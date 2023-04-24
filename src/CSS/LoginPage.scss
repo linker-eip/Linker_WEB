@@ -1,14 +1,14 @@
 .login-page-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
 
     &__info {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        height: inherit;
     }
 
     &__title {
@@ -35,6 +35,37 @@
             font-weight: 400;
             text-decoration: none;
             color: #333;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5em;
+        width: 26em;
+        margin-top: 2.5em;
+    }
+
+    &__validate-button {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__form-button {
+        background-image: linear-gradient(to right, #3DA1CC, #005275);
+        color: #FFF;
+        padding: 1em 4em 1em 4em;
+        border: 1px solid transparent; 
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: 600;
+        width: 17em;
+
+        &:hover {
+            color: #005275;
+            background: linear-gradient(white, white) padding-box,
+            linear-gradient(to right, #3DA1CC, #005275) border-box;
+
         }
     }
 }

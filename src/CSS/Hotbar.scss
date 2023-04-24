@@ -29,6 +29,7 @@ p {
         margin-right: 2em;
         font-size: 1.2em;
         padding: 0.2em 2.5em 0.2em 2.5em;
+        border: none;
         border-radius: 10px;
         border-color: #005275;
         background-color: #FFF;
@@ -36,7 +37,7 @@ p {
         font-weight: 700;
 
         &:hover {
-            border: solid #FFF;
+            opacity: 0.5;
         }
     }
 }
