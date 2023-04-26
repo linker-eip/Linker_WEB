@@ -10,7 +10,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Input from '@mui/material/Input'
-import { IconButton } from '@mui/material'
+import { IconButton, FormHelperText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 function LoginPage (): JSX.Element {
@@ -34,9 +34,25 @@ function LoginPage (): JSX.Element {
     console.log(email, password)
   }
 
+  function isEmail (email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  function isStrongPassword (password: string): boolean {
+    const lengthRegex = /.{8,}/
+    const uppercaseRegex = /[A-Z]/
+    const lowercaseRegex = /[a-z]/
+    const digitRegex = /\d/
+
+    return lengthRegex.test(password) && uppercaseRegex.test(password) && lowercaseRegex.test(password) && digitRegex.test(password)
+  }
+
   const checkIfButtonShouldBeEnabled = (value1: string, value2: string): any => {
     if (value1 !== '' && value2 !== '') {
-      setIsButtonDisabled(false)
+      if (isEmail(value1) && isStrongPassword(value2)) {
+        setIsButtonDisabled(false)
+      }
     } else {
       setIsButtonDisabled(true)
     }
@@ -80,12 +96,13 @@ function LoginPage (): JSX.Element {
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
-                    >
+                      >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
-              />
+                />
+                <FormHelperText> Minimum 8 caractères, 1 lettre minuscule, 1 lettre majuscule et 1 chiffre. </FormHelperText>
             </FormControl>
             <Link to={ROUTES.STUDENT_DASHBOARD} className='login-page-container__validate-button'>
               <button disabled={isButtonDisabled} onClick={fromValidate} className='login-page-container__form-button'>{t('validateButton')}</button>
