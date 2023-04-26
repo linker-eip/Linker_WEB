@@ -1,0 +1,72 @@
+.login-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: inherit;
+    }
+
+    &__title {
+        display: flex;
+        align-items: baseline;
+        gap: .6em;
+        color: #333;
+
+        &--sep {
+            font-size: 1.5em;
+            font-weight: 400;
+        }
+        
+        &--login {
+            font-size: 2em;
+            font-weight: 400;
+            border-bottom: 0.1em solid transparent;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, #3DA1CC, #005275);
+        }
+
+        &--register {
+            font-size: 2em;
+            font-weight: 400;
+            text-decoration: none;
+            color: #333;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5em;
+        width: 26em;
+        margin-top: 2.5em;
+    }
+
+    &__validate-button {
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    &__form-button {
+        background-image: linear-gradient(to right, #3DA1CC, #005275);
+        color: #FFF;
+        padding: 1em 4em 1em 4em;
+        border: 1px solid transparent; 
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: 600;
+        width: 17em;
+
+        &:hover {
+            color: #005275;
+            background: linear-gradient(white, white) padding-box,
+            linear-gradient(to right, #3DA1CC, #005275) border-box;
+
+        }
+    }
+}

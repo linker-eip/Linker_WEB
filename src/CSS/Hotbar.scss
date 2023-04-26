@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.hotbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 5em;
+    background-color: #005275;
+
+    &__logo {
+        margin-left: 2em;
+    }
+
+    &__title {
+        font-size: 2.5em;
+        font-weight: 600;
+        font-family: Poppins;
+        color: #FFF;
+    }
+
+    &__button {
+        margin-right: 2em;
+        font-size: 1.2em;
+        padding: 0.2em 2.5em 0.2em 2.5em;
+        border: none;
+        border-radius: 10px;
+        border-color: #005275;
+        background-color: #FFF;
+        color: #005275;
+        font-weight: 700;
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+}
