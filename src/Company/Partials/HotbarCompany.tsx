@@ -4,12 +4,12 @@ import '../../CSS/Hotbar.scss'
 import * as ROUTES from '../../Router/routes'
 import { useTranslation } from 'react-i18next'
 
-function HotbarStudent (): JSX.Element {
+function HotbarCompany (): JSX.Element {
   const { t } = useTranslation()
   return (
         <div className='hotbar-container'>
           <img src="/assets/logo.svg" alt='logo'></img>
-          <p className='hotbar-container__title'>{t('student.title')}</p>
+          <p className='hotbar-container__title'>{t('company.title')}</p>
           <Link to={ROUTES.LANDING_PAGE}>
             <button className='hotbar-container__button'> {t('button')} </button>
           </Link>
@@ -17,4 +17,4 @@ function HotbarStudent (): JSX.Element {
   )
 }
 
-export default HotbarStudent
+export default HotbarCompany

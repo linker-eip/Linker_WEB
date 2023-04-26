@@ -1,5 +1,5 @@
 import React, { useState, type ChangeEvent } from 'react'
-import HotbarStudent from './Partials/HotbarStudent'
+import HotbarCompany from './Partials/HotbarCompany'
 import '../CSS/LoginPage.scss'
 import { Link } from 'react-router-dom'
 import * as ROUTES from '../Router/routes'
@@ -13,7 +13,7 @@ import Input from '@mui/material/Input'
 import { IconButton, FormHelperText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-function LoginPage (): JSX.Element {
+function CompanyLoginPage (): JSX.Element {
   const { t } = useTranslation()
   const [showPassword, setShowPassword] = React.useState(false)
   const [email, setEmail] = useState<string>('')
@@ -65,12 +65,12 @@ function LoginPage (): JSX.Element {
   }
   return (
       <div className='login-page-container'>
-        <HotbarStudent/>
+        <HotbarCompany/>
         <div className='login-page-container__info'>
           <div className='login-page-container__title'>
             <p className='login-page-container__title--login'> {t('formTitle.part1')} </p>
             <p className='login-page-container__title--sep'>{t('formTitle.part2')}</p>
-            <Link to={ROUTES.REGISTER_PAGE} className='login-page-container__title--register'>
+            <Link to={ROUTES.COMPANY_REGISTER_PAGE} className='login-page-container__title--register'>
               <p >{t('formTitle.part3')}</p>
             </Link>
           </div>
@@ -103,8 +103,11 @@ function LoginPage (): JSX.Element {
                 }
                 />
                 <FormHelperText> Minimum 8 caractères, 1 lettre minuscule, 1 lettre majuscule et 1 chiffre. </FormHelperText>
+                <Link to={ROUTES.COMPANY_FORGOT_PASSWORD} className="login-page-container__forgotten-password">
+                  <p>{t('forgottenPassword')}</p>
+                </Link>
             </FormControl>
-            <Link to={ROUTES.STUDENT_DASHBOARD} className='login-page-container__validate-button'>
+            <Link to={ROUTES.COMPANY_DASHBOARD} className='login-page-container__validate-button'>
               <button disabled={isButtonDisabled} onClick={fromValidate} className='login-page-container__form-button'>{t('validateButton')}</button>
             </Link>
           </div>
@@ -113,4 +116,4 @@ function LoginPage (): JSX.Element {
   )
 }
 
-export default LoginPage
+export default CompanyLoginPage
