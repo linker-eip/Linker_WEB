@@ -40,4 +40,19 @@ p {
             opacity: 0.5;
         }
     }
+
+    &__info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: #FFF;
+        margin-right: 1em;
+        background-color: #005275;
+    }
+
+    &__picture {
+        height: 3.5em;
+        width: 3.5em;
+        border-radius: 50%;
+    }
 }

@@ -26,7 +26,14 @@ i18n
           validateButton: 'Se connecter',
           forgottenPassword: 'Mot de passe oublié ?',
           student: {
-            title: 'Je suis ÉTUDIANT'
+            title: 'Je suis ÉTUDIANT',
+            dashboard: {
+              home: 'Mon dashboard',
+              mission: 'Mes missions',
+              facture: 'Mes factures',
+              profil: 'Mon profil',
+              doc: 'Mes documents'
+            }
           },
           company: {
             title: 'Je suis une ENTREPRISE'
