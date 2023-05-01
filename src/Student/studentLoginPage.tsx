@@ -1,7 +1,7 @@
 import React, { useState, type ChangeEvent } from 'react'
 import HotbarStudent from './Partials/HotbarStudent'
 import '../CSS/LoginPage.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as ROUTES from '../Router/routes'
 import TextField from '@mui/material/TextField'
 import FormControl from '@mui/material/FormControl'
@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Input from '@mui/material/Input'
 import { IconButton, FormHelperText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import axios from 'axios'
 
 function StudentLoginPage (): JSX.Element {
   const { t } = useTranslation()
@@ -19,6 +20,7 @@ function StudentLoginPage (): JSX.Element {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
+  const navigate = useNavigate()
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): any => {
     setEmail(event.target.value)
@@ -31,7 +33,23 @@ function StudentLoginPage (): JSX.Element {
   }
 
   const fromValidate = (): any => {
-    console.log(email, password)
+    const credentials = {
+      email,
+      password
+    }
+
+    axios.post('URL_BACKEND_STUDENT_LOGIN', credentials)
+      .then((response) => {
+        console.log(response)
+        const jwtToken = response.data.token
+        localStorage.setItem(jwtToken, jwtToken)
+        if (response.status >= 200 && response.status < 204) {
+          navigate(ROUTES.STUDENT_DASHBOARD)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   function isEmail (email: string): boolean {
@@ -107,9 +125,9 @@ function StudentLoginPage (): JSX.Element {
                   <p>{t('forgottenPassword')}</p>
                 </Link>
             </FormControl>
-            <Link to={ROUTES.STUDENT_DASHBOARD} className='login-page-container__validate-button'>
+            <div className='login-page-container__validate-button'>
               <button disabled={isButtonDisabled} onClick={fromValidate} className='login-page-container__form-button'>{t('validateButton')}</button>
-            </Link>
+            </div>
           </div>
         </div>
       </div>
