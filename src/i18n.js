@@ -15,7 +15,6 @@ i18n
       fr: {
         translation: {
           button: 'Retour',
-          title: 'Je suis étudiant',
           formTitle: {
             part1: 'Me connecter',
             part2: 'ou',
@@ -23,7 +22,15 @@ i18n
           },
           email: 'Email',
           password: 'Mot de passe',
-          validateButton: 'Se connecter'
+          passwordHelper: 'Minimum 8 caractères, 1 lettre minuscule, 1 lettre majuscule et 1 chiffre.',
+          validateButton: 'Se connecter',
+          forgottenPassword: 'Mot de passe oublié ?',
+          student: {
+            title: 'Je suis ÉTUDIANT'
+          },
+          company: {
+            title: 'Je suis une ENTREPRISE'
+          }
         }
       }
     }
