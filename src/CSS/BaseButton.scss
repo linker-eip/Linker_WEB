@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.base-button {
+    background-image: linear-gradient(to right, #3DA1CC, #005275);
+    color: #FFF;
+    padding: 1em 4em 1em 4em;
+    border: 1px solid transparent; 
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: 'Poppins';
+    width: 17em;
+
+    &:hover {
+        color: #005275;
+        background: linear-gradient(white, white) padding-box,
+        linear-gradient(to right, #3DA1CC, #005275) border-box;
+
+    }
+}

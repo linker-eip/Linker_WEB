@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../CSS/Hotbar.scss'
+import '../../../CSS/Hotbar.scss'
 import Avatar from '@mui/material/Avatar'
 import Menu, { type MenuProps } from '@mui/material/Menu'
 import { styled, alpha, createTheme, ThemeProvider } from '@mui/material/styles'
@@ -7,10 +7,10 @@ import { Button } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import MenuItem from '@mui/material/MenuItem'
 import EditIcon from '@mui/icons-material/Edit'
-import Divider from '@mui/material/Divider'
-import ArchiveIcon from '@mui/icons-material/Archive'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../Router/routes'
 
 const theme = createTheme({
   palette: {
@@ -67,14 +67,18 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
 function HotbarDashboard (props: { children: string | any }): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const navigate = useNavigate()
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): any => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleClose = (): any => {
+    navigate(ROUTES.STUDENT_LOGIN_PAGE)
     setAnchorEl(null)
   }
+
+  const { t } = useTranslation()
   return (
         <div className='hotbar-container'>
           <img src="/assets/logo.svg" alt='logo'/>
@@ -106,20 +110,11 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
                 >
                 <MenuItem onClick={handleClose} disableRipple>
                       <EditIcon />
-                      Edit
+                      { t('student.dashboard.hotbar.profil') }
                     </MenuItem>
                     <MenuItem onClick={handleClose} disableRipple>
-                      <FileCopyIcon />
-                      Duplicate
-                    </MenuItem>
-                    <Divider sx={{ my: 0.5 }} />
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <ArchiveIcon />
-                      Archive
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <MoreHorizIcon />
-                      More
+                      <ExitToAppOutlinedIcon />
+                      { t('student.dashboard.hotbar.quit') }
                     </MenuItem>
             </StyledMenu>
           </div>

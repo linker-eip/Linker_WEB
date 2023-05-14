@@ -4,7 +4,7 @@ import './i18n'
 
 import StudentLoginPage from './Student/studentLoginPage'
 import CompanyLoginPage from './Company/companyLoginPage'
-import StudentDashboard from './Student/studentDashboard'
+import StudentDashboard from './Student/Dashbord/studentDashboard'
 
 import * as ROUTES from './Router/routes'
 

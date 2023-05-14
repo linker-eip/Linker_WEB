@@ -32,7 +32,29 @@ i18n
               mission: 'Mes missions',
               facture: 'Mes factures',
               profil: 'Mon profil',
-              doc: 'Mes documents'
+              doc: 'Mes documents',
+              hotbar: {
+                profil: 'Profil',
+                quit: 'Déconnexion'
+              },
+              card: {
+                status: {
+                  title: 'Mon statut Linker',
+                  content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir réaliser des missions. C\'est la dernière ligne droite !',
+                  statut: 'Statut auto-entrepreneur',
+                  cni: 'Carte d\'identité',
+                  rib: 'RIB'
+                },
+                faq: {
+                  title: 'Linker, c\'est...',
+                  content: 'Nous répondons aux questions que vous ous avez le plus posé dans notre dernière vidéo FAQ !'
+                },
+                freelance: {
+                  title: 'Se déclarer freelance',
+                  content: 'Voici un tutoriel pour se déclarer en tant que freelance. Nous savons à quel point c\'est dur de se lancer dans tout ça. Ici tu trouveras toutes les démarches nécessaires pour bien démarrer ton activité. Et en toute légalité bien sûr :D',
+                  button: 'Commencer'
+                }
+              }
             }
           },
           company: {
