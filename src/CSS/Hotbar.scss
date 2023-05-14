@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
 body {
     margin: 0;
 }
@@ -21,7 +26,7 @@ p {
     &__title {
         font-size: 2.5em;
         font-weight: 600;
-        font-family: Poppins;
+        font-family: 'Poppins';
         color: #FFF;
     }
 
@@ -39,5 +44,20 @@ p {
         &:hover {
             opacity: 0.5;
         }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: #FFF;
+        margin-right: 1em;
+        background-color: #005275;
+    }
+
+    &__picture {
+        height: 3.5em;
+        width: 3.5em;
+        border-radius: 50%;
     }
 }
