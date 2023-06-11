@@ -37,9 +37,16 @@ h2 {
         flex-direction: column;
         gap: 2em;
         font-size: 1.1em;
-        border: 0.01em solid #000;
-        border-radius: 1em;
         padding: 1em;
+    }
+
+    &__dropzone {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__dropzone-filename {
+        font-size: 0.8em;
     }
 
     &__textfield-container {

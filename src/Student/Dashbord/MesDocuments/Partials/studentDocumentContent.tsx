@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../../../CSS/BaseButton.scss'
 import '../../../../CSS/StudentDocumentContent.scss'
 import { useTranslation } from 'react-i18next'
 import { TextField } from '@mui/material'
+import DropZone from '../../../../Component/DropZone'
 
 function StudentDocuentContent (): JSX.Element {
   const { t } = useTranslation()
@@ -14,13 +15,29 @@ function StudentDocuentContent (): JSX.Element {
     rib: false
   }
 
+  const [cniFile, setcniFile] = useState<any>([])
+  const [urssafFile, setUrssafFile] = useState<any>([])
+
+  const handleCniFile = (value: any): any => {
+    setcniFile(value)
+  }
+
+  const handleUrssafFile = (value: any): any => {
+    setUrssafFile(value)
+  }
+
   return (
     <div className='std-document-content'>
       <div className='std-document-card'>
         <h2 className='std-document-card__title'> { t('student.dashboard.doc') } </h2>
       <div className='std-document-card__content'>
         {
-          data.cni ? <div> Vous avez bien renseignez votre cni </div> : <div> Veuillez renseigner votre CNI </div>
+          data.cni
+            ? <div> Vous avez bien renseignez votre cni </div>
+            : <div className='std-document-card__dropzone'>
+              <p>Veuillez renseigner votre CNI:</p>
+              { cniFile.length > 0 ? <div className='std-document-card__dropzone-filename'> { cniFile[0].path } </div> : <DropZone onObjectChange={handleCniFile}/> }
+            </div>
         }
         {
           data.siren
@@ -38,7 +55,12 @@ function StudentDocuentContent (): JSX.Element {
               </div>
         }
         {
-          data.urssaf && <div> Vous avez bien renseignez votre attestation de vigilence URSSAF </div>
+          data.urssaf
+            ? <div> Vous avez bien renseignez votre attestation de vigilence URSSAF </div>
+            : <div className='std-document-card__dropzone'>
+                <p>Veuillez renseigner votre attestation de vigilence URSSAF:</p>
+                { urssafFile.length > 0 ? <div className='std-document-card__dropzone-filename'> { urssafFile[0].path } </div> : <DropZone onObjectChange={handleUrssafFile}/> }
+              </div>
         }
         {
           data.rib
