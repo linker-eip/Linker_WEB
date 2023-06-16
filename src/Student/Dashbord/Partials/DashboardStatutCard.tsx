@@ -5,6 +5,8 @@ import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../Router/routes'
 
 enum state {
   NOT_FILLED,
@@ -99,12 +101,17 @@ function DashboardStatutCard (): JSX.Element {
     }
   }
 
+  const handleNavigation = (): void => {
+    navigate(ROUTES.STUDENT_DOCUMENTS_DASHBOARD)
+  }
+
   const { t } = useTranslation()
+  const navigate = useNavigate()
   return (
-    <div className='std-dashboard-card'>
-        <h2 className='std-dashboard-card__title'> { t('student.dashboard.card.status.title') } </h2>
-        <p className='std-dashboard-card__content'> { t('student.dashboard.card.status.content') } </p>
-        <div className='std-dashboard-card__object'>
+    <div className='std-dashboard-card' >
+        <h2 className='std-dashboard-card__title std-dashboard-card__cursor' onClick={handleNavigation}> { t('student.dashboard.card.status.title') } </h2>
+        <p className='std-dashboard-card__content std-dashboard-card__cursor' onClick={handleNavigation}> { t('student.dashboard.card.status.content') } </p>
+        <div className='std-dashboard-card__object std-dashboard-card__cursor'>
           <p className='std-dashboard-card__file' onClick={changeStatusState}> <ShowIcon status={statusState} /> { t('student.dashboard.card.status.statut') } </p>
           <p className='std-dashboard-card__file' onClick={changeCniState}> <ShowIcon status={cniState} /> { t('student.dashboard.card.status.cni') } </p>
           <p className='std-dashboard-card__file' onClick={changeRibState}> <ShowIcon status={ribState} /> { t('student.dashboard.card.status.rib') } </p>

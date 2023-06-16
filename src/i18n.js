@@ -14,6 +14,7 @@ i18n
     resources: {
       fr: {
         translation: {
+          validate: 'Valider',
           button: 'Retour',
           formTitle: {
             part1: 'Me connecter',
