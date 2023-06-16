@@ -2,6 +2,7 @@ export const LANDING_PAGE = '/landing-page'
 export const STUDENT_LOGIN_PAGE = '/student/login'
 export const STUDENT_REGISTER_PAGE = '/student/register'
 export const STUDENT_DASHBOARD = '/student/dashboard'
+export const STUDENT_DOCUMENTS_DASHBOARD = '/student/documents'
 export const STUDENT_FORGOT_PASSWORD = '/student/forgotten-password'
 
 export const COMPANY_FORGOT_PASSWORD = '/company/forgotten-password'

@@ -3,9 +3,9 @@
     src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
   }
 
-.std-dashboard-content {
+.std-document-content {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
 }
 
 h2 {
@@ -13,12 +13,12 @@ h2 {
     padding: 0;
 }
 
-.std-dashboard-card {
+.std-document-card {
     padding: 1.8em 2.5em 1.8em 2.5em;
-    margin: 3em 0 0 5em;
+    margin: 3em 0 0 0;
     font-family: 'Poppins';
     background-color: white;
-    max-width: 20em;
+    //max-width: 20em;
     border: 0.01em solid white;
     border-radius: 2em;
     display: flex;
@@ -26,19 +26,42 @@ h2 {
     gap: 1.8em;
 
     &__title {
+        display: flex;
         font-size: 1.7em;
         color: #3DA1CC;
-    }
-
-    &__cursor {
-        cursor: pointer;
+        justify-content: center;
     }
 
     &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
         font-size: 1.1em;
-        border: 0.01em solid #000;
-        border-radius: 1em;
         padding: 1em;
+    }
+
+    &__dropzone {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__dropzone-filename {
+        font-size: 0.8em;
+    }
+
+    &__textfield-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__line {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) repeat(1, 0.5fr);
+    }
+
+    &__button {
+        grid-column-start: 3;
+        justify-content: center;
     }
 
     &__button {
@@ -73,5 +96,9 @@ h2 {
 
     &__denied {
         color: red;
+    }
+
+    &__button {
+        align-items: center;
     }
 }

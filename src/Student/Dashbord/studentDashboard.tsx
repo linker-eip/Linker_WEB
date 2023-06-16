@@ -13,7 +13,7 @@ function StudentDashboard (): JSX.Element {
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.home') } </HotbarDashboard>
       <div className='std-bord-container__page'>
-        <SidebarDashboard state={state.MISSION} />
+        <SidebarDashboard state={state.DASHBOARD} />
         <div className='std-bord-container__content'>
           <DashboardContent />
         </div>
