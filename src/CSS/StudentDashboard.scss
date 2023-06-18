@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.std-bord-container {
+    display: flex;
+    flex-direction: column;
+
+    &__page {
+        display: flex;
+        flex-direction: row;
+        height: inherit;
+
+    }
+
+    &__content {
+        width: 100%;
+        height: inherit;
+        background-color: #f2f2f2;
+    }
+}
