@@ -36,6 +36,21 @@
             text-decoration: none;
             color: #333;
         }
+
+        &--login1 {
+            font-size: 2em;
+            font-weight: 400;
+            text-decoration: none;
+            color: #333;
+        }
+
+        &--register1 {
+            font-size: 2em;
+            font-weight: 400;
+            border-bottom: 0.1em solid transparent;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, #3DA1CC, #005275);
+        }
     }
 
     &__form {

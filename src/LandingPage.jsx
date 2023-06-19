@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from './Router/routes'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import MuiAppBar from '@mui/material/AppBar'
@@ -50,6 +52,8 @@ const mdTheme = createTheme({
 })
 
 function DashboardStudent () {
+  const navigate = useNavigate()
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -83,20 +87,6 @@ function DashboardStudent () {
                 height: 'auto'
               }}
             />
-            <Button
-              variant="contained"
-              target="_blank"
-              style={{
-                borderRadius: 20,
-                background: 'white',
-                fontWeight: 600,
-                padding: '5px 30px',
-                marginRight: '20px',
-                color: colors.PRIMARY
-              }}
-            >
-              Connexion
-            </Button>
           </Toolbar>
         </AppBar>
         <Box
@@ -206,6 +196,7 @@ function DashboardStudent () {
                             padding: '5px 30px',
                             marginLeft: '55px'
                           }}
+                          onClick={() => navigate(ROUTES.COMPANY_REGISTER_PAGE)}
                         >
                           S&apos;inscrire sur Linker
                         </Button>
@@ -255,6 +246,7 @@ function DashboardStudent () {
                             padding: '5px 30px',
                             marginLeft: '55px'
                           }}
+                          onClick={() => navigate(ROUTES.STUDENT_REGISTER_PAGE)}
                         >
                           S&apos;inscrire sur Linker
                         </Button>
