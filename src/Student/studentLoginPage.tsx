@@ -38,7 +38,7 @@ function StudentLoginPage (): JSX.Element {
       password
     }
 
-    axios.post('http://api.linker-app.fr:8080/api/auth/student/login', credentials)
+    axios.post('https://api.linker-app.fr/api/auth/student/login', credentials)
       .then((response) => {
         console.log(response.data)
         const jwtToken = response.data.token
