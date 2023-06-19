@@ -27,6 +27,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exposer le port 80
 EXPOSE 80
+EXPOSE 443
 
 # Démarrer Nginx au démarrage du conteneur
 CMD ["nginx", "-g", "daemon off;"]
