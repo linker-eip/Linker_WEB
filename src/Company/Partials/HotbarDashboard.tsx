@@ -74,7 +74,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
   }
 
   const handleClose = (): any => {
-    navigate(ROUTES.STUDENT_LOGIN_PAGE)
+    navigate(ROUTES.COMPANY_LOGIN_PAGE)
     setAnchorEl(null)
   }
 
