@@ -7,6 +7,7 @@ import StudentLoginPage from './Student/studentLoginPage'
 import CompanyLoginPage from './Company/companyLoginPage'
 import CompanyRegisterPage from './Company/companyRegisterPage'
 import StudentRegisterPage from './Student/studentRegisterPage'
+import CompanyDashboard from './Company/companyDashboard'
 import StudentDashboard from './Student/Dashbord/studentDashboard'
 import StudentDocuments from './Student/Dashbord/MesDocuments/studentDocuments'
 
@@ -22,6 +23,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_LOGIN_PAGE} element={<StudentLoginPage/>}/>
         <Route path={ROUTES.COMPANY_LOGIN_PAGE} element={<CompanyLoginPage/>}/>
         <Route path={ROUTES.STUDENT_DASHBOARD} element={<StudentDashboard/>}/>
+        <Route path={ROUTES.COMPANY_DASHBOARD} element={<CompanyDashboard/>}/>
         <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments/>}/>
       </Routes>
     </BrowserRouter>

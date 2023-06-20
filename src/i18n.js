@@ -57,7 +57,7 @@ i18n
                 },
                 faq: {
                   title: 'Linker, c\'est...',
-                  content: 'Nous répondons aux questions que vous ous avez le plus posé dans notre dernière vidéo FAQ !'
+                  content: 'Nous répondons aux questions que vous nous avez le plus posé dans notre dernière vidéo FAQ !'
                 },
                 freelance: {
                   title: 'Se déclarer freelance',
@@ -68,7 +68,17 @@ i18n
             }
           },
           company: {
-            title: 'Je suis une ENTREPRISE'
+            title: 'Je suis une ENTREPRISE',
+            dashboard: {
+              card: {
+                status: {
+                  content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir proposer des missions. C\'est la dernière ligne droite !',
+                  cni: 'Carte d\'identité',
+                  kbis: 'KBIS',
+                  siret: 'SIRET'
+                }
+              }
+            }
           }
         }
       },
@@ -117,7 +127,7 @@ i18n
                 },
                 faq: {
                   title: 'Linker, c\'est...',
-                  content: 'Nous répondons aux questions que vous ous avez le plus posé dans notre dernière vidéo FAQ !'
+                  content: 'Nous répondons aux questions que vous nous avez le plus posé dans notre dernière vidéo FAQ !'
                 },
                 freelance: {
                   title: 'Se déclarer freelance',
@@ -128,7 +138,17 @@ i18n
             }
           },
           company: {
-            title: 'Je suis une ENTREPRISE'
+            title: 'Je suis une ENTREPRISE',
+            dashboard: {
+              card: {
+                status: {
+                  content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir proposer des missions. C\'est la dernière ligne droite !',
+                  cni: 'Carte d\'identité',
+                  kbis: 'KBIS',
+                  siret: 'SIRET'
+                }
+              }
+            }
           }
         }
       }
