@@ -38,12 +38,12 @@ function StudentLoginPage (): JSX.Element {
       password
     }
 
-    axios.post('URL_BACKEND_STUDENT_LOGIN', credentials)
+    axios.post('https://api.linker-app.fr/api/auth/student/login', credentials)
       .then((response) => {
-        console.log(response)
+        console.log(response.data)
         const jwtToken = response.data.token
         localStorage.setItem(jwtToken, jwtToken)
-        if (response.status >= 200 && response.status < 204) {
+        if (response.data.error === undefined) {
           navigate(ROUTES.STUDENT_DASHBOARD)
         }
       })
