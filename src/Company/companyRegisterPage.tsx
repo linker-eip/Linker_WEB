@@ -25,7 +25,7 @@ function CompanyRegisterPage (): JSX.Element {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
+  // const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
   const [firstCheckedState, setFirstCheckedState] = useState<boolean>(false)
   const [secondCheckedState, setSecondCheckedState] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -36,17 +36,17 @@ function CompanyRegisterPage (): JSX.Element {
 
   const handleTelephoneChange = (event: ChangeEvent<HTMLInputElement>): any => {
     setTelephone(event.target.value)
-    checkIfButtonShouldBeEnabled(event.target.value, telephone)
+    // checkIfButtonShouldBeEnabled(event.target.value, telephone)
   }
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): any => {
     setEmail(event.target.value)
-    checkIfButtonShouldBeEnabled(event.target.value, password)
+    // checkIfButtonShouldBeEnabled(event.target.value, password)
   }
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): any => {
     setPassword(event.target.value)
-    checkIfButtonShouldBeEnabled(email, event.target.value)
+    // checkIfButtonShouldBeEnabled(email, event.target.value)
   }
 
   const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>): any => {
@@ -83,34 +83,34 @@ function CompanyRegisterPage (): JSX.Element {
       })
   }
 
-  function isTelephone (telephone: string): boolean {
-    const telephoneRegex = /^\d{9}$/
-    return telephoneRegex.test(telephone)
-  }
+  // function isTelephone (telephone: string): boolean {
+  //   const telephoneRegex = /^\d{9}$/
+  //   return telephoneRegex.test(telephone)
+  // }
 
-  function isEmail (email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-  }
+  // function isEmail (email: string): boolean {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  //   return emailRegex.test(email)
+  // }
 
-  function isStrongPassword (password: string): boolean {
-    const lengthRegex = /.{8,}/
-    const uppercaseRegex = /[A-Z]/
-    const lowercaseRegex = /[a-z]/
-    const digitRegex = /\d/
+  // function isStrongPassword (password: string): boolean {
+  //   const lengthRegex = /.{8,}/
+  //   const uppercaseRegex = /[A-Z]/
+  //   const lowercaseRegex = /[a-z]/
+  //   const digitRegex = /\d/
 
-    return lengthRegex.test(password) && uppercaseRegex.test(password) && lowercaseRegex.test(password) && digitRegex.test(password)
-  }
+  //   return lengthRegex.test(password) && uppercaseRegex.test(password) && lowercaseRegex.test(password) && digitRegex.test(password)
+  // }
 
-  const checkIfButtonShouldBeEnabled = (value1: string, value2: string): any => {
-    if (value1 !== '' && value2 !== '') {
-      if (isEmail(value1) && isStrongPassword(value2) && isTelephone(telephone)) {
-        setIsButtonDisabled(false)
-      }
-    } else {
-      setIsButtonDisabled(true)
-    }
-  }
+  // const checkIfButtonShouldBeEnabled = (value1: string, value2: string): any => {
+  //   if (value1 !== '' && value2 !== '') {
+  //     if (isEmail(value1) && isStrongPassword(value2) && isTelephone(telephone)) {
+  //       setIsButtonDisabled(false)
+  //     }
+  //   } else {
+  //     setIsButtonDisabled(true)
+  //   }
+  // }
 
   const handleClickShowPassword = (): any => { setShowPassword((show) => !show) }
 
@@ -221,7 +221,8 @@ function CompanyRegisterPage (): JSX.Element {
               />
             </div>
             <div className='login-page-container__validate-button'>
-              <button disabled={isButtonDisabled} onClick={fromValidate} className='login-page-container__form-button'>{t('registerButton')}</button>
+              {/* <button disabled={isButtonDisabled} onClick={fromValidate} className='login-page-container__form-button'>{t('registerButton')}</button> */}
+              <button onClick={fromValidate} className='login-page-container__form-button'>{t('registerButton')}</button>
             </div>
           </div>
         </div>
