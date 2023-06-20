@@ -16,7 +16,7 @@ import { IconButton, FormHelperText } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 
-function StudentRegisterPage (): JSX.Element {
+function CompanyRegisterPage (): JSX.Element {
   const { t } = useTranslation()
   const [showPassword, setShowPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
@@ -64,10 +64,12 @@ function StudentRegisterPage (): JSX.Element {
   const fromValidate = (): any => {
     const credentials = {
       email,
-      password
+      password,
+      name: companyName,
+      phoneNumber: telephone
     }
 
-    axios.post('URL_BACKEND_STUDENT_LOGIN', credentials)
+    axios.post('https://api.linker-app.fr/api/auth/company/register', credentials)
       .then((response) => {
         console.log(response)
         const jwtToken = response.data.token
@@ -227,4 +229,4 @@ function StudentRegisterPage (): JSX.Element {
   )
 }
 
-export default StudentRegisterPage
+export default CompanyRegisterPage

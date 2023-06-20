@@ -69,10 +69,12 @@ function StudentRegisterPage (): JSX.Element {
   const fromValidate = (): any => {
     const credentials = {
       email,
-      password
+      password,
+      firstName,
+      lastName
     }
 
-    axios.post('URL_BACKEND_STUDENT_LOGIN', credentials)
+    axios.post('https://api.linker-app.fr/api/auth/student/register', credentials)
       .then((response) => {
         console.log(response)
         const jwtToken = response.data.token
