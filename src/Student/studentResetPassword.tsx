@@ -29,7 +29,7 @@ function StudentResetPassword (): JSX.Element {
       .then((response) => {
         console.log(response)
         const jwtToken = response.data.token
-        localStorage.setItem(jwtToken, jwtToken)
+        localStorage.setItem('jwtToken', jwtToken)
         if (response.status >= 200 && response.status < 204) {
           navigate(ROUTES.STUDENT_LOGIN_PAGE)
         }
