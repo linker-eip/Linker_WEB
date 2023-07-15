@@ -5,8 +5,10 @@ import SidebarDashboard from '../Partials/SidebarDashboard'
 import { useTranslation } from 'react-i18next'
 import { DashboardState } from '../../Enum'
 import CompanyDocumentContent from './Partials/companyDocumentContent'
+import isPrivateRoute from '../../Component/isPrivateRoute'
 
 function CompanyDocuments (): JSX.Element {
+  isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
   return (

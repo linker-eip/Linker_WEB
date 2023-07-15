@@ -42,7 +42,7 @@ function StudentLoginPage (): JSX.Element {
       .then((response) => {
         console.log(response.data)
         const jwtToken = response.data.token
-        localStorage.setItem(jwtToken, jwtToken)
+        localStorage.setItem('jwtToken', jwtToken)
         if (response.data.error === undefined) {
           navigate(ROUTES.STUDENT_DASHBOARD)
         }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import './i18n'
 
 import LandingPage from './LandingPage'
@@ -20,14 +20,14 @@ import * as ROUTES from './Router/routes'
 
 function App (): JSX.Element {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path={ROUTES.LANDING_PAGE} element={<LandingPage/>}/>
         <Route path={ROUTES.STUDENT_REGISTER_PAGE} element={<StudentRegisterPage/>}/>
         <Route path={ROUTES.COMPANY_REGISTER_PAGE} element={<CompanyRegisterPage/>}/>
         <Route path={ROUTES.STUDENT_LOGIN_PAGE} element={<StudentLoginPage/>}/>
         <Route path={ROUTES.COMPANY_LOGIN_PAGE} element={<CompanyLoginPage/>}/>
-        <Route path={ROUTES.STUDENT_DASHBOARD} element={<StudentDashboard/>}/>
+        <Route path={ROUTES.STUDENT_DASHBOARD} element={<StudentDashboard />} />
         <Route path={ROUTES.COMPANY_DASHBOARD} element={<CompanyDashboard/>}/>
         <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments/>}/>
         <Route path={ROUTES.COMPANY_DOCUMENTS_DASHBOARD} element={<CompanyDocuments/>}/>
@@ -36,7 +36,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_FORGOT_PASSWORD} element={<StudentForgetPassword/>}/>
         <Route path={ROUTES.STUDENT_RESET_PASSWORD} element={<StudentResetPassword/>}/>
       </Routes>
-    </BrowserRouter>
+    </Router>
   )
 }
 
