@@ -88,7 +88,11 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
   }
 
   const handleClose = (): any => {
-    console.log('here')
+    setAnchorEl(null)
+  }
+
+  const handleProfile = (): any => {
+    navigate(ROUTES.STUDENT_PROFILE)
     setAnchorEl(null)
   }
 
@@ -127,7 +131,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
                 open={open}
                 onClose={handleClose}
                 >
-                <MenuItem onClick={handleClose} disableRipple>
+                <MenuItem onClick={handleProfile} disableRipple>
                       <EditIcon />
                       { t('student.dashboard.hotbar.profil') }
                     </MenuItem>

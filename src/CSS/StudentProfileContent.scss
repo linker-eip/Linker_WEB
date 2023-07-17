@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.std-profile-content {
+    padding: 1.8em 2.5em 1.8em 2.5em;
+    background-color: white;
+
+    &__avatar {
+        border: 0.1em solid #3da1cc;
+        width: 15em !important;
+        height: 15em !important;
+    }
+
+    &__stars {
+        color: yellow;
+        margin-left: -0.7em;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__content {
+        margin-left: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        font-size: 1.2em    ;
+    }
+
+    &__mark {
+        margin-left: 0.7em;
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: row;
+        gap: .6em;
+    }
+
+    &__site {
+        color: #3da1cc;
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+    }
+}
