@@ -98,6 +98,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
 
   const handleDisconnect = (): void => {
     navigate(ROUTES.STUDENT_LOGIN_PAGE)
+    localStorage.removeItem('jwtToken')
     setAnchorEl(null)
   }
 
