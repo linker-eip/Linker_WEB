@@ -4,7 +4,7 @@
   }
 
 .std-profile-content {
-    padding: 1.8em 2.5em 1.8em 2.5em;
+    padding: 1.8em 4em 1.8em 4em;
     background-color: white;
 
     &__avatar {
@@ -13,9 +13,28 @@
         height: 15em !important;
     }
 
-    &__stars {
+    &__stars-selected {
         color: yellow;
         margin-left: -0.7em;
+    }
+
+    &__stars {
+        filter: grayscale(100%);
+        margin-left: -0.7em;
+    }
+
+    &__circle {
+        text-align: center;
+        background-color: black;
+        border: black solid 0.1em;
+        border-radius: 100%;
+        height: 0.4em;
+        width: 0.4em;
+    }
+
+    &__edit {
+        height: 2em !important;
+        width: 100% !important;
     }
 
     &__container {
@@ -28,7 +47,8 @@
         display: flex;
         flex-direction: column;
         gap: 1em;
-        font-size: 1.2em    ;
+        font-size: 1.2em;
+        flex: 1;
     }
 
     &__mark {
@@ -36,6 +56,7 @@
         display: flex;
         flex-direction: row;
         gap: 1em;
+        align-items: center;
     }
 
     &__section {
