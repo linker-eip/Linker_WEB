@@ -24,7 +24,7 @@
         justify-content: center;
     }
 
-    &__text {
+    &__content {
         padding: 1em;
         background-color: rgba(0, 210, 100, 0.10);
         display: flex;
@@ -33,6 +33,17 @@
         gap: 0.8em;
         border-radius: 1em;
         font-size: 1.3em;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline   ;
+    }
+
+    &__subtext {
+        font-size: 0.8em;
+        color: #3DA1CC;
     }
 
     &__icon {

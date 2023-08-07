@@ -72,7 +72,9 @@ i18n
                 verified_student: 'Étudiant vérifié',
                 verified_freelance: 'Freelance vérifié',
                 linker_charte: 'Charte Linker signée',
-                verified_email: 'Email vérifié'
+                verified_email: 'Email vérifié',
+                more_information: 'Plus d\'information',
+                check_charte: 'Consulter la charte'
               }
             }
           },

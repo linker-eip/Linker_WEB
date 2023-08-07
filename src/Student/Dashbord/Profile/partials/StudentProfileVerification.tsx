@@ -10,25 +10,35 @@ function StudentProfileVerification (): JSX.Element {
         { t('student.profile.verif.title') }
       </h1>
       <div className='std-profile-verif__container'>
-        <div className='std-profile-verif__text'>
+        <div className='std-profile-verif__content'>
           <img src='/assets/validate.svg' alt='' className='std-profile-verif__icon' />
           <p>
             { t('student.profile.verif.verified_student') }
           </p>
         </div>
-        <div className='std-profile-verif__text'>
+        <div className='std-profile-verif__content'>
           <img src='/assets/validate.svg' alt='' className='std-profile-verif__icon' />
-          <p>
-            { t('student.profile.verif.verified_freelance') }
-          </p>
+          <div className='std-profile-verif__text'>
+            <p>
+              { t('student.profile.verif.verified_freelance') }
+            </p>
+            <p className='std-profile-verif__subtext' >
+              { t('student.profile.verif.more_information') }
+            </p>
+          </div>
         </div>
-        <div className='std-profile-verif__text'>
+        <div className='std-profile-verif__content'>
           <img src='/assets/validate.svg' alt='' className='std-profile-verif__icon' />
-          <p>
-            { t('student.profile.verif.linker_charte') }
-          </p>
+          <div className='std-profile-verif__text'>
+            <p>
+              { t('student.profile.verif.linker_charte') }
+            </p>
+            <p className='std-profile-verif__subtext' >
+              { t('student.profile.verif.check_charte') }
+            </p>
+          </div>
         </div>
-        <div className='std-profile-verif__text'>
+        <div className='std-profile-verif__content'>
           <img src='/assets/validate.svg' alt=''className='std-profile-verif__icon' />
           <p>
             { t('student.profile.verif.verified_email') }
