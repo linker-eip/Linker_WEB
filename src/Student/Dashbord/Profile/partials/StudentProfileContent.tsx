@@ -1,10 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../../CSS/StudentProfileContent.scss'
 import Avatar from '@mui/material/Avatar'
 import PlaceIcon from '@mui/icons-material/Place'
 import EditIcon from '@mui/icons-material/Edit'
+import ProfileApi from '../../../../API/GetProfile'
+import type { Profile } from '../../../../Typage/ProfileType'
 
-function StudentDocuentContent (): JSX.Element {
+function StudentProfileContent (): JSX.Element {
+  const [profileData, setProfileData] = useState<Profile>()
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function fetchData () {
+      try {
+        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
+        setProfileData(data)
+      } catch (error) {
+        console.error('Error fetching profile data:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
+  console.log(profileData)
   const [starsMark, setStarsMark] = useState(5)
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
 
@@ -45,7 +62,7 @@ function StudentDocuentContent (): JSX.Element {
         <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
         <div className='std-profile-content__content'>
           <h1 className='std-profile-content__title'>
-            NOM Prénom
+            { profileData?.name }
           </h1>
           <p> Poste - techno </p>
           <div className='std-profile-content__mark' onClick={handleChangeStars}>
@@ -78,4 +95,4 @@ function StudentDocuentContent (): JSX.Element {
   )
 }
 
-export default StudentDocuentContent
+export default StudentProfileContent

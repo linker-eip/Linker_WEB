@@ -70,7 +70,10 @@
     }
 
     &__title {
+        margin-bottom: -0.5em;
         display: flex;
         align-items: center;
+        font-family: 'Poppins';
+        text-transform: uppercase;
     }
 }

@@ -65,6 +65,15 @@ i18n
                   button: 'Commencer'
                 }
               }
+            },
+            profile: {
+              verif: {
+                title: 'Vérifications',
+                verified_student: 'Étudiant vérifié',
+                verified_freelance: 'Freelance vérifié',
+                linker_charte: 'Charte Linker signée',
+                verified_email: 'Email vérifié'
+              }
             }
           },
           company: {

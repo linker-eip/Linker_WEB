@@ -4,7 +4,7 @@ import axios from 'axios'
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class ProfileApi {
   static async getProfile (jwtToken: string): Promise<Profile> {
-    const response = await axios.get('https://api.linker-app.fr/api/student/profile', {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
       }
