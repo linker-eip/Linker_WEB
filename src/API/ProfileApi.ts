@@ -11,6 +11,15 @@ class ProfileApi {
     })
     return response.data
   }
+
+  static async updateProfile (jwtToken: string, dto: any): Promise<Profile> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
 }
 
 export default ProfileApi

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
 import type { Profile } from '../../../Typage/ProfileType'
-import ProfileApi from '../../../API/GetProfile'
+import ProfileApi from '../../../API/ProfileApi'
 
 const theme = createTheme({
   palette: {

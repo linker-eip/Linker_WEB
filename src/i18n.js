@@ -67,6 +67,13 @@ i18n
               }
             },
             profile: {
+              edit_mode: {
+                desc: 'Description',
+                location: 'location',
+                website: 'website'
+              },
+              content: {
+              },
               verif: {
                 title: 'Vérifications',
                 verified_student: 'Étudiant vérifié',
