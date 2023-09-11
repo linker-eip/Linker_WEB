@@ -38,7 +38,7 @@ function CompanyLoginPage (): JSX.Element {
       password
     }
 
-    axios.post('https://api.linker-app.fr/api/auth/company/login', credentials)
+    axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/company/login`, credentials)
       .then((response) => {
         console.log(response.data)
         const jwtToken = response.data.token

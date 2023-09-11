@@ -1,11 +1,36 @@
 export interface Profile {
-  id: number
-  name: string
+  id: 0
+  firstName: string
+  lastName: string
   description: string
   email: string
   phone: string
   location: string
-  studies: string
-  skills: string
+  picture: string
+  studies: [ {
+    name: string
+    logo: string
+    city: string
+    duration: string
+    description: string
+    position: string
+  }
+  ]
+  skills: [
+    {
+      name: string
+      logo: string
+    }
+  ]
+  jobs: [
+    {
+      name: string
+      logo: string
+      city: string
+      duration: string
+      description: string
+      position: string
+    }
+  ]
   website: string
 }

@@ -69,8 +69,8 @@ i18n
             profile: {
               edit_mode: {
                 desc: 'Description',
-                location: 'location',
-                website: 'website'
+                location: 'Location',
+                website: 'Website'
               },
               content: {
               },
@@ -82,6 +82,28 @@ i18n
                 verified_email: 'Email vérifié',
                 more_information: 'Plus d\'information',
                 check_charte: 'Consulter la charte'
+              },
+              skills: {
+                title: 'Compétences',
+                add_skill: 'Ajouter une compétence'
+              },
+              experience: {
+                title: 'Expériences',
+                add_exp: 'Ajoute ton expérience',
+                name: 'Rentre le nom de ton expérience ?',
+                position: 'Quel poste avez-vous exercé ?',
+                localisation: 'Lieu',
+                date: 'Date',
+                description: 'Décris ton expérience'
+              },
+              education: {
+                title: 'Formations',
+                add_form: 'Ajoute ta formation',
+                name: 'Rentre le nom de ton formation ?',
+                position: 'Quel est sujet de cette formation ?',
+                localisation: 'Lieu',
+                date: 'Date',
+                description: 'Décris la formation'
               }
             }
           },

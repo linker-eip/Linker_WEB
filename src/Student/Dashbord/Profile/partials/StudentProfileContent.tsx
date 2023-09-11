@@ -12,12 +12,19 @@ import BaseButton from '../../../../Component/BaseButton'
 function StudentProfileContent (): JSX.Element {
   const [profileData, setProfileData] = useState<Profile>()
   const { t } = useTranslation()
+  const [description, setDescription] = useState<string | undefined>(undefined)
+  const [location, setLocation] = useState<string | undefined>(undefined)
+  const [website, setWebsite] = useState<string | undefined>(undefined)
+  const [isEdit, setIsEdit] = useState(false)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
       try {
         const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
         setProfileData(data)
+        setDescription(data.description)
+        setLocation(data.location)
+        setWebsite(data.website)
       } catch (error) {
         console.error('Error fetching profile data:', error)
       }
@@ -26,15 +33,24 @@ function StudentProfileContent (): JSX.Element {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function refetchData () {
+      try {
+        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
+        setProfileData(data)
+      } catch (error) {
+        console.error('Error fetching profile data:', error)
+      }
+    }
+
+    refetchData()
+  }, [isEdit])
+
   const handleEditMode = (): void => {
     setIsEdit(!isEdit)
   }
 
-  const [description, setDescription] = useState(profileData?.description)
-  const [location, setLocation] = useState(profileData?.location)
-  const [website, setWebsite] = useState(profileData?.website)
-
-  const [isEdit, setIsEdit] = useState(false)
   const [starsMark, setStarsMark] = useState(5)
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
 
@@ -52,6 +68,7 @@ function StudentProfileContent (): JSX.Element {
 
   const handleValidNewInfo = (): void => {
     handleEditMode()
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { description, location, website })
   }
 
   const handleChangeStars = (): void => {
@@ -93,9 +110,9 @@ function StudentProfileContent (): JSX.Element {
             <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
             <div className='std-profile-content__content'>
               <h1 className='std-profile-content__title'>
-                { profileData?.name }
+                { profileData?.firstName } { profileData?.lastName }
               </h1>
-              <p> Poste - techno </p>
+              { profileData?.description !== '' ? <p> { profileData?.description } </p> : <p> Description </p>}
               <div className='std-profile-content__mark' onClick={handleChangeStars}>
                 {
                   starsStatus.map((item, index) => {
@@ -109,15 +126,14 @@ function StudentProfileContent (): JSX.Element {
                 <div className='std-profile-content__circle' />
                 <p> nbr mission</p>
               </div>
-              <div className='std-profile-content__section'>
-                <PlaceIcon />
-                <p> Localité: Marseille </p>
+                <div className='std-profile-content__section'>
+                  <PlaceIcon />
+                  { profileData?.location !== '' ? <p> { profileData?.location } </p> : <p> Localité </p> }
+                </div>
+                <div className='std-profile-content__section'>
+                  { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
+                </div>
               </div>
-              <div className='std-profile-content__section'>
-                <p> Site Web: </p>
-                <p className='std-profile-content__site'> https://www.google.fr </p>
-              </div>
-            </div>
             <div onClick={handleEditMode}>
               <EditIcon className='std-profile-content__edit' />
             </div>
@@ -126,7 +142,7 @@ function StudentProfileContent (): JSX.Element {
               <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
               <div className='std-profile-content__content'>
                 <TextField
-                  value={description}
+                  defaultValue={description}
                   onChange={handleDesc}
                   variant='standard'
                   id="standard-required"

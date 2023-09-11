@@ -7,6 +7,9 @@ import { DashboardState } from '../../../Enum'
 import isPrivateRoute from '../../../Component/isPrivateRoute'
 import StudentProfileContent from './partials/StudentProfileContent'
 import StudentProfileVerification from './partials/StudentProfileVerification'
+import StudentProfileCompetence from './partials/StudentProfileCompetence'
+import StudentProfileExperience from './partials/StudentProfileExperience'
+import StudentProfileEducation from './partials/StudentProfileEducation'
 
 function StudentProfile (): JSX.Element {
   isPrivateRoute()
@@ -19,7 +22,12 @@ function StudentProfile (): JSX.Element {
         <SidebarDashboard state={state.PROFIL} />
         <div className='std-bord-container__content'>
           <StudentProfileContent />
-          <StudentProfileVerification />
+          <div className='std-bord-container__row'>
+            <StudentProfileVerification />
+            <StudentProfileCompetence />
+          </div>
+          <StudentProfileExperience />
+          <StudentProfileEducation />
         </div>
       </div>
     </div>

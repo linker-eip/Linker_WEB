@@ -68,15 +68,13 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
 
 function HotbarDashboard (props: { children: string | any }): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [jwtToken, setJwtToken] = useState('')
   const [profile, setProfile] = useState<Profile | null>(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async (): Promise<any> => {
-      setJwtToken(localStorage.getItem('jwtToken') as string)
-      const profileData = await ProfileApi.getProfile(jwtToken)
+      const profileData = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
       setProfile(profileData)
       return profileData
     }
@@ -120,7 +118,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
                     onClick={handleClick}
                     endIcon={<KeyboardArrowDownIcon />}
                     >
-                    { profile !== null ? profile.name : 'Prenom NOM'}
+                    { profile !== null ? <p> { profile.firstName } { profile.lastName }</p> : 'Prenom NOM'}
                 </Button>
             </ThemeProvider>
             <StyledMenu
