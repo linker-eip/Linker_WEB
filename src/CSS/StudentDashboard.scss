@@ -19,4 +19,13 @@
         height: inherit;
         background-color: #f2f2f2;
     }
+
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+
+        @media screen  and (max-width: 1300px) {
+            grid-template-columns: 1fr;
+        }
+    }
 }

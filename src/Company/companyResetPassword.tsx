@@ -25,7 +25,7 @@ function CompanyResetPassword (): JSX.Element {
       password
     }
 
-    axios.post('https://api.linker-app.fr/api/auth/company/reset-password', credentials)
+    axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/company/reset-password`, credentials)
       .then((response) => {
         console.log(response)
         const jwtToken = response.data.token
