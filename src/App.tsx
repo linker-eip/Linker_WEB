@@ -16,6 +16,7 @@ import CompanyResetPassword from './Company/companyResetPassword'
 import StudentForgetPassword from './Student/studentForgetPassword'
 import StudentResetPassword from './Student/studentResetPassword'
 import StudentProfile from './Student/Dashbord/Profile/StudentProfile'
+import StudentMissions from './Student/Dashbord/Missions/StudentMissions'
 
 import * as ROUTES from './Router/routes'
 
@@ -32,6 +33,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.COMPANY_DASHBOARD} element={<CompanyDashboard/>}/>
         <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments/>}/>
         <Route path={ROUTES.STUDENT_PROFILE} element={< StudentProfile/>}/>
+        <Route path={ROUTES.STUDENT_MISSIONS} element={< StudentMissions/>}/>
         <Route path={ROUTES.COMPANY_DOCUMENTS_DASHBOARD} element={<CompanyDocuments/>}/>
         <Route path={ROUTES.COMPANY_FORGOT_PASSWORD} element={<CompanyForgetPassword/>}/>
         <Route path={ROUTES.COMPANY_RESET_PASSWORD} element={<CompanyResetPassword/>}/>

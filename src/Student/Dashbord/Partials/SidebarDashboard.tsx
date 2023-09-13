@@ -31,6 +31,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.PROFIL:
         navigate(ROUTES.STUDENT_PROFILE)
         break
+      case DashboardState.MISSION:
+        navigate(ROUTES.STUDENT_MISSIONS)
+        break
       default:
         break
     }

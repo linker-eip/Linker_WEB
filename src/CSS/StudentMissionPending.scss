@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.std-mission-pending {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins' !important;
+
+
+  &__mission-status {
+    font-family: 'Poppins';
+    color: #000;
+    font-weight: 600;
+    font-size: 1.25em;
+    font-style: normal;
+    line-height: normal;
+    margin: 2em 0 0 0;
+  }
+
+  &__no-mission {
+    color: #000;
+    font-size: 1.25em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}

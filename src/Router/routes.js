@@ -7,6 +7,7 @@ export const STUDENT_DOCUMENTS_DASHBOARD = '/student/documents'
 export const STUDENT_FORGOT_PASSWORD = '/student/forgotten-password'
 export const STUDENT_RESET_PASSWORD = '/student/reset-password'
 export const STUDENT_PROFILE = '/student/profile'
+export const STUDENT_MISSIONS = '/student/missions'
 
 export const COMPANY_LOGIN_PAGE = '/company/login'
 export const COMPANY_REGISTER_PAGE = '/company/register'

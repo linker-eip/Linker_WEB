@@ -20,6 +20,7 @@ function StudentProfileContent (): JSX.Element {
   const [isEdit, setIsEdit] = useState(false)
   const [isAvatarEditing, setIsAvatarEditing] = useState(false)
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
+  const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
@@ -29,6 +30,7 @@ function StudentProfileContent (): JSX.Element {
         setDescription(data.description)
         setLocation(data.location)
         setWebsite(data.website)
+        setProfilePicture(data.picture)
       } catch (error) {
         console.error('Error fetching profile data:', error)
       }
@@ -139,7 +141,7 @@ function StudentProfileContent (): JSX.Element {
                       : null }
                   </div>
                 : <div onClick={handleAvatarEditing}>
-                    <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
+                    { profilePicture !== '' ? <Avatar alt='avatar' className='std-profile-content__avatar' src={profilePicture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
                   </div>
               }
             <div className='std-profile-content__content'>
