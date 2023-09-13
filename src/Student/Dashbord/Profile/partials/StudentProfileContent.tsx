@@ -3,11 +3,13 @@ import '../../../../CSS/StudentProfileContent.scss'
 import Avatar from '@mui/material/Avatar'
 import PlaceIcon from '@mui/icons-material/Place'
 import EditIcon from '@mui/icons-material/Edit'
+import CloseIcon from '@mui/icons-material/Close'
 import ProfileApi from '../../../../API/ProfileApi'
 import type { Profile } from '../../../../Typage/ProfileType'
 import { TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
+import DropZone from '../../../../Component/DropZone'
 
 function StudentProfileContent (): JSX.Element {
   const [profileData, setProfileData] = useState<Profile>()
@@ -16,6 +18,8 @@ function StudentProfileContent (): JSX.Element {
   const [location, setLocation] = useState<string | undefined>(undefined)
   const [website, setWebsite] = useState<string | undefined>(undefined)
   const [isEdit, setIsEdit] = useState(false)
+  const [isAvatarEditing, setIsAvatarEditing] = useState(false)
+  const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
@@ -47,12 +51,21 @@ function StudentProfileContent (): JSX.Element {
     refetchData()
   }, [isEdit])
 
+  const handleAvatarEditing = (): void => {
+    setIsAvatarEditing(!isAvatarEditing)
+  }
+
   const handleEditMode = (): void => {
     setIsEdit(!isEdit)
   }
 
   const [starsMark, setStarsMark] = useState(5)
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
+
+  const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
+    console.log(event)
+    setAvatarImage(event)
+  }
 
   const handleDesc = (event: ChangeEvent<HTMLInputElement>): void => {
     setDescription(event.target.value)
@@ -69,6 +82,11 @@ function StudentProfileContent (): JSX.Element {
   const handleValidNewInfo = (): void => {
     handleEditMode()
     ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { description, location, website })
+  }
+
+  const handleNewPicture = (): void => {
+    setIsAvatarEditing(!isAvatarEditing)
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { picture: AvatarImage[0] })
   }
 
   const handleChangeStars = (): void => {
@@ -107,7 +125,23 @@ function StudentProfileContent (): JSX.Element {
       {
         !isEdit
           ? <div className='std-profile-content__container'>
-            <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
+              { isAvatarEditing
+                ? <div>
+                    <div onClick={handleAvatarEditing}>
+                      <CloseIcon className='std-profile-exp__edit'/>
+                    </div>
+                    <DropZone onObjectChange={handleAvatarImage}/>
+                    { AvatarImage !== undefined
+                      ? <div>
+                          <p> {AvatarImage[0].path } </p>
+                          <BaseButton title='Envoyer' onClick={handleNewPicture} />
+                        </div>
+                      : null }
+                  </div>
+                : <div onClick={handleAvatarEditing}>
+                    <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
+                  </div>
+              }
             <div className='std-profile-content__content'>
               <h1 className='std-profile-content__title'>
                 { profileData?.firstName } { profileData?.lastName }
@@ -139,7 +173,23 @@ function StudentProfileContent (): JSX.Element {
             </div>
           </div>
           : <div className='std-profile-content__container'>
-              <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
+              { isAvatarEditing
+                ? <div>
+                    <div onClick={handleAvatarEditing}>
+                      <CloseIcon className='std-profile-exp__edit'/>
+                    </div>
+                    <DropZone onObjectChange={handleAvatarImage}/>
+                    { AvatarImage !== undefined
+                      ? <div>
+                          <p> {AvatarImage[0].path } </p>
+                          <BaseButton title='Envoyer' onClick={handleNewPicture} />
+                        </div>
+                      : null }
+                  </div>
+                : <div onClick={handleAvatarEditing}>
+                    <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
+                  </div>
+              }
               <div className='std-profile-content__content'>
                 <TextField
                   defaultValue={description}
@@ -162,7 +212,10 @@ function StudentProfileContent (): JSX.Element {
                   id="standard-required"
                   label={t('student.profile.edit_mode.website')}
                 />
-                <BaseButton title='submit' onClick={handleValidNewInfo} />
+                <BaseButton title='Envoyer' onClick={handleValidNewInfo} />
+              </div>
+              <div onClick={handleEditMode}>
+                <CloseIcon className='std-profile-exp__edit'/>
               </div>
           </div>
       }

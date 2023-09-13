@@ -20,6 +20,26 @@ class ProfileApi {
     })
     return response.data
   }
+
+  static async uploadFile (jwtToken: string, dto: any): Promise<Profile> {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/file/upload`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async getFile (jwtToken: string, dto: any): Promise<any> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/file`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      },
+      params: dto
+    })
+    return response.data
+  }
 }
 
 export default ProfileApi
