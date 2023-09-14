@@ -39,6 +39,7 @@ i18n
             price: 'Montant:',
             begin: 'Début de misison:',
             end: 'Fin de misison:',
+            cancelled: 'Mission annulée le:',
             participants: 'Participants:',
             bill: 'N° de facture:',
             see_mission: 'Voir la mission'

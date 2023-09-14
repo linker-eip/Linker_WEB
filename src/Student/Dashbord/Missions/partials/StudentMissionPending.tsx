@@ -25,7 +25,10 @@ function StudentMissionsPending (): JSX.Element {
   //   fetchData()
   // }, [])
 
-  const [data] = useState<Array<{ logo: string, title: string, motant: number, begin: string, end: string, bill: string, participants: number }>>([{ logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 }, { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 }, { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 }, { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 }])
+  const [data] = useState<Array<{ logo: string, title: string, motant: number, begin?: string, end: string, bill: string, participants: number }>>([
+    { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 },
+    { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 }
+  ])
   const [nbrMission] = useState(data.length)
   const { t } = useTranslation()
 
