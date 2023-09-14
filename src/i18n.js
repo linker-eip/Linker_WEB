@@ -35,6 +35,15 @@ i18n
           registerButton: 'S\'inscrire',
           validateButton: 'Se connecter',
           forgottenPassword: 'Mot de passe oublié ?',
+          missionCard: {
+            price: 'Montant:',
+            begin: 'Début de misison:',
+            end: 'Fin de misison:',
+            cancelled: 'Mission annulée le:',
+            participants: 'Participants:',
+            bill: 'N° de facture:',
+            see_mission: 'Voir la mission'
+          },
           student: {
             title: 'Je suis ÉTUDIANT',
             dashboard: {
@@ -64,6 +73,23 @@ i18n
                   content: 'Voici un tutoriel pour se déclarer en tant que freelance. Nous savons à quel point c\'est dur de se lancer dans tout ça. Ici tu trouveras toutes les démarches nécessaires pour bien démarrer ton activité. Et en toute légalité bien sûr :D',
                   button: 'Commencer'
                 }
+              }
+            },
+            mission: {
+              pending: {
+                title: 'En cours',
+                pending_mission: 'Missions en cours ({{nbrMission}})',
+                no_mission: 'Vous n\'avez aucune mission en cours'
+              },
+              completed: {
+                title: 'Terminées',
+                completed_mission: 'Missions terminées ({{nbrMission}})',
+                no_mission: 'Vous n\'avez aucune mission terminée'
+              },
+              cancelled: {
+                title: 'Annulées',
+                cancelled_mission: 'Missions annulées ({{nbrMission}})',
+                no_mission: 'Vous n\'avez aucune mission annulée'
               }
             },
             profile: {

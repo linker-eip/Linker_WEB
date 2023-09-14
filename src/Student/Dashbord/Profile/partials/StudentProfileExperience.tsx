@@ -78,9 +78,7 @@ function StudentProfileExperience (): JSX.Element {
   }
 
   const handleEditMode = (): void => {
-    console.log('before', isEdit)
     setIsEdit(!isEdit)
-    console.log('after', isEdit)
   }
 
   const handleExperienceName = (event: ChangeEvent<HTMLInputElement>): void => {
