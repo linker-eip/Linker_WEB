@@ -92,6 +92,23 @@ i18n
                 no_mission: 'Vous n\'avez aucune mission annulée'
               }
             },
+            detailed_mission: {
+              pending_mission: 'Missions en cours',
+              accepted: 'Proposition acceptée',
+              provisionée: 'Mission provisionée',
+              in_progress: 'Mission en cours',
+              completed: 'Mission terminée',
+              details: 'Détail de la mission',
+              historic: 'Historique de la mission',
+              conversation: 'Accéder à la conversation',
+              mission: 'missions',
+              tab: {
+                detail: 'Détail',
+                quantity: 'Quantité',
+                unitary_price: 'Prix unitaire (HT)',
+                total_price: 'total (HT)'
+              }
+            },
             profile: {
               edit_mode: {
                 desc: 'Description',
