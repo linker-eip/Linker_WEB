@@ -13,6 +13,72 @@ h2 {
     padding: 0;
 }
 
+.std-dashboard-ca {
+    padding: 1.8em 2.5em 1.8em 2.5em;
+    margin: 3em 0 0 5em;
+    font-family: 'Poppins';
+    background-color: white;
+    //width: 40em;
+    border: 0.01em solid white;
+    border-radius: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8em;
+
+    &__container {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 3em;
+    }
+
+    &__sub-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        gap: 0.8em;
+    }
+
+    &__text-1 {
+        color: #4B4B4B;
+        font-family: 'Poppins';
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    &__value {
+        color: #4B4B4B;
+        font-family: 'Poppins';
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+
+    &__link {
+        color: #005275;
+        font-family: 'Poppins';
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    &__logo {
+        width: 40px;
+    }
+}
+
 .std-dashboard-card {
     padding: 1.8em 2.5em 1.8em 2.5em;
     margin: 3em 0 0 5em;
