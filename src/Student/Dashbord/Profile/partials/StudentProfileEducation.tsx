@@ -178,6 +178,12 @@ function StudentProfileEducation (): JSX.Element {
           <h1> Ajoute ton expérience </h1>
             <div className='std-profile-exp__content'>
               <DropZone onObjectChange={handleLogo} />
+              { logo !== undefined
+                ? <div>
+                    <p> {logo[0].path } </p>
+                  </div>
+                : null
+              }
               <TextField
                 className='std-profile-exp__input'
                 value={experienceName}

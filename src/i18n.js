@@ -72,6 +72,12 @@ i18n
                   title: 'Se déclarer freelance',
                   content: 'Voici un tutoriel pour se déclarer en tant que freelance. Nous savons à quel point c\'est dur de se lancer dans tout ça. Ici tu trouveras toutes les démarches nécessaires pour bien démarrer ton activité. Et en toute légalité bien sûr :D',
                   button: 'Commencer'
+                },
+                sales: {
+                  title: 'Mon chiffre d\'affaires',
+                  sales: 'Chiffre d\'affaires (12 derniers mois)',
+                  finished_missions: 'Missions terminées (12 derniers mois)',
+                  see_all: 'Voir toutes mes statistiques'
                 }
               }
             },

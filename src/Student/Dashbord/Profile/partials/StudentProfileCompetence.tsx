@@ -8,12 +8,14 @@ import { TextField } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
 import ProfileApi from '../../../../API/ProfileApi'
 import type { Profile } from '../../../../Typage/ProfileType'
+import DropZone from '../../../../Component/DropZone'
 
 function StudentProfileCompetence (): JSX.Element {
   const [profileData, setProfileData] = useState<Profile>()
   const [skillName, setSkillName] = useState<string>()
   const [isEdit, setIsEdit] = useState(false)
   const [open, setOpen] = React.useState(false)
+  const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   const handleSkillOpen = (): void => { setOpen(true) }
   const handleSkillClose = (): void => { setOpen(false) }
 
@@ -31,6 +33,11 @@ function StudentProfileCompetence (): JSX.Element {
     fetchData()
   }, [])
 
+  const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
+    console.log(event)
+    setAvatarImage(event)
+  }
+
   const handleEditMode = (): void => {
     setIsEdit(!isEdit)
     console.log(isEdit)
@@ -44,7 +51,7 @@ function StudentProfileCompetence (): JSX.Element {
     handleEditMode()
     const skills = [{
       name: skillName ?? '',
-      logo: '/assets/react.svg'
+      logo: AvatarImage[0]
     }]
     setSkillName('')
     ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { skills })
@@ -87,12 +94,18 @@ function StudentProfileCompetence (): JSX.Element {
         <div className='std-profile-comp__modal'>
           <h1> Ajoute ta compétence </h1>
             <div className='std-profile-comp__content'>
+            <DropZone onObjectChange={handleAvatarImage}/>
+            { AvatarImage !== undefined
+              ? <div>
+                  <p> {AvatarImage[0].path } </p>
+                </div>
+              : null }
               <TextField
                 value={skillName}
                 onChange={handleSkillName}
                 variant='standard'
                 id="standard-required"
-                label="nom de la compétence"
+                label="Nom de la compétence"
               />
               <BaseButton title='submit' onClick={handleNewSkill} />
             </div>
