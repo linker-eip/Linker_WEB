@@ -49,12 +49,11 @@ function StudentProfileCompetence (): JSX.Element {
 
   const handleNewSkill = (): void => {
     handleEditMode()
-    const skills = [{
-      name: skillName ?? '',
-      logo: AvatarImage[0]
-    }]
+    const skills = new FormData()
+    skills.append('skills[0][name]', skillName ?? '')
+    skills.append('skills[0][logo]', AvatarImage[0].path)
     setSkillName('')
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { skills })
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, skills)
 
     handleSkillClose()
   }

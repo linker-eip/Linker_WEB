@@ -103,15 +103,14 @@ function StudentProfileExperience (): JSX.Element {
 
   const handleNewExperience = (): void => {
     handleEditMode()
-    const jobs = [{
-      name: experienceName,
-      city: localisation,
-      duration: formatRange(dateRange[0], dateRange[1]),
-      description,
-      logo,
-      position
-    }]
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { jobs })
+    const jobs = new FormData()
+    jobs.append('jobs[0][name]', experienceName ?? '')
+    jobs.append('jobs[0][city]', localisation ?? '')
+    jobs.append('jobs[0][duration]', formatRange(startDate, endDate))
+    jobs.append('jobs[0][description]', description ?? '')
+    jobs.append('jobs[0][logo]', logo?.path ?? '')
+    jobs.append('jobs[0][position]', position ?? '')
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, jobs)
     handleModalClose()
     setIsSubmited(isSubmited)
   }

@@ -27,7 +27,7 @@ function StudentProfileEducation (): JSX.Element {
   const [open, setOpen] = React.useState(false)
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
   const [startDate, endDate] = dateRange
-  const [photo, setPhoto] = useState<string | undefined>()
+  // const [photo, setPhoto] = useState<string | undefined>()
   const handleModalOpen = (): void => {
     setIsEdit(!isEdit)
     setOpen(true)
@@ -42,10 +42,7 @@ function StudentProfileEducation (): JSX.Element {
     async function fetchData () {
       try {
         const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-        const imageFile = await ProfileApi.getFile(localStorage.getItem('jwtToken') as string, { fileName: '1694492165225-IMG_6298.jpg' })
-        setPhoto(imageFile)
         setProfileData(data)
-        console.log(photo)
       } catch (error) {
         console.error('Error fetching profile data:', error)
       }
@@ -107,18 +104,14 @@ function StudentProfileEducation (): JSX.Element {
 
   const handleNewExperience = (): void => {
     handleEditMode()
-    const studies = [{
-      name: experienceName,
-      city: localisation,
-      duration: formatRange(dateRange[0], dateRange[1]),
-      description,
-      logo,
-      position
-    }]
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { studies })
-
-    console.log('logo: ', logo)
-    ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, { file: logo[0] })
+    const studies = new FormData()
+    studies.append('studies[0][name]', experienceName ?? '')
+    studies.append('studies[0][city]', localisation ?? '')
+    studies.append('studies[0][duration]', formatRange(dateRange[0], dateRange[1]))
+    studies.append('studies[0][description]', description ?? '')
+    studies.append('studies[0][logo]', logo[0].path)
+    studies.append('studies[0][position]', position ?? '')
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, studies)
 
     handleModalClose()
     setIsSubmited(isSubmited)
@@ -128,7 +121,6 @@ function StudentProfileEducation (): JSX.Element {
   return (
     <div className='std-profile-exp'>
       <div className='std-profile-exp__columns'>
-        <img src={photo} />
         <div className='std-profile-exp__title-container'>
           <h1 className='std-profile-exp__title'> { t('student.profile.education.title') } </h1>
           { !isEditing

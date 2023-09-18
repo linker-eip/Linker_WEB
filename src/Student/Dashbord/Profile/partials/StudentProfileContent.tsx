@@ -83,12 +83,18 @@ function StudentProfileContent (): JSX.Element {
 
   const handleValidNewInfo = (): void => {
     handleEditMode()
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { description, location, website })
+    const fd = new FormData()
+    fd.append('description', description ?? '')
+    fd.append('location', location ?? '')
+    fd.append('website', website ?? '')
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, fd)
   }
 
   const handleNewPicture = (): void => {
     setIsAvatarEditing(!isAvatarEditing)
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, { picture: AvatarImage[0] })
+    const picture = new FormData()
+    picture.append('picture', AvatarImage[0])
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, picture)
   }
 
   const handleChangeStars = (): void => {
@@ -189,7 +195,7 @@ function StudentProfileContent (): JSX.Element {
                       : null }
                   </div>
                 : <div onClick={handleAvatarEditing}>
-                    <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' />
+                    { profilePicture !== '' ? <Avatar alt='avatar' className='std-profile-content__avatar' src={profilePicture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
                   </div>
               }
               <div className='std-profile-content__content'>
