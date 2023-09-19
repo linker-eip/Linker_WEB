@@ -101,16 +101,24 @@ function StudentProfileExperience (): JSX.Element {
     setLogo(event)
   }
 
-  const handleNewExperience = (): void => {
-    handleEditMode()
+  const callApi = async (): Promise<void> => {
+    const file = new FormData()
+    file.append('file', logo[0])
+    const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
+
     const jobs = new FormData()
     jobs.append('jobs[0][name]', experienceName ?? '')
     jobs.append('jobs[0][city]', localisation ?? '')
     jobs.append('jobs[0][duration]', formatRange(startDate, endDate))
     jobs.append('jobs[0][description]', description ?? '')
-    jobs.append('jobs[0][logo]', logo?.path ?? '')
+    jobs.append('jobs[0][logo]', String(returnValue))
     jobs.append('jobs[0][position]', position ?? '')
     ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, jobs)
+  }
+
+  const handleNewExperience = (): void => {
+    handleEditMode()
+    callApi()
     handleModalClose()
     setIsSubmited(isSubmited)
   }

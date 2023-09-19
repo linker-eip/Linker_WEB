@@ -106,7 +106,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
           <img src="/assets/logo.svg" alt='logo'/>
           <p className='hotbar-container__title'>{ props.children }</p>
           <div className='hotbar-container__info'>
-            <Avatar alt='avatar' src='/assets/anonymLogo.jpg' />
+            <Avatar alt='avatar' src={profile?.picture} />
             <ThemeProvider theme={theme}>
                 <Button
                     id="demo-customized-button"

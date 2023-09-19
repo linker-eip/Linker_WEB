@@ -34,27 +34,32 @@ function StudentProfileCompetence (): JSX.Element {
   }, [])
 
   const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log(event)
     setAvatarImage(event)
   }
 
   const handleEditMode = (): void => {
     setIsEdit(!isEdit)
-    console.log(isEdit)
   }
 
   const handleSkillName = (event: ChangeEvent<HTMLInputElement>): void => {
     setSkillName(event.target.value)
   }
 
-  const handleNewSkill = (): void => {
-    handleEditMode()
+  const callApi = async (): Promise<void> => {
+    const file = new FormData()
+    file.append('file', AvatarImage[0])
+    const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
+    console.log(returnValue)
     const skills = new FormData()
     skills.append('skills[0][name]', skillName ?? '')
-    skills.append('skills[0][logo]', AvatarImage[0].path)
+    skills.append('skills[0][logo]', String(returnValue))
     setSkillName('')
     ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, skills)
+  }
 
+  const handleNewSkill = (): void => {
+    handleEditMode()
+    callApi()
     handleSkillClose()
   }
 

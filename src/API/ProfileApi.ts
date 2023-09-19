@@ -22,7 +22,7 @@ class ProfileApi {
     return response.data
   }
 
-  static async uploadFile (jwtToken: string, dto: FormData): Promise<Profile> {
+  static async uploadFile (jwtToken: string, dto: FormData): Promise<string> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/file/upload`, dto, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,

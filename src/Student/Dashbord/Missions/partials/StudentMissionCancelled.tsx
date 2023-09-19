@@ -10,7 +10,7 @@ function StudentMissionsCancelled (): JSX.Element {
     { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, cancelledDate: '09/07/2023', bill: 'KP250320231200', participants: 3 },
     { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, cancelledDate: '31/08/2023', bill: 'KP250320231200', participants: 3 }
   ])
-  const [nbrMission] = useState(data.length)
+  const [nbrMission] = useState(0)
   const { t } = useTranslation()
 
   return (
