@@ -9,6 +9,7 @@ export const STUDENT_RESET_PASSWORD = '/student/reset-password'
 export const STUDENT_PROFILE = '/student/profile'
 export const STUDENT_MISSIONS = '/student/missions'
 export const STUDENT_DETAILED_MISSION = '/student/detailed-mission'
+export const STUDENT_STATISTICS = '/student/statistics'
 
 export const COMPANY_LOGIN_PAGE = '/company/login'
 export const COMPANY_REGISTER_PAGE = '/company/register'

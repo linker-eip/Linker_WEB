@@ -11,7 +11,11 @@ import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZone from '../../../../Component/DropZone'
 
-function StudentProfileContent (): JSX.Element {
+interface Props {
+  editable: boolean
+}
+
+function StudentProfileContent ({ editable }: Props): JSX.Element {
   const [profileData, setProfileData] = useState<Profile>()
   const { t } = useTranslation()
   const [description, setDescription] = useState<string | undefined>(undefined)
@@ -21,6 +25,7 @@ function StudentProfileContent (): JSX.Element {
   const [isAvatarEditing, setIsAvatarEditing] = useState(false)
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined)
+  const maxLength = 500
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
@@ -54,7 +59,9 @@ function StudentProfileContent (): JSX.Element {
   }, [isEdit])
 
   const handleAvatarEditing = (): void => {
-    setIsAvatarEditing(!isAvatarEditing)
+    if (editable) {
+      setIsAvatarEditing(!isAvatarEditing)
+    }
   }
 
   const handleEditMode = (): void => {
@@ -176,9 +183,12 @@ function StudentProfileContent (): JSX.Element {
                   { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
                 </div>
               </div>
-            <div onClick={handleEditMode}>
-              <EditIcon className='std-profile-content__edit' />
-            </div>
+            { editable
+              ? <div onClick={handleEditMode}>
+                <EditIcon className='std-profile-content__edit' />
+                </div>
+              : <div></div>
+            }
           </div>
           : <div className='std-profile-content__container'>
               { isAvatarEditing
@@ -199,13 +209,19 @@ function StudentProfileContent (): JSX.Element {
                   </div>
               }
               <div className='std-profile-content__content'>
-                <TextField
-                  defaultValue={description}
-                  onChange={handleDesc}
-                  variant='standard'
-                  id="standard-required"
-                  label={t('student.profile.edit_mode.desc')}
-                />
+                <div className='std-profile-content__row'>
+                  <TextField
+                    defaultValue={description}
+                    onChange={handleDesc}
+                    variant='standard'
+                    id="standard-required"
+                    label={t('student.profile.edit_mode.desc')}
+                    inputProps={{
+                      maxLength
+                    }}
+                  />
+                  <p className='std-profile-content__text'>{description?.length ?? 0}/{maxLength} </p>
+                </div>
                 <TextField
                   value={location}
                   onChange={handleLoc}
