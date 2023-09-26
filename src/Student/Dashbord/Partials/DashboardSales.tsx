@@ -6,6 +6,23 @@ import Graphics from './Graphics'
 function DashboardSales (): JSX.Element {
   const { t } = useTranslation()
   const [salesData] = useState<{ ca: number, nbrMission: number }>({ ca: 880, nbrMission: 2 })
+  const revenueData = {
+    labels: [
+      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+    ],
+    datasets: [
+      {
+        label: 'Chiffre d\'affaires',
+        data: [0, 0, 0, 0, 0, 0, 440, 440, 440, 440, 880, 880],
+        fill: true,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 2
+      }
+    ]
+  }
+
   return (
     <div className='std-dashboard-ca'>
       <h2 className='std-dashboard-card__title'> { t('student.dashboard.card.sales.title') } </h2>
@@ -27,7 +44,7 @@ function DashboardSales (): JSX.Element {
           </div>
           <p className='std-dashboard-ca__link'> {t('student.dashboard.card.sales.see_all')} </p>
         </div>
-        <Graphics />
+        <Graphics revenueData={revenueData} />
       </div>
     </div>
   )
