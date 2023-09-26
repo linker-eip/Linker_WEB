@@ -21,7 +21,7 @@ function StudentProfile (): JSX.Element {
       <div className='std-bord-container__page'>
         <SidebarDashboard state={state.PROFIL} />
         <div className='std-bord-container__content'>
-          <StudentProfileContent />
+          <StudentProfileContent editable />
           <div className='std-bord-container__row'>
             <StudentProfileVerification />
             <StudentProfileCompetence />

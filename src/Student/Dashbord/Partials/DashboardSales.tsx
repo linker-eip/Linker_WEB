@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import '../../../CSS/StudentDashboardContent.scss'
 import { useTranslation } from 'react-i18next'
 import Graphics from './Graphics'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../Router/routes'
 
 function DashboardSales (): JSX.Element {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [salesData] = useState<{ ca: number, nbrMission: number }>({ ca: 880, nbrMission: 2 })
   const revenueData = {
     labels: [
@@ -21,6 +24,10 @@ function DashboardSales (): JSX.Element {
         borderWidth: 2
       }
     ]
+  }
+
+  const handleNavigation = (): void => {
+    navigate(ROUTES.STUDENT_STATISTICS)
   }
 
   return (
@@ -42,7 +49,7 @@ function DashboardSales (): JSX.Element {
               <p> { salesData.nbrMission } </p>
             </div>
           </div>
-          <p className='std-dashboard-ca__link'> {t('student.dashboard.card.sales.see_all')} </p>
+          <p onClick={handleNavigation} className='std-dashboard-ca__link'> {t('student.dashboard.card.sales.see_all')} </p>
         </div>
         <Graphics revenueData={revenueData} />
       </div>

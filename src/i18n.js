@@ -52,6 +52,7 @@ i18n
               facture: 'Mes factures',
               profil: 'Mon profil',
               doc: 'Mes documents',
+              stat: 'Mes statistiques',
               hotbar: {
                 profil: 'Profil',
                 quit: 'Déconnexion'
@@ -97,6 +98,12 @@ i18n
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
                 no_mission: 'Vous n\'avez aucune mission annulée'
               }
+            },
+            sales: {
+              avis: 'Avis',
+              mark: 'Note Moyenne',
+              text_1: 'laissés par vos clients sur les 12 derniers mois',
+              text_2: 'sur toutes vos missions notées par vos clients'
             },
             detailed_mission: {
               pending_mission: 'Missions en cours',

@@ -11,7 +11,11 @@ import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZone from '../../../../Component/DropZone'
 
-function StudentProfileContent (): JSX.Element {
+interface Props {
+  editable: boolean
+}
+
+function StudentProfileContent ({ editable }: Props): JSX.Element {
   const [profileData, setProfileData] = useState<Profile>()
   const { t } = useTranslation()
   const [description, setDescription] = useState<string | undefined>(undefined)
@@ -55,7 +59,9 @@ function StudentProfileContent (): JSX.Element {
   }, [isEdit])
 
   const handleAvatarEditing = (): void => {
-    setIsAvatarEditing(!isAvatarEditing)
+    if (editable) {
+      setIsAvatarEditing(!isAvatarEditing)
+    }
   }
 
   const handleEditMode = (): void => {
@@ -177,9 +183,12 @@ function StudentProfileContent (): JSX.Element {
                   { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
                 </div>
               </div>
-            <div onClick={handleEditMode}>
-              <EditIcon className='std-profile-content__edit' />
-            </div>
+            { editable
+              ? <div onClick={handleEditMode}>
+                <EditIcon className='std-profile-content__edit' />
+                </div>
+              : <div></div>
+            }
           </div>
           : <div className='std-profile-content__container'>
               { isAvatarEditing
