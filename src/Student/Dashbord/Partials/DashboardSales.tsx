@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../../../CSS/StudentDashboardContent.scss'
 import { useTranslation } from 'react-i18next'
+import Graphics from './Graphics'
 
 function DashboardSales (): JSX.Element {
   const { t } = useTranslation()
@@ -26,6 +27,7 @@ function DashboardSales (): JSX.Element {
           </div>
           <p className='std-dashboard-ca__link'> {t('student.dashboard.card.sales.see_all')} </p>
         </div>
+        <Graphics />
       </div>
     </div>
   )

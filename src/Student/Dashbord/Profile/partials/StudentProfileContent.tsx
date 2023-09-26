@@ -21,6 +21,7 @@ function StudentProfileContent (): JSX.Element {
   const [isAvatarEditing, setIsAvatarEditing] = useState(false)
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined)
+  const maxLength = 500
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
@@ -199,13 +200,19 @@ function StudentProfileContent (): JSX.Element {
                   </div>
               }
               <div className='std-profile-content__content'>
-                <TextField
-                  defaultValue={description}
-                  onChange={handleDesc}
-                  variant='standard'
-                  id="standard-required"
-                  label={t('student.profile.edit_mode.desc')}
-                />
+                <div className='std-profile-content__row'>
+                  <TextField
+                    defaultValue={description}
+                    onChange={handleDesc}
+                    variant='standard'
+                    id="standard-required"
+                    label={t('student.profile.edit_mode.desc')}
+                    inputProps={{
+                      maxLength
+                    }}
+                  />
+                  <p className='std-profile-content__text'>{description?.length ?? 0}/{maxLength} </p>
+                </div>
                 <TextField
                   value={location}
                   onChange={handleLoc}
