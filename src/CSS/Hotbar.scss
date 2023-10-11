@@ -24,10 +24,15 @@ p {
     }
 
     &__title {
-        font-size: 2.5em;
+        text-align: center;
+        font-size: 1.8em;
         font-weight: 600;
         font-family: 'Poppins';
         color: #FFF;
+
+        @media screen and (min-width: 792px) {
+            font-size: 2.5em;
+        }
     }
 
     &__button {

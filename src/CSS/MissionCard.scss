@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.mission-card {
+  margin: 1em 0 1em 0;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    border-left: solid 1px black;
+    padding: 2em;
+  }
+  
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+    margin: 1em;
+  }
+
+  &__logo {
+    width: 200px;
+  }
+
+  &__text-important {
+    color: #3DA1CC;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  &__text {
+    color: #737370;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  &__value {
+    color: #4B4B4B;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  &__title {
+    text-align: center;
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  &__link {
+    margin-left: 1em;
+    color: #005275;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+  }
+}

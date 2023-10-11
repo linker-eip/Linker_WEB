@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.std-profile-comp {
+    margin: 2em;
+    padding: 1em 1em 1em 1em;
+    background-color: white;
+    width: fit-content;
+    color: #4b4b4b;
+    border-radius: 1em;
+    font-family: 'poppins';
+    display: flex;
+    flex-direction: row;
+
+    &__title-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
+    }
+
+    &__container {
+        margin: 0 1.5em 0 1.5em;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4em;
+    }
+    
+    &__section {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.5em;
+        font-weight: 700;
+        align-items: center;
+    }
+
+    &__img {
+        width: 2.8em;
+    }
+
+    &__columns {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__add {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        align-items: center;
+        margin: 2em;
+        padding: 1em;
+        border: 0.4em #4b4b4b dashed;
+        width: fit-content;
+    }
+
+    &__title {
+        display: flex;
+        margin: 0 0.5em 1em 0.5em;
+    }
+
+    &__edit {
+        height: 2em !important;
+        width: 2em !important;
+        cursor: pointer;
+    }
+
+    &__modal {
+        background-color: white;
+        margin: 25em 35em 10em 35em;
+        padding: 3em;
+        text-align: center;
+    }
+}

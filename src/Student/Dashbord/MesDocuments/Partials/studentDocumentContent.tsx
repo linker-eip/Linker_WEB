@@ -2,7 +2,6 @@ import React, { useState, type ChangeEvent } from 'react'
 import '../../../../CSS/BaseButton.scss'
 import '../../../../CSS/StudentDocumentContent.scss'
 import { useTranslation } from 'react-i18next'
-import { TextField } from '@mui/material'
 import DropZone from '../../../../Component/DropZone'
 import BaseButton from '../../../../Component/BaseButton'
 
@@ -18,23 +17,64 @@ function StudentDocuentContent (): JSX.Element {
 
   const [cniFile, setcniFile] = useState<any>([])
   const [urssafFile, setUrssafFile] = useState<any>([])
-  const [siren, setSiren] = useState('')
-  const [rib, setRib] = useState('')
+  const [siren, setSiren] = useState<any>([])
+  const [rib, setRib] = useState<any>([])
+
+  const downloadFile = (file: any): void => {
+    const url = URL.createObjectURL(new Blob(file, { type: 'image/jpeg' }))
+    const link = document.createElement('a')
+    link.href = url
+    link.download = file[0].path
+    link.click()
+  }
+
+  const resetCni = (cni = data.cni, siren = data.siren, urssaf = data.urssaf, rib = data.rib): void => {
+    setData({
+      cni,
+      siren,
+      urssaf,
+      rib
+    })
+  }
 
   const handleSirenChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSiren(event.target.value)
+    setSiren(event)
+    setData({
+      cni: data.cni,
+      siren: true,
+      urssaf: data.urssaf,
+      rib: data.rib
+    })
   }
 
   const handleRibChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setRib(event.target.value)
+    setRib(event)
+    setData({
+      cni: data.cni,
+      siren: data.siren,
+      urssaf: data.urssaf,
+      rib: true
+    })
   }
 
-  const handleCniFile = (value: any): any => {
-    setcniFile(value)
+  const handleCniFile = (event: ChangeEvent<HTMLInputElement>): void => {
+    setcniFile(event)
+    setData({
+      cni: true,
+      siren: data.siren,
+      urssaf: data.urssaf,
+      rib: data.rib
+    })
   }
 
-  const handleUrssafFile = (value: any): any => {
-    setUrssafFile(value)
+  const handleUrssafFile = (event: ChangeEvent<HTMLInputElement>): void => {
+    setUrssafFile(event)
+    setData({
+      cni: data.cni,
+      siren: data.siren,
+      urssaf: true,
+      rib: data.rib
+    })
   }
 
   const postFile = (): any => {
@@ -63,49 +103,75 @@ function StudentDocuentContent (): JSX.Element {
       <div className='std-document-card__content'>
         {
           data.cni
-            ? <div> Vous avez bien renseigné votre cni. </div>
+            ? <div className='std-document-card__line'>
+                <div>
+                  Vous avez bien renseigné votre cni
+                  { cniFile.length > 0 ? <div className='std-document-card__dropzone-filename' onClick={() => { downloadFile(cniFile) }}> { cniFile[0].path } </div> : '' }
+                </div>
+              <div className='std-document-card__button'>
+              <button className='base-button__little' onClick={() => { resetCni(false) }}>
+                remplacer
+              </button>
+            </div>
+          </div>
             : <div className='std-document-card__dropzone'>
               <p>Veuillez renseigner votre CNI:</p>
-              { cniFile.length > 0 ? <div className='std-document-card__dropzone-filename'> { cniFile[0].path } </div> : <DropZone onObjectChange={handleCniFile}/> }
+              <DropZone onObjectChange={handleCniFile}/>
             </div>
         }
         {
           data.siren
             ? <div className='std-document-card__line'>
-                Vous avez bien renseigné votre siren
+                <div>
+                  Vous avez bien renseigné votre siren
+                  { siren.length > 0 ? <div className='std-document-card__dropzone-filename' onClick={() => { downloadFile(siren) }}> { siren[0].path } </div> : '' }
+                </div>
                 <div className='std-document-card__button'>
-                  <button className='base-button__little'>
+                  <button className='base-button__little' onClick={() => { resetCni(data.cni, false) }}>
                     remplacer
                   </button>
                 </div>
               </div>
-            : <div className='std-document-card__textfield-container'>
-                Veuillez renseigner votre siren
-                <TextField onChange={handleSirenChange} id="siren" label="Siren" variant="standard" />
-              </div>
+            : <div className='std-document-card__dropzone'>
+            <p>Veuillez renseigner votre siren:</p>
+            <DropZone onObjectChange={handleSirenChange}/>
+          </div>
         }
         {
           data.urssaf
-            ? <div> Vous avez bien renseigné votre attestation de vigilence URSSAF </div>
+            ? <div className='std-document-card__line'>
+                <div>
+                  Vous avez bien renseigné votre attestation de vigilence URSSAF
+                  { urssafFile.length > 0 ? <div className='std-document-card__dropzone-filename' onClick={() => { downloadFile(urssafFile) }}> { urssafFile[0].path } </div> : '' }
+                </div>
+                <div className='std-document-card__button'>
+                  <button className='base-button__little' onClick={() => { resetCni(data.cni, data.siren, false) }}>
+                    remplacer
+                  </button>
+                </div>
+              </div>
             : <div className='std-document-card__dropzone'>
                 <p>Veuillez renseigner votre attestation de vigilence URSSAF:</p>
-                { urssafFile.length > 0 ? <div className='std-document-card__dropzone-filename'> { urssafFile[0].path } </div> : <DropZone onObjectChange={handleUrssafFile}/> }
+                  <DropZone onObjectChange={handleUrssafFile}/>
               </div>
         }
         {
           data.rib
             ? <div className='std-document-card__line'>
-                Vous avez bien renseigné votre RIB
+                <div>
+                  Vous avez bien renseigné votre RIB
+                  { rib.length > 0 ? <div className='std-document-card__dropzone-filename' onClick={() => { downloadFile(rib) }}> { rib[0].path } </div> : '' }
+                </div>
                 <div className='std-document-card__button'>
-                  <button className='base-button__little'>
+                  <button className='base-button__little' onClick={() => { resetCni(data.cni, data.siren, data.urssaf, false) }}>
                     remplacer
                   </button>
                 </div>
               </div>
-            : <div className='std-document-card__textfield-container'>
-                Veuillez renseigner votre RIB
-                <TextField onChange={handleRibChange} id="rib" label="RIB" variant="standard" />
-              </div>
+            : <div className='std-document-card__dropzone'>
+              <p>Veuillez renseigner votre RIB:</p>
+              <DropZone onObjectChange={handleRibChange}/>
+            </div>
         }
         { !data.cni && !data.siren && !data.rib && !data.urssaf
           ? <div className='std-document-card__button'>
