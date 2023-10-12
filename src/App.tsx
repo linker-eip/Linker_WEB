@@ -20,6 +20,8 @@ import StudentMissions from './Student/Dashbord/Missions/StudentMissions'
 import StudentDetailedMission from './Student/Mission/StudentDetailedMission'
 import StudentStatistics from './Student/Statistics/StudentStatistics'
 
+import AuthVerifyPwd from './Auth/AuthVerifyPwd'
+
 import * as ROUTES from './Router/routes'
 
 function App (): JSX.Element {
@@ -43,6 +45,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.COMPANY_RESET_PASSWORD} element={<CompanyResetPassword/>}/>
         <Route path={ROUTES.STUDENT_FORGOT_PASSWORD} element={<StudentForgetPassword/>}/>
         <Route path={ROUTES.STUDENT_RESET_PASSWORD} element={<StudentResetPassword/>}/>
+        <Route path={ROUTES.AUTH_VERIFY_PWD} element={<AuthVerifyPwd/>} />
       </Routes>
     </Router>
   )
