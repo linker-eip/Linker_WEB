@@ -26,6 +26,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.DOCUMENTS:
         navigate(ROUTES.COMPANY_DOCUMENTS_DASHBOARD)
         break
+      case DashboardState.FACTURES:
+        navigate(ROUTES.COMPANY_INVOICES_DASHBOARD)
+        break
       case DashboardState.DASHBOARD:
         navigate(ROUTES.COMPANY_DASHBOARD)
         break

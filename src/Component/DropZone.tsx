@@ -13,7 +13,12 @@ function DropZone ({ onObjectChange }: Props): JSX.Element {
       <section>
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <div className='dropzone'> Déposez votre fichier</div>
+          <div
+            className='dropzone'
+            style={{ fontFamily: 'Poppins', fontSize: '20px' }}
+          >
+            Déposez votre fichier
+          </div>
         </div>
       </section>
       )}

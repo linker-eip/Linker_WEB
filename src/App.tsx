@@ -21,6 +21,12 @@ import StudentDetailedMission from './Student/Mission/StudentDetailedMission'
 import StudentStatistics from './Student/Statistics/StudentStatistics'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
+import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
+import CompanyInvoices from './Company/Dashbord/MesFactures/companyInvoices'
+import AdminDashboard from './Admin/adminDashboard'
+import AdminMissions from './Admin/Missions/adminMissions'
+import AdminDocuments from './Admin/Documents/adminDocuments'
+import AdminUsers from './Admin/Users/adminUsers'
 
 import * as ROUTES from './Router/routes'
 
@@ -46,6 +52,12 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_FORGOT_PASSWORD} element={<StudentForgetPassword/>}/>
         <Route path={ROUTES.STUDENT_RESET_PASSWORD} element={<StudentResetPassword/>}/>
         <Route path={ROUTES.AUTH_VERIFY_PWD} element={<AuthVerifyPwd/>} />
+        <Route path={ROUTES.STUDENT_INVOICES_DASHBOARD} element={<StudentInvoices/>}/>
+        <Route path={ROUTES.COMPANY_INVOICES_DASHBOARD} element={<CompanyInvoices/>}/>
+        <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard/>}/>
+        <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>
+        <Route path={ROUTES.ADMIN_DOCUMENTS_DASHBOARD} element={<AdminDocuments/>}/>
+        <Route path={ROUTES.ADMIN_USERS_DASHBOARD} element={<AdminUsers/>}/>
       </Routes>
     </Router>
   )
