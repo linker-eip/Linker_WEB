@@ -12,6 +12,7 @@ export const STUDENT_DETAILED_MISSION = '/student/detailed-mission'
 export const STUDENT_STATISTICS = '/student/statistics'
 
 export const AUTH_VERIFY_PWD = '/auth/verify/:code'
+export const STUDENT_INVOICES_DASHBOARD = '/student/invoices'
 
 export const COMPANY_LOGIN_PAGE = '/company/login'
 export const COMPANY_REGISTER_PAGE = '/company/register'
@@ -19,3 +20,9 @@ export const COMPANY_DASHBOARD = '/company/dashboard'
 export const COMPANY_DOCUMENTS_DASHBOARD = '/company/documents'
 export const COMPANY_FORGOT_PASSWORD = '/company/forgotten-password'
 export const COMPANY_RESET_PASSWORD = '/company/reset-password'
+export const COMPANY_INVOICES_DASHBOARD = '/company/invoices'
+
+export const ADMIN_DASHBOARD = '/admin/dashboard'
+export const ADMIN_MISSIONS_DASHBOARD = '/admin/missions'
+export const ADMIN_DOCUMENTS_DASHBOARD = '/admin/documents'
+export const ADMIN_USERS_DASHBOARD = '/admin/users'

@@ -53,6 +53,7 @@ i18n
               profil: 'Mon profil',
               doc: 'Mes documents',
               stat: 'Mes statistiques',
+              invoices: 'Mes factures',
               hotbar: {
                 profil: 'Profil',
                 quit: 'Déconnexion'
@@ -174,6 +175,15 @@ i18n
                   siret: 'SIRET'
                 }
               }
+            }
+          },
+          admin: {
+            dashboard: {
+              home: 'Panel Admin',
+              homeTitle: 'Mon panel',
+              utilisateur: 'Utilisateurs',
+              mission: 'Missions',
+              doc: 'Documents'
             }
           }
         }
@@ -219,6 +229,7 @@ i18n
               profil: 'Mon profil',
               doc: 'Mes documents',
               stat: 'Mes statistiques',
+              invoices: 'Mes factures',
               hotbar: {
                 profil: 'Profil',
                 quit: 'Déconnexion'
@@ -339,7 +350,17 @@ i18n
                   kbis: 'KBIS',
                   siret: 'SIRET'
                 }
-              }
+              },
+              invoices: 'Mes factures'
+            }
+          },
+          admin: {
+            dashboard: {
+              home: 'Panel Admin',
+              homeTitle: 'Mon panel',
+              utilisateur: 'Utilisateurs',
+              mission: 'Missions',
+              doc: 'Documents'
             }
           }
         }
