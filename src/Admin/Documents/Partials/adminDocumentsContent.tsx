@@ -254,9 +254,9 @@ function AdminDocumentsContent (): JSX.Element {
           <TableBody>
             {rows.map((row) => {
               if (
-                row.documentType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.userId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.id.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                row.documentType?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.userId?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.id?.toString().toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return (
                   <TableRow key={row.id}>

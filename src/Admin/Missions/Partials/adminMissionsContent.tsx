@@ -247,8 +247,8 @@ function AdminMissionsContent (): JSX.Element {
           <TableBody>
             {rows.map((row) => {
               if (
-                row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+                row.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.companyName?.toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return (
                   <TableRow key={row.id}>
