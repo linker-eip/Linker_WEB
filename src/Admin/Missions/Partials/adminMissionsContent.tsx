@@ -268,7 +268,7 @@ function AdminMissionsContent (): JSX.Element {
                       align='center'
                       sx={{ fontFamily: 'Poppins', fontSize: '24px' }}
                     >
-                      {row.studentsIds.join(', ')}
+                      {row.studentsIds?.length > 0 ? row.studentsIds.join(', ') : ''}
                     </TableCell>
                     <TableCell
                       align='center'
