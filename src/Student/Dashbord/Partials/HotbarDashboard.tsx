@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../CSS/Hotbar.scss'
 import Avatar from '@mui/material/Avatar'
 import Menu, { type MenuProps } from '@mui/material/Menu'
@@ -11,6 +11,8 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
+import type { Profile } from '../../../Typage/ProfileType'
+import ProfileApi from '../../../API/ProfileApi'
 
 const theme = createTheme({
   palette: {
@@ -66,15 +68,35 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
 
 function HotbarDashboard (props: { children: string | any }): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchData = async (): Promise<any> => {
+      const profileData = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
+      setProfile(profileData)
+      return profileData
+    }
+    fetchData()
+  }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): any => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleClose = (): any => {
+    setAnchorEl(null)
+  }
+
+  const handleProfile = (): any => {
+    navigate(ROUTES.STUDENT_PROFILE)
+    setAnchorEl(null)
+  }
+
+  const handleDisconnect = (): void => {
     navigate(ROUTES.STUDENT_LOGIN_PAGE)
+    localStorage.removeItem('jwtToken')
     setAnchorEl(null)
   }
 
@@ -84,7 +106,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
           <img src="/assets/logo.svg" alt='logo'/>
           <p className='hotbar-container__title'>{ props.children }</p>
           <div className='hotbar-container__info'>
-            <Avatar alt='avatar' src='/assets/anonymLogo.jpg'></Avatar>
+            <Avatar alt='avatar' src={profile?.picture} />
             <ThemeProvider theme={theme}>
                 <Button
                     id="demo-customized-button"
@@ -96,7 +118,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
                     onClick={handleClick}
                     endIcon={<KeyboardArrowDownIcon />}
                     >
-                    Prénom NOM
+                    { profile !== null ? <p> { profile.firstName } { profile.lastName }</p> : 'Prenom NOM'}
                 </Button>
             </ThemeProvider>
             <StyledMenu
@@ -108,11 +130,11 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
                 open={open}
                 onClose={handleClose}
                 >
-                <MenuItem onClick={handleClose} disableRipple>
+                <MenuItem onClick={handleProfile} disableRipple>
                       <EditIcon />
                       { t('student.dashboard.hotbar.profil') }
                     </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
+                    <MenuItem onClick={handleDisconnect} disableRipple>
                       <ExitToAppOutlinedIcon />
                       { t('student.dashboard.hotbar.quit') }
                     </MenuItem>

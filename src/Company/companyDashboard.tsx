@@ -5,8 +5,10 @@ import { useTranslation } from 'react-i18next'
 import '../CSS/StudentDashboard.scss'
 import { DashboardState } from '../Enum'
 import DashboardContent from './DashboardContent'
+import isPrivateRoute from '../Component/isPrivateRoute'
 
 function CompanyDashboard (): JSX.Element {
+  isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
   return (

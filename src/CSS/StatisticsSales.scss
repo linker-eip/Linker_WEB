@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+.stats-sales {
+  padding: 1.8em 2.5em 1.8em 2.5em;
+  margin: 3em 0 3em 2em;
+  font-family: 'Poppins';
+  background-color: white;
+  border: 0.01em solid white;
+  border-radius: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8em;
+
+  &__title {
+    font-size: 1.7em;
+    color: #4b4b4b;
+  }
+
+  &__container {
+    display: grid;
+    gap: 2.5em;
+    grid-template-columns: 1fr 1.5fr;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+  }
+
+  &__sub-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8em;
+  }
+
+  &__text-1 {
+    color: #4b4b4b;
+    font-family: 'Poppins';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  &__value {
+    color: #4b4b4b;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  &__link {
+    color: #005275;
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+  }
+
+  &__logo {
+    width: 40px;
+  }
+}

@@ -74,11 +74,11 @@ function StudentRegisterPage (): JSX.Element {
       lastName
     }
 
-    axios.post('https://api.linker-app.fr/api/auth/student/register', credentials)
+    axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/register`, credentials)
       .then((response) => {
         console.log(response)
         const jwtToken = response.data.token
-        localStorage.setItem(jwtToken, jwtToken)
+        localStorage.setItem('jwtToken', jwtToken)
         if (response.status >= 200 && response.status < 204) {
           navigate(ROUTES.STUDENT_DASHBOARD)
         }

@@ -4,6 +4,7 @@ export enum DashboardState {
   FACTURES = 'factures',
   PROFIL = 'profil',
   DOCUMENTS = 'documents',
+  STATISTICS = 'statistics',
 }
 
 export enum AdminDashboardState {

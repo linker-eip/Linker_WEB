@@ -6,6 +6,12 @@ export const STUDENT_DASHBOARD = '/student/dashboard'
 export const STUDENT_DOCUMENTS_DASHBOARD = '/student/documents'
 export const STUDENT_FORGOT_PASSWORD = '/student/forgotten-password'
 export const STUDENT_RESET_PASSWORD = '/student/reset-password'
+export const STUDENT_PROFILE = '/student/profile'
+export const STUDENT_MISSIONS = '/student/missions'
+export const STUDENT_DETAILED_MISSION = '/student/detailed-mission'
+export const STUDENT_STATISTICS = '/student/statistics'
+
+export const AUTH_VERIFY_PWD = '/auth/verify/:code'
 export const STUDENT_INVOICES_DASHBOARD = '/student/invoices'
 
 export const COMPANY_LOGIN_PAGE = '/company/login'
