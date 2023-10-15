@@ -240,9 +240,9 @@ function AdminUsersContent (): JSX.Element {
           <TableBody>
             {rows.map((row) => {
               if (
-                row.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.LastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.email.toLowerCase().includes(searchTerm.toLowerCase())
+                row.FirstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.LastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.email?.toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return (
                   <TableRow key={row.id}>
