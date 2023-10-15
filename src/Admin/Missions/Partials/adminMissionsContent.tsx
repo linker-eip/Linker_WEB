@@ -247,8 +247,8 @@ function AdminMissionsContent (): JSX.Element {
           <TableBody>
             {rows.map((row) => {
               if (
-                row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+                row.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.companyName?.toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return (
                   <TableRow key={row.id}>
@@ -268,7 +268,7 @@ function AdminMissionsContent (): JSX.Element {
                       align='center'
                       sx={{ fontFamily: 'Poppins', fontSize: '24px' }}
                     >
-                      {row.studentsIds.join(', ')}
+                      {row.studentsIds?.length > 0 ? row.studentsIds.join(', ') : ''}
                     </TableCell>
                     <TableCell
                       align='center'

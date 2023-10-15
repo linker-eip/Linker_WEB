@@ -23,6 +23,8 @@ import StudentStatistics from './Student/Statistics/StudentStatistics'
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
 import CompanyInvoices from './Company/Dashbord/MesFactures/companyInvoices'
+
+import AdminLoginPage from './Admin/adminLoginPage'
 import AdminDashboard from './Admin/adminDashboard'
 import AdminMissions from './Admin/Missions/adminMissions'
 import AdminDocuments from './Admin/Documents/adminDocuments'
@@ -54,6 +56,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.AUTH_VERIFY_PWD} element={<AuthVerifyPwd/>} />
         <Route path={ROUTES.STUDENT_INVOICES_DASHBOARD} element={<StudentInvoices/>}/>
         <Route path={ROUTES.COMPANY_INVOICES_DASHBOARD} element={<CompanyInvoices/>}/>
+        <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage/>}/>
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard/>}/>
         <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>
         <Route path={ROUTES.ADMIN_DOCUMENTS_DASHBOARD} element={<AdminDocuments/>}/>
