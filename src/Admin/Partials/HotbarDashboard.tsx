@@ -6,7 +6,6 @@ import { styled, alpha, createTheme, ThemeProvider } from '@mui/material/styles'
 import { Button } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import MenuItem from '@mui/material/MenuItem'
-import EditIcon from '@mui/icons-material/Edit'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -74,7 +73,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
   }
 
   const handleClose = (): any => {
-    navigate(ROUTES.COMPANY_LOGIN_PAGE)
+    navigate(ROUTES.ADMIN_LOGIN_PAGE)
     setAnchorEl(null)
   }
 
@@ -108,14 +107,10 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
                 open={open}
                 onClose={handleClose}
                 >
-                <MenuItem onClick={handleClose} disableRipple>
-                      <EditIcon />
-                      { t('student.dashboard.hotbar.profil') }
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <ExitToAppOutlinedIcon />
-                      { t('student.dashboard.hotbar.quit') }
-                    </MenuItem>
+                  <MenuItem onClick={handleClose} disableRipple>
+                    <ExitToAppOutlinedIcon />
+                    { t('student.dashboard.hotbar.quit') }
+                  </MenuItem>
             </StyledMenu>
           </div>
         </div>
