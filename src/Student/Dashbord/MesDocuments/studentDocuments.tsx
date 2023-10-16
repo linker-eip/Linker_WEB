@@ -11,6 +11,7 @@ function StudentDocuments (): JSX.Element {
   isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.doc') } </HotbarDashboard>

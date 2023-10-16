@@ -1,116 +1,77 @@
 import React, { useState } from 'react'
-import '../../CSS/StudentDashboardContent.scss'
 import { useTranslation } from 'react-i18next'
+
+// Icons.
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 
-enum state {
+// Styles.
+import '../../CSS/StudentDashboardContent.scss'
+
+enum DocumentStatus {
   NOT_FILLED,
   PENDING,
   VALIDATED,
   DENIED
 }
 
-interface Props {
-  status: state
+interface ShowIconProps {
+  status: DocumentStatus
 }
 
-function ShowIcon ({ status }: Props): JSX.Element {
-  if (status === state.NOT_FILLED) {
-    return (
-      <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
-    )
-  } else if (status === state.PENDING) {
-    return (
-      <PendingOutlinedIcon className='std-dashboard-card__pending' />
-    )
-  } else if (status === state.VALIDATED) {
-    return (
-      <CheckCircleOutlineIcon className='std-dashboard-card__validated' />
-    )
-  } else {
-    return (
-      <CloseOutlinedIcon className='std-dashboard-card__denied' />
-    )
+function ShowIcon ({ status }: ShowIconProps): JSX.Element {
+  switch (status) {
+    case DocumentStatus.NOT_FILLED:
+      return <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
+    case DocumentStatus.PENDING:
+      return <PendingOutlinedIcon className='std-dashboard-card__pending' />
+    case DocumentStatus.VALIDATED:
+      return <CheckCircleOutlineIcon className='std-dashboard-card__validated' />
+    case DocumentStatus.DENIED:
+    default:
+      return <CloseOutlinedIcon className='std-dashboard-card__denied' />
   }
 }
 
-function DashboardStatutCard (): JSX.Element {
-  const [cniState, setCniState] = useState(state.NOT_FILLED)
-  const [kbisState, setKbisState] = useState(state.NOT_FILLED)
-  const [siretState, setSiretState] = useState(state.NOT_FILLED)
+function DashboardStatusCard (): JSX.Element {
+  const [cniStatus, setCniStatus] = useState(DocumentStatus.NOT_FILLED)
+  const [kbisStatus, setKbisStatus] = useState(DocumentStatus.NOT_FILLED)
+  const [siretStatus, setSiretStatus] = useState(DocumentStatus.NOT_FILLED)
 
-  const changeStatusState = (): void => {
-    switch (kbisState) {
-      case state.NOT_FILLED:
-        setKbisState(state.PENDING)
-        break
-      case state.PENDING:
-        setKbisState(state.VALIDATED)
-        break
-      case state.VALIDATED:
-        setKbisState(state.DENIED)
-        break
-      case state.DENIED:
-        setKbisState(state.NOT_FILLED)
-        break
+  const cycleStatus = (currentStatus: DocumentStatus): DocumentStatus => {
+    switch (currentStatus) {
+      case DocumentStatus.NOT_FILLED:
+        return DocumentStatus.PENDING
+      case DocumentStatus.PENDING:
+        return DocumentStatus.VALIDATED
+      case DocumentStatus.VALIDATED:
+        return DocumentStatus.DENIED
+      case DocumentStatus.DENIED:
       default:
-        break
-    }
-  }
-
-  const changeCniState = (): void => {
-    switch (cniState) {
-      case state.NOT_FILLED:
-        setCniState(state.PENDING)
-        break
-      case state.PENDING:
-        setCniState(state.VALIDATED)
-        break
-      case state.VALIDATED:
-        setCniState(state.DENIED)
-        break
-      case state.DENIED:
-        setCniState(state.NOT_FILLED)
-        break
-      default:
-        break
-    }
-  }
-
-  const changeRibState = (): void => {
-    switch (siretState) {
-      case state.NOT_FILLED:
-        setSiretState(state.PENDING)
-        break
-      case state.PENDING:
-        setSiretState(state.VALIDATED)
-        break
-      case state.VALIDATED:
-        setSiretState(state.DENIED)
-        break
-      case state.DENIED:
-        setSiretState(state.NOT_FILLED)
-        break
-      default:
-        break
+        return DocumentStatus.NOT_FILLED
     }
   }
 
   const { t } = useTranslation()
   return (
     <div className='std-dashboard-card'>
-        <h2 className='std-dashboard-card__title'> { t('student.dashboard.card.status.title') } </h2>
-        <p className='std-dashboard-card__content'> { t('company.dashboard.card.status.content') } </p>
-        <div className='std-dashboard-card__object'>
-          <p className='std-dashboard-card__file' onClick={changeCniState}> <ShowIcon status={cniState} /> { t('company.dashboard.card.status.cni') } </p>
-          <p className='std-dashboard-card__file' onClick={changeStatusState}> <ShowIcon status={kbisState} /> { t('company.dashboard.card.status.kbis') } </p>
-          <p className='std-dashboard-card__file' onClick={changeRibState}> <ShowIcon status={siretState} /> { t('company.dashboard.card.status.siret') } </p>
-        </div>
+      <h2 className='std-dashboard-card__title'> {t('student.dashboard.card.status.title')} </h2>
+      <p className='std-dashboard-card__content'> {t('company.dashboard.card.status.content')} </p>
+      <div className='std-dashboard-card__object'>
+        <p className='std-dashboard-card__file' onClick={() => { setCniStatus(cycleStatus(cniStatus)) }}>
+          <ShowIcon status={cniStatus} /> {t('company.dashboard.card.status.cni')}
+        </p>
+        <p className='std-dashboard-card__file' onClick={() => { setKbisStatus(cycleStatus(kbisStatus)) }}>
+          <ShowIcon status={kbisStatus} /> {t('company.dashboard.card.status.kbis')}
+        </p>
+        <p className='std-dashboard-card__file' onClick={() => { setSiretStatus(cycleStatus(siretStatus)) }}>
+          <ShowIcon status={siretStatus} /> {t('company.dashboard.card.status.siret')}
+        </p>
+      </div>
     </div>
   )
 }
 
-export default DashboardStatutCard
+export default DashboardStatusCard

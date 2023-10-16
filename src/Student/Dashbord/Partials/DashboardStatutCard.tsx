@@ -8,96 +8,47 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
 
-enum state {
+enum StatusState {
   NOT_FILLED,
   PENDING,
   VALIDATED,
-  DENIED
+  DENIED,
 }
 
 interface Props {
-  status: state
+  status: StatusState
 }
 
-function ShowIcon ({ status }: Props): JSX.Element {
-  if (status === state.NOT_FILLED) {
-    return (
-      <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
-    )
-  } else if (status === state.PENDING) {
-    return (
-      <PendingOutlinedIcon className='std-dashboard-card__pending' />
-    )
-  } else if (status === state.VALIDATED) {
-    return (
-      <CheckCircleOutlineIcon className='std-dashboard-card__validated' />
-    )
-  } else {
-    return (
-      <CloseOutlinedIcon className='std-dashboard-card__denied' />
-    )
-  }
+const iconMap = {
+  [StatusState.NOT_FILLED]: <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />,
+  [StatusState.PENDING]: <PendingOutlinedIcon className='std-dashboard-card__pending' />,
+  [StatusState.VALIDATED]: <CheckCircleOutlineIcon className='std-dashboard-card__validated' />,
+  [StatusState.DENIED]: <CloseOutlinedIcon className='std-dashboard-card__denied' />
+}
+
+const ShowIcon = ({ status }: Props): JSX.Element => {
+  return iconMap[status]
 }
 
 function DashboardStatutCard (): JSX.Element {
-  const [statusState, setStatusState] = useState(state.NOT_FILLED)
-  const [cniState, setCniState] = useState(state.NOT_FILLED)
-  const [ribState, setRibState] = useState(state.NOT_FILLED)
+  const [statusState, setStatusState] = useState(StatusState.NOT_FILLED)
+  const [cniState, setCniState] = useState(StatusState.NOT_FILLED)
+  const [ribState, setRibState] = useState(StatusState.NOT_FILLED)
+  const { t } = useTranslation()
+  const navigate = useNavigate()
 
-  const changeStatusState = (): void => {
-    switch (statusState) {
-      case state.NOT_FILLED:
-        setStatusState(state.PENDING)
-        break
-      case state.PENDING:
-        setStatusState(state.VALIDATED)
-        break
-      case state.VALIDATED:
-        setStatusState(state.DENIED)
-        break
-      case state.DENIED:
-        setStatusState(state.NOT_FILLED)
-        break
+  const nextState = (currentState: StatusState): StatusState => {
+    switch (currentState) {
+      case StatusState.NOT_FILLED:
+        return StatusState.PENDING
+      case StatusState.PENDING:
+        return StatusState.VALIDATED
+      case StatusState.VALIDATED:
+        return StatusState.DENIED
+      case StatusState.DENIED:
+        return StatusState.NOT_FILLED
       default:
-        break
-    }
-  }
-
-  const changeCniState = (): void => {
-    switch (cniState) {
-      case state.NOT_FILLED:
-        setCniState(state.PENDING)
-        break
-      case state.PENDING:
-        setCniState(state.VALIDATED)
-        break
-      case state.VALIDATED:
-        setCniState(state.DENIED)
-        break
-      case state.DENIED:
-        setCniState(state.NOT_FILLED)
-        break
-      default:
-        break
-    }
-  }
-
-  const changeRibState = (): void => {
-    switch (ribState) {
-      case state.NOT_FILLED:
-        setRibState(state.PENDING)
-        break
-      case state.PENDING:
-        setRibState(state.VALIDATED)
-        break
-      case state.VALIDATED:
-        setRibState(state.DENIED)
-        break
-      case state.DENIED:
-        setRibState(state.NOT_FILLED)
-        break
-      default:
-        break
+        return currentState
     }
   }
 
@@ -105,17 +56,25 @@ function DashboardStatutCard (): JSX.Element {
     navigate(ROUTES.STUDENT_DOCUMENTS_DASHBOARD)
   }
 
-  const { t } = useTranslation()
-  const navigate = useNavigate()
   return (
-    <div className='std-dashboard-card' >
-        <h2 className='std-dashboard-card__title std-dashboard-card__cursor' onClick={handleNavigation}> { t('student.dashboard.card.status.title') } </h2>
-        <p className='std-dashboard-card__content std-dashboard-card__cursor' onClick={handleNavigation}> { t('student.dashboard.card.status.content') } </p>
-        <div className='std-dashboard-card__object std-dashboard-card__cursor'>
-          <p className='std-dashboard-card__file' onClick={changeStatusState}> <ShowIcon status={statusState} /> { t('student.dashboard.card.status.statut') } </p>
-          <p className='std-dashboard-card__file' onClick={changeCniState}> <ShowIcon status={cniState} /> { t('student.dashboard.card.status.cni') } </p>
-          <p className='std-dashboard-card__file' onClick={changeRibState}> <ShowIcon status={ribState} /> { t('student.dashboard.card.status.rib') } </p>
-        </div>
+    <div className='std-dashboard-card'>
+      <h2 className='std-dashboard-card__title std-dashboard-card__cursor' onClick={handleNavigation}>
+        {t('student.dashboard.card.status.title')}
+      </h2>
+      <p className='std-dashboard-card__content std-dashboard-card__cursor' onClick={handleNavigation}>
+        {t('student.dashboard.card.status.content')}
+      </p>
+      <div className='std-dashboard-card__object std-dashboard-card__cursor'>
+        <p className='std-dashboard-card__file' onClick={() => { setStatusState(nextState(statusState)) }}>
+          <ShowIcon status={statusState} /> {t('student.dashboard.card.status.statut')}
+        </p>
+        <p className='std-dashboard-card__file' onClick={() => { setCniState(nextState(cniState)) }}>
+          <ShowIcon status={cniState} /> {t('student.dashboard.card.status.cni')}
+        </p>
+        <p className='std-dashboard-card__file' onClick={() => { setRibState(nextState(ribState)) }}>
+          <ShowIcon status={ribState} /> {t('student.dashboard.card.status.rib')}
+        </p>
+      </div>
     </div>
   )
 }

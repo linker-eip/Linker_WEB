@@ -1,21 +1,57 @@
 import React, { useState, type ChangeEvent } from 'react'
-import '../../../CSS/BaseButton.scss'
-import '../../../CSS/StudentDocumentContent.scss'
 import { useTranslation } from 'react-i18next'
 import { TextField } from '@mui/material'
+
 import DropZone from '../../../Component/DropZone'
 import BaseButton from '../../../Component/BaseButton'
 
+import '../../../CSS/BaseButton.scss'
+import '../../../CSS/StudentDocumentContent.scss'
+
+interface DocumentProps {
+  isSet: boolean
+  label: string
+  data: any
+  handleReset: () => void
+  handleChange?: (event: ChangeEvent<HTMLInputElement>) => void
+  handleFileChange?: (value: any) => void
+}
+
+const Document: React.FC<DocumentProps> = ({ isSet, label, data, handleReset, handleChange, handleFileChange }) => {
+  if (isSet) {
+    return (
+      <div className='std-document-card__line'>
+        Vous avez bien renseigné votre {label}
+        <div className='std-document-card__button'>
+          <button className='base-button__little' onClick={handleReset}>
+            Remplacer
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (handleChange != null) {
+    return (
+      <div className='std-document-card__textfield-container'>
+        Veuillez renseigner votre {label}
+        <TextField onChange={handleChange} id={label.toLowerCase()} label={label} variant="standard" />
+      </div>
+    )
+  }
+
+  return (
+    <div className='std-document-card__dropzone'>
+      <p>Veuillez renseigner votre {label}:</p>
+      { data.length > 0 ? <div className='std-document-card__dropzone-filename'> { data[0].path } </div> : <DropZone onObjectChange={handleFileChange}/> }
+    </div>
+  )
+}
+
 function CompanyDocumentContent (): JSX.Element {
   const { t } = useTranslation()
-  // faire une query ici pour recupérer les documents renseigner
-  const [data, setData] = useState({
-    cni: false,
-    siret: false,
-    kbis: false
-  })
 
-  const [cniFile, setcniFile] = useState<any>([])
+  const [cniFile, setCniFile] = useState<any>([])
   const [kbisFile, setKbisFile] = useState<any>([])
   const [siret, setSiret] = useState('')
 
@@ -23,31 +59,20 @@ function CompanyDocumentContent (): JSX.Element {
     setSiret(event.target.value)
   }
 
-  const handleCniFile = (value: any): any => {
-    setcniFile(value)
-  }
-
-  const handleKbisFile = (value: any): any => {
-    setKbisFile(value)
-  }
-
   const resetSiret = (): void => {
     setSiret('')
-    setData(prevState => ({ ...prevState, siret: false }))
   }
 
   const resetCniFile = (): void => {
-    setcniFile([])
-    setData(prevState => ({ ...prevState, cni: false }))
+    setCniFile([])
   }
 
   const resetKbisFile = (): void => {
     setKbisFile([])
-    setData(prevState => ({ ...prevState, kbis: false }))
   }
 
   const postFile = (): any => {
-    // faire une query axios pour post les documents
+    // TODO: Faire une query axios pour post les documents.
 
     const documentsDto = {
       siret,
@@ -55,11 +80,6 @@ function CompanyDocumentContent (): JSX.Element {
       kbis: kbisFile
     }
 
-    setData({
-      cni: true,
-      siret: true,
-      kbis: true
-    })
     return documentsDto
   }
 
@@ -67,58 +87,17 @@ function CompanyDocumentContent (): JSX.Element {
     <div className='std-document-content'>
       <div className='std-document-card'>
         <h2 className='std-document-card__title'> { t('student.dashboard.doc') } </h2>
-      <div className='std-document-card__content'>
-        {
-          data.siret
-            ? <div className='std-document-card__line'>
-                Vous avez bien renseigné votre SIRET
-                <div className='std-document-card__button'>
-                  <button className='base-button__little' onClick={resetSiret}>
-                    Remplacer
-                  </button>
+        <div className='std-document-card__content'>
+          <Document isSet={siret !== ''} label="SIRET" data={siret} handleReset={resetSiret} handleChange={handleSiretChange} />
+          <Document isSet={cniFile.length > 0} label="CNI" data={cniFile} handleReset={resetCniFile} handleFileChange={setCniFile} />
+          <Document isSet={kbisFile.length > 0} label="KBIS" data={kbisFile} handleReset={resetKbisFile} handleFileChange={setKbisFile} />
+
+          { cniFile.length === 0 && siret === '' && kbisFile.length === 0
+            ? <div className='std-document-card__button'>
+                  <BaseButton onClick={postFile} title={t('validate')} />
                 </div>
-              </div>
-            : <div className='std-document-card__textfield-container'>
-                Veuillez renseigner votre SIRET
-                <TextField onChange={handleSiretChange} id="siret" label="SIRET" variant="standard" />
-              </div>
-        }
-        {
-          data.cni
-            ? <div className='std-document-card__line'>
-            Vous avez bien renseigné votre CNI
-            <div className='std-document-card__button'>
-              <button className='base-button__little' onClick={resetCniFile}>
-                Remplacer
-              </button>
-            </div>
-          </div>
-            : <div className='std-document-card__dropzone'>
-              <p>Veuillez renseigner votre CNI:</p>
-              { cniFile.length > 0 ? <div className='std-document-card__dropzone-filename'> { cniFile[0].path } </div> : <DropZone onObjectChange={handleCniFile}/> }
-            </div>
-        }
-        {
-          data.kbis
-            ? <div className='std-document-card__line'>
-            Vous avez bien renseigné votre extrait KBIS
-            <div className='std-document-card__button' onClick={resetKbisFile}>
-              <button className='base-button__little'>
-                Remplacer
-              </button>
-            </div>
-          </div>
-            : <div className='std-document-card__dropzone'>
-                <p>Veuillez renseigner votre extrait KBIS:</p>
-                { kbisFile.length > 0 ? <div className='std-document-card__dropzone-filename'> { kbisFile[0].path } </div> : <DropZone onObjectChange={handleKbisFile}/> }
-              </div>
-        }
-        { !data.cni && !data.siret && !data.kbis
-          ? <div className='std-document-card__button'>
-              <BaseButton onClick={postFile} title={t('validate')} />
-            </div>
-          : null
-        }
+            : null
+          }
         </div>
       </div>
     </div>

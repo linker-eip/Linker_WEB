@@ -1,22 +1,24 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+// Components and Styles.
 import HotbarDashboard from './Partials/HotbarDashboard'
 import SidebarDashboard from './Partials/SidebarDashboard'
-import { useTranslation } from 'react-i18next'
+import DashboardContent from './DashboardContent'
 import '../CSS/StudentDashboard.scss'
 import { DashboardState } from '../Enum'
-import DashboardContent from './DashboardContent'
 import isPrivateRoute from '../Component/isPrivateRoute'
 
 function CompanyDashboard (): JSX.Element {
   isPrivateRoute()
-  const state = DashboardState
   const { t } = useTranslation()
+
   return (
-    <div className='std-bord-container'>
+    <div className='company-bord-container'>
       <HotbarDashboard> { t('student.dashboard.home') } </HotbarDashboard>
-      <div className='std-bord-container__page'>
-        <SidebarDashboard state={state.DASHBOARD} />
-        <div className='std-bord-container__content'>
+      <div className='company-bord-container__page'>
+        <SidebarDashboard state={DashboardState.DASHBOARD} />
+        <div className='company-bord-container__content'>
           <DashboardContent />
         </div>
       </div>

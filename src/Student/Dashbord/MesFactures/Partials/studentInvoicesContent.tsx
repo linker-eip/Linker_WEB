@@ -23,6 +23,21 @@ const rows: Row[] = [
   { année: '2022', titre: 'Site vitrine', client: 'Pharmacie Derol', etat: 'Payée' }
 ]
 
+const headerCellStyle: { align: 'center', sx: object } = {
+  align: 'center',
+  sx: {
+    fontFamily: 'Poppins',
+    fontWeight: 'bold',
+    fontSize: '30px',
+    color: '#FFFFFF',
+    backgroundColor: '#005275',
+    paddingLeft: '50px',
+    paddingRight: '50px'
+  }
+}
+
+const tableHeaders = ['Année', 'Titre de la mission', 'Client', 'État', 'Facture']
+
 function StudentInvoicesContent (): JSX.Element {
   const handleDownload = (): void => {
     const link = document.createElement('a')
@@ -40,71 +55,11 @@ function StudentInvoicesContent (): JSX.Element {
           <Table aria-label="Invoices table">
             <TableHead>
               <TableRow>
-                <TableCell
-                align='center'
-                sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 'bold',
-                  fontSize: '30px',
-                  color: '#FFFFFF',
-                  backgroundColor: '#005275',
-                  paddingLeft: '50px',
-                  paddingRight: '50px'
-                }}>
-                    Année
-                </TableCell>
-                <TableCell
-                align='center'
-                sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 'bold',
-                  fontSize: '30px',
-                  color: '#FFFFFF',
-                  backgroundColor: '#005275',
-                  paddingLeft: '50px',
-                  paddingRight: '50px'
-                }}>
-                    Titre de la mission
-                </TableCell>
-                <TableCell
-                align='center'
-                sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 'bold',
-                  fontSize: '30px',
-                  color: '#FFFFFF',
-                  backgroundColor: '#005275',
-                  paddingLeft: '50px',
-                  paddingRight: '50px'
-                }}>
-                    Client
-                </TableCell>
-                <TableCell
-                align='center'
-                sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 'bold',
-                  fontSize: '30px',
-                  color: '#FFFFFF',
-                  backgroundColor: '#005275',
-                  paddingLeft: '50px',
-                  paddingRight: '50px'
-                }}>
-                    État
-                </TableCell>
-                <TableCell
-                align='center'
-                sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 'bold',
-                  fontSize: '30px',
-                  color: '#FFFFFF',
-                  backgroundColor: '#005275',
-                  paddingLeft: '50px',
-                  paddingRight: '50px'
-                }}>
-                    Facture
-                </TableCell>
+                {tableHeaders.map(header => (
+                  <TableCell key={header} {...headerCellStyle}>
+                    {header}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -117,7 +72,7 @@ function StudentInvoicesContent (): JSX.Element {
                   <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>{row.client}</TableCell>
                   <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>{row.etat}</TableCell>
                   <TableCell align='center'>
-                    <img src='/assets/downloadInvoice.png' alt='Download' style={{ cursor: 'pointer', width: '40px', height: '40px' }} onClick={handleDownload}/>
+                    <img src='/assets/downloadInvoice.png' alt='Download' style={{ cursor: 'pointer', width: '40px', height: '40px' }} onClick={handleDownload} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -126,17 +81,17 @@ function StudentInvoicesContent (): JSX.Element {
         </TableContainer>
         <Stack direction='row' alignItems='center' justifyContent='space-between' mt='30px'>
           <IconButton
-           style={{ padding: 0, marginLeft: '500px' }}
-           onClick={() => { console.log('Chevron gauche cliqué!') }}>
-            <ChevronLeftIcon style={{ fontSize: 40 }}/>
+            style={{ padding: 0, marginLeft: '500px' }}
+            onClick={() => { console.log('Chevron gauche cliqué!') }}>
+            <ChevronLeftIcon style={{ fontSize: 40 }} />
           </IconButton>
           <Typography variant="body1" sx={{ fontFamily: 'Poppins', fontSize: '24px', fontWeight: 'bold' }}>
             Page 1 sur 2
           </Typography>
           <IconButton
-           style={{ padding: 0, marginRight: '500px' }}
-           onClick={() => { console.log('Chevron droite cliqué!') }}>
-            <ChevronRightIcon style={{ fontSize: 40 }}/>
+            style={{ padding: 0, marginRight: '500px' }}
+            onClick={() => { console.log('Chevron droite cliqué!') }}>
+            <ChevronRightIcon style={{ fontSize: 40 }} />
           </IconButton>
         </Stack>
       </div>
