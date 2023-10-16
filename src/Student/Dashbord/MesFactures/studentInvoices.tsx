@@ -9,6 +9,7 @@ import StudentInvoicesContent from './Partials/studentInvoicesContent'
 function StudentInvoices (): JSX.Element {
   const state = DashboardState
   const { t } = useTranslation()
+
   return (
     <div className="std-bord-container">
       <HotbarDashboard> {t('student.dashboard.invoices')} </HotbarDashboard>

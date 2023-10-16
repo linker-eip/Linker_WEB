@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../../../CSS/Sidebar.scss'
 import { useTranslation } from 'react-i18next'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
@@ -16,11 +16,9 @@ interface Props {
 
 function SidebarDashboard ({ state }: Props): JSX.Element {
   const { t } = useTranslation()
-  const [stateDashboard, setState] = useState(state)
   const navigate = useNavigate()
 
   const changeState = (newState: DashboardState): void => {
-    setState(newState)
     switch (newState) {
       case DashboardState.DOCUMENTS:
         navigate(ROUTES.STUDENT_DOCUMENTS_DASHBOARD)
@@ -40,36 +38,31 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       default:
         break
     }
-    if (newState === DashboardState.DOCUMENTS) {
-      navigate(ROUTES.STUDENT_DOCUMENTS_DASHBOARD)
-    }
+  }
+
+  const getClassName = (currentState: DashboardState): string => {
+    return state === currentState ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'
+  }
+
+  const SidebarItem = (props: { icon: JSX.Element, labelKey: string, dashboardState: DashboardState }): JSX.Element => {
+    return (
+      <p className={getClassName(props.dashboardState)} onClick={() => { changeState(props.dashboardState) }}>
+        {props.icon}
+        {t(props.labelKey)}
+      </p>
+    )
   }
 
   return (
-        <div className='sidebar'>
-          <div className='sidebar__text'>
-            <p className={ stateDashboard === DashboardState.DASHBOARD ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.DASHBOARD) }}>
-              <DashboardOutlinedIcon />
-              { t('student.dashboard.home') }
-            </p>
-            <p className={ stateDashboard === DashboardState.MISSION ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.MISSION) }}>
-              <RoomOutlinedIcon />
-              { t('student.dashboard.mission') }
-            </p>
-            <p className={ stateDashboard === DashboardState.FACTURES ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.FACTURES) }}>
-              <RequestPageOutlinedIcon />
-              { t('student.dashboard.facture') }
-            </p>
-            <p className={ stateDashboard === DashboardState.PROFIL ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.PROFIL) }}>
-              <PersonOutlineOutlinedIcon />
-              { t('student.dashboard.profil') }
-            </p>
-            <p className={ stateDashboard === DashboardState.DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.DOCUMENTS) }}>
-              <TopicOutlinedIcon />
-              { t('student.dashboard.doc') }
-            </p>
-          </div>
-        </div>
+    <div className='sidebar'>
+      <div className='sidebar__text'>
+        <SidebarItem icon={<DashboardOutlinedIcon />} labelKey='student.dashboard.home' dashboardState={DashboardState.DASHBOARD} />
+        <SidebarItem icon={<RoomOutlinedIcon />} labelKey='student.dashboard.mission' dashboardState={DashboardState.MISSION} />
+        <SidebarItem icon={<RequestPageOutlinedIcon />} labelKey='student.dashboard.facture' dashboardState={DashboardState.FACTURES} />
+        <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
+        <SidebarItem icon={<TopicOutlinedIcon />} labelKey='student.dashboard.doc' dashboardState={DashboardState.DOCUMENTS} />
+      </div>
+    </div>
   )
 }
 

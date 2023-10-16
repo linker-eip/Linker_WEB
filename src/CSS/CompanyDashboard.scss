@@ -20,3 +20,21 @@
         background-color: #f2f2f2;
     }
 }
+
+.company-bord-container {
+    display: flex;
+    flex-direction: column;
+
+    &__page {
+        display: flex;
+        flex-direction: row;
+        height: inherit;
+
+    }
+
+    &__content {
+        width: 100%;
+        height: inherit;
+        background-color: #f2f2f2;
+    }
+}

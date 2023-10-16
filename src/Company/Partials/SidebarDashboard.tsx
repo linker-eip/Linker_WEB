@@ -14,57 +14,96 @@ interface Props {
   state: DashboardState
 }
 
+const SidebarItem = ({
+  currentState,
+  itemState,
+  icon: Icon,
+  label,
+  onClick
+}: {
+  currentState: DashboardState
+  itemState: DashboardState
+  icon: any
+  label: string
+  onClick: (state: DashboardState) => void
+}): JSX.Element => {
+  const className = currentState === itemState ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'
+  return (
+    <p className={className} onClick={() => { onClick(itemState) }}>
+      <Icon />
+      {label}
+    </p>
+  )
+}
+
 function SidebarDashboard ({ state }: Props): JSX.Element {
   const { t } = useTranslation()
-  const [stateDashboard, setState] = useState(state)
+  const [stateDashboard, setStateDashboard] = useState(state)
   const navigate = useNavigate()
 
   const changeState = (newState: DashboardState): void => {
-    setState(newState)
-    setState(newState)
+    setStateDashboard(newState)
     switch (newState) {
-      case DashboardState.DOCUMENTS:
-        navigate(ROUTES.COMPANY_DOCUMENTS_DASHBOARD)
+      case DashboardState.DASHBOARD:
+        navigate(ROUTES.COMPANY_DASHBOARD)
+        break
+      case DashboardState.MISSION:
+        // TODO: Navigate to the MISSION route.
         break
       case DashboardState.FACTURES:
         navigate(ROUTES.COMPANY_INVOICES_DASHBOARD)
         break
-      case DashboardState.DASHBOARD:
-        navigate(ROUTES.COMPANY_DASHBOARD)
+      case DashboardState.PROFIL:
+        // TODO: Navigate to the PROFIL route.
+        break
+      case DashboardState.DOCUMENTS:
+        navigate(ROUTES.COMPANY_DOCUMENTS_DASHBOARD)
         break
       default:
         break
     }
-    if (newState === DashboardState.DOCUMENTS) {
-      navigate(ROUTES.COMPANY_DOCUMENTS_DASHBOARD)
-    }
   }
 
   return (
-        <div className='sidebar'>
-          <div className='sidebar__text'>
-            <p className={ stateDashboard === DashboardState.DASHBOARD ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.DASHBOARD) }}>
-              <DashboardOutlinedIcon />
-              { t('student.dashboard.home') }
-            </p>
-            <p className={ stateDashboard === DashboardState.MISSION ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.MISSION) }}>
-              <RoomOutlinedIcon />
-              { t('student.dashboard.mission') }
-            </p>
-            <p className={ stateDashboard === DashboardState.FACTURES ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.FACTURES) }}>
-              <RequestPageOutlinedIcon />
-              { t('student.dashboard.facture') }
-            </p>
-            <p className={ stateDashboard === DashboardState.PROFIL ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.PROFIL) }}>
-              <PersonOutlineOutlinedIcon />
-              { t('student.dashboard.profil') }
-            </p>
-            <p className={ stateDashboard === DashboardState.DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(DashboardState.DOCUMENTS) }}>
-              <TopicOutlinedIcon />
-              { t('student.dashboard.doc') }
-            </p>
-          </div>
-        </div>
+    <div className="sidebar">
+      <div className="sidebar__text">
+        <SidebarItem
+          currentState={stateDashboard}
+          itemState={DashboardState.DASHBOARD}
+          icon={DashboardOutlinedIcon}
+          label={t('student.dashboard.home')}
+          onClick={changeState}
+        />
+        <SidebarItem
+          currentState={stateDashboard}
+          itemState={DashboardState.MISSION}
+          icon={RoomOutlinedIcon}
+          label={t('student.dashboard.mission')}
+          onClick={changeState}
+        />
+        <SidebarItem
+          currentState={stateDashboard}
+          itemState={DashboardState.FACTURES}
+          icon={RequestPageOutlinedIcon}
+          label={t('student.dashboard.facture')}
+          onClick={changeState}
+        />
+        <SidebarItem
+          currentState={stateDashboard}
+          itemState={DashboardState.PROFIL}
+          icon={PersonOutlineOutlinedIcon}
+          label={t('student.dashboard.profil')}
+          onClick={changeState}
+        />
+        <SidebarItem
+          currentState={stateDashboard}
+          itemState={DashboardState.DOCUMENTS}
+          icon={TopicOutlinedIcon}
+          label={t('student.dashboard.doc')}
+          onClick={changeState}
+        />
+      </div>
+    </div>
   )
 }
 
