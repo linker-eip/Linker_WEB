@@ -96,7 +96,7 @@ function CompanyLoginPage (): JSX.Element {
           </InputAdornment>
         }
       />
-      <FormHelperText>{t('passwordRequirements')}</FormHelperText>
+      <FormHelperText>{t('passwordHelper')}</FormHelperText>
       <Link to={ROUTES.COMPANY_FORGOT_PASSWORD} className="login-page-container__forgotten-password">
         <p>{t('forgottenPassword')}</p>
       </Link>
