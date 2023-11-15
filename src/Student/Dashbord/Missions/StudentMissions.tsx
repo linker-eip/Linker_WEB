@@ -14,6 +14,7 @@ import { Typography } from '@mui/material'
 import StudentMissionsCompleted from './partials/StudentMissionCompleted'
 import StudentMissionsPending from './partials/StudentMissionPending'
 import StudentMissionsCancelled from './partials/StudentMissionCancelled'
+import StudentMissionsPotential from './partials/StudentMissionPotential'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -66,6 +67,7 @@ function StudentMissions (): JSX.Element {
               <Tab className='std-mission__text' label={t('student.mission.pending.title')} {...a11yProps(0)} />
               <Tab className='std-mission__text' label={t('student.mission.completed.title')} {...a11yProps(0)} />
               <Tab className='std-mission__text' label={t('student.mission.cancelled.title')} {...a11yProps(0)} />
+              <Tab className='std-mission__text' label={t('student.mission.potential.title')} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
               <StudentMissionsPending />
@@ -75,6 +77,9 @@ function StudentMissions (): JSX.Element {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               <StudentMissionsCancelled />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+              <StudentMissionsPotential />
             </CustomTabPanel>
           </div>
         </div>

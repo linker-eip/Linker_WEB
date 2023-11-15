@@ -77,4 +77,12 @@
     line-height: normal;
     cursor: pointer;
   }
+
+  &__potential-section {
+    align-items: center;
+    display: grid;
+    gap: 3em;
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
 }
