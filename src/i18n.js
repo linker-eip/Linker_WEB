@@ -14,6 +14,15 @@ i18n
     resources: {
       fr: {
         translation: {
+          modal: {
+            title: 'Confirmer votre choix',
+            refus: {
+              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+            },
+            accept: {
+              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+            }
+          },
           validate: 'Valider',
           button: 'Retour',
           formTitle: {
@@ -98,6 +107,9 @@ i18n
                 title: 'Annulées',
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
                 no_mission: 'Vous n\'avez aucune mission annulée'
+              },
+              potential: {
+                title: 'potentielle'
               }
             },
             sales: {
@@ -274,6 +286,9 @@ i18n
                 title: 'Annulées',
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
                 no_mission: 'Vous n\'avez aucune mission annulée'
+              },
+              potential: {
+                title: 'potentielle'
               }
             },
             sales: {

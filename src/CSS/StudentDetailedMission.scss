@@ -204,4 +204,18 @@
     line-height: normal;
   }
 
+  &__potential-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__potential-button {
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    gap: 1em;
+  }
+
 }

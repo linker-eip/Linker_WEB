@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../../../CSS/MissionCard.scss'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../../Router/routes'
+import ClassicButton from '../../../../Component/ClassicButton'
+import ModalValidation from '../../../../Component/ModalValidation'
+import { ModalType } from '../../../../Enum'
 
 interface Props {
   data: {
@@ -16,11 +19,29 @@ interface Props {
     cancelledDate?: string
   }
   cancelled?: boolean
+  potential?: boolean
 }
 
 function MissionCard (props: Props): JSX.Element {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+  const [acceptModal, setAcceptModal] = useState(false)
+  const handleRefuseOpen = (): void => {
+    setOpen(true)
+  }
+
+  const handleRefuseClose = (): void => {
+    setOpen(false)
+  }
+
+  const handleAcceptOpen = (): void => {
+    setAcceptModal(true)
+  }
+
+  const handleAcceptClose = (): void => {
+    setAcceptModal(false)
+  }
 
   const handleNavigation = (): void => {
     navigate(ROUTES.STUDENT_DETAILED_MISSION)
@@ -61,11 +82,29 @@ function MissionCard (props: Props): JSX.Element {
             <p className='mission-card__text-important'> { props.data.bill } </p>
           </div>
         </div>
-        <div className='mission-card__link' onClick={handleNavigation}>
-          <p> {t('missionCard.see_mission')} </p>
+        { props.potential ??
+          <div className='mission-card__link' onClick={handleNavigation}>
+            <p> {t('missionCard.see_mission')} </p>
+          </div>
+        }
+        { props.potential === true
+          ? <div className='mission-card__potential-section'>
+              <div className='mission-card__link' onClick={handleNavigation}>
+                <p> {t('missionCard.see_mission')} </p>
+              </div>
+              <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen} />
+              <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
+            </div>
+          : null
+        }
         </div>
+        {
+          open ? <ModalValidation subject={props.data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} /> : null
+        }
+        {
+          acceptModal ? <ModalValidation subject={props.data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} /> : null
+        }
       </div>
-    </div>
   )
 }
 

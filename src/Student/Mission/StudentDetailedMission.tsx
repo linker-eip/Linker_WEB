@@ -5,15 +5,36 @@ import '../../CSS/StudentDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import HotbarDashboard from '../Dashbord/Partials/HotbarDashboard'
 import SidebarDashboard from '../Dashbord/Partials/SidebarDashboard'
-import { DashboardState } from '../../Enum'
+import { DashboardState, ModalType } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
 import { Avatar } from '@mui/material'
+import ClassicButton from '../../Component/ClassicButton'
+import ModalValidation from '../../Component/ModalValidation'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
+  const potential = true
+  const [open, setOpen] = useState(false)
+  const [acceptModal, setAcceptModal] = useState(false)
+  const handleRefuseOpen = (): void => {
+    setOpen(true)
+  }
+
+  const handleRefuseClose = (): void => {
+    setOpen(false)
+  }
+
+  const handleAcceptOpen = (): void => {
+    setAcceptModal(true)
+  }
+
+  const handleAcceptClose = (): void => {
+    setAcceptModal(false)
+  }
+
   const [missionData] = useState<{ logo: string, name: string, companyName: string, mark: number, nbrMission: number, historic: Array<{ logo: string, name: string, action: string }> }>(
     {
       logo: '/assets/anonymLogo.jpg',
@@ -97,7 +118,16 @@ function StudentDetailedMission (): JSX.Element {
         <SidebarDashboard state={state.MISSION} />
         <div className='std-bord-container__content'>
           <div className='std-detailed-mission__section'>
-            <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
+            { potential
+              ? <div className='std-detailed-mission__potential-section'>
+                  <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
+                  <div className='std-detailed-mission__potential-button'>
+                    <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen}/>
+                    <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
+                  </div>
+                </div>
+              : <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
+            }
             <p className='std-detailed-mission__section__title-3'> { data.title } </p>
             <Stepper activeStep={activeStep - 1} alternativeLabel>
               {steps.map((label, index) => (
@@ -191,6 +221,12 @@ function StudentDetailedMission (): JSX.Element {
           </div>
         </div>
       </div>
+      {
+        open ? <ModalValidation subject={data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} /> : null
+      }
+      {
+        acceptModal ? <ModalValidation subject={data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} /> : null
+      }
     </div>
   )
 }

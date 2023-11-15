@@ -39,3 +39,26 @@
         cursor: pointer;
     }
 }
+
+.classic-button {
+    background-color: #005275;
+    color: #FFF;
+    padding: 0.5em 2em 0.5em 2em;
+    border: 1px solid transparent; 
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins';
+
+    &--refuse {
+        background-color: #FF0832;
+    }
+
+    &--cancelled {
+        background-color: #B1B1B1;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
