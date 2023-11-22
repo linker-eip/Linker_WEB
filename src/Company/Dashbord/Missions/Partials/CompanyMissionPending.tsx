@@ -1,64 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../../CSS/StudentMissionPending.scss'
 import { useTranslation } from 'react-i18next'
-import MissionCard from './MissionCard'
-// import EditIcon from '@mui/icons-material/Edit'
-// import CloseIcon from '@mui/icons-material/Close'
-// import Modal from '@mui/material/Modal'
-// import { TextField } from '@mui/material'
-// import BaseButton from '../../../../Component/BaseButton'
-// import ProfileApi from '../../../../API/ProfileApi'
-// import type { Profile } from '../../../../Typage/ProfileType'
+import MissionCardPotential from './MissionCardPotential'
+
+interface MissionPendingItems {
+  id: number
+  name: string
+  status: string
+  description: string
+  companyId: number
+  startOfMission: Date
+  endOfMission: Date
+  amount: number
+  skills: string
+}
 
 function CompanyMissionsPending (): JSX.Element {
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  //   async function fetchData () {
-  //     try {
-  //       const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-  //       setProfileData(data)
-  //     } catch (error) {
-  //       console.error('Error fetching profile data:', error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [])
-
-  const [data] = useState<Array<{ logo: string, title: string, motant: number, begin?: string, end: string, bill: string, participants: number }>>([
-    {
-      logo: '/assets/anonymLogo.jpg',
-      title: 'Développement d’une application mobile pour une salle de sports',
-      motant: 880.00,
-      begin: '25/03/2023',
-      end: '15/04/2023',
-      bill: 'KP250320231200',
-      participants: 3
-    },
-    {
-      logo: '/assets/anonymLogo.jpg',
-      title: 'Développement d’une application mobile pour une salle de sports',
-      motant: 880.00,
-      begin: '25/03/2023',
-      end: '15/04/2023',
-      bill: 'KP250320231200',
-      participants: 3
-    }
-  ])
-  const [nbrMission] = useState(data.length)
   const { t } = useTranslation()
+
+  useEffect(() => {
+    fetch('https://dev.linker-app.fr/api/mission', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(async response => await response.json())
+      .then(data => {
+        const pendingMissions = data.filter((item: any) => item.status === 'IN_PROGRESS').map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          status: item.status,
+          description: item.description,
+          companyId: item.companyId,
+          startOfMission: item.startOfMission,
+          endOfMission: item.endOfMission,
+          amount: item.amount,
+          skills: item.skills
+        }))
+        setData(pendingMissions)
+      })
+      .catch(error => {
+        alert(`Erreur lors de la récupération des données: ${String(error)}`)
+      })
+  }, [])
+
+  const [data, setData] = useState<MissionPendingItems[]>([])
 
   return (
     <div className='std-mission-pending'>
       <p className='std-mission-pending__mission-status'>
-        { t('company.mission.pending.pending_mission', { nbrMission }) }
+        { t('company.mission.pending.pending_mission', { nbrMission: data.length }) }
       </p>
-      { nbrMission === 0
+      { data.length === 0
         ? <p className='std-mission-pending__no-mission'>
             { t('company.mission.pending.no_mission') }
           </p>
         : data.map((item, index) => (
-          <MissionCard data={item} key={index} />
+          <MissionCardPotential data={item} key={index} />
         ))
       }
     </div>
