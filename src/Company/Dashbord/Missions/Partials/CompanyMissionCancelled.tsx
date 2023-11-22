@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import '../../../../CSS/StudentMissionCancelled.scss'
 import { useTranslation } from 'react-i18next'
 import MissionCardPotential from './MissionCardPotential'
+import { TextField, InputAdornment } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 
 interface MissionCancelledItems {
   id: number
@@ -48,16 +50,49 @@ function CompanyMissionsCancelled (): JSX.Element {
 
   const [data, setData] = useState<MissionCancelledItems[]>([])
 
+  const [searchTerm, setSearchTerm] = useState('')
+  const filteredData = data.filter(mission =>
+    mission.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <div className='std-mission-cancelled'>
       <p className='std-mission-cancelled__mission-status'>
         { t('company.mission.cancelled.cancelled_mission', { nbrMission: data.length }) }
       </p>
-      { data.length === 0
+      { data.length !== 0 &&
+        <TextField
+          fullWidth
+          id="search-bar"
+          type="search"
+          variant="outlined"
+          placeholder="Recherche par titre de la mission"
+          onChange={(e) => {
+            setSearchTerm(e.target.value)
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            )
+          }}
+          sx={{
+            width: '50%',
+            margin: '20px 0',
+            marginTop: 0,
+            borderRadius: '20px',
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '20px'
+            }
+          }}
+        />
+      }
+      { data.length === 0 && filteredData.length === 0
         ? <p className='std-mission-cancelled__no-mission'>
             { t('company.mission.cancelled.no_mission') }
           </p>
-        : data.map((item, index) => (
+        : filteredData.map((item, index) => (
           <MissionCardPotential data={item} key={index} cancelled />
         ))
       }
