@@ -79,7 +79,8 @@ function CompanyMissionsCompleted (): JSX.Element {
           sx={{
             width: '50%',
             margin: '20px 0',
-            marginTop: 0,
+            marginTop: 1,
+            marginBottom: 1,
             borderRadius: '20px',
             '& .MuiOutlinedInput-root': {
               borderRadius: '20px'
