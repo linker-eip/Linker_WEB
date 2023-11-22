@@ -44,7 +44,7 @@ function MissionCardPotential (props: Props): JSX.Element {
   }
 
   const handleNavigation = (): void => {
-    navigate(ROUTES.STUDENT_DETAILED_MISSION)
+    navigate(ROUTES.COMPANY_DETAILED_MISSION)
   }
 
   function formatDate (missionDate: string): string {

@@ -58,6 +58,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_INVOICES_DASHBOARD} element={<StudentInvoices/>}/>
         <Route path={ROUTES.COMPANY_INVOICES_DASHBOARD} element={<CompanyInvoices/>}/>
         <Route path={ROUTES.COMPANY_MISSIONS} element={<CompanyMissions/>}/>
+        <Route path={ROUTES.COMPANY_DETAILED_MISSION} element={<></>}/>
         <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage/>}/>
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard/>}/>
         <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>
