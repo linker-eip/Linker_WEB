@@ -44,9 +44,14 @@ function ModalValidation (props: Props): JSX.Element {
   return (
     <Modal open={opened} onClose={handleValidationClose} >
       <div className='modal-validation'>
-        <div className='modal-validation__title'>
-          { t('modal.title') }
-        </div>
+        {props.type === ModalType.DELETE
+          ? <div className='modal-validation__title'>
+              { t('modal.deleteTitle') }
+            </div>
+          : <div className='modal-validation__title'>
+              { t('modal.title') }
+            </div>
+        }
         {props.type === ModalType.REFUS
           ? <div className='modal-validation__subtitle'>
               { t('modal.refus.subtitle') }

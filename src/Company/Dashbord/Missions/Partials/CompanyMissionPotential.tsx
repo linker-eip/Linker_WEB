@@ -37,14 +37,9 @@ function CompanyMissionsPotential (): JSX.Element {
         'Content-Type': 'application/json'
       }
     })
-      .then(async response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        return await response.json()
-      })
+      .then(async response => await response.json())
       .then(data => {
-        const formattedData = data.map((item: any) => ({
+        const pendingMissions = data.filter((item: any) => item.status === 'PENDING').map((item: any) => ({
           id: item.id,
           name: item.name,
           status: item.status,
@@ -55,7 +50,7 @@ function CompanyMissionsPotential (): JSX.Element {
           amount: item.amount,
           skills: item.skills
         }))
-        setData(formattedData)
+        setData(pendingMissions)
       })
       .catch(error => {
         alert(`Erreur lors de la récupération des données: ${String(error)}`)

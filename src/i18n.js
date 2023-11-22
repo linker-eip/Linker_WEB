@@ -16,6 +16,7 @@ i18n
         translation: {
           modal: {
             title: 'Confirmer votre choix',
+            deleteTitle: 'Confirmer la suppression',
             refus: {
               subtitle: 'Etes-vous sur de vouloir refuser la mission :'
             },
@@ -230,6 +231,7 @@ i18n
         translation: {
           modal: {
             title: 'Confirmer votre choix',
+            deleteTitle: 'Confirmer la suppression',
             refus: {
               subtitle: 'Etes-vous sur de vouloir refuser la mission :'
             },
