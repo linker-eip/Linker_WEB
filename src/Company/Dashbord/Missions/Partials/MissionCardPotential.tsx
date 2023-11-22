@@ -8,7 +8,7 @@ import { ModalType } from '../../../../Enum'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { IconButton } from '@mui/material'
 
-interface PendingMissionItems {
+interface MissionPotentialItems {
   id: number
   name: string
   status: string
@@ -21,12 +21,12 @@ interface PendingMissionItems {
 }
 
 interface Props {
-  data: PendingMissionItems
+  data: MissionPotentialItems
   cancelled?: boolean
   potential?: boolean
 }
 
-function MissionCard (props: Props): JSX.Element {
+function MissionCardPotential (props: Props): JSX.Element {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -147,4 +147,4 @@ function MissionCard (props: Props): JSX.Element {
   )
 }
 
-export default MissionCard
+export default MissionCardPotential

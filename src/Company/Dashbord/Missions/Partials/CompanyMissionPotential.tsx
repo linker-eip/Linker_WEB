@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import '../../../../CSS/CompanyMissionPotential.scss'
 import { useTranslation } from 'react-i18next'
-import PendingMissionCard from './PendingMissionCard'
+import MissionCardPotential from './MissionCardPotential'
 import ClassicButton from '../../../../Component/ClassicButton'
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material'
 
-interface PendingMissionItems {
+interface MissionPotentialItems {
   id: number
   name: string
   status: string
@@ -57,7 +57,7 @@ function CompanyMissionsPotential (): JSX.Element {
       })
   }, [])
 
-  const [data, setData] = useState<PendingMissionItems[]>([])
+  const [data, setData] = useState<MissionPotentialItems[]>([])
 
   const [openCreate, setOpenCreate] = useState(false)
 
@@ -126,7 +126,7 @@ function CompanyMissionsPotential (): JSX.Element {
             { t('company.mission.potential.no_mission') }
           </p>
         : data.map((item, index) => (
-          <PendingMissionCard data={item} key={index} potential />
+          <MissionCardPotential data={item} key={index} potential />
         ))
       }
       {/* MODALE POUR CREER */}
