@@ -19,7 +19,7 @@ function StudentMissionsCancelled (): JSX.Element {
       { nbrMission === 0
         ? <p className='std-mission-cancelled__no-mission'> { t('student.mission.cancelled.no_mission') } </p>
         : data.map((item, index) => (
-          <MissionCard data={item} key={index} cancelled />
+          <MissionCard data={item} key={index} cancelled onCallback={() => {}}/>
         ))
       }
     </div>

@@ -19,7 +19,7 @@ function StudentMissionsCompleted (): JSX.Element {
       { nbrMission === 0
         ? <p className='std-mission-completed__no-mission'> { t('student.mission.completed.no_mission') } </p>
         : data.map((item, index) => (
-          <MissionCard data={item} key={index} />
+          <MissionCard data={item} key={index} onCallback={() => {}}/>
         ))
       }
     </div>

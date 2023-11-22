@@ -13,6 +13,7 @@ interface Props {
   open: boolean
   type: ModalType
   onClose: () => void
+  onValid: () => void
 }
 
 function ModalValidation (props: Props): JSX.Element {
@@ -20,6 +21,11 @@ function ModalValidation (props: Props): JSX.Element {
   const [opened, setOpened] = useState(props.open)
   const handleValidationClose = (): void => {
     setOpened(false)
+    props.onClose()
+  }
+
+  const handleValidation = (): void => {
+    props.onValid()
     props.onClose()
   }
 
@@ -44,11 +50,11 @@ function ModalValidation (props: Props): JSX.Element {
         <p className='modal-validation__subject'> "{ props.subject }" ? </p>
         <div className='modal-validation__button-section'>
           { props.type === ModalType.REFUS
-            ? <ClassicButton title='Refuser' refuse onClick={handleValidationClose} />
+            ? <ClassicButton title='Refuser' refuse onClick={handleValidation} />
             : <div></div>
           }
           { props.type === ModalType.ACCEPT
-            ? <ClassicButton title='Accepter' onClick={handleValidationClose} />
+            ? <ClassicButton title='Accepter' onClick={handleValidation} />
             : <div></div>
           }
           <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />
