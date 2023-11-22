@@ -13,6 +13,7 @@ interface Props {
   open: boolean
   type: ModalType
   onClose: () => void
+  id?: number
 }
 
 function ModalValidation (props: Props): JSX.Element {
@@ -21,6 +22,23 @@ function ModalValidation (props: Props): JSX.Element {
   const handleValidationClose = (): void => {
     setOpened(false)
     props.onClose()
+  }
+
+  const handleDeleteClose = (): void => {
+    fetch(`https://dev.linker-app.fr/api/mission/${String(props?.id)}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(() => {
+        setOpened(false)
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la suppression de la mission: ${String(error)}`)
+      })
   }
 
   return (
@@ -41,15 +59,25 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.DELETE
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.delete.subtitle') }
+            </div>
+          : null
+        }
         <p className='modal-validation__subject'> "{ props.subject }" ? </p>
         <div className='modal-validation__button-section'>
           { props.type === ModalType.REFUS
             ? <ClassicButton title='Refuser' refuse onClick={handleValidationClose} />
-            : <div></div>
+            : null
           }
           { props.type === ModalType.ACCEPT
             ? <ClassicButton title='Accepter' onClick={handleValidationClose} />
-            : <div></div>
+            : null
+          }
+          { props.type === ModalType.DELETE
+            ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
+            : null
           }
           <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />
         </div>
