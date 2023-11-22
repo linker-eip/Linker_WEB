@@ -98,26 +98,36 @@ function CompanyMissionsPotential (): JSX.Element {
       })
   }
 
-  const isFormValid = (): boolean => {
-    const textFieldsFilled = newMissionData.name.trim() !== '' &&
-      newMissionData.description.trim() !== '' &&
-      newMissionData.skills.trim() !== ''
-
-    const amountValid = newMissionData.amount > 0
-
-    const datesValid = newMissionData.startOfMission instanceof Date &&
-      newMissionData.endOfMission instanceof Date &&
-      !isNaN(newMissionData.startOfMission.getTime()) &&
-      !isNaN(newMissionData.endOfMission.getTime()) &&
-      newMissionData.endOfMission >= newMissionData.startOfMission
-
-    return textFieldsFilled && amountValid && datesValid
-  }
-
   const [searchTerm, setSearchTerm] = useState('')
   const filteredData = data.filter(mission =>
     mission.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  const [fieldValidity, setFieldValidity] = useState({
+    nameValid: true,
+    descriptionValid: true,
+    amountValid: true,
+    startOfMissionValid: true,
+    endOfMissionValid: true,
+    skillsValid: true
+  })
+
+  useEffect(() => {
+    const isValid = {
+      nameValid: newMissionData.name.trim() !== '',
+      descriptionValid: newMissionData.description.trim() !== '',
+      amountValid: newMissionData.amount > 0,
+      startOfMissionValid: newMissionData.startOfMission instanceof Date && !isNaN(newMissionData.startOfMission.getTime()),
+      endOfMissionValid: newMissionData.endOfMission instanceof Date && !isNaN(newMissionData.endOfMission.getTime()) && newMissionData.endOfMission >= newMissionData.startOfMission,
+      skillsValid: newMissionData.skills.trim() !== ''
+    }
+
+    setFieldValidity(isValid)
+  }, [newMissionData])
+
+  const isFormValid = (): boolean => {
+    return Object.values(fieldValidity).every(value => value)
+  }
 
   return (
     <div className='company-mission-potential'>
@@ -173,21 +183,40 @@ function CompanyMissionsPotential (): JSX.Element {
             margin="dense"
             label="Titre"
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-            onChange={(e) => { setNewMissionData({ ...newMissionData, name: e.target.value }) }}
+            onChange={(e) => {
+              setNewMissionData({ ...newMissionData, name: e.target.value })
+              setFieldValidity({ ...fieldValidity, nameValid: true })
+            }}
+            error={!fieldValidity.nameValid}
           />
           <TextField
             fullWidth
             margin="dense"
             label="Description"
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-            onChange={(e) => { setNewMissionData({ ...newMissionData, description: e.target.value }) }}
+            onChange={(e) => {
+              setNewMissionData({ ...newMissionData, description: e.target.value })
+              setFieldValidity({ ...fieldValidity, descriptionValid: true })
+            }}
+            error={!fieldValidity.descriptionValid}
           />
           <TextField
             fullWidth
             margin="dense"
             label="Prix"
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-            onChange={(e) => { setNewMissionData({ ...newMissionData, amount: parseInt(e.target.value) }) }}
+            onChange={(e) => {
+              const parsedAmount = parseInt(e.target.value, 10)
+              setNewMissionData({
+                ...newMissionData,
+                amount: isNaN(parsedAmount) ? 0 : parsedAmount
+              })
+              setFieldValidity({
+                ...fieldValidity,
+                amountValid: !isNaN(parsedAmount) && parsedAmount > 0
+              })
+            }}
+            error={!fieldValidity.amountValid}
           />
           <TextField
             type="date"
@@ -195,7 +224,11 @@ function CompanyMissionsPotential (): JSX.Element {
             margin="dense"
             label="Date de début"
             InputLabelProps={{ shrink: true }}
-            onChange={(e) => { setNewMissionData({ ...newMissionData, startOfMission: new Date(e.target.value) }) }}
+            onChange={(e) => {
+              setNewMissionData({ ...newMissionData, startOfMission: new Date(e.target.value) })
+              setFieldValidity({ ...fieldValidity, startOfMissionValid: true })
+            }}
+            error={!fieldValidity.startOfMissionValid}
             sx={{ marginTop: '16px' }}
           />
           <TextField
@@ -204,7 +237,11 @@ function CompanyMissionsPotential (): JSX.Element {
             margin="dense"
             label="Date de fin"
             InputLabelProps={{ shrink: true }}
-            onChange={(e) => { setNewMissionData({ ...newMissionData, endOfMission: new Date(e.target.value) }) }}
+            onChange={(e) => {
+              setNewMissionData({ ...newMissionData, endOfMission: new Date(e.target.value) })
+              setFieldValidity({ ...fieldValidity, endOfMissionValid: true })
+            }}
+            error={!fieldValidity.endOfMissionValid}
             sx={{ marginTop: '16px' }}
           />
           <TextField
@@ -212,7 +249,11 @@ function CompanyMissionsPotential (): JSX.Element {
             margin="dense"
             label="Compétences associées"
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-            onChange={(e) => { setNewMissionData({ ...newMissionData, skills: e.target.value }) }}
+            onChange={(e) => {
+              setNewMissionData({ ...newMissionData, skills: e.target.value })
+              setFieldValidity({ ...fieldValidity, skillsValid: true })
+            }}
+            error={!fieldValidity.skillsValid}
           />
         </DialogContent>
         <DialogActions>
