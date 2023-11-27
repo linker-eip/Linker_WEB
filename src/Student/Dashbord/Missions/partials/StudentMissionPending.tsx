@@ -38,7 +38,7 @@ function StudentMissionsPending (): JSX.Element {
       { nbrMission === 0
         ? <p className='std-mission-pending__no-mission'> { t('student.mission.pending.no_mission') } </p>
         : data.map((item, index) => (
-          <MissionCard data={item} key={index} />
+          <MissionCard data={item} key={index} onCallback={() => {}} />
         ))
       }
     </div>

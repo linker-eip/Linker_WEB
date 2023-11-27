@@ -20,6 +20,7 @@ interface Props {
   }
   cancelled?: boolean
   potential?: boolean
+  onCallback: () => void
 }
 
 function MissionCard (props: Props): JSX.Element {
@@ -41,6 +42,10 @@ function MissionCard (props: Props): JSX.Element {
 
   const handleAcceptClose = (): void => {
     setAcceptModal(false)
+  }
+
+  const handleValidation = (): void => {
+    props.onCallback()
   }
 
   const handleNavigation = (): void => {
@@ -99,10 +104,10 @@ function MissionCard (props: Props): JSX.Element {
         }
         </div>
         {
-          open ? <ModalValidation subject={props.data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} /> : null
+          open ? <ModalValidation subject={props.data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={handleValidation} /> : null
         }
         {
-          acceptModal ? <ModalValidation subject={props.data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} /> : null
+          acceptModal ? <ModalValidation subject={props.data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={handleValidation} /> : null
         }
       </div>
   )
