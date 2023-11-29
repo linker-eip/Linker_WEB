@@ -10,6 +10,7 @@ export const STUDENT_PROFILE = '/student/profile'
 export const STUDENT_MISSIONS = '/student/missions'
 export const STUDENT_DETAILED_MISSION = '/student/detailed-mission'
 export const STUDENT_STATISTICS = '/student/statistics'
+export const STUDENT_GROUP = '/student/group'
 
 export const AUTH_VERIFY_PWD = '/auth/verify/:code'
 export const STUDENT_INVOICES_DASHBOARD = '/student/invoices'

@@ -63,6 +63,10 @@ i18n
               doc: 'Mes documents',
               stat: 'Mes statistiques',
               invoices: 'Mes factures',
+              group: 'Groupe',
+              groups: {
+                my_group: 'votre groupe'
+              },
               hotbar: {
                 profil: 'Profil',
                 quit: 'Déconnexion'
@@ -242,6 +246,13 @@ i18n
               doc: 'Mes documents',
               stat: 'Mes statistiques',
               invoices: 'Mes factures',
+              group: 'Groupe',
+              groups: {
+                my_group: 'votre groupe',
+                invite: 'invitations',
+                no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
+                create_group_button: 'Créer un groupe'
+              },
               hotbar: {
                 profil: 'Profil',
                 quit: 'Déconnexion'

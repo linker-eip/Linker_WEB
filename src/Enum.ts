@@ -5,6 +5,7 @@ export enum DashboardState {
   PROFIL = 'profil',
   DOCUMENTS = 'documents',
   STATISTICS = 'statistics',
+  GROUP = 'group',
 }
 
 export enum AdminDashboardState {
