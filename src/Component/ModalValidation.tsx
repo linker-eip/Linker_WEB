@@ -2,8 +2,6 @@
 import React, { useState } from 'react'
 import '../CSS/ModalValidation.scss'
 import { useTranslation } from 'react-i18next'
-// import { useNavigate } from 'react-router-dom'
-// import * as ROUTES from '../Router/routes'
 import ClassicButton from './ClassicButton'
 import Modal from '@mui/material/Modal'
 import { ModalType } from '../Enum'
@@ -20,8 +18,12 @@ interface Props {
 function ModalValidation (props: Props): JSX.Element {
   const { t } = useTranslation()
   const [opened, setOpened] = useState(props.open)
+
   const handleValidationClose = (): void => {
     setOpened(false)
+    if (props.onValid !== null && props.onValid !== undefined) {
+      props.onValid()
+    }
     props.onClose()
   }
 
@@ -40,10 +42,6 @@ function ModalValidation (props: Props): JSX.Element {
       .catch((error) => {
         alert(`Erreur lors de la suppression de la mission: ${String(error)}`)
       })
-
-  const handleValidation = (): void => {
-    props.onValid()
-    props.onClose()
   }
 
   return (
