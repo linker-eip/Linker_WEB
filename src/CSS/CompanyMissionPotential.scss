@@ -3,7 +3,7 @@
     src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
   }
 
-.std-mission-completed {
+.company-mission-potential {
     display: flex;
     flex-direction: column;
     font-family: 'Poppins' !important;
@@ -16,7 +16,6 @@
     font-size: 1.25em;
     font-style: normal;
     line-height: normal;
-    margin: 2em 0 1em 0;
   }
 
   &__no-mission {
@@ -31,6 +30,7 @@
     display: flex;
     flex-direction: row;
     margin: 2em 0 1em 0;
+    align-items: center;
+    gap: 2em;
   }
-
 }

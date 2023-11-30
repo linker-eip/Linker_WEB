@@ -20,7 +20,24 @@
   &__content {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; 
+    justify-content: space-between;
+  }
+
+  &__pending-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4em;
+  }
+
+  &__pending-title {
+    text-align: start;
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 0.7em;
   }
 
   &__section {
@@ -77,4 +94,20 @@
     line-height: normal;
     cursor: pointer;
   }
+
+  &__potential-section {
+    align-items: center;
+    display: grid;
+    gap: 3em;
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  &__potential-section-pending {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3em;
+  }
+
 }

@@ -3,9 +3,10 @@ import '../../../../CSS/MissionCard.scss'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../../Router/routes'
-import ClassicButton from '../../../../Component/ClassicButton'
 import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import { IconButton } from '@mui/material'
 
 interface Props {
   data: {
@@ -20,7 +21,6 @@ interface Props {
   }
   cancelled?: boolean
   potential?: boolean
-  onCallback: () => void
 }
 
 function MissionCard (props: Props): JSX.Element {
@@ -36,16 +36,8 @@ function MissionCard (props: Props): JSX.Element {
     setOpen(false)
   }
 
-  const handleAcceptOpen = (): void => {
-    setAcceptModal(true)
-  }
-
   const handleAcceptClose = (): void => {
     setAcceptModal(false)
-  }
-
-  const handleValidation = (): void => {
-    props.onCallback()
   }
 
   const handleNavigation = (): void => {
@@ -97,17 +89,19 @@ function MissionCard (props: Props): JSX.Element {
               <div className='mission-card__link' onClick={handleNavigation}>
                 <p> {t('missionCard.see_mission')} </p>
               </div>
-              <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen} />
-              <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
+              <div/>
+              <IconButton onClick={handleRefuseOpen}>
+                <DeleteOutlineIcon sx={{ color: 'red' }} />
+              </IconButton>
             </div>
           : null
         }
         </div>
         {
-          open ? <ModalValidation subject={props.data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={handleValidation} /> : null
+          open ? <ModalValidation subject={props.data.title} open={open} type={ModalType.DELETE} onClose={handleRefuseClose} /> : null
         }
         {
-          acceptModal ? <ModalValidation subject={props.data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={handleValidation} /> : null
+          acceptModal ? <ModalValidation subject={props.data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} /> : null
         }
       </div>
   )

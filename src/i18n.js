@@ -14,6 +14,19 @@ i18n
     resources: {
       fr: {
         translation: {
+          modal: {
+            title: 'Confirmer votre choix',
+            deleteTitle: 'Confirmer la suppression',
+            refus: {
+              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+            },
+            accept: {
+              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+            },
+            delete: {
+              subtitle: 'Etes-vous sûr de vouloir supprimer la mission :'
+            }
+          },
           validate: 'Valider',
           button: 'Retour',
           formTitle: {
@@ -42,7 +55,8 @@ i18n
             cancelled: 'Mission annulée le:',
             participants: 'Participants:',
             bill: 'N° de facture:',
-            see_mission: 'Voir la mission'
+            see_mission: 'Voir la mission',
+            skill: 'Compétences associées'
           },
           student: {
             title: 'Je suis ÉTUDIANT',
@@ -98,6 +112,9 @@ i18n
                 title: 'Annulées',
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
                 no_mission: 'Vous n\'avez aucune mission annulée'
+              },
+              potential: {
+                title: 'potentielle'
               }
             },
             sales: {
@@ -175,6 +192,28 @@ i18n
                   siret: 'SIRET'
                 }
               }
+            },
+            mission: {
+              pending: {
+                title: 'En cours',
+                pending_mission: 'Missions en cours ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission en cours.'
+              },
+              completed: {
+                title: 'Terminées',
+                completed_mission: 'Missions terminées ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission terminée.'
+              },
+              cancelled: {
+                title: 'Annulées',
+                cancelled_mission: 'Missions annulées ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission annulée.'
+              },
+              potential: {
+                title: 'En recherche',
+                potential_mission: 'Missions en recherche ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission en recherche.'
+              }
             }
           },
           admin: {
@@ -190,6 +229,19 @@ i18n
       },
       en: {
         translation: {
+          modal: {
+            title: 'Confirmer votre choix',
+            deleteTitle: 'Confirmer la suppression',
+            refus: {
+              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+            },
+            accept: {
+              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+            },
+            delete: {
+              subtitle: 'Etes-vous sûr de vouloir supprimer la mission :'
+            }
+          },
           validate: 'Valider',
           button: 'Retour',
           formTitle: {
@@ -218,7 +270,8 @@ i18n
             cancelled: 'Mission annulée le:',
             participants: 'Participants:',
             bill: 'N° de facture:',
-            see_mission: 'Voir la mission'
+            see_mission: 'Voir la mission',
+            skill: 'Compétences associées'
           },
           student: {
             title: 'Je suis ÉTUDIANT',
@@ -274,6 +327,9 @@ i18n
                 title: 'Annulées',
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
                 no_mission: 'Vous n\'avez aucune mission annulée'
+              },
+              potential: {
+                title: 'potentielle'
               }
             },
             sales: {
@@ -352,6 +408,28 @@ i18n
                 }
               },
               invoices: 'Mes factures'
+            },
+            mission: {
+              pending: {
+                title: 'En cours',
+                pending_mission: 'Missions en cours ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission en cours.'
+              },
+              completed: {
+                title: 'Terminées',
+                completed_mission: 'Missions terminées ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission terminée.'
+              },
+              cancelled: {
+                title: 'Annulées',
+                cancelled_mission: 'Missions annulées ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission annulée.'
+              },
+              potential: {
+                title: 'En recherche',
+                potential_mission: 'Missions en recherche ({{nbrMission}}).',
+                no_mission: 'Vous n\'avez aucune mission en recherche.'
+              }
             }
           },
           admin: {

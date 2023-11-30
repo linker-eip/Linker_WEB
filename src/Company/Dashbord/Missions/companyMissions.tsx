@@ -1,20 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react'
 import '../../../CSS/StudentDashboard.scss'
 import '../../../CSS/StudentMission.scss'
-import HotbarDashboard from '../Partials/HotbarDashboard'
-import SidebarDashboard from '../Partials/SidebarDashboard'
+import HotbarDashboard from '../../Partials/HotbarDashboard'
+import SidebarDashboard from '../../Partials/SidebarDashboard'
 import { useTranslation } from 'react-i18next'
 import { DashboardState } from '../../../Enum'
 import isPrivateRoute from '../../../Component/isPrivateRoute'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import { Typography } from '@mui/material'
-import StudentMissionsCompleted from './partials/StudentMissionCompleted'
-import StudentMissionsPending from './partials/StudentMissionPending'
-import StudentMissionsCancelled from './partials/StudentMissionCancelled'
-import StudentMissionsPotential from './partials/StudentMissionPotential'
+import CompanyMissionsPending from './Partials/CompanyMissionPending'
+import CompanyMissionsCompleted from './Partials/CompanyMissionCompleted'
+import CompanyMissionsCancelled from './Partials/CompanyMissionCancelled'
+import CompanyMissionsPotential from './Partials/CompanyMissionPotential'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -24,7 +21,6 @@ interface TabPanelProps {
 
 function CustomTabPanel (props: TabPanelProps): JSX.Element {
   const { children, value, index, ...other } = props
-  const { t } = useTranslation()
 
   return (
     <div
@@ -46,7 +42,7 @@ function a11yProps (index: number): any {
   }
 }
 
-function StudentMissions (): JSX.Element {
+function CompanyMissions (): JSX.Element {
   isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
@@ -63,23 +59,43 @@ function StudentMissions (): JSX.Element {
         <SidebarDashboard state={state.MISSION} />
         <div className='std-bord-container__content'>
           <div className='std-mission'>
-            <Tabs className='std-mission__text' value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab className='std-mission__text' label={t('student.mission.pending.title')} {...a11yProps(0)} />
-              <Tab className='std-mission__text' label={t('student.mission.completed.title')} {...a11yProps(0)} />
-              <Tab className='std-mission__text' label={t('student.mission.cancelled.title')} {...a11yProps(0)} />
-              <Tab className='std-mission__text' label={t('student.mission.potential.title')} {...a11yProps(0)} />
+            <Tabs
+              className='std-mission__text'
+              value={value} onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab
+                className='std-mission__text'
+                label={t('company.mission.pending.title')}
+                {...a11yProps(0)}
+              />
+              <Tab
+                className='std-mission__text'
+                label={t('company.mission.completed.title')}
+                {...a11yProps(0)}
+              />
+              <Tab
+                className='std-mission__text'
+                label={t('company.mission.cancelled.title')}
+                {...a11yProps(0)}
+              />
+              <Tab
+                className='std-mission__text'
+                label={t('company.mission.potential.title')}
+                {...a11yProps(0)}
+              />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <StudentMissionsPending />
+              <CompanyMissionsPending />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <StudentMissionsCompleted />
+              <CompanyMissionsCompleted />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              <StudentMissionsCancelled />
+              <CompanyMissionsCancelled />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-              <StudentMissionsPotential />
+              <CompanyMissionsPotential />
             </CustomTabPanel>
           </div>
         </div>
@@ -88,4 +104,4 @@ function StudentMissions (): JSX.Element {
   )
 }
 
-export default StudentMissions
+export default CompanyMissions

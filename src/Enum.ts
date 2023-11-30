@@ -13,3 +13,9 @@ export enum AdminDashboardState {
   MISSIONS = 'missions',
   DOCUMENTS = 'documents'
 }
+
+export enum ModalType {
+  REFUS = 'refus',
+  ACCEPT = 'accept',
+  DELETE = 'delete'
+}
