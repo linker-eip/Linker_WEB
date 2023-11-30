@@ -222,10 +222,10 @@ function StudentDetailedMission (): JSX.Element {
         </div>
       </div>
       {
-        open ? <ModalValidation subject={data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} /> : null
+        open ? <ModalValidation subject={data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={() => {}}/> : null
       }
       {
-        acceptModal ? <ModalValidation subject={data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} /> : null
+        acceptModal ? <ModalValidation subject={data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={() => {}} /> : null
       }
     </div>
   )

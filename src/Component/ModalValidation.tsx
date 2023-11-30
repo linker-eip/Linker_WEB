@@ -13,6 +13,7 @@ interface Props {
   open: boolean
   type: ModalType
   onClose: () => void
+  onValid?: () => void
   id?: number
 }
 
@@ -39,6 +40,10 @@ function ModalValidation (props: Props): JSX.Element {
       .catch((error) => {
         alert(`Erreur lors de la suppression de la mission: ${String(error)}`)
       })
+
+  const handleValidation = (): void => {
+    props.onValid()
+    props.onClose()
   }
 
   return (
