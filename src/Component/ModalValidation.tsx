@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from 'react'
+import React from 'react'
 import '../CSS/ModalValidation.scss'
 import { useTranslation } from 'react-i18next'
 // import { useNavigate } from 'react-router-dom'
@@ -18,9 +18,7 @@ interface Props {
 
 function ModalValidation (props: Props): JSX.Element {
   const { t } = useTranslation()
-  const [opened, setOpened] = useState(props.open)
   const handleValidationClose = (): void => {
-    setOpened(false)
     props.onClose()
   }
 
@@ -30,7 +28,7 @@ function ModalValidation (props: Props): JSX.Element {
   }
 
   return (
-    <Modal open={opened} onClose={handleValidationClose} >
+    <Modal open={props.open} onClose={handleValidationClose} >
       <div className='modal-validation'>
         <div className='modal-validation__title'>
           { t('modal.title') }
@@ -47,15 +45,35 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.DELETE
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.delete.subtitle') }
+            </div>
+          : null
+        }
+        {props.type === ModalType.LEAVE
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.leave.subtitle') }
+            </div>
+          : null
+        }
         <p className='modal-validation__subject'> "{ props.subject }" ? </p>
         <div className='modal-validation__button-section'>
           { props.type === ModalType.REFUS
             ? <ClassicButton title='Refuser' refuse onClick={handleValidation} />
-            : <div></div>
+            : null
           }
           { props.type === ModalType.ACCEPT
             ? <ClassicButton title='Accepter' onClick={handleValidation} />
-            : <div></div>
+            : null
+          }
+          { props.type === ModalType.DELETE
+            ? <ClassicButton title='Détruire' refuse onClick={handleValidation} />
+            : null
+          }
+          { props.type === ModalType.LEAVE
+            ? <ClassicButton title='Quitter' refuse onClick={handleValidation} />
+            : null
           }
           <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />
         </div>

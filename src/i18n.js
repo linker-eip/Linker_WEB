@@ -21,6 +21,12 @@ i18n
             },
             accept: {
               subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+            },
+            delete: {
+              subtitle: 'Etes-vous sur de vouloir détruire le groupe :'
+            },
+            leave: {
+              subtitle: 'Etes-vous sur de vouloir quitter le groupe :'
             }
           },
           validate: 'Valider',
@@ -65,7 +71,11 @@ i18n
               invoices: 'Mes factures',
               group: 'Groupe',
               groups: {
-                my_group: 'votre groupe'
+                my_group: 'votre groupe',
+                invite: 'invitations',
+                no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
+                create_group_button: 'Créer un groupe',
+                member_title: 'Les membres'
               },
               hotbar: {
                 profil: 'Profil',
@@ -177,6 +187,15 @@ i18n
                 localisation: 'Lieu',
                 date: 'Date',
                 description: 'Décris la formation'
+              }
+            },
+            groups: {
+              title: 'Création d’un groupe',
+              name: 'Sélectionner un nom pour votre groupe',
+              description: 'Ajouter une description pour votre groupe',
+              button: 'Créer le groupe',
+              invite: {
+                title: 'Ajouter un membre'
               }
             }
           },

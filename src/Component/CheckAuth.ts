@@ -17,7 +17,6 @@ function CheckAuth (): boolean {
   if (token) {
     try {
       const decodedToken = jwtDecode(token)
-      console.log('decodedToken: ', decodedToken)
       // const currentTime = Date.now() / 1000
 
       if (!decodedToken) {

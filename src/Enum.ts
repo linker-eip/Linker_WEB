@@ -17,5 +17,7 @@ export enum AdminDashboardState {
 
 export enum ModalType {
   REFUS = 'refus',
-  ACCEPT = 'accept'
+  ACCEPT = 'accept',
+  DELETE = 'delete',
+  LEAVE = 'leave'
 }

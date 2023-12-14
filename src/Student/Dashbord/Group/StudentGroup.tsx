@@ -51,6 +51,7 @@ function StudentGroup (): JSX.Element {
   const { t } = useTranslation()
   const [value, setValue] = useState(0)
   const [groupData, setGroupData] = useState<GroupData>()
+  const [refetchData, setRefetchData] = useState(false)
 
   useEffect(() => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -59,10 +60,14 @@ function StudentGroup (): JSX.Element {
       setGroupData(groupData)
     }
     fetchData()
-  }, [])
+  }, [refetchData])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
+  }
+
+  const handleRefetch = (): void => {
+    setRefetchData(!refetchData)
   }
 
   return (
@@ -71,13 +76,13 @@ function StudentGroup (): JSX.Element {
       <div className='std-bord-container__page'>
         <SidebarDashboard state={state.GROUP} />
         <div className='std-bord-container__content'>
-          <div className='std-mission'>
+          <div className='std-mission__group-page'>
             <Tabs className='std-mission__text' value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab className='std-mission__text' label={t('student.dashboard.groups.my_group')} {...a11yProps(0)} />
+              <Tab className='std-mission__text' label={groupData?.data?.name ?? t('student.dashboard.groups.my_group')} {...a11yProps(0)} />
               <Tab className='std-mission__text' label={t('student.dashboard.groups.invite')} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <Group data={groupData} />
+              <Group data={groupData} onReturn={handleRefetch} />
             </CustomTabPanel>
           </div>
         </div>
