@@ -220,6 +220,9 @@ i18n
               mission: 'Missions',
               doc: 'Documents'
             }
+          },
+          snackbar: {
+            invitation_error: 'Vous ne pouvez pas inviter cette personne car elle a déjà un groupe.'
           }
         }
       },
