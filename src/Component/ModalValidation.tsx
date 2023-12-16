@@ -20,6 +20,7 @@ function ModalValidation (props: Props): JSX.Element {
   const [opened, setOpened] = useState(props.open)
 
   const handleValidationClose = (): void => {
+    console.log(opened)
     setOpened(false)
     props.onClose()
   }
@@ -49,7 +50,7 @@ function ModalValidation (props: Props): JSX.Element {
   }
 
   return (
-    <Modal open={opened} onClose={handleValidationClose} >
+    <Modal open={props.open} onClose={handleValidationClose} >
       <div className='modal-validation'>
         {props.type === ModalType.DELETE
           ? <div className='modal-validation__title'>
@@ -77,6 +78,12 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.DELETE_GROUP
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.delete.groups.subtitle') }
+            </div>
+          : null
+        }
         {props.type === ModalType.LEAVE
           ? <div className='modal-validation__subtitle'>
               { t('modal.leave.subtitle') }
@@ -95,6 +102,10 @@ function ModalValidation (props: Props): JSX.Element {
           }
           { props.type === ModalType.DELETE
             ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
+            : null
+          }
+          { props.type === ModalType.DELETE_GROUP
+            ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.LEAVE

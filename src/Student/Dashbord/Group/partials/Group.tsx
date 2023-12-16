@@ -80,7 +80,7 @@ function Group (props: Props): JSX.Element {
                 <div className='std-group__member-title'> {t('student.dashboard.groups.member_title')} </div>
                 <MemberCard member={props.data?.data?.members} />
             </div>
-            <ModalValidation subject={props.data?.data?.name ?? ''} open={deleteModal} onClose={closeDeleteModal} type={ModalType.DELETE} onValid={deleteGroup} />
+            <ModalValidation subject={props.data?.data?.name ?? ''} open={deleteModal} onClose={closeDeleteModal} type={ModalType.DELETE_GROUP} onValid={deleteGroup} />
             <ModalInvitationGroup open={inviteModal} onClose={closeInviteModal} />
           </div>
         : <div className='std-group'>
