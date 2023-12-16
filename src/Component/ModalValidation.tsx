@@ -20,7 +20,12 @@ function ModalValidation (props: Props): JSX.Element {
   const [opened, setOpened] = useState(props.open)
 
   const handleValidationClose = (): void => {
+    console.log(opened)
     setOpened(false)
+    props.onClose()
+  }
+
+  const handleValidation = (): void => {
     if (props.onValid !== null && props.onValid !== undefined) {
       props.onValid()
     }
@@ -28,7 +33,7 @@ function ModalValidation (props: Props): JSX.Element {
   }
 
   const handleDeleteClose = (): void => {
-    fetch(`https://dev.linker-app.fr/api/mission/${String(props?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/mission/${String(props?.id)}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
@@ -45,7 +50,7 @@ function ModalValidation (props: Props): JSX.Element {
   }
 
   return (
-    <Modal open={opened} onClose={handleValidationClose} >
+    <Modal open={props.open} onClose={handleValidationClose} >
       <div className='modal-validation'>
         {props.type === ModalType.DELETE
           ? <div className='modal-validation__title'>
@@ -73,18 +78,38 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.DELETE_GROUP
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.delete.groups.subtitle') }
+            </div>
+          : null
+        }
+        {props.type === ModalType.LEAVE
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.leave.subtitle') }
+            </div>
+          : null
+        }
         <p className='modal-validation__subject'> "{ props.subject }" ? </p>
         <div className='modal-validation__button-section'>
           { props.type === ModalType.REFUS
-            ? <ClassicButton title='Refuser' refuse onClick={handleValidationClose} />
+            ? <ClassicButton title='Refuser' refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.ACCEPT
-            ? <ClassicButton title='Accepter' onClick={handleValidationClose} />
+            ? <ClassicButton title='Accepter' onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DELETE
             ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
+            : null
+          }
+          { props.type === ModalType.DELETE_GROUP
+            ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
+            : null
+          }
+          { props.type === ModalType.LEAVE
+            ? <ClassicButton title='Quitter' refuse onClick={handleValidation} />
             : null
           }
           <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />

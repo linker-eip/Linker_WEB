@@ -6,9 +6,10 @@ interface Props {
   title: string
   refuse?: boolean
   cancelled?: boolean
+  disabled?: boolean
 }
 
-function ClassicButton ({ title, onClick, refuse, cancelled }: Props): JSX.Element {
+function ClassicButton ({ title, onClick, refuse, cancelled, disabled }: Props): JSX.Element {
   let classname = 'classic-button'
 
   if (refuse ?? false) {
@@ -17,8 +18,12 @@ function ClassicButton ({ title, onClick, refuse, cancelled }: Props): JSX.Eleme
     classname += ' classic-button--cancelled'
   }
 
+  if (disabled ?? false) {
+    classname += ' classic-button--disabled'
+  }
+
   return (
-    <button onClick={onClick} className={classname}>
+    <button onClick={onClick} disabled={disabled ?? false} className={classname}>
       {title}
     </button>
   )

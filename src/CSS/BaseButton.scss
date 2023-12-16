@@ -43,7 +43,7 @@
 .classic-button {
     background-color: #005275;
     color: #FFF;
-    padding: 0.5em 2em 0.5em 2em;
+    padding: 0.5em 1em 0.5em 1em;
     border: 1px solid transparent; 
     border-radius: 10px;
     font-size: 16px;
@@ -56,6 +56,10 @@
 
     &--cancelled {
         background-color: #B1B1B1;
+    }
+
+    &--disabled {
+        opacity: 30%;
     }
 
     &:hover {

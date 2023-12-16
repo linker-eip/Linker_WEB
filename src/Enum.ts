@@ -5,6 +5,7 @@ export enum DashboardState {
   PROFIL = 'profil',
   DOCUMENTS = 'documents',
   STATISTICS = 'statistics',
+  GROUP = 'group',
 }
 
 export enum AdminDashboardState {
@@ -17,5 +18,7 @@ export enum AdminDashboardState {
 export enum ModalType {
   REFUS = 'refus',
   ACCEPT = 'accept',
-  DELETE = 'delete'
+  DELETE = 'delete',
+  DELETE_GROUP = 'delete_group',
+  LEAVE = 'leave'
 }

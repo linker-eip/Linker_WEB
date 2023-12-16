@@ -72,7 +72,6 @@ function StudentProfileContent ({ editable }: Props): JSX.Element {
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
 
   const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log(event)
     setAvatarImage(event)
   }
 

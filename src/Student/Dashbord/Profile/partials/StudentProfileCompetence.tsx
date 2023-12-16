@@ -49,7 +49,6 @@ function StudentProfileCompetence (): JSX.Element {
     const file = new FormData()
     file.append('file', AvatarImage[0])
     const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
-    console.log(returnValue)
     const skills = new FormData()
     skills.append('skills[0][name]', skillName ?? '')
     skills.append('skills[0][logo]', String(returnValue))
