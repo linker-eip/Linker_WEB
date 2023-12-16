@@ -33,7 +33,7 @@ function ModalValidation (props: Props): JSX.Element {
   }
 
   const handleDeleteClose = (): void => {
-    fetch(`https://dev.linker-app.fr/api/mission/${String(props?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/mission/${String(props?.id)}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
