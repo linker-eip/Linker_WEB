@@ -23,7 +23,7 @@ export const COMPANY_FORGOT_PASSWORD = '/company/forgotten-password'
 export const COMPANY_RESET_PASSWORD = '/company/reset-password'
 export const COMPANY_INVOICES_DASHBOARD = '/company/invoices'
 export const COMPANY_MISSIONS = '/company/missions'
-export const COMPANY_DETAILED_MISSION = '/company/detailed-missions'
+export const COMPANY_DETAILED_MISSION = '/company/detailed-missions/:missionId'
 
 export const ADMIN_LOGIN_PAGE = '/admin/login'
 export const ADMIN_DASHBOARD = '/admin/dashboard'
