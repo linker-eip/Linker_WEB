@@ -158,7 +158,8 @@ i18n
               edit_mode: {
                 desc: 'Description',
                 location: 'Location',
-                website: 'Website'
+                website: 'Website',
+                activity: 'Activité'
               },
               content: {
               },
@@ -392,7 +393,8 @@ i18n
               edit_mode: {
                 desc: 'Description',
                 location: 'Location',
-                website: 'Website'
+                website: 'Website',
+                activity: 'Activité'
               },
               content: {
               },
