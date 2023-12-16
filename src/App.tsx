@@ -20,6 +20,7 @@ import StudentMissions from './Student/Dashbord/Missions/StudentMissions'
 import StudentDetailedMission from './Student/Mission/StudentDetailedMission'
 import StudentStatistics from './Student/Statistics/StudentStatistics'
 import StudentGroup from './Student/Dashbord/Group/StudentGroup'
+import CompanyMissions from './Company/Dashbord/Missions/companyMissions'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
@@ -58,6 +59,8 @@ function App (): JSX.Element {
         <Route path={ROUTES.AUTH_VERIFY_PWD} element={<AuthVerifyPwd/>} />
         <Route path={ROUTES.STUDENT_INVOICES_DASHBOARD} element={<StudentInvoices/>}/>
         <Route path={ROUTES.COMPANY_INVOICES_DASHBOARD} element={<CompanyInvoices/>}/>
+        <Route path={ROUTES.COMPANY_MISSIONS} element={<CompanyMissions/>}/>
+        <Route path={ROUTES.COMPANY_DETAILED_MISSION} element={<></>}/>
         <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage/>}/>
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard/>}/>
         <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>

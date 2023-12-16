@@ -48,7 +48,7 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
         navigate(ROUTES.COMPANY_DASHBOARD)
         break
       case DashboardState.MISSION:
-        // TODO: Navigate to the MISSION route.
+        navigate(ROUTES.COMPANY_MISSIONS)
         break
       case DashboardState.FACTURES:
         navigate(ROUTES.COMPANY_INVOICES_DASHBOARD)

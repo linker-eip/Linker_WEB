@@ -19,5 +19,6 @@ export enum ModalType {
   REFUS = 'refus',
   ACCEPT = 'accept',
   DELETE = 'delete',
+  DELETE_GROUP = 'delete_group',
   LEAVE = 'leave'
 }

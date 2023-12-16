@@ -1,9 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react'
+import React, { useState } from 'react'
 import '../CSS/ModalValidation.scss'
 import { useTranslation } from 'react-i18next'
-// import { useNavigate } from 'react-router-dom'
-// import * as ROUTES from '../Router/routes'
 import ClassicButton from './ClassicButton'
 import Modal from '@mui/material/Modal'
 import { ModalType } from '../Enum'
@@ -13,26 +11,54 @@ interface Props {
   open: boolean
   type: ModalType
   onClose: () => void
-  onValid: () => void
+  onValid?: () => void
+  id?: number
 }
 
 function ModalValidation (props: Props): JSX.Element {
   const { t } = useTranslation()
+  const [opened, setOpened] = useState(props.open)
+
   const handleValidationClose = (): void => {
+    setOpened(false)
     props.onClose()
   }
 
   const handleValidation = (): void => {
-    props.onValid()
+    if (props.onValid !== null && props.onValid !== undefined) {
+      props.onValid()
+    }
     props.onClose()
   }
 
+  const handleDeleteClose = (): void => {
+    fetch(`https://dev.linker-app.fr/api/mission/${String(props?.id)}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(() => {
+        setOpened(false)
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la suppression de la mission: ${String(error)}`)
+      })
+  }
+
   return (
-    <Modal open={props.open} onClose={handleValidationClose} >
+    <Modal open={opened} onClose={handleValidationClose} >
       <div className='modal-validation'>
-        <div className='modal-validation__title'>
-          { t('modal.title') }
-        </div>
+        {props.type === ModalType.DELETE
+          ? <div className='modal-validation__title'>
+              { t('modal.deleteTitle') }
+            </div>
+          : <div className='modal-validation__title'>
+              { t('modal.title') }
+            </div>
+        }
         {props.type === ModalType.REFUS
           ? <div className='modal-validation__subtitle'>
               { t('modal.refus.subtitle') }
@@ -68,7 +94,7 @@ function ModalValidation (props: Props): JSX.Element {
             : null
           }
           { props.type === ModalType.DELETE
-            ? <ClassicButton title='Détruire' refuse onClick={handleValidation} />
+            ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
             : null
           }
           { props.type === ModalType.LEAVE
