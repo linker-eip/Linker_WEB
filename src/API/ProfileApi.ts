@@ -1,4 +1,4 @@
-import type { Profile } from '../Typage/ProfileType'
+import type { Profile, ProfileCompany } from '../Typage/ProfileType'
 import axios from 'axios'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
@@ -12,11 +12,30 @@ class ProfileApi {
     return response.data
   }
 
+  static async getCompanyProfile (jwtToken: string): Promise<ProfileCompany> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/company/profile`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
+
   static async updateProfile (jwtToken: string, dto: FormData): Promise<Profile> {
     const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, dto, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
         'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async updateCompanyProfile (jwtToken: string, dto: FormData): Promise<ProfileCompany> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/company/profile`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
       }
     })
     return response.data
