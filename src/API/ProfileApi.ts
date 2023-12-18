@@ -42,7 +42,7 @@ class ProfileApi {
   }
 
   static async uploadFile (jwtToken: string, dto: FormData): Promise<string> {
-    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/file/upload`, dto, {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/document/upload`, dto, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
         'Content-Type': 'multipart/form-data'

@@ -10,10 +10,10 @@ import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
-import { Avatar } from '@mui/material'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
+import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material'
 
 interface MissionDetails {
   id: number
@@ -41,9 +41,11 @@ function CompanyDetailedMission (): JSX.Element {
   isPrivateRoute()
   const { missionId } = useParams()
   const [open, setOpen] = useState(false)
+  const [edit, setEditOpen] = useState(false)
   const [notationModal, setNotationModal] = useState(false)
   const [commentModal, setCommentModal] = useState(false)
   const [missionData, setMissionData] = useState<MissionDetails>()
+  const [editMissionData, setEditMissionData] = useState<MissionDetails>()
   const [nbrMission, setNbrMission] = useState<number | undefined>(0)
   const [hasCompanyNoted, setHasCompanyNoted] = useState<number>(0)
   const [hasCompanyCommented, setHasCompanyCommented] = useState<number>(0)
@@ -111,6 +113,15 @@ function CompanyDetailedMission (): JSX.Element {
     setOpen(false)
   }
 
+  const handleEditOpen = (): void => {
+    setEditMissionData(missionData)
+    setEditOpen(true)
+  }
+
+  const handleEditClose = (): void => {
+    setEditOpen(false)
+  }
+
   const handleNotationOpen = (): void => {
     setNotationModal(true)
   }
@@ -155,6 +166,30 @@ function CompanyDetailedMission (): JSX.Element {
     ])
   }, [missionData?.companyProfilePicture])
 
+  const handleUpdate = (): void => {
+    const payload = {
+      name: editMissionData?.name,
+      description: editMissionData?.description,
+      amount: editMissionData?.amount
+    }
+
+    fetch(`https://dev.linker-app.fr/api/admin/mission/${String(missionId)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(async response => await response.json())
+      .then(() => {
+        setEditOpen(false)
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la modifcation de la mission: ${String(error)}`)
+      })
+  }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
@@ -167,6 +202,7 @@ function CompanyDetailedMission (): JSX.Element {
                   ? <div className='std-detailed-mission__potential-section'>
                     <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
                       <div className='std-detailed-mission__potential-button'>
+                        <ClassicButton title='Modifier' onClick={handleEditOpen}/>
                         <ClassicButton title='Supprimer' refuse onClick={handleRefuseOpen}/>
                       </div>
                     </div>
@@ -316,6 +352,63 @@ function CompanyDetailedMission (): JSX.Element {
             />
           : null
       }
+      <Dialog open={edit} onClose={handleEditClose}>
+        <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Modifier la mission</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Titre"
+            fullWidth
+            value={editMissionData?.name}
+            onChange={(e) => {
+              if (editMissionData !== null && editMissionData !== undefined) {
+                setEditMissionData({ ...editMissionData, name: e.target.value })
+              }
+            }}
+          />
+          <TextField
+            margin="dense"
+            label="Description"
+            fullWidth
+            value={editMissionData?.description}
+            onChange={(e) => {
+              if (editMissionData !== null && editMissionData !== undefined) {
+                setEditMissionData({ ...editMissionData, description: e.target.value })
+              }
+            }}
+            sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+          />
+          <TextField
+            margin="dense"
+            label="Prix"
+            fullWidth
+            value={editMissionData?.amount}
+            onChange={(e) => {
+              if (editMissionData !== null && editMissionData !== undefined) {
+                setEditMissionData({ ...editMissionData, amount: parseInt(e.target.value) })
+              }
+            }}
+            sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleEditClose}
+            color="primary"
+            sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+          >
+            Annuler
+          </Button>
+          <Button
+            onClick={handleUpdate}
+            color="primary"
+            sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+          >
+            Modifier
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
