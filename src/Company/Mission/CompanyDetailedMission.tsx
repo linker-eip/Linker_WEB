@@ -190,6 +190,26 @@ function CompanyDetailedMission (): JSX.Element {
       })
   }
 
+  const [fieldValidity, setFieldValidity] = useState({
+    nameValid: true,
+    descriptionValid: true,
+    amountValid: true
+  })
+
+  useEffect(() => {
+    const isValid = {
+      nameValid: editMissionData?.name.trim() !== '',
+      descriptionValid: editMissionData?.description.trim() !== '',
+      amountValid: editMissionData !== undefined && editMissionData?.amount > 0
+    }
+
+    setFieldValidity(isValid)
+  }, [editMissionData])
+
+  const isFormValid = (): boolean => {
+    return Object.values(fieldValidity).every(value => value)
+  }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
@@ -364,8 +384,10 @@ function CompanyDetailedMission (): JSX.Element {
             onChange={(e) => {
               if (editMissionData !== null && editMissionData !== undefined) {
                 setEditMissionData({ ...editMissionData, name: e.target.value })
+                setFieldValidity({ ...fieldValidity, nameValid: true })
               }
             }}
+            error={!fieldValidity.nameValid}
           />
           <TextField
             margin="dense"
@@ -375,9 +397,11 @@ function CompanyDetailedMission (): JSX.Element {
             onChange={(e) => {
               if (editMissionData !== null && editMissionData !== undefined) {
                 setEditMissionData({ ...editMissionData, description: e.target.value })
+                setFieldValidity({ ...fieldValidity, descriptionValid: true })
               }
             }}
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+            error={!fieldValidity.descriptionValid}
           />
           <TextField
             margin="dense"
@@ -386,10 +410,19 @@ function CompanyDetailedMission (): JSX.Element {
             value={editMissionData?.amount}
             onChange={(e) => {
               if (editMissionData !== null && editMissionData !== undefined) {
-                setEditMissionData({ ...editMissionData, amount: parseInt(e.target.value) })
+                const parsedAmount = parseInt(e.target.value, 10)
+                setEditMissionData({
+                  ...editMissionData,
+                  amount: isNaN(parsedAmount) ? 0 : parsedAmount
+                })
+                setFieldValidity({
+                  ...fieldValidity,
+                  amountValid: !isNaN(parsedAmount) && parsedAmount > 0
+                })
               }
             }}
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+            error={!fieldValidity.amountValid}
           />
         </DialogContent>
         <DialogActions>
@@ -401,9 +434,14 @@ function CompanyDetailedMission (): JSX.Element {
             Annuler
           </Button>
           <Button
-            onClick={handleUpdate}
+            onClick={() => {
+              if (isFormValid()) {
+                handleUpdate()
+              }
+            }}
             color="primary"
             sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+            disabled={!isFormValid()}
           >
             Modifier
           </Button>
