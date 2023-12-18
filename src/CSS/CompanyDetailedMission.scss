@@ -235,4 +235,15 @@
     height: 5em;
   }
 
+  &__cahier-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__edit-logo {
+    height: 2em;
+  }
+
 }

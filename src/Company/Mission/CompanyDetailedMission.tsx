@@ -136,7 +136,10 @@ function CompanyDetailedMission (): JSX.Element {
 
               <div className='cpn-detailed-mission__container'>
                 <div className='cpn-detailed-mission__section'>
-                  <p className='cpn-detailed-mission__container__title'> { t('student.detailed_mission.details') } </p>
+                  <div className='cpn-detailed-mission__cahier-section'>
+                    <p className='cpn-detailed-mission__container__title'> { t('student.detailed_mission.details') } </p>
+                    <img className='cpn-detailed-mission__edit-logo' src='/assets/edit.svg' />
+                  </div>
                   <div className='cpn-detailed-mission__tab-container cpn-detailed-mission__tab-container--colored'>
                     <p className='cpn-detailed-mission__centered'> {t('student.detailed_mission.tab.detail')} </p>
                     <p className='cpn-detailed-mission__centered'> {t('student.detailed_mission.tab.quantity')} </p>
