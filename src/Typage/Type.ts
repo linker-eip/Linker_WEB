@@ -51,3 +51,17 @@ export interface GroupSearchMember {
   data?: SearchMember[]
   response?: GroupError
 }
+
+export interface MissionDetails {
+  id: number
+  name: string
+  status: string
+  description: string
+  companyId: number
+  groupId: number
+  startOfMission: string
+  endOfMission: string
+  createdAt: string
+  amount: number
+  skills: string
+}

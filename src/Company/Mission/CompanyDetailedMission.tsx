@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import '../../CSS/StudentDashboard.scss'
-import '../../CSS/StudentDetailedMission.scss'
+import '../../CSS/CompanyDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
-import { DashboardState, ModalType } from '../../Enum'
+import { DashboardState, ModalType, MissionStatus } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -14,18 +14,7 @@ import { Avatar } from '@mui/material'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
-
-interface MissionPotentialItems {
-  id: number
-  name: string
-  status: string
-  description: string
-  companyId: number
-  startOfMission: Date
-  endOfMission: Date
-  amount: number
-  skills: string
-}
+import { type MissionDetails } from '../../Typage/Type'
 
 function CompanyDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -33,10 +22,10 @@ function CompanyDetailedMission (): JSX.Element {
   const potential = true
   const [open, setOpen] = useState(false)
   const [acceptModal, setAcceptModal] = useState(false)
-  const [missionData, setMissionData] = useState<MissionPotentialItems>()
+  const [missionData, setMissionData] = useState<MissionDetails>()
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/mission', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/mission`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
@@ -45,15 +34,17 @@ function CompanyDetailedMission (): JSX.Element {
     })
       .then(async response => await response.json())
       .then(data => {
-        setMissionData(data.filter((item: any) => item.id.toString() === missionId?.toString()).map((item: MissionPotentialItems) => {
+        setMissionData(data.filter((item: any) => item.id.toString() === missionId?.toString()).map((item: MissionDetails) => {
           return {
             id: item.id,
             name: item.name,
             status: item.status,
             description: item.description,
             companyId: item.companyId,
+            groupId: item.groupId,
             startOfMission: item.startOfMission,
             endOfMission: item.endOfMission,
+            createdAt: item.createdAt,
             amount: item.amount,
             skills: item.skills
           }
@@ -63,6 +54,28 @@ function CompanyDetailedMission (): JSX.Element {
         alert(`Erreur lors de la récupération des données: ${String(error)}`)
       })
   }, [])
+
+  useEffect(() => {
+    switch (missionData?.status) {
+      case MissionStatus.PENDING:
+        setActiveStep(1)
+        break
+      case MissionStatus.ACCEPTED:
+        setActiveStep(2)
+        break
+      case MissionStatus.PROVISIONED:
+        setActiveStep(2)
+        break
+      case MissionStatus.IN_PROGRESS:
+        setActiveStep(3)
+        break
+      case MissionStatus.FINISHED:
+        setActiveStep(4)
+        break
+      default:
+        break
+    }
+  }, [missionData])
 
   const handleRefuseOpen = (): void => {
     setOpen(true)
@@ -83,12 +96,13 @@ function CompanyDetailedMission (): JSX.Element {
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
   const state = DashboardState
   const { t } = useTranslation()
-  const [activeStep, setActiveStep] = useState(3)
+  const [activeStep, setActiveStep] = useState(0)
   const steps = [
-    t('student.detailed_mission.accepted'),
-    t('student.detailed_mission.provisionée'),
-    t('student.detailed_mission.in_progress'),
-    t('student.detailed_mission.completed')
+    t('company.detailed_mission.research_mission'),
+    t('company.detailed_mission.accepted'),
+    t('company.detailed_mission.provisionée'),
+    t('company.detailed_mission.in_progress'),
+    t('company.detailed_mission.completed')
   ]
 
   return (
@@ -98,15 +112,21 @@ function CompanyDetailedMission (): JSX.Element {
         <SidebarDashboard state={state.MISSION} />
         { missionData !== undefined && missionData !== null
           ? <div className='std-bord-container__content'>
-              <div className='std-detailed-mission__section'>
-                <p className='std-detailed-mission__section__title-3'> { missionData.name } </p>
+              <div className='cpn-detailed-mission__section'>
+                {missionData.status === MissionStatus.PENDING
+                  ? <div className='cpn-detailed-mission__section__title'>
+                    { t('company.detailed_mission.research_mission') }
+                  </div>
+                  : null
+                }
+                <p className='cpn-detailed-mission__section__title-3'> { missionData.name } </p>
                 <Stepper activeStep={activeStep - 1} alternativeLabel>
                   {steps.map((label, index) => (
                     <Step key={label}>
                       <StepLabel>
                         { index <= activeStep - 1
-                          ? <p className='std-detailed-mission__stepper-active'>{label}</p>
-                          : <p className='std-detailed-mission__stepper'>{label}</p>
+                          ? <p className='cpn-detailed-mission__stepper-active'>{label}</p>
+                          : <p className='cpn-detailed-mission__stepper'>{label}</p>
                         }
                       </StepLabel>
                     </Step>
@@ -114,74 +134,79 @@ function CompanyDetailedMission (): JSX.Element {
                 </Stepper>
               </div>
 
-              <div className='std-detailed-mission__container'>
-                <div className='std-detailed-mission__section'>
-                  <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.details') } </p>
-                  <div className='std-detailed-mission__tab-container std-detailed-mission__tab-container--colored'>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.detail')} </p>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.quantity')} </p>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.unitary_price')} </p>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.total_price')} </p>
+              <div className='cpn-detailed-mission__container'>
+                <div className='cpn-detailed-mission__section'>
+                  <p className='cpn-detailed-mission__container__title'> { t('student.detailed_mission.details') } </p>
+                  <div className='cpn-detailed-mission__tab-container cpn-detailed-mission__tab-container--colored'>
+                    <p className='cpn-detailed-mission__centered'> {t('student.detailed_mission.tab.detail')} </p>
+                    <p className='cpn-detailed-mission__centered'> {t('student.detailed_mission.tab.quantity')} </p>
+                    <p className='cpn-detailed-mission__centered'> {t('student.detailed_mission.tab.unitary_price')} </p>
+                    <p className='cpn-detailed-mission__centered'> {t('student.detailed_mission.tab.total_price')} </p>
                   </div>
                     {/* { data.missionDetails.map((details, index) => (
-                      <div className='std-detailed-mission__tab-container' key={index}>
-                        <div className='std-detailed-mission__sub-section'>
+                      <div className='cpn-detailed-mission__tab-container' key={index}>
+                        <div className='cpn-detailed-mission__sub-section'>
                           <p> {details.element} </p>
-                          <div className='std-detailed-mission__sub-container'>
+                          <div className='cpn-detailed-mission__sub-container'>
                             {
                               details.description.map((description, index) => (
-                                <div key={index} className='std-detailed-mission__content'>
-                                  <div className='std-detailed-mission__circle' />
+                                <div key={index} className='cpn-detailed-mission__content'>
+                                  <div className='cpn-detailed-mission__circle' />
                                   <p > {description} </p>
                                 </div>
                               ))
                             }
                           </div>
                         </div>
-                        <div className='std-detailed-mission__sub-section'>
-                          <p className='std-detailed-mission__centered'> {details.quantity} </p>
+                        <div className='cpn-detailed-mission__sub-section'>
+                          <p className='cpn-detailed-mission__centered'> {details.quantity} </p>
                         </div>
-                        <div className='std-detailed-mission__sub-section'>
-                          <p className='std-detailed-mission__centered'> {details.unitaryPrice} € </p>
+                        <div className='cpn-detailed-mission__sub-section'>
+                          <p className='cpn-detailed-mission__centered'> {details.unitaryPrice} € </p>
                         </div>
-                        <div className='std-detailed-mission__sub-section'>
-                          <p className='std-detailed-mission__centered'> {details.total} € </p>
+                        <div className='cpn-detailed-mission__sub-section'>
+                          <p className='cpn-detailed-mission__centered'> {details.total} € </p>
                         </div>
                       </div>
                     ))} */}
                 </div>
-                <div className='std-detailed-mission__column'>
-                    <div className='std-detailed-mission__section'>
-                      <div className='std-detailed-mission__row'>
-                        <img className='std-detailed-mission__logo' src={'missionData.logo'} />
-                        <div className='std-detailed-mission__column'>
-                          <p className='std-detailed-mission__section__title-2'> { missionData?.name } </p>
-                          <p className='std-detailed-mission__section__subtitle'> company name= { missionData?.name } </p>
-                        </div>
-                      </div>
-                      <div className='std-detailed-mission__column-2'>
-                        <div className='std-detailed-mission__mark'>
-                          {
-                            starsStatus.map((item, index) => {
-                              return <img src='/assets/stars.svg' alt='stars' className='std-detailed-mission__stars' key={index} />
-                            })
-                          }
-                          <div className='std-detailed-mission__circle' />
-                          <p> {'missionData.nbrMission'} {t('student.detailed_mission.mission')} </p>
-                        </div>
-                        <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
-                      </div>
+                <div className='cpn-detailed-mission__column'>
+                    <div className='cpn-detailed-mission__section'>
+                      <p className='cpn-detailed-mission__section__title-4'> { t('company.detailed_mission.participants')} </p>
+                        {missionData.groupId != null
+                          ? <div className='cpn-detailed-mission__column-2'>
+                              <div className='cpn-detailed-mission__row'>
+                                <img className='cpn-detailed-mission__logo' src={'missionData.logo'} />
+                                <div className='cpn-detailed-mission__column'>
+                                  <p className='cpn-detailed-mission__section__subtitle'> company name= { missionData?.name } </p>
+                                </div>
+                              </div>
+                              <p className='cpn-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
+                            </div>
+                          : <div className='cpn-detailed-mission__column-2'>
+                              <img className='cpn-detailed-mission__img' src='/assets/groups_image.svg' />
+                              <div className='cpn-detailed-mission__row'>
+                                { t('company.detailed_mission.no_participants')}
+                              </div>
+                            </div>
+                        }
                     </div>
                     <div>
-                      <div className='std-detailed-mission__section'>
-                        <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
+                      <div className='cpn-detailed-mission__section'>
+                        <p className='cpn-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
+                        {missionData.status === MissionStatus.PENDING.toString()
+                          ? <div>
+                              L’historique est vide.
+                            </div>
+                          : null
+                        }
                         {/* {
                           missionData.historic.map((historic, index) => (
-                            <div className='std-detailed-mission__sub-section' key={index}>
-                              <div className='std-detailed-mission__row'>
-                                <Avatar className='std-detailed-mission__historic-logo' src={historic.logo} />
-                                <div className='std-detailed-mission__text-important'> {historic.name} </div>
-                                <div className='std-detailed-mission__text '> {historic.action} </div>
+                            <div className='cpn-detailed-mission__sub-section' key={index}>
+                              <div className='cpn-detailed-mission__row'>
+                                <Avatar className='cpn-detailed-mission__historic-logo' src={historic.logo} />
+                                <div className='cpn-detailed-mission__text-important'> {historic.name} </div>
+                                <div className='cpn-detailed-mission__text '> {historic.action} </div>
                               </div>
                             </div>
                           ))

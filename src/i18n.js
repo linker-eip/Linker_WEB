@@ -237,6 +237,26 @@ i18n
                 potential_mission: 'Missions en recherche ({{nbrMission}}).',
                 no_mission: 'Vous n\'avez aucune mission en recherche.'
               }
+            },
+            detailed_mission: {
+              research_mission: 'Mission en recherche',
+              pending_mission: 'Missions en cours',
+              accepted: 'Proposition acceptée',
+              provisionée: 'Mission provisionée',
+              in_progress: 'Mission en cours',
+              completed: 'Mission terminée',
+              details: 'Détail de la mission',
+              historic: 'Historique de la mission',
+              conversation: 'Accéder à la conversation',
+              mission: 'missions',
+              participants: 'Participants',
+              no_participants: 'Aucun groupe trouvée',
+              tab: {
+                detail: 'Détail',
+                quantity: 'Quantité',
+                unitary_price: 'Prix unitaire (HT)',
+                total_price: 'total (HT)'
+              }
             }
           },
           admin: {
