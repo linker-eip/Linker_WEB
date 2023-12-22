@@ -314,7 +314,8 @@ i18n
                 my_group: 'votre groupe',
                 invite: 'invitations',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
-                create_group_button: 'Créer un groupe'
+                create_group_button: 'Créer un groupe',
+                invited: 'Les membres invités'
               },
               hotbar: {
                 profil: 'Profil',

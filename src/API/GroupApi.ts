@@ -85,6 +85,20 @@ class GroupApi {
       return error
     }
   }
+
+  static async deleteInvitedMember (jwtToken: string, userId: number): Promise<Group> {
+    try {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/group/invite/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      }
+      )
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
 }
 
 export default GroupApi
