@@ -21,6 +21,7 @@ function Group (props: Props): JSX.Element {
   const [hasGroup, setStatus] = useState<boolean>(false)
   const [creationGroup, setCreationGroup] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const [leaveModal, setLeaveModal] = useState<boolean>(false)
   const [inviteModal, setInviteModal] = useState<boolean>(false)
   const [memberInvited, setMemberInvited] = useState<InvitedMember[] | undefined>()
   const [refetch, setRefetch] = useState<boolean>(false)
@@ -61,12 +62,26 @@ function Group (props: Props): JSX.Element {
     props.onReturn()
   }
 
+  const leaveGroup = (): void => {
+    setLeaveModal(false)
+    GroupApi.leaveGroup(localStorage.getItem('jwtToken') as string)
+    props.onReturn()
+  }
+
   const openDeleteModal = (): void => {
     setDeleteModal(true)
   }
 
   const closeDeleteModal = (): void => {
     setDeleteModal(false)
+  }
+
+  const openLeaveModal = (): void => {
+    setLeaveModal(true)
+  }
+
+  const closeLeaveModal = (): void => {
+    setLeaveModal(false)
   }
 
   const openInviteModal = (): void => {
@@ -91,7 +106,7 @@ function Group (props: Props): JSX.Element {
                   ? <ClassicButton title='Ajouter des membres' onClick={openInviteModal} />
                   : null
                 }
-                <ClassicButton title={props.data?.data?.isLeader ?? false ? 'Détruire le groupe' : 'Quitter le groupe'} refuse onClick={openDeleteModal} />
+                <ClassicButton title={props.data?.data?.isLeader ?? false ? 'Détruire le groupe' : 'Quitter le groupe'} refuse onClick={props.data?.data?.isLeader ?? false ? openDeleteModal : openLeaveModal } />
               </div>
               <div className='std-group__details'>
                 <img className='std-group__picture' src={props.data?.data?.picture} />
@@ -105,6 +120,7 @@ function Group (props: Props): JSX.Element {
                 <MemberInvitedCard member={memberInvited} onDelete={handleRefetch} />
             </div>
             <ModalValidation subject={props.data?.data?.name ?? ''} open={deleteModal} onClose={closeDeleteModal} type={ModalType.DELETE_GROUP} onValid={deleteGroup} />
+            <ModalValidation subject={props.data?.data?.name ?? ''} open={leaveModal} onClose={closeLeaveModal} type={ModalType.LEAVE} onValid={leaveGroup} />
             <ModalInvitationGroup open={inviteModal} onClose={closeInviteModal} />
           </div>
         : <div className='std-group'>

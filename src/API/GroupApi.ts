@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Group, GroupeInvitedMember, GroupSearchMember } from '../Typage/Type'
+import type { Group, GroupeInvitedMember, GroupSearchMember, GroupInvitationData } from '../Typage/Type'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class GroupApi {
@@ -34,6 +34,21 @@ class GroupApi {
   static async deleteGroup (jwtToken: string): Promise<Group> {
     try {
       const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/group`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json'
+        }
+      }
+      )
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
+  static async leaveGroup (jwtToken: string): Promise<Group> {
+    try {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/group/leave`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           'Content-Type': 'application/json'
@@ -89,6 +104,47 @@ class GroupApi {
   static async deleteInvitedMember (jwtToken: string, userId: number): Promise<Group> {
     try {
       const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/group/invite/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      }
+      )
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
+  static async getGroupInvitation (jwtToken: string): Promise<GroupInvitationData> {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/group/invites`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      })
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
+  static async acceptInvitation (jwtToken: string, groupId: number): Promise<Group> {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/group/invites/accept/${groupId}`, null, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      }
+      )
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
+  static async refuseInvitation (jwtToken: string, groupId: number): Promise<Group> {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/group/invites/refuse/${groupId}`, null, {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }

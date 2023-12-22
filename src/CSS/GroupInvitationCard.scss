@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+.grp-invite-card {
+    font-family: 'Poppins';
+    background-color: #fff;
+    margin-top: 2em;
+    border-radius: 10px;
+    width: fit-content;
+    max-width: 70%;
+
+    &__section {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__title {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        justify-content: center;
+        align-items: center;
+        color: #3DA1CC;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+
+    &__leader {
+        margin: 1em;
+        text-align: center;
+        color: #4B4B4B;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        border-right: rgba($color: #000000, $alpha: .3) solid 1px;
+        padding: 1em;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        padding: 1em;
+        gap: 1em;
+        align-items: center;
+    }
+
+    &__button-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+}

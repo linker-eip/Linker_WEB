@@ -18,19 +18,19 @@ i18n
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
             refus: {
-              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+              subtitle: 'Etes-vous sur de vouloir refuser:'
             },
             accept: {
-              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+              subtitle: 'Etes-vous sur de vouloir accepter:'
             },
             delete: {
-              subtitle: 'Etes-vous sûr de vouloir supprimer la mission :',
+              subtitle: 'Etes-vous sûr de vouloir supprimer:',
               groups: {
-                subtitle: 'Etes-vous sur de vouloir détruire le groupe :'
+                subtitle: 'Etes-vous sur de vouloir détruire:'
               }
             },
             leave: {
-              subtitle: 'Etes-vous sur de vouloir quitter le groupe :'
+              subtitle: 'Etes-vous sur de vouloir quitter:'
             }
           },
           validate: 'Valider',
@@ -77,8 +77,9 @@ i18n
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
-                invite: 'invitations',
+                invite: 'invitations ({{nbrInvitation}})',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
+                no_invite: 'Il semble que vous n\'ayez aucune invitations en attente.',
                 create_group_button: 'Créer un groupe',
                 member_title: 'Les membres'
               },
@@ -259,13 +260,19 @@ i18n
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
             refus: {
-              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+              subtitle: 'Etes-vous sur de vouloir refuser:'
             },
             accept: {
-              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+              subtitle: 'Etes-vous sur de vouloir accepter:'
             },
             delete: {
-              subtitle: 'Etes-vous sûr de vouloir supprimer la mission :'
+              subtitle: 'Etes-vous sûr de vouloir supprimer:',
+              groups: {
+                subtitle: 'Etes-vous sur de vouloir détruire:'
+              }
+            },
+            leave: {
+              subtitle: 'Etes-vous sur de vouloir quitter:'
             }
           },
           validate: 'Valider',
@@ -312,7 +319,7 @@ i18n
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
-                invite: 'invitations',
+                invite: 'invitations()',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
                 create_group_button: 'Créer un groupe',
                 invited: 'Les membres invités'
