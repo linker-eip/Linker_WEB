@@ -51,3 +51,15 @@ export interface GroupSearchMember {
   data?: SearchMember[]
   response?: GroupError
 }
+
+export interface GroupInvitation {
+  id: 0
+  name: string
+  picture: string
+  leaderName: string
+}
+
+export interface GroupInvitationData {
+  data?: GroupInvitation[]
+  response?: GroupError
+}

@@ -30,26 +30,31 @@ function ModalCreateGroup (props: Props): JSX.Element {
   const maxLength = 500
   const [logo, setLogo] = useState<any>()
   const [alertError, setAlertError] = useState(false)
+  const [errorText, setErrorText] = useState('')
 
   const handleLogo = (event: ChangeEvent<HTMLInputElement>): void => {
     setLogo(event)
   }
 
   const handleCreateGroup = async (): Promise<void> => {
-    console.log('here')
-    const file = new FormData()
-    file.append('file', logo[0])
-    const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
-
-    const dto = new FormData()
-    dto.append('name', groupName.toString())
-    dto.append('description', groupDescription.toString())
-    dto.append('picture', String(returnValue))
-    const response = await GroupApi.createGroup(localStorage.getItem('jwtToken') as string, dto)
-    if (response.response?.status === 400 || response.response?.status === 409) {
-      openAlertSnackbar()
+    if (logo != null && groupName.length > 1 && groupDescription.length > 1) {
+      const file = new FormData()
+      file.append('file', logo[0])
+      const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
+      const dto = new FormData()
+      dto.append('name', groupName.toString())
+      dto.append('description', groupDescription.toString())
+      dto.append('picture', String(returnValue))
+      const response = await GroupApi.createGroup(localStorage.getItem('jwtToken') as string, dto)
+      if (response.response?.status === 400 || response.response?.status === 409) {
+        setErrorText(response.response?.data.message)
+        openAlertSnackbar()
+      } else {
+        props.onClose()
+      }
     } else {
-      props.onClose()
+      setErrorText('Veuillez remplir les champs correctement.')
+      openAlertSnackbar()
     }
   }
 
@@ -120,7 +125,7 @@ function ModalCreateGroup (props: Props): JSX.Element {
           </div>
           <Snackbar open={alertError} autoHideDuration={6000} onClose={closeAlertSnackbar}>
             <Alert onClose={closeAlertSnackbar} severity="error" sx={{ width: '100%' }}>
-              Il existe déjà un groupe portant ce nom
+              { errorText }
             </Alert>
           </Snackbar>
         </div>

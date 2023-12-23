@@ -21,15 +21,15 @@ i18n
             commentTitle: 'Laisser un avis sur la prestation',
             remaining_char: 'caractères restants',
             refus: {
-              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+              subtitle: 'Etes-vous sur de vouloir refuser:'
             },
             accept: {
-              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+              subtitle: 'Etes-vous sur de vouloir accepter:'
             },
             delete: {
-              subtitle: 'Etes-vous sûr de vouloir supprimer la mission :',
+              subtitle: 'Etes-vous sûr de vouloir supprimer:',
               groups: {
-                subtitle: 'Etes-vous sur de vouloir détruire le groupe :'
+                subtitle: 'Etes-vous sur de vouloir détruire:'
               }
             },
             notation: {
@@ -39,7 +39,7 @@ i18n
               subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
             },
             leave: {
-              subtitle: 'Etes-vous sur de vouloir quitter le groupe :'
+              subtitle: 'Etes-vous sur de vouloir quitter:'
             }
           },
           validate: 'Valider',
@@ -86,8 +86,9 @@ i18n
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
-                invite: 'invitations',
+                invite: 'invitations ({{nbrInvitation}})',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
+                no_invite: 'Il semble que vous n\'ayez aucune invitations en attente.',
                 create_group_button: 'Créer un groupe',
                 member_title: 'Les membres'
               },
@@ -273,19 +274,19 @@ i18n
             commentTitle: 'Laisser un avis sur la prestation',
             remaining_char: 'caractères restants',
             refus: {
-              subtitle: 'Etes-vous sur de vouloir refuser la mission :'
+              subtitle: 'Etes-vous sur de vouloir refuser:'
             },
             accept: {
-              subtitle: 'Etes-vous sur de vouloir accepter la mission :'
+              subtitle: 'Etes-vous sur de vouloir accepter:'
             },
             delete: {
-              subtitle: 'Etes-vous sûr de vouloir supprimer la mission :'
+              subtitle: 'Etes-vous sûr de vouloir supprimer:',
+              groups: {
+                subtitle: 'Etes-vous sur de vouloir détruire:'
+              }
             },
-            notation: {
-              subtitle: 'Veuillez remplir les champs ci-dessous pour évaluer la prestation du groupe sur cette mission:'
-            },
-            comment: {
-              subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
+            leave: {
+              subtitle: 'Etes-vous sur de vouloir quitter:'
             }
           },
           validate: 'Valider',
@@ -332,9 +333,10 @@ i18n
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
-                invite: 'invitations',
+                invite: 'invitations()',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
-                create_group_button: 'Créer un groupe'
+                create_group_button: 'Créer un groupe',
+                invited: 'Les membres invités'
               },
               hotbar: {
                 profil: 'Profil',

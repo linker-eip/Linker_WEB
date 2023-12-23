@@ -7,17 +7,23 @@
     font-family: 'Poppins';
 
     &__section {
-        padding: 0.5em;
+        padding: 1em;
+        margin-left: 1em;
         display: flex;
         flex-direction: column;
         gap: 1em;
-        align-items: center;
+        align-items: flex-start;
     }
 
     &__name {
         color: #4B4B4B;
         font-size: 20px;
         font-weight: 600;
+    }
+
+    &__logo {
+        height: 25px;
+        cursor: pointer;
     }
 
     &__card {
