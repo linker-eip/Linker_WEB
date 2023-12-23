@@ -59,6 +59,7 @@ const InvitationCard = (props: Props): JSX.Element => {
         </div>
         <div className='grp-invite-card__content'>
           <div>
+          {/* changer la description la team le type de GroupeInvitation */}
           Description tah les ouf ecrit en dur tah les zhomme SUII aller le football la j aime le foot alesxandDescription tah les ouf ecrit en dur tah les zhomme SUII aller le football la j aime le foot alesxandDescription tah les ouf ecrit en dur tah les zhomme SUII aller le football la j aime le foot alesxandDescription tah les ouf ecrit en dur tah les zhomme SUII aller le football la j aime le foot alesxandDescription tah les ouf ecrit en dur tah les zhomme SUII aller le football la j aime le foot ale
           </div>
           <div className='grp-invite-card__button-section'>
