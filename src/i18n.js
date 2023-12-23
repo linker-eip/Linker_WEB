@@ -251,12 +251,12 @@ i18n
               }
             },
             detailed_mission: {
-              research_mission: 'Mission en recherche',
-              pending_mission: 'Missions en cours',
+              research_mission: 'Mission en recherche ⌛',
+              pending_mission: 'Missions en cours ⌛',
               accepted: 'Proposition acceptée',
               provisionée: 'Mission provisionée',
               in_progress: 'Mission en cours',
-              completed: 'Mission terminée',
+              completed: 'Mission terminée ✅',
               details: 'Détail de la mission',
               historic: 'Historique de la mission',
               conversation: 'Accéder à la conversation',
