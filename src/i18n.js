@@ -17,6 +17,9 @@ i18n
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
+            notationTitle: 'Noter la prestation',
+            commentTitle: 'Laisser un avis sur la prestation',
+            remaining_char: 'caractères restants',
             refus: {
               subtitle: 'Etes-vous sur de vouloir refuser:'
             },
@@ -28,6 +31,12 @@ i18n
               groups: {
                 subtitle: 'Etes-vous sur de vouloir détruire:'
               }
+            },
+            notation: {
+              subtitle: 'Veuillez remplir les champs ci-dessous pour évaluer la prestation du groupe sur cette mission:'
+            },
+            comment: {
+              subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
             },
             leave: {
               subtitle: 'Etes-vous sur de vouloir quitter:'
@@ -139,15 +148,16 @@ i18n
               text_2: 'sur toutes vos missions notées par vos clients'
             },
             detailed_mission: {
-              pending_mission: 'Missions en cours',
+              pending_mission: 'Mission en cours ⌛',
               accepted: 'Proposition acceptée',
               provisionée: 'Mission provisionée',
               in_progress: 'Mission en cours',
               completed: 'Mission terminée',
+              mission_completed: 'Mission terminée ✅',
               details: 'Détail de la mission',
               historic: 'Historique de la mission',
               conversation: 'Accéder à la conversation',
-              mission: 'missions',
+              mission: 'mission(s)',
               tab: {
                 detail: 'Détail',
                 quantity: 'Quantité',
@@ -159,7 +169,8 @@ i18n
               edit_mode: {
                 desc: 'Description',
                 location: 'Location',
-                website: 'Website'
+                website: 'Website',
+                activity: 'Activité'
               },
               content: {
               },
@@ -259,6 +270,9 @@ i18n
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
+            notationTitle: 'Noter la prestation',
+            commentTitle: 'Laisser un avis sur la prestation',
+            remaining_char: 'caractères restants',
             refus: {
               subtitle: 'Etes-vous sur de vouloir refuser:'
             },
@@ -380,15 +394,16 @@ i18n
               text_2: 'sur toutes vos missions notées par vos clients'
             },
             detailed_mission: {
-              pending_mission: 'Missions en cours',
+              pending_mission: 'Mission en cours ⌛',
               accepted: 'Proposition acceptée',
               provisionée: 'Mission provisionée',
               in_progress: 'Mission en cours',
               completed: 'Mission terminée',
+              mission_completed: 'Mission terminée ✅',
               details: 'Détail de la mission',
               historic: 'Historique de la mission',
               conversation: 'Accéder à la conversation',
-              mission: 'missions',
+              mission: 'mission(s)',
               tab: {
                 detail: 'Détail',
                 quantity: 'Quantité',
@@ -400,7 +415,8 @@ i18n
               edit_mode: {
                 desc: 'Description',
                 location: 'Location',
-                website: 'Website'
+                website: 'Website',
+                activity: 'Activité'
               },
               content: {
               },
