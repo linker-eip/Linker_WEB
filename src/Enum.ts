@@ -20,6 +20,8 @@ export enum ModalType {
   ACCEPT = 'accept',
   DELETE = 'delete',
   DELETE_GROUP = 'delete_group',
+  NOTATION = 'notation',
+  COMMENT = 'comment',
   LEAVE = 'leave'
 }
 

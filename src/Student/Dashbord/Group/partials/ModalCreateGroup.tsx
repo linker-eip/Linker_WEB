@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { type ChangeEvent, useState } from 'react'
 import '../../../../CSS/StudentGroup.scss'
 import { useTranslation } from 'react-i18next'
@@ -5,6 +6,17 @@ import Modal from '@mui/material/Modal'
 import { TextField } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
 import GroupApi from '../../../../API/GroupApi'
+import DropZone from '../../../../Component/DropZone'
+import ProfileApi from '../../../../API/ProfileApi'
+import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 interface Props {
   open: boolean
@@ -16,14 +28,34 @@ function ModalCreateGroup (props: Props): JSX.Element {
   const [groupName, setGroupName] = useState<string>('')
   const [groupDescription, setGroupDescription] = useState('')
   const maxLength = 500
+  const [logo, setLogo] = useState<any>()
+  const [alertError, setAlertError] = useState(false)
+  const [errorText, setErrorText] = useState('')
 
-  const handleCreateGroup = (): void => {
-    const dto = new FormData()
-    dto.append('name', groupName.toString())
-    dto.append('description', groupDescription.toString())
-    dto.append('picture', '')
-    GroupApi.createGroup(localStorage.getItem('jwtToken') as string, dto)
-    props.onClose()
+  const handleLogo = (event: ChangeEvent<HTMLInputElement>): void => {
+    setLogo(event)
+  }
+
+  const handleCreateGroup = async (): Promise<void> => {
+    if (logo != null && groupName.length > 1 && groupDescription.length > 1) {
+      const file = new FormData()
+      file.append('file', logo[0])
+      const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
+      const dto = new FormData()
+      dto.append('name', groupName.toString())
+      dto.append('description', groupDescription.toString())
+      dto.append('picture', String(returnValue))
+      const response = await GroupApi.createGroup(localStorage.getItem('jwtToken') as string, dto)
+      if (response.response?.status === 400 || response.response?.status === 409) {
+        setErrorText(response.response?.data.message)
+        openAlertSnackbar()
+      } else {
+        props.onClose()
+      }
+    } else {
+      setErrorText('Veuillez remplir les champs correctement.')
+      openAlertSnackbar()
+    }
   }
 
   const handleValidationClose = (): void => {
@@ -42,6 +74,18 @@ function ModalCreateGroup (props: Props): JSX.Element {
     }
   }
 
+  const openAlertSnackbar = (): void => {
+    setAlertError(true)
+  }
+
+  const closeAlertSnackbar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setAlertError(false)
+  }
+
   return (
     <Modal open={props.open} onClose={handleValidationClose} >
         <div className='std-group-modal'>
@@ -49,6 +93,13 @@ function ModalCreateGroup (props: Props): JSX.Element {
             <div className='std-group-modal__title'> { t('student.groups.title') } </div>
           </div>
           <div className='std-group-modal__content-section'>
+            <DropZone onObjectChange={handleLogo} />
+              { logo !== undefined
+                ? <div>
+                    <p> {logo[0].path } </p>
+                  </div>
+                : null
+              }
             <TextField
               className='std-group-modal__textfield'
               value={groupName}
@@ -72,6 +123,11 @@ function ModalCreateGroup (props: Props): JSX.Element {
               <BaseButton title={t('student.groups.button')} onClick={handleCreateGroup} />
             </div>
           </div>
+          <Snackbar open={alertError} autoHideDuration={6000} onClose={closeAlertSnackbar}>
+            <Alert onClose={closeAlertSnackbar} severity="error" sx={{ width: '100%' }}>
+              { errorText }
+            </Alert>
+          </Snackbar>
         </div>
       </Modal>
   )

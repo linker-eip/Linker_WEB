@@ -13,7 +13,8 @@ import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import Group from './partials/Group'
 import GroupApi from '../../../API/GroupApi'
-import type { GroupType, GroupError, Group as GroupData } from '../../../Typage/Type'
+import type { GroupType, GroupError, Group as GroupData, GroupInvitationData } from '../../../Typage/Type'
+import Invitations from './partials/Invitations'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -51,13 +52,16 @@ function StudentGroup (): JSX.Element {
   const { t } = useTranslation()
   const [value, setValue] = useState(0)
   const [groupData, setGroupData] = useState<GroupData>()
+  const [groupInvitationData, setGroupInvitationData] = useState<GroupInvitationData>()
   const [refetchData, setRefetchData] = useState(false)
 
   useEffect(() => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
+      const groupInvitationData = await GroupApi.getGroupInvitation(localStorage.getItem('jwtToken') as string)
       const groupData = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
       setGroupData(groupData)
+      setGroupInvitationData(groupInvitationData)
     }
     fetchData()
   }, [refetchData])
@@ -78,11 +82,14 @@ function StudentGroup (): JSX.Element {
         <div className='std-bord-container__content'>
           <div className='std-mission__group-page'>
             <Tabs className='std-mission__text' value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab className='std-mission__text' label={groupData?.data?.name ?? t('student.dashboard.groups.my_group')} {...a11yProps(0)} />
-              <Tab className='std-mission__text' label={t('student.dashboard.groups.invite')} {...a11yProps(0)} />
+              <Tab className='std-mission__text' label={ groupData?.data?.name ?? t('student.dashboard.groups.my_group')} {...a11yProps(0)} />
+              <Tab className='std-mission__text' label={t('student.dashboard.groups.invite', { nbrInvitation: groupInvitationData?.data?.length ?? 0 })} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
               <Group data={groupData} onReturn={handleRefetch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <Invitations data={groupInvitationData?.data} onReturn={handleRefetch} />
             </CustomTabPanel>
           </div>
         </div>

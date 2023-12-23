@@ -8,9 +8,14 @@
   background-color: white;
   padding: 2em;
   width: fit-content;
-  margin-top: 23em;
-  margin-left: 40em;
+  max-width: 90%;
   border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   &__title {
     color: #474747;
@@ -23,6 +28,13 @@
     padding-bottom: 1em;
   }
 
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em;
+  }
+
   &__subtitle {
     color: #474747;
     font-family: Poppins;
@@ -30,6 +42,42 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+  }
+
+  &__textarea {
+    width: 90%;
+    height: 100px;
+    margin-top: 1em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1em;
+  }
+
+  &__char-count {
+    color: #474747;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding-top: 1em;
+  }
+
+  &__first-stars {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 1em;
+    padding-top: 1em;
+  }
+
+  &__stars {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 1em;
   }
 
   &__subject {

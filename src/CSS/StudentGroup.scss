@@ -14,7 +14,8 @@
 
     &__member-container {
         background-color: #fff;
-        min-height: 81vh;
+        min-height: 91.5vh;
+        margin-top: -96px;
     }
 
     &__button-container {
@@ -40,6 +41,25 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+    }
+
+    &__picture {
+        height: 120px;
+        border-radius: 10%;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: row;
+        margin: 1em;
+        gap: 1em;
+    }
+
+    &__details-section {
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-between;
+        
     }
 
     &__image {
