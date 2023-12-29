@@ -33,3 +33,8 @@ export enum MissionStatus {
   FINISHED = 'FINISHED',
   CANCELLED = 'CANCELLED'
 }
+
+export enum TaskStatus {
+  PENDING = 'PENDING',
+  FINISHED = 'FINISHED'
+}

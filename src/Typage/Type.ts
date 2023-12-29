@@ -52,66 +52,70 @@ export interface GroupSearchMember {
   response?: GroupError
 }
 
+export interface CompanyInfo {
+  id: number
+  name: string
+  description: string
+  email: string
+  phone: string
+  address: string
+  size: number
+  location: string
+  activity: string
+  speciality: string
+  website: string
+  picture: string
+}
+
+export interface MissionInfo {
+  id: number
+  name: string
+  status: string
+  description: string
+  companyId: number
+  groupId: number
+  startOfMission: string
+  endOfMission: string
+  createdAt: string
+  amount: number
+  skills: string
+}
+
+export interface MissionTaskArrayInfo {
+  missionTask: MissionTaskInfo
+  studentProfile: StudentProfileInfo[]
+}
+
+export interface MissionTaskInfo {
+  id: number
+  name: string
+  description: string
+  studentId: number
+  missionId: number
+  amount: number
+  skills: string
+  status: string
+  createdAt: string
+}
+
+export interface StudentProfileInfo {
+  id: number
+  studentId: number
+  firstName: string
+  lastName: string
+  description: string
+  email: string
+  phone: string
+  location: string
+  picture: string
+  website: string
+  note: number
+}
+
 export interface CompanyMissionDetails {
-  company: {
-    id: 0
-    name: string
-    description: string
-    email: string
-    phone: string
-    address: string
-    size: 0
-    location: string
-    activity: string
-    speciality: string
-    website: string
-    picture: string
-  }
-  mission: {
-    Id: 0
-    name: string
-    status: string
-    description: string
-    companyId: 0
-    groupId: 0
-    startOfMission: string
-    endOfMission: string
-    createdAt: string
-    amount: 0
-    skills: string
-  }
-  missionTaskArray: [
-    {
-      missionTasks: [
-        {
-          id: 0
-          name: string
-          description: string
-          studentId: 0
-          missionId: 0
-          amount: 0
-          skills: string
-          status: string
-          createdAt: string
-        }
-      ]
-      studentProfile: [
-        {
-          id: 0
-          studentId: 0
-          firstName: string
-          lastName: string
-          description: string
-          email: string
-          phone: string
-          location: string
-          picture: string
-          website: string
-          note: 0
-        }
-      ]
-    }
-  ]
+  company: CompanyInfo
+  mission: MissionInfo
+  missionTaskArray: MissionTaskArrayInfo[]
   group: {
     name: string
     description: string
@@ -122,16 +126,16 @@ export interface CompanyMissionDetails {
         lastName: string
         picture: string
         isLeader: true
-        id: 0
+        id: number
       }
     ]
-    leaderId: 0
+    leaderId: number
     isLeader: true
   }
   groupStudents: [
     {
-      id: 0
-      studentId: 0
+      id: number
+      studentId: number
       firstName: string
       lastName: string
       description: string
@@ -140,13 +144,13 @@ export interface CompanyMissionDetails {
       location: string
       picture: string
       website: string
-      note: 0
+      note: number
     }
   ]
 }
 
 export interface GroupInvitation {
-  id: 0
+  id: number
   name: string
   picture: string
   leaderName: string

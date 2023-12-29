@@ -5,7 +5,7 @@ import '../../CSS/CompanyDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
-import { DashboardState, ModalType, MissionStatus } from '../../Enum'
+import { DashboardState, ModalType, MissionStatus, TaskStatus } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -14,23 +14,10 @@ import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
 import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material'
-import { CompanyMissionDetails } from '../../Typage/Type'
-
-interface MissionDetails {
-  id: number
-  name: string
-  status: string
-  description: string
-  companyId: number
-  companyName: string
-  companyProfilePicture: string
-  groupId: number
-  startOfMission: Date
-  endOfMission: Date
-  createdAt: Date
-  amount: number
-  skills: string
-}
+import type { CompanyMissionDetails, MissionInfo, MissionTaskArrayInfo } from '../../Typage/Type'
+import MissionApi from '../../API/MissionApi'
+import MissionGroup from './partials/MissionGroup'
+import TaskTab from './partials/TaskTab'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -46,46 +33,28 @@ function CompanyDetailedMission (): JSX.Element {
   const [notationModal, setNotationModal] = useState(false)
   const [commentModal, setCommentModal] = useState(false)
   const [missionData, setMissionData] = useState<CompanyMissionDetails>()
-  const [editMissionData, setEditMissionData] = useState<MissionDetails>()
+  const [editMissionData, setEditMissionData] = useState<MissionInfo>()
   const [nbrMission, setNbrMission] = useState<number | undefined>(0)
   const [hasCompanyNoted, setHasCompanyNoted] = useState<number>(0)
   const [hasCompanyCommented, setHasCompanyCommented] = useState<number>(0)
+  const [refetchMissionData, setRefetch] = useState<boolean>(false)
+  const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
 
   useEffect(() => {
-    if (typeof missionId === 'undefined') {
-      console.error('missionId is undefined.')
-      return
-    }
-
-    fetch(`https://dev.linker-app.fr/api/mission/info/${missionId}/company`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
-        'Content-Type': 'application/json'
+    async function fetchData (): Promise<void> {
+      if (typeof missionId === 'undefined') {
+        console.error('missionId is undefined.')
+        return
       }
-    })
-      .then(async response => await response.json())
-      .then(data => {
-        setMissionData({
-          id: data.mission.id,
-          name: data.mission.name,
-          status: data.mission.status,
-          description: data.mission.description,
-          companyId: data.mission.companyId,
-          companyName: data.companyProfile.name,
-          companyProfilePicture: data.companyProfile.picture,
-          groupId: data.mission.groupId,
-          startOfMission: data.mission.startOfMission,
-          endOfMission: data.mission.endOfMission,
-          createdAt: data.mission.createdAt,
-          amount: data.mission.amount,
-          skills: data.mission.skills
-        })
-      })
-      .catch(error => {
-        alert(`Erreur lors de la récupération des données: ${String(error)}`)
-      })
-  }, [missionId])
+
+      const response = await MissionApi.getCompanyDetailedMission(localStorage.getItem('jwtToken') as string, missionId)
+      setMissionData(response)
+      if (response !== undefined) {
+        setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
+      }
+    }
+    fetchData()
+  }, [missionId, refetchMissionData])
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/mission`, {
@@ -115,13 +84,13 @@ function CompanyDetailedMission (): JSX.Element {
         setActiveStep(2)
         break
       case MissionStatus.PROVISIONED:
-        setActiveStep(2)
-        break
-      case MissionStatus.IN_PROGRESS:
         setActiveStep(3)
         break
-      case MissionStatus.FINISHED:
+      case MissionStatus.IN_PROGRESS:
         setActiveStep(4)
+        break
+      case MissionStatus.FINISHED:
+        setActiveStep(5)
         break
       default:
         break
@@ -161,6 +130,10 @@ function CompanyDetailedMission (): JSX.Element {
     setCommentModal(false)
   }
 
+  const handleRefetch = (): void => {
+    setRefetch(!refetchMissionData)
+  }
+
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
   const state = DashboardState
   const { t } = useTranslation()
@@ -178,17 +151,17 @@ function CompanyDetailedMission (): JSX.Element {
   useEffect(() => {
     setHistoricData([
       {
-        logo: missionData?.companyProfilePicture,
+        logo: missionData?.company.picture ?? '',
         name: 'Vous',
         action: 'avez noté la prestation.'
       },
       {
-        logo: missionData?.companyProfilePicture,
+        logo: missionData?.company.picture ?? '',
         name: 'Vous',
         action: 'avez laissé un avis sur la prestation.'
       }
     ])
-  }, [missionData?.companyProfilePicture])
+  }, [missionData?.company])
 
   const handleUpdate = (): void => {
     const payload = {
@@ -234,6 +207,13 @@ function CompanyDetailedMission (): JSX.Element {
     return Object.values(fieldValidity).every(value => value)
   }
 
+  const finishMission = (): void => {
+    console.log(missionData)
+    if (missionData?.mission !== undefined && missionData.mission.id !== undefined) {
+      MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)
+    }
+  }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
@@ -241,42 +221,42 @@ function CompanyDetailedMission (): JSX.Element {
         <SidebarDashboard state={state.MISSION} />
         { missionData !== undefined && missionData !== null
           ? <div className='std-bord-container__content'>
-              <div className='std-detailed-mission__section'>
-                { missionData.status === MissionStatus.PENDING
-                  ? <div className='std-detailed-mission__potential-section'>
-                    <p className='std-detailed-mission__section__title'> { t('company.detailed_mission.research_mission') } </p>
-                      <div className='std-detailed-mission__potential-button'>
+              <div className='cpn-detailed-mission__section'>
+                { missionData.mission.status === MissionStatus.PENDING
+                  ? <div className='cpn-detailed-mission__potential-section'>
+                    <p className='cpn-detailed-mission__section__title'> { t('company.detailed_mission.research_mission') } </p>
+                      <div className='cpn-detailed-mission__potential-button'>
                         <ClassicButton title='Modifier' onClick={handleEditOpen}/>
                         <ClassicButton title='Supprimer' refuse onClick={handleRefuseOpen}/>
                       </div>
                     </div>
                   : null
                 }
-                { missionData.status === 'ACCEPTED'
-                  ? <div className='std-detailed-mission__potential-section'>
-                      <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.mission_pending') } </p>
+                { missionData.mission.status === MissionStatus.ACCEPTED
+                  ? <div className='cpn-detailed-mission__potential-section'>
+                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_pending') } </p>
                     </div>
                   : null
                 }
-                { missionData.status === 'FINISHED'
-                  ? <div className='std-detailed-mission__potential-section'>
-                      <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.mission_completed') } </p>
+                { missionData.mission.status === MissionStatus.FINISHED
+                  ? <div className='cpn-detailed-mission__potential-section'>
+                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_completed') } </p>
                     </div>
                   : null
                 }
-                <p className='std-detailed-mission__section__title-3'>{ missionData.name }</p>
-                <p className='std-detailed-mission__section__title-4'>{ missionData.description }</p>
+                <p className='cpn-detailed-mission__section__title-3'>{ missionData.mission.name }</p>
+                <p className='cpn-detailed-mission__section__title-4'>{ missionData.mission.description }</p>
                 <Stepper
-                  activeStep={missionData.status === 'PENDING' ? 0 : (missionData.status === 'FINISHED' ? steps.length - 1 : activeStep - 1)}
+                  activeStep={activeStep - 1}
                   alternativeLabel
                 >
                   {steps.map((label, index) => (
                     <Step key={label}>
                       <StepLabel>
                         <p className={
-                            index === (missionData.status === 'PENDING' ? 0 : (missionData.status === 'FINISHED' ? steps.length - 1 : activeStep - 1))
-                              ? 'std-detailed-mission__stepper-active'
-                              : 'std-detailed-mission__stepper'
+                            index === activeStep - 1
+                              ? 'cpn-detailed-mission__stepper-active'
+                              : 'cpn-detailed-mission__stepper'
                           }>
                           {label}
                         </p>
@@ -285,110 +265,77 @@ function CompanyDetailedMission (): JSX.Element {
                   ))}
                 </Stepper>
               </div>
-              <div className='std-detailed-mission__container'>
-                <div className='std-detailed-mission__section'>
-                  <div className='std-detailed-mission__section__notation'>
-                    <p className='std-detailed-mission__container__title'>{ t('student.detailed_mission.details') }</p>
+              <div className='cpn-detailed-mission__container'>
+                <div className='cpn-detailed-mission__section'>
+                  <div className='cpn-detailed-mission__section__notation'>
+                    <p className='cpn-detailed-mission__container__title'>{ t('student.detailed_mission.details') }</p>
+                    {
+                      missionData.mission.status === MissionStatus.IN_PROGRESS
+                        ? <div>
+                            { `Tâches terminées: ${nbrFinishedTask}/${missionData.missionTaskArray.length}` }
+                          </div>
+                        : null
+                    }
+                    {
+                      missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && missionData.mission.status === MissionStatus.IN_PROGRESS
+                        ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
+                        : null
+                    }
                     <div>
-                      { missionData.status === 'FINISHED' && hasCompanyNoted === 0
+                      { missionData.mission.status === MissionStatus.FINISHED && hasCompanyNoted === 0
                         ? <ClassicButton title='Noter' onClick={handleNotationOpen} />
                         : null
                       }
-                      { missionData.status === 'FINISHED' && hasCompanyCommented === 0
+                      { missionData.mission.status === MissionStatus.FINISHED && hasCompanyCommented === 0
                         ? <ClassicButton title='Laisser un avis' onClick={handleCommentOpen} />
                         : null
                       }
                     </div>
                   </div>
-                  <div className='std-detailed-mission__tab-container std-detailed-mission__tab-container--colored'>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.detail')} </p>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.quantity')} </p>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.unitary_price')} </p>
-                    <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.total_price')} </p>
-                  </div>
+                  <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} onCallback={handleRefetch}/>
                 </div>
-                <div className='std-detailed-mission__column'>
-                <div className='cpn-detailed-mission__section'>
-                  <p className='cpn-detailed-mission__section__title-4'> { t('company.detailed_mission.participants')} </p>
-                  {missionData.groupId != null
-                    ? <div className='cpn-detailed-mission__column-2'>
-                        <div className='cpn-detailed-mission__row'>
-                          <img className='cpn-detailed-mission__logo' src={'missionData.logo'} />
-                          <div className='cpn-detailed-mission__column'>
-                            <p className='cpn-detailed-mission__section__subtitle'> company name= { missionData?.name } </p>
+                <div className='cpn-detailed-mission__column'>
+                <MissionGroup missionData={missionData} />
+                  <div>
+                    <div className='cpn-detailed-mission__section'>
+                      <p className='cpn-detailed-mission__container__title'> { t('company.detailed_mission.historic') } </p>
+                      { missionData.mission.status === MissionStatus.PENDING.toString()
+                        ? <div>
+                            L’historique est vide.
                           </div>
-                        </div>
-                        <p className='cpn-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
-                      </div>
-                    : <div className='cpn-detailed-mission__column-2'>
-                        <img className='cpn-detailed-mission__img' src='/assets/groups_image.svg' />
-                        <div className='cpn-detailed-mission__row'>
-                          { t('company.detailed_mission.no_participants')}
-                        </div>
-                      </div>
-                  }
-                </div>
-                    {/* <div className='std-detailed-mission__section'>
-                      <div className='std-detailed-mission__row'>
-                        <img className='std-detailed-mission__logo' src={'missionData.logo'} />
-                        <div className='std-detailed-mission__column'>
-                          <p className='std-detailed-mission__section__title-2'> { missionData?.name } </p>
-                          <p className='std-detailed-mission__section__subtitle'> { missionData?.companyName } </p>
-                        </div>
-                      </div>
-                      <div className='std-detailed-mission__column-2'>
-                        <div className='std-detailed-mission__mark'>
-                          {
-                            starsStatus.map((index) => {
-                              return <img src='/assets/stars.svg' alt='stars' className='std-detailed-mission__stars' key={index} />
-                            })
-                          }
-                          <div className='std-detailed-mission__circle' />
-                          <p>{ nbrMission } {t('student.detailed_mission.mission')} </p>
-                        </div>
-                        <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
-                      </div>
-                    </div> */}
-                    <div>
-                      <div className='cpn-detailed-mission__section'>
-                        <p className='cpn-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
-                        {missionData.status === MissionStatus.PENDING.toString()
-                          ? <div>
-                              L’historique est vide.
-                            </div>
-                          : null
-                        }
-                        {/* {
-                          historicData.map((historic, index) => (
-                            <div className='std-detailed-mission__sub-section' key={index}>
-                              <div className='std-detailed-mission__row'>
-                                <Avatar className='std-detailed-mission__historic-logo' src={historic.logo} />
-                                <div className='std-detailed-mission__text-important'> {historic.name} </div>
-                                <div className='std-detailed-mission__text '> {historic.action} </div>
-                              </div>
-                            </div>
-                          ))
-                        } */}
-                        { hasCompanyNoted > 0 && (
-                          <div className='std-detailed-mission__sub-section'>
-                            <div className='std-detailed-mission__row'>
-                              <Avatar className='std-detailed-mission__historic-logo' src={historicData[0].logo} />
-                              <div className='std-detailed-mission__text-important'> {historicData[0].name}</div>
-                              <div className='std-detailed-mission__text '> {historicData[0].action} </div>
+                        : null
+                      }
+                      {/* {
+                        historicData.map((historic, index) => (
+                          <div className='cpn-detailed-mission__sub-section' key={index}>
+                            <div className='cpn-detailed-mission__row'>
+                              <Avatar className='cpn-detailed-mission__historic-logo' src={historic.logo} />
+                              <div className='cpn-detailed-mission__text-important'> {historic.name} </div>
+                              <div className='cpn-detailed-mission__text '> {historic.action} </div>
                             </div>
                           </div>
-                        )}
-                        { hasCompanyCommented > 0 && (
-                          <div className='std-detailed-mission__sub-section'>
-                            <div className='std-detailed-mission__row'>
-                              <Avatar className='std-detailed-mission__historic-logo' src={historicData[1].logo} />
-                              <div className='std-detailed-mission__text-important'> {historicData[1].name}</div>
-                              <div className='std-detailed-mission__text '> {historicData[1].action} </div>
-                            </div>
+                        ))
+                      } */}
+                      { hasCompanyNoted > 0 && (
+                        <div className='cpn-detailed-mission__sub-section'>
+                          <div className='cpn-detailed-mission__row'>
+                            <Avatar className='cpn-detailed-mission__historic-logo' src={historicData[0].logo} />
+                            <div className='cpn-detailed-mission__text-important'> {historicData[0].name}</div>
+                            <div className='cpn-detailed-mission__text '> {historicData[0].action} </div>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
+                      { hasCompanyCommented > 0 && (
+                        <div className='cpn-detailed-mission__sub-section'>
+                          <div className='cpn-detailed-mission__row'>
+                            <Avatar className='cpn-detailed-mission__historic-logo' src={historicData[1].logo} />
+                            <div className='cpn-detailed-mission__text-important'> {historicData[1].name}</div>
+                            <div className='cpn-detailed-mission__text '> {historicData[1].action} </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -397,10 +344,10 @@ function CompanyDetailedMission (): JSX.Element {
       {
         open
           ? <ModalValidation
-              subject={missionData?.name ?? ''}
+              subject={missionData?.mission.name ?? ''}
               open={open}
               type={ModalType.DELETE}
-              id={missionData?.id}
+              id={missionData?.mission.id}
               isDetails={true}
               onClose={handleRefuseClose}
             />
@@ -409,7 +356,7 @@ function CompanyDetailedMission (): JSX.Element {
       {
         notationModal
           ? <ModalValidation
-              subject={missionData?.name ?? ''}
+              subject={missionData?.mission.name ?? ''}
               open={notationModal}
               type={ModalType.NOTATION}
               onClose={handleNotationClose}
@@ -420,7 +367,7 @@ function CompanyDetailedMission (): JSX.Element {
       {
         commentModal
           ? <ModalValidation
-              subject={missionData?.name ?? ''}
+              subject={missionData?.mission.name ?? ''}
               open={commentModal}
               type={ModalType.COMMENT}
               onClose={handleCommentClose}

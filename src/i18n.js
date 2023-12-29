@@ -266,8 +266,14 @@ i18n
               tab: {
                 detail: 'Détail',
                 quantity: 'Quantité',
-                unitary_price: 'Prix unitaire (HT)',
-                total_price: 'total (HT)'
+                price: 'Prix',
+                task: 'Tâches'
+              },
+              task: {
+                modal_title: 'Ajouter une tâche',
+                name: 'Nom',
+                description: 'description',
+                price: 'Prix'
               }
             }
           },

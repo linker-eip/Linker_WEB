@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
+
+.cpn-modal-task {
+    font-family: 'Poppins';
+    background-color: #FFF;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+    border-radius: 10px;
+    width: max-content;
+
+    &__title {
+        color: #474747;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        padding-bottom: 1em;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        min-width: 500px;
+    }
+
+    &__button-section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+}
