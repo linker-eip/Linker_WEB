@@ -9,6 +9,7 @@ import ModalTaskCreation from './ModalTaskCreation'
 import Checkbox from '@mui/material/Checkbox'
 import MissionApi from '../../../API/MissionApi'
 import { TaskStatus, MissionStatus } from '../../../Enum'
+import ModalTaskEdition from './ModalTaskEdition'
 
 interface Props {
   missionTask: MissionTaskArrayInfo[]
@@ -20,6 +21,7 @@ interface Props {
 function TaskTab (props: Props): JSX.Element {
   const { t } = useTranslation()
   const [taskModal, setTaskModal] = useState<boolean>(false)
+  const [editTaskModal, setEditTaskModal] = useState<boolean>(false)
   const [taskTab, setTaskTab] = useState<MissionTaskArrayInfo[]>()
 
   useEffect(() => {
@@ -37,6 +39,20 @@ function TaskTab (props: Props): JSX.Element {
 
   const openTaskModal = (): void => {
     setTaskModal(true)
+  }
+
+  const closeEditTaskModal = (): void => {
+    setEditTaskModal(false)
+  }
+
+  const validEditTaskModal = (): void => {
+    // setEditTaskModal(false)
+    props.onCallback()
+    closeEditTaskModal()
+  }
+
+  const openEditTaskModal = (): void => {
+    setEditTaskModal(true)
   }
 
   const changeTaskStatus = async (taskId: number): Promise<void> => {
@@ -85,7 +101,8 @@ function TaskTab (props: Props): JSX.Element {
             {props.missionStatus === MissionStatus.PENDING
               ? <div>
                   <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
-                  <img className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
+                  <img onClick={openEditTaskModal} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
+                  <ModalTaskEdition open={editTaskModal} taskId={task.missionTask.id} onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={task.missionTask.name} description={task.missionTask.description} amount={task.missionTask.amount} />
                 </div>
               : null
             }

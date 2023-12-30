@@ -24,6 +24,16 @@ class MissionApi {
     return response.data
   }
 
+  static async editTask (jwtToken: string, taskId: number, data: any): Promise<MissionTaskInfo> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/mission/task/${taskId}`, data, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
   static async deleteTask (jwtToken: string, taskId: number): Promise<MissionTaskInfo> {
     const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/mission/task/${taskId}`, {
       headers: {

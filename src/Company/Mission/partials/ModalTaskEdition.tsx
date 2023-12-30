@@ -9,16 +9,19 @@ import MissionApi from '../../../API/MissionApi'
 
 interface Props {
   open: boolean
-  missionId: number
+  taskId: number
+  name: string
+  description: string
+  amount: number
   onClose: () => void
   onValidation: () => void
 }
 
-function ModalTaskCreation (props: Props): JSX.Element {
+function ModalTaskEdition (props: Props): JSX.Element {
   const { t } = useTranslation()
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState<number>(0)
+  const [name, setName] = useState(props.name)
+  const [description, setDescription] = useState(props.description)
+  const [price, setPrice] = useState<number>(props.amount)
   const maxLengthDesc = 300
   const maxLengthName = 100
 
@@ -82,7 +85,7 @@ function ModalTaskCreation (props: Props): JSX.Element {
         studentId: null,
         skills: ''
       }
-      MissionApi.createTask(localStorage.getItem('jwtToken') as string, props.missionId, data)
+      MissionApi.editTask(localStorage.getItem('jwtToken') as string, props.taskId, data)
       props.onValidation()
     }
   }
@@ -91,7 +94,7 @@ function ModalTaskCreation (props: Props): JSX.Element {
     <Modal open={props.open} onClose={props.onClose} >
         <div className='cpn-modal-task'>
             <div className='cpn-modal-task__title'>
-                { t('company.detailed_mission.task.modal_title')}
+                Modification de la tâche
             </div>
             <div className='cpn-modal-task__section'>
               <TextField
@@ -141,4 +144,4 @@ function ModalTaskCreation (props: Props): JSX.Element {
   )
 }
 
-export default ModalTaskCreation
+export default ModalTaskEdition
