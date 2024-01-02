@@ -18,6 +18,7 @@ import type { CompanyMissionDetails, MissionInfo, MissionTaskArrayInfo } from '.
 import MissionApi from '../../API/MissionApi'
 import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
+import Historic from './partials/Historic'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -151,17 +152,17 @@ function CompanyDetailedMission (): JSX.Element {
   useEffect(() => {
     setHistoricData([
       {
-        logo: missionData?.company.picture ?? '',
+        logo: missionData?.companyProfile.picture ?? '',
         name: 'Vous',
         action: 'avez noté la prestation.'
       },
       {
-        logo: missionData?.company.picture ?? '',
+        logo: missionData?.companyProfile.picture ?? '',
         name: 'Vous',
         action: 'avez laissé un avis sur la prestation.'
       }
     ])
-  }, [missionData?.company])
+  }, [missionData?.companyProfile])
 
   const handleUpdate = (): void => {
     const payload = {
@@ -299,23 +300,7 @@ function CompanyDetailedMission (): JSX.Element {
                   <div>
                     <div className='cpn-detailed-mission__section'>
                       <p className='cpn-detailed-mission__container__title'> { t('company.detailed_mission.historic') } </p>
-                      { missionData.mission.status === MissionStatus.PENDING.toString()
-                        ? <div>
-                            L’historique est vide.
-                          </div>
-                        : null
-                      }
-                      {/* {
-                        historicData.map((historic, index) => (
-                          <div className='cpn-detailed-mission__sub-section' key={index}>
-                            <div className='cpn-detailed-mission__row'>
-                              <Avatar className='cpn-detailed-mission__historic-logo' src={historic.logo} />
-                              <div className='cpn-detailed-mission__text-important'> {historic.name} </div>
-                              <div className='cpn-detailed-mission__text '> {historic.action} </div>
-                            </div>
-                          </div>
-                        ))
-                      } */}
+                      <Historic missionStatus={missionData.mission.status} companyName={missionData.companyProfile.name} groupName={missionData.group !== null ? missionData.group.name : 'GroupName'} companyLogo={missionData.companyProfile.picture} groupLogo={missionData.group !== null ? missionData.group.picture : 'GroupName'} />
                       { hasCompanyNoted > 0 && (
                         <div className='cpn-detailed-mission__sub-section'>
                           <div className='cpn-detailed-mission__row'>

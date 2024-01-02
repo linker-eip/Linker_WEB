@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../CSS/StudentDashboard.scss'
 import '../../CSS/StudentDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import HotbarDashboard from '../Dashbord/Partials/HotbarDashboard'
 import SidebarDashboard from '../Dashbord/Partials/SidebarDashboard'
-import { DashboardState, ModalType } from '../../Enum'
+import { DashboardState, ModalType, MissionStatus, TaskStatus } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -13,12 +13,37 @@ import StepLabel from '@mui/material/StepLabel'
 import { Avatar } from '@mui/material'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
+import { useParams } from 'react-router-dom'
+import MissionApi from '../../API/MissionApi'
+import type { StudentMissionDetails, MissionTaskArrayInfo } from '../../Typage/Type'
+import TaskTab from './partials/TaskTab'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
+  const { missionId } = useParams()
   const potential = true
   const [open, setOpen] = useState(false)
   const [acceptModal, setAcceptModal] = useState(false)
+  const [missionData, setMissionData] = useState<StudentMissionDetails>()
+  const [refetchMissionData, setRefetch] = useState<boolean>(false)
+  const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
+
+  useEffect(() => {
+    async function fetchData (): Promise<void> {
+      if (typeof missionId === 'undefined') {
+        console.error('missionId is undefined.')
+        return
+      }
+
+      const response = await MissionApi.getStudentDetailedMission(localStorage.getItem('jwtToken') as string, missionId)
+      setMissionData(response)
+      if (response !== undefined) {
+        setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
+      }
+    }
+    fetchData()
+  }, [missionId, refetchMissionData])
+
   const handleRefuseOpen = (): void => {
     setOpen(true)
   }
@@ -35,70 +60,9 @@ function StudentDetailedMission (): JSX.Element {
     setAcceptModal(false)
   }
 
-  const [missionData] = useState<{ logo: string, name: string, companyName: string, mark: number, nbrMission: number, historic: Array<{ logo: string, name: string, action: string }> }>(
-    {
-      logo: '/assets/anonymLogo.jpg',
-      name: 'Killian PASTOR',
-      companyName: 'Physic Form 2.0',
-      mark: 5,
-      nbrMission: 10,
-      historic: [
-        {
-          logo: '/assets/anonymLogo.jpg',
-          name: 'Vous',
-          action: 'avez indiqué la mission est en cours'
-        },
-        {
-          logo: '/assets/anonymLogo.jpg',
-          name: 'Vous',
-          action: 'avez accepté la mission'
-        },
-        {
-          logo: '/assets/anonymLogo.jpg',
-          name: 'Killian PASTOR',
-          action: 'a provisionné la mission'
-        }
-      ]
-    }
-  )
-  const [data] = useState<{ title: string, step: number, missionDetails: Array<{ element: string, description: string[], quantity: number, unitaryPrice: number, total: number }> }>(
-    {
-      title: 'Développement d’une application mobile pour une salle de sports',
-      step: 3,
-      missionDetails: [
-        {
-          element: 'Page d\'accueil',
-          description: [
-            'Presentation du produit',
-            '...'
-          ],
-          quantity: 1,
-          unitaryPrice: 350.00,
-          total: 350.00
-        },
-        {
-          element: 'Page de connexion',
-          description: [
-            '2 champs',
-            '1 button'
-          ],
-          quantity: 1,
-          unitaryPrice: 180.00,
-          total: 180.00
-        },
-        {
-          element: 'Page d\'inscription',
-          description: [
-            '6 champs',
-            '...'
-          ],
-          quantity: 1,
-          unitaryPrice: 350.00,
-          total: 350.00
-        }
-      ]
-    }
-  )
+  const handleRefetch = (): void => {
+    setRefetch(!refetchMissionData)
+  }
 
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
   const state = DashboardState
@@ -128,7 +92,7 @@ function StudentDetailedMission (): JSX.Element {
                 </div>
               : <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
             }
-            <p className='std-detailed-mission__section__title-3'> { data.title } </p>
+            <p className='std-detailed-mission__section__title-3'> { missionData?.mission.name } </p>
             <Stepper activeStep={activeStep - 1} alternativeLabel>
               {steps.map((label, index) => (
                 <Step key={label}>
@@ -144,43 +108,12 @@ function StudentDetailedMission (): JSX.Element {
           </div>
 
           <div className='std-detailed-mission__container'>
-            <div className='std-detailed-mission__section'>
-              <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.details') } </p>
-              <div className='std-detailed-mission__tab-container std-detailed-mission__tab-container--colored'>
-                <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.detail')} </p>
-                <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.quantity')} </p>
-                <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.unitary_price')} </p>
-                <p className='std-detailed-mission__centered'> {t('student.detailed_mission.tab.total_price')} </p>
-              </div>
-                { data.missionDetails.map((details, index) => (
-                  <div className='std-detailed-mission__tab-container' key={index}>
-                    <div className='std-detailed-mission__sub-section'>
-                      <p> {details.element} </p>
-                      <div className='std-detailed-mission__sub-container'>
-                        {
-                          details.description.map((description, index) => (
-                            <div key={index} className='std-detailed-mission__content'>
-                              <div className='std-detailed-mission__circle' />
-                              <p > {description} </p>
-                            </div>
-                          ))
-                        }
-                      </div>
-                    </div>
-                    <div className='std-detailed-mission__sub-section'>
-                      <p className='std-detailed-mission__centered'> {details.quantity} </p>
-                    </div>
-                    <div className='std-detailed-mission__sub-section'>
-                      <p className='std-detailed-mission__centered'> {details.unitaryPrice} € </p>
-                    </div>
-                    <div className='std-detailed-mission__sub-section'>
-                      <p className='std-detailed-mission__centered'> {details.total} € </p>
-                    </div>
-                  </div>
-                ))}
-            </div>
+            {missionData !== undefined
+              ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} onCallback={handleRefetch}/>
+              : null
+            }
             <div className='std-detailed-mission__column'>
-                <div className='std-detailed-mission__section'>
+                {/* <div className='std-detailed-mission__section'>
                   <div className='std-detailed-mission__row'>
                     <img className='std-detailed-mission__logo' src={missionData.logo} />
                     <div className='std-detailed-mission__column'>
@@ -200,9 +133,9 @@ function StudentDetailedMission (): JSX.Element {
                     </div>
                     <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
                   </div>
-                </div>
+                </div> */}
                 <div>
-                  <div className='std-detailed-mission__section'>
+                  {/* <div className='std-detailed-mission__section'>
                     <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
                     {
                       missionData.historic.map((historic, index) => (
@@ -215,17 +148,18 @@ function StudentDetailedMission (): JSX.Element {
                         </div>
                       ))
                     }
-                  </div>
+                  </div> */}
                 </div>
             </div>
           </div>
         </div>
       </div>
-      {
-        open ? <ModalValidation subject={data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={() => {}}/> : null
-      }
-      {
-        acceptModal ? <ModalValidation subject={data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={() => {}} /> : null
+      {missionData?.mission.status === MissionStatus.PENDING
+        ? <div>
+            {open ? <ModalValidation subject={missionData.mission.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={() => {}}/> : null}
+            {acceptModal ? <ModalValidation subject={missionData.mission.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={() => {}} /> : null}
+          </div>
+        : null
       }
     </div>
   )

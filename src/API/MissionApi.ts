@@ -14,6 +14,25 @@ class MissionApi {
     return response.data
   }
 
+  static async getStudentDetailedMission (jwtToken: string, missionId: string): Promise<CompanyMissionDetails> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/mission/info/${missionId}/student`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async getMissions (jwtToken: string): Promise<CompanyMissionDetails> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/mission/`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
+
   static async createTask (jwtToken: string, missionId: number, data: any): Promise<MissionTaskInfo> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/mission/task/${missionId}`, data, {
       headers: {

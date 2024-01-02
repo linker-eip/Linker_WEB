@@ -50,6 +50,7 @@ function MissionCard (props: Props): JSX.Element {
 
   const handleNavigation = (): void => {
     navigate(ROUTES.STUDENT_DETAILED_MISSION)
+    navigate(`${ROUTES.STUDENT_DETAILED_MISSION.replace(':missionId', '43')}`)
   }
 
   return (
