@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../../CSS/MissionCard.scss'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -6,18 +6,12 @@ import * as ROUTES from '../../../../Router/routes'
 import ClassicButton from '../../../../Component/ClassicButton'
 import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
+import type { MissionInfo, GroupType, CompanyAdminInfo } from '../../../../Typage/Type'
+import GroupApi from '../../../../API/GroupApi'
+import MissionApi from '../../../../API/MissionApi'
 
 interface Props {
-  data: {
-    logo: string
-    title: string
-    motant: number
-    begin?: string
-    end?: string
-    bill: string
-    participants: number
-    cancelledDate?: string
-  }
+  data: MissionInfo
   cancelled?: boolean
   potential?: boolean
   onCallback: () => void
@@ -28,6 +22,23 @@ function MissionCard (props: Props): JSX.Element {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [acceptModal, setAcceptModal] = useState(false)
+  const [groupData, setGroupData] = useState<GroupType>()
+  const [companyData, setCompanyData] = useState<CompanyAdminInfo>()
+
+  useEffect(() => {
+    async function fetchData (): Promise<void> {
+      const response = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
+      if (response !== undefined) {
+        setGroupData(response.data)
+      }
+      const response2 = await MissionApi.getCompany(localStorage.getItem('jwtToken') as string, props.data.companyId)
+      if (response2 !== undefined) {
+        setCompanyData(response2)
+      }
+    }
+    fetchData()
+  }, [])
+
   const handleRefuseOpen = (): void => {
     setOpen(true)
   }
@@ -55,21 +66,21 @@ function MissionCard (props: Props): JSX.Element {
 
   return (
     <div className='mission-card'>
-        <img className='mission-card__logo' src={props.data.logo} />
+        <img className='mission-card__logo' src={companyData?.companyPicture} />
       <div className='mission-card__container'>
         <div>
-          <p className='mission-card__title'> { props.data.title } </p>
+          <p className='mission-card__title'> { props.data.name} </p>
         </div>
         <div className='mission-card__content'>
           <div className='mission-card__section'>
             <p className='mission-card__text'> {t('missionCard.price')} </p>
-            <p className='mission-card__text-important'> { props.data.motant } € HT </p>
+            <p className='mission-card__text-important'> { props.data.amount } € HT </p>
           </div>
           {
-            props.data.begin !== undefined &&
+            props.data.startOfMission !== undefined &&
             <div className='mission-card__section'>
               <p className='mission-card__text'> {t('missionCard.begin')} </p>
-              <p className='mission-card__value'> { props.data.begin } </p>
+              <p className='mission-card__value'> { props.data.startOfMission } </p>
             </div>
           }
           <div className='mission-card__section'>
@@ -77,16 +88,16 @@ function MissionCard (props: Props): JSX.Element {
               ? <p className='mission-card__text'> {t('missionCard.cancelled')} </p>
               : <p className='mission-card__text'> {t('missionCard.end')} </p>
             }
-            <p className='mission-card__value'> { props.cancelled !== null && props.cancelled === true ? props.data.cancelledDate : props.data.end } </p>
+            <p className='mission-card__value'> { props.cancelled !== null && props.cancelled === true ? props.data.endOfMission : props.data.endOfMission } </p>
           </div>
           <div className='mission-card__section'>
             <p className='mission-card__text'> {t('missionCard.participants')} </p>
-            <p className='mission-card__value'> { props.data.participants } personnes </p>
+            <p className='mission-card__value'> { groupData?.members.length } personnes </p>
           </div>
-          <div className='mission-card__section'>
+          {/* <div className='mission-card__section'>
             <p className='mission-card__text'> {t('missionCard.bill')} </p>
             <p className='mission-card__text-important'> { props.data.bill } </p>
-          </div>
+          </div> */}
         </div>
         { props.potential ??
           <div className='mission-card__link' onClick={handleNavigation}>
@@ -105,10 +116,10 @@ function MissionCard (props: Props): JSX.Element {
         }
         </div>
         {
-          open ? <ModalValidation subject={props.data.title} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={handleValidation} /> : null
+          open ? <ModalValidation subject={props.data.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={handleValidation} /> : null
         }
         {
-          acceptModal ? <ModalValidation subject={props.data.title} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={handleValidation} /> : null
+          acceptModal ? <ModalValidation subject={props.data.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={handleValidation} /> : null
         }
       </div>
   )

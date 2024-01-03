@@ -1,6 +1,6 @@
 import axios from 'axios'
-import type { CompanyMissionDetails, MissionTaskInfo } from '../Typage/Type'
-import { TaskStatus } from '../Enum'
+import type { CompanyMissionDetails, MissionTaskInfo, MissionInfo, CompanyAdminInfo } from '../Typage/Type'
+import { type MissionStatus, TaskStatus } from '../Enum'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class MissionApi {
@@ -28,6 +28,26 @@ class MissionApi {
     const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/mission/`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
+
+  static async getStudentMissions (jwtToken: string, status: MissionStatus): Promise<MissionInfo[]> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/mission/student/missions?status=${status}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async getCompany (jwtToken: string, companyId: number): Promise<CompanyAdminInfo> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/admin/users/company/${companyId}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
       }
     })
     return response.data

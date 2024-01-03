@@ -161,3 +161,15 @@ export interface StudentMissionDetails {
   group: GroupInfo
   groupStudents: GroupStudentInfo[]
 }
+
+export interface CompanyAdminInfo {
+  id: number
+  email: string
+  companyName: string
+  phoneNumber: string
+  picture: string
+  companyPicture: string
+  isActive: boolean
+  lastConnectedAt: string
+  createdAt: string
+}
