@@ -25,7 +25,7 @@ function TaskTab (props: Props): JSX.Element {
   }, [props.missionTask])
 
   const changeTaskStatus = async (taskId: number): Promise<void> => {
-    const response = await MissionApi.changeTaskStatus(localStorage.getItem('jwtToken') as string, taskId)
+    const response = await MissionApi.changeStudentTaskStatus(localStorage.getItem('jwtToken') as string, taskId)
     if (response !== undefined) {
       props.onCallback()
     }

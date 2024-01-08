@@ -13,6 +13,7 @@ function StudentMissionsPotential (): JSX.Element {
       const response = await MissionApi.getStudentMissions(localStorage.getItem('jwtToken') as string, MissionStatus.PENDING)
       if (response !== undefined) {
         setData(response)
+        setNbrMission(response.length)
       }
     }
     fetchData()

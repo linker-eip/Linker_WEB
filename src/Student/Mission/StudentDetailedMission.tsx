@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import '../../CSS/StudentDashboard.scss'
@@ -17,6 +19,7 @@ import { useParams } from 'react-router-dom'
 import MissionApi from '../../API/MissionApi'
 import type { StudentMissionDetails, MissionTaskArrayInfo } from '../../Typage/Type'
 import TaskTab from './partials/TaskTab'
+import Historic from './partials/Historic'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -64,16 +67,67 @@ function StudentDetailedMission (): JSX.Element {
     setRefetch(!refetchMissionData)
   }
 
+  const finishMission = async (): Promise<void> => {
+    if (missionData?.mission !== undefined && missionData.mission.id !== undefined) {
+      const response = await MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)
+      if (response !== undefined) {
+        window.location.reload()
+      }
+    }
+  }
+
+  const acceptMission = async (): Promise<void> => {
+    if (missionData !== undefined) {
+      const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
+      if (response !== undefined) {
+        window.location.reload()
+      }
+    }
+  }
+
+  const refuseMission = async (): Promise<void> => {
+    console.log('test')
+    if (missionData !== undefined) {
+      const response = await MissionApi.refuseMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
+      if (response !== undefined) {
+        window.location.reload()
+      }
+    }
+  }
+
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
   const state = DashboardState
   const { t } = useTranslation()
-  const [activeStep, setActiveStep] = useState(3)
+  const [activeStep, setActiveStep] = useState(1)
   const steps = [
-    t('student.detailed_mission.accepted'),
-    t('student.detailed_mission.provisionée'),
-    t('student.detailed_mission.in_progress'),
-    t('student.detailed_mission.completed')
+    t('company.detailed_mission.research_mission'),
+    t('company.detailed_mission.accepted'),
+    t('company.detailed_mission.provisionée'),
+    t('company.detailed_mission.in_progress'),
+    t('company.detailed_mission.completed')
   ]
+
+  useEffect(() => {
+    switch (missionData?.mission.status) {
+      case MissionStatus.PENDING:
+        setActiveStep(1)
+        break
+      case MissionStatus.ACCEPTED:
+        setActiveStep(2)
+        break
+      case MissionStatus.PROVISIONED:
+        setActiveStep(3)
+        break
+      case MissionStatus.IN_PROGRESS:
+        setActiveStep(4)
+        break
+      case MissionStatus.FINISHED:
+        setActiveStep(5)
+        break
+      default:
+        break
+    }
+  }, [missionData])
 
   return (
     <div className='std-bord-container'>
@@ -81,7 +135,54 @@ function StudentDetailedMission (): JSX.Element {
       <div className='std-bord-container__page'>
         <SidebarDashboard state={state.MISSION} />
         <div className='std-bord-container__content'>
-          <div className='std-detailed-mission__section'>
+          { missionData !== undefined
+            ? <div className='cpn-detailed-mission__section'>
+                { missionData.mission.status === MissionStatus.PENDING
+                  ? <div className='cpn-detailed-mission__potential-section'>
+                      <p className='cpn-detailed-mission__section__title'> { t('company.detailed_mission.research_mission') } </p>
+                      <div className='cpn-detailed-mission__potential-button'>
+                        <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen}/>
+                        <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
+                      </div>
+                    </div>
+                  : null
+                }
+                { missionData.mission.status === MissionStatus.ACCEPTED || missionData.mission.status === MissionStatus.IN_PROGRESS
+                  ? <div className='cpn-detailed-mission__potential-section'>
+                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_pending') } </p>
+                    </div>
+                  : null
+                }
+                { missionData.mission.status === MissionStatus.FINISHED
+                  ? <div className='cpn-detailed-mission__potential-section'>
+                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_completed') } </p>
+                    </div>
+                  : null
+                }
+                <p className='cpn-detailed-mission__section__title-3'>{ missionData.mission.name }</p>
+                <p className='cpn-detailed-mission__section__title-4'>{ missionData.mission.description }</p>
+                <Stepper
+                  activeStep={activeStep - 1}
+                  alternativeLabel
+                >
+                  {steps.map((label, index) => (
+                    <Step key={label}>
+                      <StepLabel>
+                        <p className={
+                            index === activeStep - 1
+                              ? 'cpn-detailed-mission__stepper-active'
+                              : 'cpn-detailed-mission__stepper'
+                          }>
+                          {label}
+                        </p>
+                      </StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+                </div>
+            : null
+          }
+          {/* <div className='std-detailed-mission__section'>
             { potential
               ? <div className='std-detailed-mission__potential-section'>
                   <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
@@ -105,13 +206,30 @@ function StudentDetailedMission (): JSX.Element {
                 </Step>
               ))}
             </Stepper>
-          </div>
+          </div> */}
 
           <div className='std-detailed-mission__container'>
-            {missionData !== undefined
-              ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} onCallback={handleRefetch}/>
-              : null
-            }
+            <div className='cpn-detailed-mission__section'>
+              <div className='std-detailed-mission__row-2'>
+                <p className='cpn-detailed-mission__container__title'>{ t('student.detailed_mission.details') }</p>
+                <div>
+                  { missionData !== undefined && missionData.mission.status === MissionStatus.IN_PROGRESS
+                    ? <div>
+                        { `Tâches terminées: ${nbrFinishedTask}/${missionData.missionTaskArray.length}` }
+                      </div>
+                    : null
+                  }
+                  { missionData !== undefined && missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && missionData.mission.status === MissionStatus.IN_PROGRESS
+                    ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
+                    : null
+                  }
+                </div>
+              </div>
+              {missionData !== undefined
+                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} onCallback={handleRefetch}/>
+                : <div />
+              }
+            </div>
             <div className='std-detailed-mission__column'>
                 {/* <div className='std-detailed-mission__section'>
                   <div className='std-detailed-mission__row'>
@@ -135,20 +253,13 @@ function StudentDetailedMission (): JSX.Element {
                   </div>
                 </div> */}
                 <div>
-                  {/* <div className='std-detailed-mission__section'>
+                   <div className='std-detailed-mission__section'>
                     <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
-                    {
-                      missionData.historic.map((historic, index) => (
-                        <div className='std-detailed-mission__sub-section' key={index}>
-                          <div className='std-detailed-mission__row'>
-                            <Avatar className='std-detailed-mission__historic-logo' src={historic.logo} />
-                            <div className='std-detailed-mission__text-important'> {historic.name} </div>
-                            <div className='std-detailed-mission__text '> {historic.action} </div>
-                          </div>
-                        </div>
-                      ))
+                    {missionData !== undefined
+                      ? <Historic missionStatus={missionData?.mission.status} companyName={missionData.mission.name} groupName={missionData.group.name} companyLogo={missionData.group.picture} groupLogo={missionData.group.picture} />
+                      : null
                     }
-                  </div> */}
+                  </div>
                 </div>
             </div>
           </div>
@@ -156,8 +267,8 @@ function StudentDetailedMission (): JSX.Element {
       </div>
       {missionData?.mission.status === MissionStatus.PENDING
         ? <div>
-            {open ? <ModalValidation subject={missionData.mission.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={() => {}}/> : null}
-            {acceptModal ? <ModalValidation subject={missionData.mission.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={() => {}} /> : null}
+            {open ? <ModalValidation subject={missionData.mission.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={refuseMission}/> : null}
+            {acceptModal ? <ModalValidation subject={missionData.mission.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={acceptMission} /> : null}
           </div>
         : null
       }

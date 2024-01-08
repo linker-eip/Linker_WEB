@@ -6,7 +6,7 @@ import * as ROUTES from '../../../../Router/routes'
 import ClassicButton from '../../../../Component/ClassicButton'
 import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
-import type { MissionInfo, GroupType, CompanyAdminInfo } from '../../../../Typage/Type'
+import type { MissionInfo, GroupType, CompanyAdminInfo, StudentMissionDetails } from '../../../../Typage/Type'
 import GroupApi from '../../../../API/GroupApi'
 import MissionApi from '../../../../API/MissionApi'
 
@@ -24,6 +24,7 @@ function MissionCard (props: Props): JSX.Element {
   const [acceptModal, setAcceptModal] = useState(false)
   const [groupData, setGroupData] = useState<GroupType>()
   const [companyData, setCompanyData] = useState<CompanyAdminInfo>()
+  const [missionData, setMissionData] = useState<StudentMissionDetails>()
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -34,6 +35,10 @@ function MissionCard (props: Props): JSX.Element {
       const response2 = await MissionApi.getCompany(localStorage.getItem('jwtToken') as string, props.data.companyId)
       if (response2 !== undefined) {
         setCompanyData(response2)
+      }
+      const response3 = await MissionApi.getStudentDetailedMission(localStorage.getItem('jwtToken') as string, props.data.id.toString())
+      if (response3 !== undefined) {
+        setMissionData(response3)
       }
     }
     fetchData()
@@ -59,9 +64,26 @@ function MissionCard (props: Props): JSX.Element {
     props.onCallback()
   }
 
+  const acceptMission = async (): Promise<void> => {
+    if (missionData !== undefined) {
+      const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
+      if (response !== undefined) {
+        window.location.reload()
+      }
+    }
+  }
+
+  const refuseMission = async (): Promise<void> => {
+    if (missionData !== undefined) {
+      const response = await MissionApi.refuseMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
+      if (response !== undefined) {
+        window.location.reload()
+      }
+    }
+  }
+
   const handleNavigation = (): void => {
-    navigate(ROUTES.STUDENT_DETAILED_MISSION)
-    navigate(`${ROUTES.STUDENT_DETAILED_MISSION.replace(':missionId', '43')}`)
+    navigate(`${ROUTES.STUDENT_DETAILED_MISSION.replace(':missionId', props.data.id.toString())}`)
   }
 
   return (
@@ -116,10 +138,10 @@ function MissionCard (props: Props): JSX.Element {
         }
         </div>
         {
-          open ? <ModalValidation subject={props.data.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={handleValidation} /> : null
+          open ? <ModalValidation subject={props.data.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={props.potential === true ? refuseMission : handleValidation} /> : null
         }
         {
-          acceptModal ? <ModalValidation subject={props.data.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={handleValidation} /> : null
+          acceptModal ? <ModalValidation subject={props.data.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={props.potential === true ? acceptMission : handleValidation} /> : null
         }
       </div>
   )

@@ -133,6 +133,7 @@ export interface GroupInvitationData {
 }
 
 export interface GroupInfo {
+  id: number
   name: string
   description: string
   picture: string
@@ -156,6 +157,7 @@ export interface GroupStudentInfo {
 }
 
 export interface StudentMissionDetails {
+  companyProfile: CompanyInfo
   mission: MissionInfo
   missionTaskArray: MissionTaskArrayInfo[]
   group: GroupInfo
