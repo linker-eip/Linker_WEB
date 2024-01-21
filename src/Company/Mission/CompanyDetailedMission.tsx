@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import '../../CSS/StudentDashboard.scss'
@@ -208,10 +209,17 @@ function CompanyDetailedMission (): JSX.Element {
     return Object.values(fieldValidity).every(value => value)
   }
 
-  const finishMission = (): void => {
+  const finishMission = async (): Promise<void> => {
     console.log(missionData)
     if (missionData?.mission !== undefined && missionData.mission.id !== undefined) {
-      MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)
+      try {
+        const response = await MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)
+        if (response !== undefined) {
+          window.location.reload()
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 

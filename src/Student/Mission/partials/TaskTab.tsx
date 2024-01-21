@@ -19,10 +19,17 @@ interface Props {
 function TaskTab (props: Props): JSX.Element {
   const { t } = useTranslation()
   const [taskTab, setTaskTab] = useState<MissionTaskArrayInfo[]>()
+  const [totalAmount, setTotalAmount] = useState<number>(0)
 
   useEffect(() => {
     setTaskTab(props.missionTask.slice().sort((a, b) => a.missionTask.id - b.missionTask.id))
   }, [props.missionTask])
+
+  useEffect(() => {
+    let amount = 0
+    props.missionTask.forEach(task => { return (amount += task.missionTask.amount) })
+    setTotalAmount(amount)
+  }, [])
 
   const changeTaskStatus = async (taskId: number): Promise<void> => {
     const response = await MissionApi.changeStudentTaskStatus(localStorage.getItem('jwtToken') as string, taskId)
@@ -64,6 +71,13 @@ function TaskTab (props: Props): JSX.Element {
         )
         : null
       }
+      <div className='cpn-detailed-mission__total-section'>
+        <div />
+        <div className='cpn-detailed-mission__total'>
+            <p> Total Prestation (TTC): </p>
+            <div>{ totalAmount } €</div>
+        </div>
+      </div>
     </div>
   )
 }

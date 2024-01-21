@@ -23,10 +23,17 @@ function TaskTab (props: Props): JSX.Element {
   const [taskModal, setTaskModal] = useState<boolean>(false)
   const [editTaskModal, setEditTaskModal] = useState<boolean>(false)
   const [taskTab, setTaskTab] = useState<MissionTaskArrayInfo[]>()
+  const [totalAmount, setTotalAmount] = useState<number>(0)
 
   useEffect(() => {
     setTaskTab(props.missionTask.slice().sort((a, b) => a.missionTask.id - b.missionTask.id))
   }, [props.missionTask])
+
+  useEffect(() => {
+    let amount = 0
+    props.missionTask.forEach(task => { return (amount += task.missionTask.amount) })
+    setTotalAmount(amount)
+  }, [])
 
   const closeTaskModal = (): void => {
     setTaskModal(false)
@@ -119,7 +126,14 @@ function TaskTab (props: Props): JSX.Element {
             </div>
           </div>
         : null}
-    <ModalTaskCreation open={taskModal} missionId={props.missionId} onValidation={validTaskModal} onClose={closeTaskModal} />
+      <ModalTaskCreation open={taskModal} missionId={props.missionId} onValidation={validTaskModal} onClose={closeTaskModal} />
+      <div className='cpn-detailed-mission__total-section'>
+        <div />
+        <div className='cpn-detailed-mission__total'>
+            <p> Total Prestation (TTC): </p>
+            <div>{ totalAmount } €</div>
+        </div>
+      </div>
     </div>
   )
 }

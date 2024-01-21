@@ -12,12 +12,13 @@ function StudentMissionsPending (): JSX.Element {
       const response = await MissionApi.getStudentMissions(localStorage.getItem('jwtToken') as string, MissionStatus.IN_PROGRESS)
       if (response !== undefined) {
         setData(response)
+        setNbrMission(response.length)
       }
     }
     fetchData()
   }, [])
   const [data, setData] = useState<MissionInfo[]>()
-  const [nbrMission] = useState(data?.length ?? 0)
+  const [nbrMission, setNbrMission] = useState(data?.length ?? 0)
   const { t } = useTranslation()
 
   return (

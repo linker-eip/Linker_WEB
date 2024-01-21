@@ -17,9 +17,11 @@ import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
 import MissionApi from '../../API/MissionApi'
-import type { StudentMissionDetails, MissionTaskArrayInfo } from '../../Typage/Type'
+import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo } from '../../Typage/Type'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
+import ProfileApi from '../../API/ProfileApi'
+import GroupApi from '../../API/GroupApi'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -30,6 +32,8 @@ function StudentDetailedMission (): JSX.Element {
   const [missionData, setMissionData] = useState<StudentMissionDetails>()
   const [refetchMissionData, setRefetch] = useState<boolean>(false)
   const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
+  const [companyData, setCompanyData] = useState<CompanyInfo>()
+  const [groupId, setGroupId] = useState<number>()
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -42,6 +46,12 @@ function StudentDetailedMission (): JSX.Element {
       setMissionData(response)
       if (response !== undefined) {
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
+        const response2 = await ProfileApi.getSpecificCompanyProfile(localStorage.getItem('jwtToken') as string, 35/* response.mission.companyId */)
+        setCompanyData(response2)
+      }
+      const response3 = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
+      if (response3 !== undefined) {
+        setGroupId(response3.data?.groupId)
       }
     }
     fetchData()
@@ -78,7 +88,8 @@ function StudentDetailedMission (): JSX.Element {
 
   const acceptMission = async (): Promise<void> => {
     if (missionData !== undefined) {
-      const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
+      console.log('Mission accepted')
+      const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, groupId ?? 0)
       if (response !== undefined) {
         window.location.reload()
       }
@@ -88,7 +99,7 @@ function StudentDetailedMission (): JSX.Element {
   const refuseMission = async (): Promise<void> => {
     console.log('test')
     if (missionData !== undefined) {
-      const response = await MissionApi.refuseMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
+      const response = await MissionApi.refuseMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, groupId ?? 0)
       if (response !== undefined) {
         window.location.reload()
       }
@@ -149,7 +160,7 @@ function StudentDetailedMission (): JSX.Element {
                 }
                 { missionData.mission.status === MissionStatus.ACCEPTED || missionData.mission.status === MissionStatus.IN_PROGRESS
                   ? <div className='cpn-detailed-mission__potential-section'>
-                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_pending') } </p>
+                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
                     </div>
                   : null
                 }
@@ -219,10 +230,6 @@ function StudentDetailedMission (): JSX.Element {
                       </div>
                     : null
                   }
-                  { missionData !== undefined && missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && missionData.mission.status === MissionStatus.IN_PROGRESS
-                    ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
-                    : null
-                  }
                 </div>
               </div>
               {missionData !== undefined
@@ -231,31 +238,25 @@ function StudentDetailedMission (): JSX.Element {
               }
             </div>
             <div className='std-detailed-mission__column'>
-                {/* <div className='std-detailed-mission__section'>
+                <div className='std-detailed-mission__section'>
                   <div className='std-detailed-mission__row'>
-                    <img className='std-detailed-mission__logo' src={missionData.logo} />
-                    <div className='std-detailed-mission__column'>
-                      <p className='std-detailed-mission__section__title-2'> { missionData.name } </p>
-                      <p className='std-detailed-mission__section__subtitle'> { missionData.companyName } </p>
-                    </div>
+                    <Avatar src={missionData?.companyProfile.picture} />
+                      {missionData?.companyProfile !== null
+                        ? <div className='std-detailed-mission__column'>
+                            <p className='std-detailed-mission__section__title-2'> { missionData?.companyProfile.name } </p>
+                            <p className='std-detailed-mission__section__subtitle'> { missionData?.companyProfile.description ?? 'Aucune description' } </p>
+                          </div>
+                        : null
+                      }
                   </div>
                   <div className='std-detailed-mission__column-2'>
-                    <div className='std-detailed-mission__mark'>
-                      {
-                        starsStatus.map((item, index) => {
-                          return <img src='/assets/stars.svg' alt='stars' className='std-detailed-mission__stars' key={index} />
-                        })
-                      }
-                      <div className='std-detailed-mission__circle' />
-                      <p> {missionData.nbrMission} {t('student.detailed_mission.mission')} </p>
-                    </div>
                     <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
                   </div>
-                </div> */}
+                </div>
                 <div>
                    <div className='std-detailed-mission__section'>
                     <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
-                    {missionData !== undefined
+                    {missionData !== undefined && missionData.group !== null
                       ? <Historic missionStatus={missionData?.mission.status} companyName={missionData.mission.name} groupName={missionData.group.name} companyLogo={missionData.group.picture} groupLogo={missionData.group.picture} />
                       : null
                     }

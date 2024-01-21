@@ -3,14 +3,13 @@ import '../../../../CSS/StudentMissionCompleted.scss'
 import { useTranslation } from 'react-i18next'
 import MissionCard from './MissionCard'
 import MissionApi from '../../../../API/MissionApi'
-import { MissionStatus } from '../../../../Enum'
 import type { MissionInfo } from '../../../../Typage/Type'
 
 function StudentMissionsPotential (): JSX.Element {
   const { t } = useTranslation()
   useEffect(() => {
     async function fetchData (): Promise<void> {
-      const response = await MissionApi.getStudentMissions(localStorage.getItem('jwtToken') as string, MissionStatus.PENDING)
+      const response = await MissionApi.getPotentialStudentMissions(localStorage.getItem('jwtToken') as string)
       if (response !== undefined) {
         setData(response)
         setNbrMission(response.length)

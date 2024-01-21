@@ -21,6 +21,7 @@ export interface GroupType {
   members: Members[]
   leaderId: number
   isLeader: boolean
+  groupId: number
 }
 
 export interface Group {
@@ -50,6 +51,57 @@ export interface SearchMember {
 export interface GroupSearchMember {
   data?: SearchMember[]
   response?: GroupError
+}
+
+export interface SearchGroups {
+  data?: SearchGroupData[]
+  response?: GroupError
+}
+
+export interface SearchGroupData {
+  id: number
+  name: string
+  description: string
+  studentsProfiles: [
+    {
+      id: number
+      firstName: string
+      lastName: string
+      description: string
+      email: string
+      phone: string
+      location: string
+      picture: string
+      studies: [
+        {
+          id: number
+          name: string
+          logo: string
+          city: string
+          duration: string
+          description: string
+        }
+      ]
+      skills: [
+        {
+          id: number
+          name: string
+          logo: string
+        }
+      ]
+      jobs: [
+        {
+          id: number
+          name: string
+          logo: string
+          city: string
+          duration: string
+          description: string
+        }
+      ]
+      website: string
+    }
+  ]
 }
 
 export interface CompanyInfo {
