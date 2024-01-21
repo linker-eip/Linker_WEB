@@ -21,14 +21,14 @@ interface WebSocketHook {
   sendMessage: (message: string) => void
 }
 
-const useWebSocket = (jwtToken: string): WebSocketHook => {
+const useWebSocket = (jwtToken: string, missionId: string): WebSocketHook => {
   const [messages, setMessages] = useState<any[]>([])
   const [socket, setSocket] = useState<Socket | null>(null)
 
   useEffect(() => {
     console.log('ho', jwtToken)
 
-    const newSocket = io('https://dev.linker-app.fr/', {
+    const newSocket = io('https://dev.linker-app.fr', {
       transports: ['websocket', 'polling'],
       withCredentials: true,
       extraHeaders: {
@@ -42,28 +42,31 @@ const useWebSocket = (jwtToken: string): WebSocketHook => {
 
     newSocket.on('connect', () => {
       console.log('WebSocket connecté.')
+      newSocket.emit('missionHistory', { id: missionId })
     })
 
     newSocket.on('error', (error) => {
       console.error('Erreur WebSocket:', error)
     })
 
-    newSocket.on('groupHistory', (groupMessages: any[]) => {
+    newSocket.on('missionHistory', (groupMessages: any[]) => {
       setMessages(groupMessages)
     })
 
-    newSocket.on('groupMessage', (newMessage: any) => {
-      setMessages(prevMessages => [...prevMessages, newMessage])
+    newSocket.on('missionMessage', (newMessage: any) => {
+      if (newMessage.missionId === missionId) {
+        setMessages(prevMessages => [...prevMessages, newMessage])
+      }
     })
 
     return () => {
       newSocket.close()
       console.log('WebSocket déconnecté.')
     }
-  }, [jwtToken])
+  }, [jwtToken, missionId])
 
   const sendMessage = (message: string): void => {
-    socket?.emit('sendGroup', { message })
+    socket?.emit('sendMission', { message, id: missionId })
   }
 
   return { messages, sendMessage }
@@ -111,7 +114,7 @@ function GroupMissionChat (props: Props): JSX.Element {
   }
 
   const [newMessage, setNewMessage] = useState('')
-  const { messages, sendMessage } = useWebSocket(localStorage.getItem('jwtToken') as string)
+  const { messages, sendMessage } = useWebSocket(localStorage.getItem('jwtToken') as string, "1")
 
   const handleSendMessage = (): void => {
     sendMessage(newMessage)
