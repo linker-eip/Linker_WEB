@@ -114,7 +114,7 @@ function GroupMissionChat (props: Props): JSX.Element {
   }
 
   const [newMessage, setNewMessage] = useState('')
-  const { messages, sendMessage } = useWebSocket(localStorage.getItem('jwtToken') as string, "1")
+  const { messages, sendMessage } = useWebSocket(localStorage.getItem('jwtToken') as string, '1')
 
   const handleSendMessage = (): void => {
     sendMessage(newMessage)
