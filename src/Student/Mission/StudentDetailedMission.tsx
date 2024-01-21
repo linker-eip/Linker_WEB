@@ -13,6 +13,8 @@ import StepLabel from '@mui/material/StepLabel'
 import { Avatar } from '@mui/material'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../Router/routes'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -111,6 +113,11 @@ function StudentDetailedMission (): JSX.Element {
     t('student.detailed_mission.completed')
   ]
 
+  const navigate = useNavigate()
+  const handleClick = (): void => {
+    navigate(ROUTES.STUDENT_MISSION_CHAT)
+  }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
@@ -198,7 +205,9 @@ function StudentDetailedMission (): JSX.Element {
                       <div className='std-detailed-mission__circle' />
                       <p> {missionData.nbrMission} {t('student.detailed_mission.mission')} </p>
                     </div>
-                    <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
+                    <div className='std-detailed-mission__conversation' onClick={handleClick}>
+                      {t('student.detailed_mission.conversation')}
+                    </div>
                   </div>
                 </div>
                 <div>
