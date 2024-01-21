@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import GroupApi from '../../../../API/GroupApi'
 import ModalCreateGroup from './ModalCreateGroup'
 import io, { type Socket } from 'socket.io-client'
-import React, { useEffect, useState } from 'react'
 import MemberInvitedCard from './MemberInvitedCard'
 import MessageIcon from '@mui/icons-material/Message'
 import { TextField, InputAdornment } from '@mui/material'
+import React, { useEffect, useState, useRef } from 'react'
 import ClassicButton from '../../../../Component/ClassicButton'
 import type { Group as GroupData, InvitedMember } from '../../../../Typage/Type'
 
@@ -16,57 +16,13 @@ interface Props {
   onReturn: () => void
 }
 
-interface WebSocketHook {
-  messages: any[]
-  sendMessage: (message: string) => void
-}
-
-const useWebSocket = (jwtToken: string): WebSocketHook => {
-  const [messages, setMessages] = useState<any[]>([])
-  const [socket, setSocket] = useState<Socket | null>(null)
-
-  useEffect(() => {
-    console.log('ho', jwtToken)
-
-    const newSocket = io('https://dev.linker-app.fr', {
-      transports: ['websocket', 'polling'],
-      withCredentials: true,
-      extraHeaders: {
-        Authorization: `Bearer ${jwtToken}`
-      }
-    })
-
-    setSocket(newSocket)
-
-    console.log('Tentative de connexion WebSocket...')
-
-    newSocket.on('connect', () => {
-      console.log('WebSocket connecté.')
-    })
-
-    newSocket.on('error', (error) => {
-      console.error('Erreur WebSocket:', error)
-    })
-
-    newSocket.on('groupHistory', (groupMessages: any[]) => {
-      setMessages(groupMessages)
-    })
-
-    newSocket.on('groupMessage', (newMessage: any) => {
-      setMessages(prevMessages => [...prevMessages, newMessage])
-    })
-
-    return () => {
-      newSocket.close()
-      console.log('WebSocket déconnecté.')
-    }
-  }, [jwtToken])
-
-  const sendMessage = (message: string): void => {
-    socket?.emit('sendGroup', { message })
-  }
-
-  return { messages, sendMessage }
+interface GroupMessage {
+  id: number
+  content: string
+  lastName: string
+  picture: string
+  firstName: string
+  timestamp: string
 }
 
 function GroupChat (props: Props): JSX.Element {
@@ -111,10 +67,89 @@ function GroupChat (props: Props): JSX.Element {
   }
 
   const [newMessage, setNewMessage] = useState('')
-  const { messages, sendMessage } = useWebSocket(localStorage.getItem('jwtToken') as string)
+  const [groupMessages, setGroupMessages] = useState<GroupMessage[]>([])
+  const socket = useRef<Socket | null>(null)
+
+  const jwtToken = localStorage.getItem('jwtToken') as string
+
+  const connect = (): void => {
+    const socketConfig = {
+      autoConnect: false,
+      transports: ['polling'],
+      extraHeaders: { Authorization: `Bearer ${jwtToken}` }
+    }
+
+    const newSocket = io('https://dev.linker-app.fr', socketConfig)
+
+    newSocket.on('connect', () => {
+      console.log('socket connected')
+    })
+
+    newSocket.on('error', (message) => {
+      console.error(`error => ${JSON.stringify(message)}`)
+    })
+
+    newSocket.on('groupHistory', (message) => {
+      if (Array.isArray(message)) {
+        const groupMessages = message.map((dict: GroupMessage) => ({
+          content: dict.content ?? '',
+          lastName: dict.lastName ?? '',
+          picture: dict.picture ?? '',
+          id: dict.id != null ? dict.id : 0,
+          firstName: dict.firstName ?? '',
+          timestamp: dict.timestamp ?? ''
+        }))
+
+        setGroupMessages(groupMessages)
+      } else {
+        console.error('Expected an array for group history messages, but got:', message)
+      }
+    })
+
+    newSocket.on('groupMessage', (newMessage: GroupMessage) => {
+      setGroupMessages(prevMessages => [...prevMessages, newMessage])
+    })
+
+    socket.current = newSocket
+    newSocket.connect()
+  }
+
+  const disconnect = (): void => {
+    if (socket.current != null) {
+      socket.current.close()
+      socket.current = null
+    }
+  }
+
+  const askForGroupHistory = (): void => {
+    if (socket.current != null) {
+      socket.current.emit('groupHistory')
+    }
+  }
+
+  const sendGroupMessage = (message: string): void => {
+    if (socket.current != null) {
+      socket.current.emit('sendGroup', { message })
+    }
+  }
+
+  useEffect(() => {
+    connect()
+
+    const handleConnect = (): void => {
+      askForGroupHistory()
+    }
+
+    socket.current?.on('connect', handleConnect)
+
+    return () => {
+      disconnect()
+      socket.current?.off('connect', handleConnect)
+    }
+  }, [])
 
   const handleSendMessage = (): void => {
-    sendMessage(newMessage)
+    sendGroupMessage(newMessage)
     setNewMessage('')
   }
 
@@ -124,11 +159,13 @@ function GroupChat (props: Props): JSX.Element {
         ? <div className='std-group__container'>
             <div className='std-group__details-section'>
                 <div className='std-group__chat-messages'>
-                    {messages.map((msg, index) => (
+                  {groupMessages.map((msg, index) => (
                     <div key={index} className='std-group__message'>
-                        <div>{msg.sender}: {msg.content}</div>
+                      <div>
+                        {msg.firstName} {msg.lastName}: {msg.content}
+                      </div>
                     </div>
-                    ))}
+                  ))}
                 </div>
                 <div className='std-group__chat-input'>
                     <TextField

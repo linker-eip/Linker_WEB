@@ -1,6 +1,9 @@
 import React from 'react'
-import type { CompanyMissionDetails } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../Router/routes'
+import '../../../CSS/StudentDetailedMission.scss'
+import type { CompanyMissionDetails } from '../../../Typage/Type'
 
 interface Props {
   missionData: CompanyMissionDetails
@@ -8,6 +11,13 @@ interface Props {
 
 function MissionGroup (props: Props): JSX.Element {
   const { t } = useTranslation()
+
+  const navigate = useNavigate()
+  const handleClick = (): void => {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${ROUTES.COMPANY_MISSION_CHAT.replace(':missionId', props.missionData.mission.id.toString())}`)
+  }
+
   return (
     <div className='cpn-detailed-mission__section'>
       <p className='cpn-detailed-mission__section__title-4'> { t('company.detailed_mission.participants')} </p>
@@ -25,6 +35,9 @@ function MissionGroup (props: Props): JSX.Element {
             <img className='cpn-detailed-mission__img' src='/assets/groups_image.svg' />
             <div className='cpn-detailed-mission__row'>
               { t('company.detailed_mission.no_participants')}
+            </div>
+            <div className='std-detailed-mission__conversation' onClick={handleClick}>
+              {t('student.detailed_mission.conversation')}
             </div>
           </div>
       }

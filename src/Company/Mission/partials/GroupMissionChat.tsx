@@ -1,16 +1,15 @@
-import '../../../../CSS/StudentGroup.scss'
+import '../../../CSS/StudentGroup.scss'
+import GroupApi from '../../../API/GroupApi'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import GroupApi from '../../../../API/GroupApi'
 import io, { type Socket } from 'socket.io-client'
 import MessageIcon from '@mui/icons-material/Message'
-import MemberCard from '../../Group/partials/MemberCard'
 import { TextField, InputAdornment } from '@mui/material'
 import React, { useEffect, useState, useRef } from 'react'
-import ClassicButton from '../../../../Component/ClassicButton'
-import ModalCreateGroup from '../../Group/partials/ModalCreateGroup'
-import MemberInvitedCard from '../../Group/partials/MemberInvitedCard'
-import type { Group as GroupData, InvitedMember } from '../../../../Typage/Type'
+import ClassicButton from '../../../Component/ClassicButton'
+import MemberCard from '../../../Student/Dashbord/Group/partials/MemberCard'
+import type { Group as GroupData, InvitedMember } from '../../../Typage/Type'
+import MemberInvitedCard from '../../../Student/Dashbord/Group/partials/MemberInvitedCard'
 
 interface Props {
   data: GroupData | undefined
@@ -28,22 +27,8 @@ interface GroupMessage {
 
 function GroupMissionChat (props: Props): JSX.Element {
   const { t } = useTranslation()
-  const [hasGroup, setStatus] = useState<boolean>(false)
-  const [creationGroup, setCreationGroup] = useState<boolean>(false)
   const [memberInvited, setMemberInvited] = useState<InvitedMember[] | undefined>()
   const [refetch, setRefetch] = useState<boolean>(false)
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    function setGroupStatusOnMounted () {
-      if (props.data?.data?.name === undefined) {
-        setStatus(false)
-      } else {
-        setStatus(true)
-      }
-    }
-    setGroupStatusOnMounted()
-  }, [props.data])
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -53,15 +38,6 @@ function GroupMissionChat (props: Props): JSX.Element {
     }
     setInvitedData()
   }, [refetch])
-
-  const handleCreateGroup = (): void => {
-    setCreationGroup(false)
-    props.onReturn()
-  }
-
-  const openModal = (): void => {
-    setCreationGroup(true)
-  }
 
   const handleRefetch = (): void => {
     setRefetch(!refetch)
@@ -162,14 +138,13 @@ function GroupMissionChat (props: Props): JSX.Element {
 
   return (
     <div>
-      { hasGroup
-        ? <div className='std-group__container'>
+        <div className='std-group__container'>
             <div className='std-group__details-section'>
                 <div className='std-group__chat-messages'>
                   {groupMessages.map((msg, index) => (
                     <div key={index} className='std-group__message'>
                       <div>
-                        {msg.firstName} {msg.lastName}: {msg.content}
+                        {msg.firstName}: {msg.content}
                       </div>
                     </div>
                   ))}
@@ -210,18 +185,7 @@ function GroupMissionChat (props: Props): JSX.Element {
                 <div className='std-group__member-title'> {t('student.dashboard.groups.invited')} </div>
                 <MemberInvitedCard member={memberInvited} onDelete={handleRefetch} />
             </div>
-          </div>
-        : <div className='std-group'>
-          <div className='std-group__section'>
-            <div className='std-group__text'> { t('student.dashboard.groups.no_group') } </div>
-            <ClassicButton title={t('student.dashboard.groups.create_group_button')} onClick={openModal}/>
-          </div>
-          <div className='std-group__image' >
-            <img src='/assets/groups_image.svg' />
-          </div>
-          <ModalCreateGroup open={creationGroup} onClose={handleCreateGroup}/>
         </div>
-      }
     </div>
   )
 }

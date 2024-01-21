@@ -305,17 +305,6 @@ function CompanyDetailedMission (): JSX.Element {
                           </div>
                         : null
                       }
-                      {/* {
-                        historicData.map((historic, index) => (
-                          <div className='cpn-detailed-mission__sub-section' key={index}>
-                            <div className='cpn-detailed-mission__row'>
-                              <Avatar className='cpn-detailed-mission__historic-logo' src={historic.logo} />
-                              <div className='cpn-detailed-mission__text-important'> {historic.name} </div>
-                              <div className='cpn-detailed-mission__text '> {historic.action} </div>
-                            </div>
-                          </div>
-                        ))
-                      } */}
                       { hasCompanyNoted > 0 && (
                         <div className='cpn-detailed-mission__sub-section'>
                           <div className='cpn-detailed-mission__row'>

@@ -24,6 +24,7 @@ import CompanyMissions from './Company/Dashbord/Missions/companyMissions'
 import CompanyDetailedMission from './Company/Mission/CompanyDetailedMission'
 import CompanyProfile from './Company/Dashbord/Profile/CompanyProfile'
 import StudentMissionChat from './Student/Dashbord/Missions/StudentMissionChat'
+import CompanyMissionChat from './Company/Mission/CompanyMissionChat'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
@@ -66,6 +67,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.COMPANY_MISSIONS} element={<CompanyMissions/>}/>
         <Route path={ROUTES.COMPANY_DETAILED_MISSION} element={<CompanyDetailedMission/>}/>
         <Route path={ROUTES.COMPANY_PROFILE} element={<CompanyProfile />}/>
+        <Route path={ROUTES.COMPANY_MISSION_CHAT} element={<CompanyMissionChat/>}/>
         <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage/>}/>
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard/>}/>
         <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>

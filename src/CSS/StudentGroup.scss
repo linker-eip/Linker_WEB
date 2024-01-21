@@ -81,6 +81,7 @@
     &__chat-messages {
         flex-grow: 1;
         overflow-y: auto;
+        max-height: 600px;
         margin-top: 2em;
         margin-bottom: 2em;
         margin-right: 4em;
@@ -93,10 +94,10 @@
     &__message {
         margin-bottom: 0.5em;
         padding: 0.5em;
-        background-color: #000000;
+        background-color: #ffffff;
         border-radius: 5px;
     }
-    
+
     &__chat-input {
         display: flex;
         width: 95%;
