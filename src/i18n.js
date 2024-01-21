@@ -93,6 +93,9 @@ i18n
                 create_group_button: 'Créer un groupe',
                 member_title: 'Les membres'
               },
+              chat: {
+                send_message: 'Envoyer'
+              },
               hotbar: {
                 profil: 'Profil',
                 quit: 'Déconnexion'
@@ -365,6 +368,9 @@ i18n
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
                 create_group_button: 'Créer un groupe',
                 invited: 'Les membres invités'
+              },
+              chat: {
+                send_message: 'Envoyer'
               },
               hotbar: {
                 profil: 'Profil',
