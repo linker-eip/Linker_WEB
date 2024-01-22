@@ -102,45 +102,45 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
 
   const { t } = useTranslation()
   return (
-        <div className='hotbar-container'>
-          <img src="/assets/logo.svg" alt='logo'/>
-          <p className='hotbar-container__title'>{ props.children }</p>
-          <div className='hotbar-container__info'>
-            <Avatar alt='avatar' src={profile?.picture} />
-            <ThemeProvider theme={theme}>
-                <Button
-                    id="demo-customized-button"
-                    aria-controls={open ? 'demo-customized-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    disableElevation
-                    onClick={handleClick}
-                    endIcon={<KeyboardArrowDownIcon />}
-                    >
-                    { profile !== null ? <p> { profile.firstName } { profile.lastName }</p> : 'Prenom NOM'}
-                </Button>
-            </ThemeProvider>
-            <StyledMenu
-                id="demo-customized-menu"
-                MenuListProps={{
-                  'aria-labelledby': 'demo-customized-button'
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
+    <div className='hotbar-container'>
+      <img src="/assets/logo.svg" alt='logo'/>
+      <p className='hotbar-container__title'>{ props.children }</p>
+      <div className='hotbar-container__info'>
+        <Avatar alt='avatar' src={profile?.picture} />
+        <ThemeProvider theme={theme}>
+            <Button
+                id="demo-customized-button"
+                aria-controls={open ? 'demo-customized-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                variant="contained"
+                disableElevation
+                onClick={handleClick}
+                endIcon={<KeyboardArrowDownIcon />}
                 >
-                <MenuItem onClick={handleProfile} disableRipple>
-                      <EditIcon />
-                      { t('student.dashboard.hotbar.profil') }
-                    </MenuItem>
-                    <MenuItem onClick={handleDisconnect} disableRipple>
-                      <ExitToAppOutlinedIcon />
-                      { t('student.dashboard.hotbar.quit') }
-                    </MenuItem>
-            </StyledMenu>
-          </div>
-        </div>
+                { profile !== null ? <p> { profile.firstName } { profile.lastName }</p> : 'Prenom NOM'}
+            </Button>
+        </ThemeProvider>
+        <StyledMenu
+            id="demo-customized-menu"
+            MenuListProps={{
+              'aria-labelledby': 'demo-customized-button'
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            >
+            <MenuItem onClick={handleProfile} disableRipple>
+                  <EditIcon />
+                  { t('student.dashboard.hotbar.profil') }
+                </MenuItem>
+                <MenuItem onClick={handleDisconnect} disableRipple>
+                  <ExitToAppOutlinedIcon />
+                  { t('student.dashboard.hotbar.quit') }
+                </MenuItem>
+        </StyledMenu>
+      </div>
+    </div>
   )
 }
 

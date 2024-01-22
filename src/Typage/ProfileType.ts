@@ -34,3 +34,18 @@ export interface Profile {
   ]
   website: string
 }
+
+export interface ProfileCompany {
+  id: number
+  name: string
+  description: string
+  email: string
+  phone: string
+  address: string
+  size: number
+  location: string
+  activity: string
+  speciality: string
+  website: string
+  picture: string
+}

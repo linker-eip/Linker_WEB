@@ -44,7 +44,8 @@ function MissionCardPotential (props: Props): JSX.Element {
   }
 
   const handleNavigation = (): void => {
-    navigate(ROUTES.COMPANY_DETAILED_MISSION)
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${ROUTES.COMPANY_DETAILED_MISSION.replace(':missionId', props.data.id.toString())}`)
   }
 
   function formatDate (missionDate: string): string {
