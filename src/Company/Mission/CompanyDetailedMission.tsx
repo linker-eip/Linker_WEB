@@ -172,7 +172,7 @@ function CompanyDetailedMission (): JSX.Element {
       amount: editMissionData?.amount
     }
 
-    fetch(`https://dev.linker-app.fr/api/admin/mission/${String(missionId)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/${String(missionId)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
