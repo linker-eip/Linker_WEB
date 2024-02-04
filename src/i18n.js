@@ -213,6 +213,9 @@ i18n
               button: 'Créer le groupe',
               invite: {
                 title: 'Ajouter un membre'
+              },
+              exclude: {
+                title: 'Exclure un membre'
               }
             }
           },
@@ -304,6 +307,9 @@ i18n
             },
             accept: {
               subtitle: 'Etes-vous sur de vouloir accepter:'
+            },
+            exclude: {
+              subtitle: 'Etes-vous sur de vouloir exclure:'
             },
             delete: {
               subtitle: 'Etes-vous sûr de vouloir supprimer:',

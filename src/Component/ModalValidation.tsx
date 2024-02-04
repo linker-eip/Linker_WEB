@@ -144,6 +144,12 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.EXCLUSION
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.exclude.subtitle') }
+            </div>
+          : null
+        }
         {props.type === ModalType.DELETE_GROUP
           ? <div className='modal-validation__subtitle'>
               { t('modal.delete.groups.subtitle') }
@@ -264,6 +270,10 @@ function ModalValidation (props: Props): JSX.Element {
           }
           { props.type === ModalType.DELETE
             ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
+            : null
+          }
+          { props.type === ModalType.EXCLUSION
+            ? <ClassicButton title='Exclure' refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DELETE_GROUP
