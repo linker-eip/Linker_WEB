@@ -1,10 +1,10 @@
-import type { Profile, ProfileCompany } from '../Typage/ProfileType'
+import type { StudentProfileInfo, Profile, ProfileCompany } from '../Typage/ProfileType'
 import type { CompanyInfo } from '../Typage/Type'
 import axios from 'axios'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class ProfileApi {
-  static async getProfile (jwtToken: string): Promise<Profile> {
+  static async getProfile (jwtToken: string): Promise<StudentProfileInfo> {
     const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
