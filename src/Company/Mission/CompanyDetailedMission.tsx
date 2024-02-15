@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import '../../CSS/StudentDashboard.scss'
@@ -19,7 +18,6 @@ import type { CompanyMissionDetails, MissionInfo, MissionTaskArrayInfo } from '.
 import MissionApi from '../../API/MissionApi'
 import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
-import Historic from './partials/Historic'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -153,17 +151,17 @@ function CompanyDetailedMission (): JSX.Element {
   useEffect(() => {
     setHistoricData([
       {
-        logo: missionData?.companyProfile.picture ?? '',
+        logo: missionData?.company.picture ?? '',
         name: 'Vous',
         action: 'avez noté la prestation.'
       },
       {
-        logo: missionData?.companyProfile.picture ?? '',
+        logo: missionData?.company.picture ?? '',
         name: 'Vous',
         action: 'avez laissé un avis sur la prestation.'
       }
     ])
-  }, [missionData?.companyProfile])
+  }, [missionData?.company])
 
   const handleUpdate = (): void => {
     const payload = {
@@ -172,7 +170,7 @@ function CompanyDetailedMission (): JSX.Element {
       amount: editMissionData?.amount
     }
 
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/${String(missionId)}`, {
+    fetch(`https://dev.linker-app.fr/api/admin/mission/${String(missionId)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -209,17 +207,10 @@ function CompanyDetailedMission (): JSX.Element {
     return Object.values(fieldValidity).every(value => value)
   }
 
-  const finishMission = async (): Promise<void> => {
+  const finishMission = (): void => {
     console.log(missionData)
     if (missionData?.mission !== undefined && missionData.mission.id !== undefined) {
-      try {
-        const response = await MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)
-        if (response !== undefined) {
-          window.location.reload()
-        }
-      } catch (error) {
-        console.log(error)
-      }
+      MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)
     }
   }
 
@@ -308,7 +299,12 @@ function CompanyDetailedMission (): JSX.Element {
                   <div>
                     <div className='cpn-detailed-mission__section'>
                       <p className='cpn-detailed-mission__container__title'> { t('company.detailed_mission.historic') } </p>
-                      <Historic missionStatus={missionData.mission.status} companyName={missionData.companyProfile.name} groupName={missionData.group !== null ? missionData.group.name : 'GroupName'} companyLogo={missionData.companyProfile.picture} groupLogo={missionData.group !== null ? missionData.group.picture : 'GroupName'} />
+                      { missionData.mission.status === MissionStatus.PENDING.toString()
+                        ? <div>
+                            L’historique est vide.
+                          </div>
+                        : null
+                      }
                       { hasCompanyNoted > 0 && (
                         <div className='cpn-detailed-mission__sub-section'>
                           <div className='cpn-detailed-mission__row'>

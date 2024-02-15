@@ -83,9 +83,6 @@ function ModalTaskCreation (props: Props): JSX.Element {
         skills: ''
       }
       MissionApi.createTask(localStorage.getItem('jwtToken') as string, props.missionId, data)
-      setName('')
-      setDescription('')
-      setPrice(0)
       props.onValidation()
     }
   }
