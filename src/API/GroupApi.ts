@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Group, GroupeInvitedMember, GroupSearchMember, GroupInvitationData } from '../Typage/Type'
+import type { Group, GroupeInvitedMember, GroupSearchMember, GroupInvitationData, SearchGroups } from '../Typage/Type'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class GroupApi {
@@ -87,9 +87,36 @@ class GroupApi {
     }
   }
 
+  static async searchGroup (jwtToken: string, value: string): Promise<SearchGroups> {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/group/company/searchGroups?searchString=${value}`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      })
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
   static async inviteMember (jwtToken: string, userId: number): Promise<Group> {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/group/invite/${userId}`, null, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      }
+      )
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
+  static async inviteGroup (jwtToken: string, missionId: number, groupId: number): Promise<Group> {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/mission/company/invite/${missionId}/${groupId}`, null, {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }

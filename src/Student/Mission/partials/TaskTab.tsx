@@ -5,11 +5,9 @@ import React, { useState, useEffect } from 'react'
 import type { MissionTaskArrayInfo } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
 import '../../../CSS/CompanyDetailedMission.scss'
-import ModalTaskCreation from './ModalTaskCreation'
 import Checkbox from '@mui/material/Checkbox'
 import MissionApi from '../../../API/MissionApi'
-import { TaskStatus, MissionStatus } from '../../../Enum'
-import ModalTaskEdition from './ModalTaskEdition'
+import { TaskStatus } from '../../../Enum'
 
 interface Props {
   missionTask: MissionTaskArrayInfo[]
@@ -20,8 +18,6 @@ interface Props {
 
 function TaskTab (props: Props): JSX.Element {
   const { t } = useTranslation()
-  const [taskModal, setTaskModal] = useState<boolean>(false)
-  const [editTaskModal, setEditTaskModal] = useState<boolean>(false)
   const [taskTab, setTaskTab] = useState<MissionTaskArrayInfo[]>()
   const [totalAmount, setTotalAmount] = useState<number>(0)
 
@@ -35,42 +31,8 @@ function TaskTab (props: Props): JSX.Element {
     setTotalAmount(amount)
   }, [])
 
-  const closeTaskModal = (): void => {
-    setTaskModal(false)
-  }
-
-  const validTaskModal = (): void => {
-    setTaskModal(false)
-    props.onCallback()
-  }
-
-  const openTaskModal = (): void => {
-    setTaskModal(true)
-  }
-
-  const closeEditTaskModal = (): void => {
-    setEditTaskModal(false)
-  }
-
-  const validEditTaskModal = (): void => {
-    // setEditTaskModal(false)
-    props.onCallback()
-    closeEditTaskModal()
-  }
-
-  const openEditTaskModal = (): void => {
-    setEditTaskModal(true)
-  }
-
   const changeTaskStatus = async (taskId: number): Promise<void> => {
-    const response = await MissionApi.changeTaskStatus(localStorage.getItem('jwtToken') as string, taskId)
-    if (response !== undefined) {
-      props.onCallback()
-    }
-  }
-
-  const deleteTask = (taskId: number): void => {
-    const response = MissionApi.deleteTask(localStorage.getItem('jwtToken') as string, taskId)
+    const response = await MissionApi.changeStudentTaskStatus(localStorage.getItem('jwtToken') as string, taskId)
     if (response !== undefined) {
       props.onCallback()
     }
@@ -96,7 +58,7 @@ function TaskTab (props: Props): JSX.Element {
       </div>
       {taskTab !== undefined && taskTab?.length > 0
         ? taskTab.map((task: MissionTaskArrayInfo, index: number) =>
-          <div key={task.missionTask.id} className={props.missionStatus === MissionStatus.PENDING ? 'cpn-detailed-mission__tab-container--delete' : 'cpn-detailed-mission__tab-container'}>
+          <div key={task.missionTask.id} className='cpn-detailed-mission__tab-container'>
             <div className='cpn-detailed-mission__sub-section'>
               <div> {task.missionTask.name} </div>
               <li> {task.missionTask.description} </li>
@@ -105,28 +67,10 @@ function TaskTab (props: Props): JSX.Element {
             <div className='cpn-detailed-mission__sub-section cpn-detailed-mission__centered'>
               <Checkbox onClick={() => changeTaskStatus(task.missionTask.id)} checked={isChecked(task.missionTask.status)} />
             </div>
-            {props.missionStatus === MissionStatus.PENDING
-              ? <div>
-                  <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
-                  <img onClick={openEditTaskModal} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
-                  <ModalTaskEdition open={editTaskModal} taskId={task.missionTask.id} onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={task.missionTask.name} description={task.missionTask.description} amount={task.missionTask.amount} />
-                </div>
-              : null
-            }
           </div>
         )
         : null
       }
-      {props.missionStatus === MissionStatus.PENDING
-        ? <div className='cpn-detailed-mission__tab-container'>
-            <div />
-            <div />
-            <div className='cpn-detailed-mission__add-task cpn-detailed-mission__centered'>
-              <img className='cpn-detailed-mission__clickable' src='/assets/adder.svg' onClick={openTaskModal} />
-            </div>
-          </div>
-        : null}
-      <ModalTaskCreation open={taskModal} missionId={props.missionId} onValidation={validTaskModal} onClose={closeTaskModal} />
       <div className='cpn-detailed-mission__total-section'>
         <div />
         <div className='cpn-detailed-mission__total'>
