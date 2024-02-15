@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import React, { useState, type ChangeEvent, useEffect } from 'react'
+import React, { useState, type ChangeEvent } from 'react'
 import '../../../../CSS/StudentProfileExperience.scss'
 import { useTranslation } from 'react-i18next'
 import Modal from '@mui/material/Modal'
@@ -7,15 +7,19 @@ import { TextField } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZone from '../../../../Component/DropZone'
 import ProfileApi from '../../../../API/ProfileApi'
-import type { Profile } from '../../../../Typage/ProfileType'
+import type { StudentProfileInfo } from '../../../../Typage/ProfileType'
 import DatePicker, {} from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 
-function StudentProfileEducation (): JSX.Element {
-  const [profileData, setProfileData] = useState<Profile>()
+interface Props {
+  data: StudentProfileInfo
+  update: () => void
+}
+
+function StudentProfileEducation (props: Props): JSX.Element {
   const [experienceName, setExperienceName] = useState<string>()
   const [logo, setLogo] = useState<any>()
   const [position, setPosition] = useState<string>()
@@ -23,7 +27,6 @@ function StudentProfileEducation (): JSX.Element {
   const [description, setDescription] = useState<string>()
   const [isEdit, setIsEdit] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const [isSubmited, setIsSubmited] = useState(false)
   const [open, setOpen] = React.useState(false)
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
   const [startDate, endDate] = dateRange
@@ -36,34 +39,6 @@ function StudentProfileEducation (): JSX.Element {
     setOpen(false)
     setIsEdit(!isEdit)
   }
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    async function fetchData () {
-      try {
-        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-        setProfileData(data)
-      } catch (error) {
-        console.error('Error fetching profile data:', error)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    async function refetchData () {
-      try {
-        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-        setProfileData(data)
-      } catch (error) {
-        console.error('Error fetching profile data:', error)
-      }
-    }
-
-    refetchData()
-  }, [isSubmited])
 
   const formatRange = (startDate: Date | null, endDate: Date | null): string => {
     if (startDate === null || endDate === null) return ''
@@ -114,15 +89,16 @@ function StudentProfileEducation (): JSX.Element {
     studies.append('studies[0][description]', description ?? '')
     studies.append('studies[0][logo]', String(returnValue))
     studies.append('studies[0][position]', position ?? '')
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, studies)
+    const response = await ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, studies)
+    if (response !== undefined) {
+      props.update()
+    }
   }
 
   const handleNewExperience = (): void => {
     handleEditMode()
     callApi()
-
     handleModalClose()
-    setIsSubmited(isSubmited)
   }
 
   const { t } = useTranslation()
@@ -141,9 +117,9 @@ function StudentProfileEducation (): JSX.Element {
         }
         </div>
         <div>
-          { profileData?.studies !== undefined
-            ? profileData.studies.map((item, index) => (
-            <div className={ profileData.studies.length > index + 1 ? 'std-profile-exp__separator' : 'std-profile-exp__row'} key={index}>
+          { props.data.studies !== undefined
+            ? props.data.studies.map((item, index: number) => (
+            <div className={ props.data.studies.length > index + 1 ? 'std-profile-exp__separator' : 'std-profile-exp__row'} key={index}>
               <img className='std-profile-exp__logo' src={item.logo} alt={item.logo} />
               <div className='std-profile-exp__container'>
                 <p className='std-profile-exp__container-title' > {item.name} </p>
