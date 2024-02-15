@@ -23,7 +23,7 @@ function AuthVerifyPwd (): JSX.Element {
   return (
     <div>
       <h1>Verification Page</h1>
-      <h3>{authData?.status === 201 ? 'Le compte a été vérifié avec succès' : 'Code de vérification invalide'}</h3>
+      <h3>{authData?.status === 201 ? 'Le compte a été vérifié avec succès' : 'Code Invalide'}</h3>
     </div>
   )
 }

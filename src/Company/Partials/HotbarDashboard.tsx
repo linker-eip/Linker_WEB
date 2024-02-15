@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { ProfileCompany } from '../../Typage/ProfileType'
-import ProfileApi from '../../API/ProfileApi'
 import { useTranslation } from 'react-i18next'
 
 // MUI imports.
@@ -47,21 +45,14 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
   //
 }))
 
-function HotbarDashboard (props: { children: string | any }): JSX.Element {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [profile, setProfile] = useState<ProfileCompany | null>(null)
-  const open = Boolean(anchorEl)
+interface HotbarProps {
+  children: React.ReactNode
+}
+
+const HotbarDashboard: React.FC<HotbarProps> = ({ children }: HotbarProps) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const navigate = useNavigate()
   const { t } = useTranslation()
-
-  useEffect(() => {
-    const fetchData = async (): Promise<any> => {
-      const profileData = await ProfileApi.getCompanyProfile(localStorage.getItem('jwtToken') as string)
-      setProfile(profileData)
-      return profileData
-    }
-    fetchData()
-  }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget)
@@ -72,95 +63,45 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
     setAnchorEl(null)
   }
 
-  const handleProfile = (): any => {
-    navigate(ROUTES.COMPANY_PROFILE)
-    setAnchorEl(null)
-  }
-
-  const handleDisconnect = (): void => {
-    navigate(ROUTES.COMPANY_LOGIN_PAGE)
-    localStorage.removeItem('jwtToken')
-    setAnchorEl(null)
-  }
-
   return (
     <div className='hotbar-container'>
-      <img src="/assets/logo.svg" alt='logo'/>
-      <p className='hotbar-container__title'>{ props.children }</p>
+      <img src="/assets/logo.svg" alt="logo" />
+      <p className='hotbar-container__title'>{children}</p>
       <div className='hotbar-container__info'>
-        <Avatar alt='avatar' src={profile?.picture} />
+        <Avatar alt="avatar" src='/assets/anonymLogo.jpg' />
         <ThemeProvider theme={theme}>
-            <Button
-                id="demo-customized-button"
-                aria-controls={open ? 'demo-customized-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                variant="contained"
-                disableElevation
-                onClick={handleClick}
-                endIcon={<KeyboardArrowDownIcon />}
-                >
-                { profile !== null ? <p> { profile.name } </p> : 'NOM'}
-            </Button>
+          <Button
+            id="demo-customized-button"
+            aria-controls={(anchorEl != null) ? 'demo-customized-menu' : undefined}
+            aria-haspopup="true"
+            variant="contained"
+            disableElevation
+            onClick={handleClick}
+            endIcon={<KeyboardArrowDownIcon />}
+          >
+            Prénom NOM
+          </Button>
         </ThemeProvider>
         <StyledMenu
-            id="demo-customized-menu"
-            MenuListProps={{
-              'aria-labelledby': 'demo-customized-button'
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            >
-            <MenuItem onClick={handleProfile} disableRipple>
-                  <EditIcon />
-                  { t('student.dashboard.hotbar.profil') }
-                </MenuItem>
-                <MenuItem onClick={handleDisconnect} disableRipple>
-                  <ExitToAppOutlinedIcon />
-                  { t('student.dashboard.hotbar.quit') }
-                </MenuItem>
+          id="demo-customized-menu"
+          MenuListProps={{
+            'aria-labelledby': 'demo-customized-button'
+          }}
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose} disableRipple>
+            <EditIcon />
+            {t('student.dashboard.hotbar.profil')}
+          </MenuItem>
+          <MenuItem onClick={handleClose} disableRipple>
+            <ExitToAppOutlinedIcon />
+            {t('student.dashboard.hotbar.quit')}
+          </MenuItem>
         </StyledMenu>
       </div>
     </div>
-    // <div className='hotbar-container'>
-    //   <img src="/assets/logo.svg" alt="logo" />
-    //   <p className='hotbar-container__title'>{children}</p>
-    //   <div className='hotbar-container__info'>
-    //     <Avatar alt="avatar" src='/assets/anonymLogo.jpg' />
-    //     <ThemeProvider theme={theme}>
-    //       <Button
-    //         id="demo-customized-button"
-    //         aria-controls={(anchorEl != null) ? 'demo-customized-menu' : undefined}
-    //         aria-haspopup="true"
-    //         variant="contained"
-    //         disableElevation
-    //         onClick={handleClick}
-    //         endIcon={<KeyboardArrowDownIcon />}
-    //       >
-    //         Prénom NOM
-    //       </Button>
-    //     </ThemeProvider>
-    //     <StyledMenu
-    //       id="demo-customized-menu"
-    //       MenuListProps={{
-    //         'aria-labelledby': 'demo-customized-button'
-    //       }}
-    //       anchorEl={anchorEl}
-    //       open={Boolean(anchorEl)}
-    //       onClose={handleClose}
-    //     >
-    //       <MenuItem onClick={handleClose} disableRipple>
-    //         <EditIcon />
-    //         {t('student.dashboard.hotbar.profil')}
-    //       </MenuItem>
-    //       <MenuItem onClick={handleClose} disableRipple>
-    //         <ExitToAppOutlinedIcon />
-    //         {t('student.dashboard.hotbar.quit')}
-    //       </MenuItem>
-    //     </StyledMenu>
-    //   </div>
-    // </div>
   )
 }
 

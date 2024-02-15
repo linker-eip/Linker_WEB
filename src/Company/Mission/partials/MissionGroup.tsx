@@ -20,11 +20,11 @@ function MissionGroup (props: Props): JSX.Element {
 
   return (
     <div className='cpn-detailed-mission__section'>
-      <p className='cpn-detailed-mission__section__title-3'> { t('company.detailed_mission.participants')} </p>
+      <p className='cpn-detailed-mission__section__title-4'> { t('company.detailed_mission.participants')} </p>
       {props.missionData.mission.groupId != null
         ? <div className='cpn-detailed-mission__column-2'>
             <div className='cpn-detailed-mission__row'>
-              <Avatar src={props.missionData.group.picture} />
+              <img className='cpn-detailed-mission__logo' src={'missionData.group.picture ?? '} />
               <div className='cpn-detailed-mission__column'>
                 <p className='cpn-detailed-mission__section__subtitle'> { props.missionData.group.name } </p>
               </div>

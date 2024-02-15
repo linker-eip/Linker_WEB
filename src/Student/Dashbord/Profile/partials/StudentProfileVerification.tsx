@@ -1,13 +1,8 @@
 import React from 'react'
 import '../../../../CSS/StudentProfileVerification.scss'
 import { useTranslation } from 'react-i18next'
-import type { StudentProfileInfo } from '../../../../Typage/ProfileType'
 
-interface Props {
-  data: StudentProfileInfo
-}
-
-function StudentProfileVerification (props: Props): JSX.Element {
+function StudentProfileVerification (): JSX.Element {
   const { t } = useTranslation()
   return (
     <div className='std-profile-verif'>

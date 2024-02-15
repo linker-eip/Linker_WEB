@@ -1,22 +1,17 @@
-import React, { useState, type ChangeEvent } from 'react'
+import React, { useState, type ChangeEvent, useEffect } from 'react'
 import '../../../../CSS/StudentProfileCompetence.scss'
 import { useTranslation } from 'react-i18next'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 import Modal from '@mui/material/Modal'
 import { TextField } from '@mui/material'
+import BaseButton from '../../../../Component/BaseButton'
 import ProfileApi from '../../../../API/ProfileApi'
-import type { StudentProfileInfo } from '../../../../Typage/ProfileType'
+import type { Profile } from '../../../../Typage/ProfileType'
 import DropZone from '../../../../Component/DropZone'
-import ClassicButton from '../../../../Component/ClassicButton'
 
-interface Props {
-  data: StudentProfileInfo
-  update: () => void
-}
-
-function StudentProfileCompetence (props: Props): JSX.Element {
-  // const [profileData, setProfileData] = useState<StudentProfileInfo>()
+function StudentProfileCompetence (): JSX.Element {
+  const [profileData, setProfileData] = useState<Profile>()
   const [skillName, setSkillName] = useState<string>()
   const [isEdit, setIsEdit] = useState(false)
   const [open, setOpen] = React.useState(false)
@@ -24,19 +19,19 @@ function StudentProfileCompetence (props: Props): JSX.Element {
   const handleSkillOpen = (): void => { setOpen(true) }
   const handleSkillClose = (): void => { setOpen(false) }
 
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  //   async function fetchData () {
-  //     try {
-  //       const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-  //       setProfileData(data)
-  //     } catch (error) {
-  //       console.error('Error fetching profile data:', error)
-  //     }
-  //   }
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function fetchData () {
+      try {
+        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
+        setProfileData(data)
+      } catch (error) {
+        console.error('Error fetching profile data:', error)
+      }
+    }
 
-  //   fetchData()
-  // }, [])
+    fetchData()
+  }, [])
 
   const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
     setAvatarImage(event)
@@ -58,10 +53,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
     skills.append('skills[0][name]', skillName ?? '')
     skills.append('skills[0][logo]', String(returnValue))
     setSkillName('')
-    const response = await ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, skills)
-    if (response !== undefined) {
-      props.update()
-    }
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, skills)
   }
 
   const handleNewSkill = (): void => {
@@ -78,7 +70,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
           <h1 className='std-profile-comp__title'> { t('student.profile.skills.title') } </h1>
         </div>
         <div className='std-profile-comp__container'>
-          { props.data.skills.map((item, index) => (
+          { profileData?.skills.map((item, index) => (
           <div className='std-profile-comp__section' key={index}>
             <img src={item.logo} className='std-profile-comp__img' />
             <p> {item.name} </p>
@@ -103,25 +95,22 @@ function StudentProfileCompetence (props: Props): JSX.Element {
         }
       <Modal open={open} onClose={handleSkillClose} >
         <div className='std-profile-comp__modal'>
-          <div className='std-profile-comp__modal-title'> Ajoute ta compétence </div>
+          <h1> Ajoute ta compétence </h1>
             <div className='std-profile-comp__content'>
             <DropZone onObjectChange={handleAvatarImage}/>
             { AvatarImage !== undefined
-              ? <div className='std-profile-comp__filename'>
-                  <img className='std-profile-comp__img' src='/assets/file.png' />
+              ? <div>
                   <p> {AvatarImage[0].path } </p>
                 </div>
               : null }
-              <div className='std-profile-comp__textfield'>
-                <TextField
-                  value={skillName}
-                  onChange={handleSkillName}
-                  variant='standard'
-                  id="standard-required"
-                  label="Nom de la compétence"
-                  />
-              </div>
-              <ClassicButton title='Envoyer' onClick={handleNewSkill} />
+              <TextField
+                value={skillName}
+                onChange={handleSkillName}
+                variant='standard'
+                id="standard-required"
+                label="Nom de la compétence"
+              />
+              <BaseButton title='submit' onClick={handleNewSkill} />
             </div>
         </div>
       </Modal>

@@ -21,7 +21,6 @@ export interface GroupType {
   members: Members[]
   leaderId: number
   isLeader: boolean
-  groupId: number
 }
 
 export interface Group {
@@ -51,57 +50,6 @@ export interface SearchMember {
 export interface GroupSearchMember {
   data?: SearchMember[]
   response?: GroupError
-}
-
-export interface SearchGroups {
-  data?: SearchGroupData[]
-  response?: GroupError
-}
-
-export interface SearchGroupData {
-  id: number
-  name: string
-  description: string
-  studentsProfiles: [
-    {
-      id: number
-      firstName: string
-      lastName: string
-      description: string
-      email: string
-      phone: string
-      location: string
-      picture: string
-      studies: [
-        {
-          id: number
-          name: string
-          logo: string
-          city: string
-          duration: string
-          description: string
-        }
-      ]
-      skills: [
-        {
-          id: number
-          name: string
-          logo: string
-        }
-      ]
-      jobs: [
-        {
-          id: number
-          name: string
-          logo: string
-          city: string
-          duration: string
-          description: string
-        }
-      ]
-      website: string
-    }
-  ]
 }
 
 export interface CompanyInfo {
@@ -165,11 +113,40 @@ export interface StudentProfileInfo {
 }
 
 export interface CompanyMissionDetails {
-  companyProfile: CompanyInfo
+  company: CompanyInfo
   mission: MissionInfo
   missionTaskArray: MissionTaskArrayInfo[]
-  group: GroupInfo
-  groupStudents: GroupStudentInfo[]
+  group: {
+    name: string
+    description: string
+    picture: string
+    members: [
+      {
+        firstName: string
+        lastName: string
+        picture: string
+        isLeader: true
+        id: number
+      }
+    ]
+    leaderId: number
+    isLeader: true
+  }
+  groupStudents: [
+    {
+      id: number
+      studentId: number
+      firstName: string
+      lastName: string
+      description: string
+      email: string
+      phone: string
+      location: string
+      picture: string
+      website: string
+      note: number
+    }
+  ]
 }
 
 export interface GroupInvitation {
@@ -182,48 +159,4 @@ export interface GroupInvitation {
 export interface GroupInvitationData {
   data?: GroupInvitation[]
   response?: GroupError
-}
-
-export interface GroupInfo {
-  id: number
-  name: string
-  description: string
-  picture: string
-  members: Members[]
-  leaderId: number
-  isLeader: boolean
-}
-
-export interface GroupStudentInfo {
-  id: number
-  studentId: number
-  firstName: string
-  lastName: string
-  description: string
-  email: string
-  phone: string
-  location: string
-  picture: string
-  website: string
-  note: number
-}
-
-export interface StudentMissionDetails {
-  companyProfile: CompanyInfo
-  mission: MissionInfo
-  missionTaskArray: MissionTaskArrayInfo[]
-  group: GroupInfo
-  groupStudents: GroupStudentInfo[]
-}
-
-export interface CompanyAdminInfo {
-  id: number
-  email: string
-  companyName: string
-  phoneNumber: string
-  picture: string
-  companyPicture: string
-  isActive: boolean
-  lastConnectedAt: string
-  createdAt: string
 }
