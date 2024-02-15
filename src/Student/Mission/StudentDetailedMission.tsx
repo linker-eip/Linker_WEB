@@ -15,6 +15,13 @@ import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../Router/routes'
+import { useParams } from 'react-router-dom'
+import MissionApi from '../../API/MissionApi'
+import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo } from '../../Typage/Type'
+import TaskTab from './partials/TaskTab'
+import Historic from './partials/Historic'
+import ProfileApi from '../../API/ProfileApi'
+import GroupApi from '../../API/GroupApi'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -118,6 +125,28 @@ function StudentDetailedMission (): JSX.Element {
     navigate(ROUTES.STUDENT_MISSION_CHAT)
   }
 
+  useEffect(() => {
+    switch (missionData?.mission.status) {
+      case MissionStatus.PENDING:
+        setActiveStep(1)
+        break
+      case MissionStatus.ACCEPTED:
+        setActiveStep(2)
+        break
+      case MissionStatus.PROVISIONED:
+        setActiveStep(3)
+        break
+      case MissionStatus.IN_PROGRESS:
+        setActiveStep(4)
+        break
+      case MissionStatus.FINISHED:
+        setActiveStep(5)
+        break
+      default:
+        break
+    }
+  }, [missionData])
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
@@ -196,18 +225,7 @@ function StudentDetailedMission (): JSX.Element {
                     </div>
                   </div>
                   <div className='std-detailed-mission__column-2'>
-                    <div className='std-detailed-mission__mark'>
-                      {
-                        starsStatus.map((item, index) => {
-                          return <img src='/assets/stars.svg' alt='stars' className='std-detailed-mission__stars' key={index} />
-                        })
-                      }
-                      <div className='std-detailed-mission__circle' />
-                      <p> {missionData.nbrMission} {t('student.detailed_mission.mission')} </p>
-                    </div>
-                    <div className='std-detailed-mission__conversation' onClick={handleClick}>
-                      {t('student.detailed_mission.conversation')}
-                    </div>
+                    <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
                   </div>
                 </div>
                 <div>
