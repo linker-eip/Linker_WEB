@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react'
-import '../../../CSS/StudentDashboard.scss'
-import '../../../CSS/StudentMission.scss'
-import HotbarDashboard from '../Partials/HotbarDashboard'
-import SidebarDashboard from '../Partials/SidebarDashboard'
-import { useTranslation } from 'react-i18next'
-import { DashboardState } from '../../../Enum'
-import isPrivateRoute from '../../../Component/isPrivateRoute'
-import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Group from './partials/Group'
-import GroupChat from './partials/GroupChat'
-import GroupApi from '../../../API/GroupApi'
-import type { Group as GroupData, GroupInvitationData } from '../../../Typage/Type'
-import Invitations from './partials/Invitations'
+import Tabs from '@mui/material/Tabs'
+import '../../CSS/StudentMission.scss'
+import '../../CSS/StudentDashboard.scss'
+import GroupApi from '../../API/GroupApi'
+import { DashboardState } from '../../Enum'
+import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from 'react'
+import HotbarDashboard from '../Partials/HotbarDashboard'
+import GroupMissionChat from './partials/GroupMissionChat'
+import isPrivateRoute from '../../Component/isPrivateRoute'
+import SidebarDashboard from '../Partials/SidebarDashboard'
+import type { Group as GroupData } from '../../Typage/Type'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -45,22 +43,19 @@ function a11yProps (index: number): any {
   }
 }
 
-function StudentGroup (): JSX.Element {
+function CompanyMissionChat (): JSX.Element {
   isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
   const [value, setValue] = useState(0)
   const [groupData, setGroupData] = useState<GroupData>()
-  const [groupInvitationData, setGroupInvitationData] = useState<GroupInvitationData>()
   const [refetchData, setRefetchData] = useState(false)
 
   useEffect(() => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
-      const groupInvitationData = await GroupApi.getGroupInvitation(localStorage.getItem('jwtToken') as string)
       const groupData = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
       setGroupData(groupData)
-      setGroupInvitationData(groupInvitationData)
     }
     fetchData()
   }, [refetchData])
@@ -75,24 +70,16 @@ function StudentGroup (): JSX.Element {
 
   return (
     <div className='std-bord-container'>
-      <HotbarDashboard> { t('student.dashboard.group') } </HotbarDashboard>
+      <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
       <div className='std-bord-container__page'>
-        <SidebarDashboard state={state.GROUP} />
+        <SidebarDashboard state={state.MISSION} />
         <div className='std-bord-container__content'>
           <div className='std-mission__group-page'>
             <Tabs className='std-mission__text' value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab className='std-mission__text' label={ groupData?.data?.name ?? t('student.dashboard.groups.my_group')} {...a11yProps(0)} />
               <Tab className='std-mission__text' label={t('student.dashboard.groups.chat')} {...a11yProps(0)} />
-              <Tab className='std-mission__text' label={t('student.dashboard.groups.invite', { nbrInvitation: groupInvitationData?.data?.length ?? 0 })} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <Group data={groupData} onReturn={handleRefetch} />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-              <GroupChat data={groupData} onReturn={handleRefetch} />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-              <Invitations data={groupInvitationData?.data} onReturn={handleRefetch} />
+              <GroupMissionChat data={groupData} onReturn={handleRefetch} />
             </CustomTabPanel>
           </div>
         </div>
@@ -101,4 +88,4 @@ function StudentGroup (): JSX.Element {
   )
 }
 
-export default StudentGroup
+export default CompanyMissionChat
