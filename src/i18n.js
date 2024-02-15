@@ -86,11 +86,15 @@ i18n
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
+                chat: 'Chat textuel',
                 invite: 'invitations ({{nbrInvitation}})',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
                 no_invite: 'Il semble que vous n\'ayez aucune invitations en attente.',
                 create_group_button: 'Créer un groupe',
                 member_title: 'Les membres'
+              },
+              chat: {
+                send_message: 'Envoyer'
               },
               hotbar: {
                 profil: 'Profil',
@@ -359,10 +363,14 @@ i18n
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
+                chat: 'Chat textuel',
                 invite: 'invitations()',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
                 create_group_button: 'Créer un groupe',
                 invited: 'Les membres invités'
+              },
+              chat: {
+                send_message: 'Envoyer'
               },
               hotbar: {
                 profil: 'Profil',
