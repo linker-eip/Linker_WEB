@@ -1,205 +1,180 @@
 @font-face {
-    font-family: 'Poppins';
-    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
-  }
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
 
 .std-profile-exp {
+  margin: 2em;
+  padding: 1em 1em 1em 1em;
+  background-color: white;
+  //width: fit-content;
+  color: #4b4b4b;
+  border-radius: 1em;
+  font-family: 'poppins';
+
+  &__title-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  &__text {
+    text-align: start;
+  }
+
+  &__button {
+    text-align: center;
+  }
+
+  &__container {
+    // margin: 0 1.5em 0 1.5em;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+    font-weight: 700;
+    align-items: center;
+  }
+
+  &__img {
+    width: 2.8em;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 2em;
+    margin: 0 1em 1em 1em;
+    padding: 2em 0 2em 0;
+  }
+
+  &__separator {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin: 0 1em 1em 1em;
+    padding: 2em 0 2em 0;
+    gap: 2em;
+    border-bottom: solid 1px #00000040;
+  }
+
+  &__columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    width: 100%;
+  }
+
+  &__datepicker {
+    width: 100%;
+    height: 2em;
+  }
+
+  &__button {
+    width: 100%;
+  }
+
+  &__add {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: center;
     margin: 2em;
-    padding: 1em 1em 1em 1em;
-    background-color: white;
-    //width: fit-content;
-    color: #4b4b4b;
-    border-radius: 1em;
+    padding: 1em;
+    padding-right: 30em;
+    border: 0.4em #4b4b4b dashed;
+    width: fit-content;
+
+    @media screen and (min-width: 1600px) {
+      padding-right: 70em;
+    }
+
+    @media screen and (min-width: 1500px) and (max-width: 1600px) {
+      padding-right: 60em;
+    }
+
+    @media screen and (min-width: 1350px) and (max-width: 1500px) {
+      padding-right: 50em;
+    }
+
+    @media screen and (min-width: 1200px) and (max-width: 1350px) {
+      padding-right: 45em;
+    }
+  }
+
+  &__title {
+    display: flex;
+    margin: 0 0.5em 1em 0.5em;
+  }
+
+  &__edit {
+    margin-top: 0.3em !important;
+    height: 1.5em !important;
+    width: 100% !important;
+    cursor: pointer;
+  }
+
+  &__logo {
+    height: 10em;
+    max-width: 15em;
+  }
+
+  &__modal {
     font-family: 'poppins';
+    background-color: white;
+    padding: 3em;
+    text-align: center;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    &__title-container {
-        display: flex;
-        flex-direction: row;
-    }
+  &__container-title {
+    font-size: 2em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-    }
+  &__position {
+    font-size: 1.3em;
+    font-weight: 700;
+  }
 
-    &__text {
-        text-align: start;
-    }
+  &__location {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+  }
 
-    &__button {
-        text-align: center;
-    }
+  &__calendar {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+  }
 
-    &__container {
-        // margin: 0 1.5em 0 1.5em;
-        display: flex;
-        flex-direction: column;
-        width: fit-content;  
-    }
-    
-    &__section {
-        display: flex;
-        flex-direction: column;
-        font-size: 1.5em;
-        font-weight: 700;
-        align-items: center;
-    }
-
-    &__img {
-        width: 2.8em;
-    }
-
-    &__row {
-        display: grid;
-        grid-template-columns: 1fr 4fr;
-        margin: 0 1em 1em 1em;
-        padding: 2em 0 2em 0;
-
-    }
-
-    &__separator {
-        display: grid;
-        grid-template-columns: 1fr 4fr;
-        margin: 0 1em 1em 1em;
-        padding: 2em 0 2em 0;
-        border-bottom: solid 1px #00000040;
-    }
-
-    &__columns {
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__input {
-        width: 100%;
-    }
-
-    &__datepicker {
-        width: 100%;
-    }
-
-    &__button {
-        width: 100%;
-    }
-
-    &__add {
-        display: flex;
-        flex-direction: row;
-        gap: 1em;
-        align-items: center;
-        margin: 2em;
-        padding: 1em;
-        padding-right: 30em;
-        border: 0.4em #4b4b4b dashed;
-        width: fit-content;
-
-        @media screen and (min-width: 1600px ) {
-            padding-right: 70em;
-            
-        }
-
-        @media screen and (min-width: 1500px) and (max-width: 1600px) {
-            padding-right: 60em;
-            
-        }
-
-        @media screen and (min-width: 1350px) and (max-width: 1500px) {
-            padding-right: 50em;
-            
-        }
-
-        @media screen and (min-width: 1200px) and (max-width: 1350px) {
-            padding-right: 45em;
-            
-        }
-
-    }
-
-    &__title {
-        display: flex;
-        margin: 0 0.5em 1em 0.5em;
-    }
-
-    &__edit {
-        height: 2em !important;
-        width: 2em !important;
-        cursor: pointer;
-    }
-
-    &__logo {
-        height: 10em;
-        width: 10em;
-    }
-
-    &__modal {
-        font-family: 'poppins';
-        background-color: white;
-        padding: 3em;
-        text-align: center;
-
-        @media screen and (min-width: 1420px ) {
-            margin: 8em 35em 10em 35em;            
-        }
-
-        @media screen and (min-width: 1240px) and (max-width: 1420px) {
-            margin: 8em 30em 10em 30em;
-        }
-
-        @media screen and (min-width: 1070px) and (max-width: 1240px) {
-            margin: 8em 25em 10em 25em;
-        }
-
-        @media screen and (min-width: 900px) and (max-width: 1070px) {
-            margin: 8em 20em 10em 20em;
-        }
-
-        @media screen and (min-width: 750px) and (max-width: 900px) {
-            margin: 8em 15em 10em 15em;
-        }
-
-        @media screen and (min-width: 600px) and (max-width: 750px) {
-            margin: 8em 10em 10em 10em;
-        }
-
-        @media screen and (min-width: 500px) and (max-width: 600px) {
-            margin: 8em 5em 10em 5em;
-        }
-    }
-
-    &__container-title {
-        font-size: 2em;
-        font-weight: 700;
-    }
-
-    &__position {
-        font-size: 1.3em;
-        font-weight: 700;
-    }
-
-    &__location {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5em;
-    }
-
-    &__calendar {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5em;
-    }
-
-    &__date {
-        display: flex;
-        flex-direction: row;
-        gap: 1.8em;
-        font-size: 0.8em;
-        font-weight: 700;
-        margin-bottom: 2em;
-    }
-
+  &__date {
+    display: flex;
+    flex-direction: row;
+    gap: 1.8em;
+    font-size: 0.8em;
+    font-weight: 700;
+    margin-bottom: 2em;
+  }
 }
 
 .react-datepicker-wrapper {
-    display: inline !important;
+  display: inline !important;
 }

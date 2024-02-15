@@ -11,7 +11,7 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
-import type { Profile } from '../../../Typage/ProfileType'
+import type { StudentProfileInfo } from '../../../Typage/ProfileType'
 import ProfileApi from '../../../API/ProfileApi'
 
 const theme = createTheme({
@@ -68,7 +68,7 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
 
 function HotbarDashboard (props: { children: string | any }): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [profile, setProfile] = useState<Profile | null>(null)
+  const [profile, setProfile] = useState<StudentProfileInfo | null>(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
 
