@@ -1,9 +1,8 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import * as ROUTES from '../../../Router/routes'
-import '../../../CSS/StudentDetailedMission.scss'
+import React, { useState } from 'react'
 import type { CompanyMissionDetails } from '../../../Typage/Type'
+import { useTranslation } from 'react-i18next'
+import { Avatar } from '@mui/material'
+import ModalInvitationGroup from './ModalInvitationGroup'
 
 interface Props {
   missionData: CompanyMissionDetails
@@ -11,13 +10,15 @@ interface Props {
 
 function MissionGroup (props: Props): JSX.Element {
   const { t } = useTranslation()
+  const [inviteModal, setInviteModal] = useState<boolean>(false)
 
-  const navigate = useNavigate()
-  const handleClick = (): void => {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    navigate(`${ROUTES.COMPANY_MISSION_CHAT.replace(':missionId', props.missionData.mission.id.toString())}`)
+  const openInviteModal = (): void => {
+    setInviteModal(true)
   }
 
+  const closeInviteModal = (): void => {
+    setInviteModal(false)
+  }
   return (
     <div className='cpn-detailed-mission__section'>
       <p className='cpn-detailed-mission__section__title-3'> { t('company.detailed_mission.participants')} </p>
@@ -36,9 +37,8 @@ function MissionGroup (props: Props): JSX.Element {
             <div className='cpn-detailed-mission__row'>
               { t('company.detailed_mission.no_participants')}
             </div>
-            <div className='std-detailed-mission__conversation' onClick={handleClick}>
-              {t('student.detailed_mission.conversation')}
-            </div>
+            <p className='cpn-detailed-mission__conversation' onClick={openInviteModal}> Inviter un groupe </p>
+            <ModalInvitationGroup open={inviteModal} onClose={closeInviteModal} missionId={props.missionData.mission.id} />
           </div>
       }
     </div>

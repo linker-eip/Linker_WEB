@@ -15,8 +15,6 @@ import StepLabel from '@mui/material/StepLabel'
 import { Avatar } from '@mui/material'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
-import { useNavigate } from 'react-router-dom'
-import * as ROUTES from '../../Router/routes'
 import { useParams } from 'react-router-dom'
 import MissionApi from '../../API/MissionApi'
 import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo } from '../../Typage/Type'
@@ -119,11 +117,6 @@ function StudentDetailedMission (): JSX.Element {
     t('company.detailed_mission.in_progress'),
     t('company.detailed_mission.completed')
   ]
-
-  const navigate = useNavigate()
-  const handleClick = (): void => {
-    navigate(ROUTES.STUDENT_MISSION_CHAT)
-  }
 
   useEffect(() => {
     switch (missionData?.mission.status) {
@@ -257,18 +250,7 @@ function StudentDetailedMission (): JSX.Element {
                       }
                   </div>
                   <div className='std-detailed-mission__column-2'>
-                    <div className='std-detailed-mission__mark'>
-                      {
-                        starsStatus.map((item, index) => {
-                          return <img src='/assets/stars.svg' alt='stars' className='std-detailed-mission__stars' key={index} />
-                        })
-                      }
-                      <div className='std-detailed-mission__circle' />
-                      <p> {missionData.nbrMission} {t('student.detailed_mission.mission')} </p>
-                    </div>
-                    <div className='std-detailed-mission__conversation' onClick={handleClick}>
-                      {t('student.detailed_mission.conversation')}
-                    </div>
+                    <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
                   </div>
                 </div>
                 <div>
