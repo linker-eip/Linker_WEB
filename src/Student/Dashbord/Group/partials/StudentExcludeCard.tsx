@@ -6,6 +6,7 @@ import ClassicButton from '../../../../Component/ClassicButton'
 import type { Members } from '../../../../Typage/Type'
 import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
+import GroupApi from '../../../../API/GroupApi'
 
 interface Props {
   member: Members
@@ -15,8 +16,12 @@ const StudentExcludeCard = (props: Props): JSX.Element => {
   const [hasBeenExcluded, setHasBeenExcluded] = useState<boolean>(false)
   const [modalValidation, setModalValidation] = useState<boolean>(false)
 
-  const excludeMember = (): void => {
+  const excludeMember = async (): Promise<void> => {
     setHasBeenExcluded(true)
+    const response = await GroupApi.ejectGroup(localStorage.getItem('jwtToken') as string, props.member.id)
+    if (response !== undefined) {
+      window.location.reload()
+    }
   }
 
   const openModalValidation = (): void => { setModalValidation(true) }
