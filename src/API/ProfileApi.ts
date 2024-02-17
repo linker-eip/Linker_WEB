@@ -41,6 +41,46 @@ class ProfileApi {
     return response.data
   }
 
+  static async updateSkillProfile (jwtToken: string, dto: FormData, id: number): Promise<Profile> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/skill/${id}`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async removeSkill (jwtToken: string, id: number): Promise<Profile> {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/student/skill/${id}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async removeStudies (jwtToken: string, id: number): Promise<Profile> {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/student/studies/${id}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async removeJob (jwtToken: string, id: number): Promise<Profile> {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/student/job/${id}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
   static async updateCompanyProfile (jwtToken: string, dto: FormData): Promise<ProfileCompany> {
     const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/company/profile`, dto, {
       headers: {

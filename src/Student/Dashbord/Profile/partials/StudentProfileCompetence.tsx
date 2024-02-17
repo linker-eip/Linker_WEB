@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import React, { useState, type ChangeEvent } from 'react'
 import '../../../../CSS/StudentProfileCompetence.scss'
 import { useTranslation } from 'react-i18next'
@@ -16,27 +17,12 @@ interface Props {
 }
 
 function StudentProfileCompetence (props: Props): JSX.Element {
-  // const [profileData, setProfileData] = useState<StudentProfileInfo>()
   const [skillName, setSkillName] = useState<string>()
   const [isEdit, setIsEdit] = useState(false)
   const [open, setOpen] = React.useState(false)
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   const handleSkillOpen = (): void => { setOpen(true) }
   const handleSkillClose = (): void => { setOpen(false) }
-
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  //   async function fetchData () {
-  //     try {
-  //       const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-  //       setProfileData(data)
-  //     } catch (error) {
-  //       console.error('Error fetching profile data:', error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [])
 
   const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
     setAvatarImage(event)
@@ -70,6 +56,17 @@ function StudentProfileCompetence (props: Props): JSX.Element {
     handleSkillClose()
   }
 
+  const removeSkill = async (skillId: number): Promise<void> => {
+    const response = await ProfileApi.removeSkill(localStorage.getItem('jwtToken') as string, skillId)
+    if (response !== undefined) {
+      props.update()
+    }
+  }
+
+  const handleRemoveSkill = (skillId: number): void => {
+    removeSkill(skillId)
+  }
+
   const { t } = useTranslation()
   return (
     <div className='std-profile-comp'>
@@ -80,6 +77,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
         <div className='std-profile-comp__container'>
           { props.data.skills.map((item, index) => (
           <div className='std-profile-comp__section' key={index}>
+            { isEdit ? <img className='std-profile-comp__delete-skill' src='/assets/remove.svg' onClick={() => handleRemoveSkill(item.id)} /> : null}
             <img src={item.logo} className='std-profile-comp__img' />
             <p> {item.name} </p>
           </div>

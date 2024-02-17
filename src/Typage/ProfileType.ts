@@ -59,6 +59,7 @@ export interface StudentProfileInfo {
   location: string
   picture: string
   studies: [ {
+    id: number
     name: string
     logo: string
     city: string
@@ -69,12 +70,14 @@ export interface StudentProfileInfo {
   ]
   skills: [
     {
+      id: number
       name: string
       logo: string
     }
   ]
   jobs: [
     {
+      id: number
       name: string
       logo: string
       city: string
