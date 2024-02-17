@@ -7,7 +7,7 @@
   margin: 2em;
   padding: 1em 1em 1em 1em;
   background-color: white;
-  //width: fit-content;
+  min-width: 300px;
   color: #4b4b4b;
   border-radius: 1em;
   font-family: 'poppins';
@@ -15,6 +15,10 @@
   &__title-container {
     display: flex;
     flex-direction: row;
+
+    @media screen and (max-width: 1300px) {
+      justify-content: center;
+    }
   }
 
   &__content {
@@ -36,6 +40,7 @@
     display: flex;
     flex-direction: column;
     width: fit-content;
+    position: relative;
   }
 
   &__section {
@@ -172,6 +177,17 @@
     font-size: 0.8em;
     font-weight: 700;
     margin-bottom: 2em;
+  }
+
+  &__delete-skill {
+    position: absolute;
+    height: 35px;
+    top: -20px;
+    right: -60px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

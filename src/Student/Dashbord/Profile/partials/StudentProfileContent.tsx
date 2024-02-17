@@ -33,20 +33,6 @@ function StudentProfileContent (props: Props): JSX.Element {
     setWebsite(props.data.website)
   }, [])
 
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  //   async function refetchData () {
-  //     try {
-  //       const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-  //       setProfileData(data)
-  //     } catch (error) {
-  //       console.error('Error fetching profile data:', error)
-  //     }
-  //   }
-
-  //   refetchData()
-  // }, [isEdit])
-
   const handleAvatarEditing = (): void => {
     if (props.editable) {
       setIsAvatarEditing(!isAvatarEditing)
@@ -123,8 +109,14 @@ function StudentProfileContent (props: Props): JSX.Element {
               </h1>
               { props.data.description !== '' ? <p> { props.data.description } </p> : <p> Description </p>}
               <div className='std-profile-content__mark'>
-                { props.data.note }
-                <img src='/assets/stars.svg' alt='stars' className='std-profile-content__stars-selected' />
+                { props.data.note !== null
+                  ? props.data.note
+                  : 'pas de note'
+                }
+                { props.data.note !== null
+                  ? <img src='/assets/stars.svg' alt='stars' className='std-profile-content__stars-selected' />
+                  : null
+                }
                 <div className='std-profile-content__circle' />
                 <p> mission réalisé : <strong> {props.data.note} </strong></p>
               </div>

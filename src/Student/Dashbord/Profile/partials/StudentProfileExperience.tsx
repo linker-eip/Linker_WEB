@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState, type ChangeEvent } from 'react'
 import '../../../../CSS/StudentProfileExperience.scss'
@@ -129,6 +130,17 @@ function StudentProfileExperience (props: Props): JSX.Element {
     handleModalClose()
   }
 
+  const removeJob = async (jobId: number): Promise<void> => {
+    const response = await ProfileApi.removeJob(localStorage.getItem('jwtToken') as string, jobId)
+    if (response !== undefined) {
+      props.update()
+    }
+  }
+
+  const handleRemoveJob = (jobId: number): void => {
+    removeJob(jobId)
+  }
+
   const { t } = useTranslation()
   return (
     <div className='std-profile-exp'>
@@ -165,6 +177,7 @@ function StudentProfileExperience (props: Props): JSX.Element {
                   </div>
                 </div>
                 <p> {item.description} </p>
+              { isEditing ? <img className='std-profile-exp__delete-skill' src='/assets/remove.svg' onClick={() => handleRemoveJob(item.id)} /> : null}
               </div>
             </div>
             ))
