@@ -22,7 +22,8 @@ export enum ModalType {
   DELETE_GROUP = 'delete_group',
   NOTATION = 'notation',
   COMMENT = 'comment',
-  LEAVE = 'leave'
+  LEAVE = 'leave',
+  EXCLUSION = 'exclusion',
 }
 
 export enum MissionStatus {

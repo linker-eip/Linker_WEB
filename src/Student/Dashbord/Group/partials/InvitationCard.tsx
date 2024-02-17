@@ -59,8 +59,7 @@ const InvitationCard = (props: Props): JSX.Element => {
         </div>
         <div className='grp-invite-card__content'>
           <div>
-          {/* changer la description la team le type de GroupeInvitation */}
-          Description du groupe
+            { props.group?.description}
           </div>
           <div className='grp-invite-card__button-section'>
             <ClassicButton title='Accepter' onClick={openAcceptModal} />
