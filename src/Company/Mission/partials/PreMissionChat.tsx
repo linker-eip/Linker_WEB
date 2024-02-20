@@ -18,17 +18,19 @@ interface GroupMessage {
   timestamp: string
 }
 
-function GroupMissionChat (): JSX.Element {
+function PreMissionChat (): JSX.Element {
   const { t } = useTranslation()
 
-  const { missionId } = useParams()
+  // const { missionId } = useParams()
 
   const [newMessage, setNewMessage] = useState('')
   const [groupMessages, setGroupMessages] = useState<GroupMessage[]>([])
   const socket = useRef<Socket | null>(null)
 
   const jwtToken = localStorage.getItem('jwtToken') as string
-  const id = 59
+
+  const missionId = 61
+  const groupId = 106
 
   const connect = (): void => {
     const socketConfig = {
@@ -47,7 +49,7 @@ function GroupMissionChat (): JSX.Element {
       console.error(`error => ${JSON.stringify(message)}`)
     })
 
-    newSocket.on('missionHistory', (message) => {
+    newSocket.on('premissionHistory', (message) => {
       if (Array.isArray(message)) {
         const groupMessages = message.map((dict: GroupMessage) => ({
           content: dict.content ?? '',
@@ -64,8 +66,8 @@ function GroupMissionChat (): JSX.Element {
       }
     })
 
-    newSocket.on('missionMessage', (newMessage: any) => {
-      if (newMessage.missionId === id) {
+    newSocket.on('groupMessage', (newMessage: any) => {
+      if (newMessage.missionId === missionId && newMessage.groupId == groupId) {
         setGroupMessages(prevMessages => [...prevMessages, newMessage])
       }
     })
@@ -83,13 +85,13 @@ function GroupMissionChat (): JSX.Element {
 
   const askForMissionHistory = (): void => {
     if (socket.current != null) {
-      socket.current.emit('missionHistory', { id })
+      socket.current.emit('premissionHistory', { missionId, groupId })
     }
   }
 
   const sendMissionMessage = (message: string): void => {
     if (socket.current != null) {
-      socket.current.emit('sendMission', { message: message, id })
+      socket.current.emit('sendPremission', { message: message, missionId, groupId })
       askForMissionHistory()
     }
   }
@@ -162,4 +164,4 @@ function GroupMissionChat (): JSX.Element {
   )
 }
 
-export default GroupMissionChat
+export default PreMissionChat

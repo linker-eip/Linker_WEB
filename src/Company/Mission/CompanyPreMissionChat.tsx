@@ -7,8 +7,8 @@ import GroupApi from '../../API/GroupApi'
 import { DashboardState } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import React, { useEffect, useState } from 'react'
+import PreMissionChat from './partials/PreMissionChat'
 import HotbarDashboard from '../Partials/HotbarDashboard'
-import GroupMissionChat from './partials/GroupMissionChat'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import SidebarDashboard from '../Partials/SidebarDashboard'
 import type { Group as GroupData } from '../../Typage/Type'
@@ -43,7 +43,7 @@ function a11yProps (index: number): any {
   }
 }
 
-function CompanyMissionChat (): JSX.Element {
+function CompanyPreMissionChat (): JSX.Element {
   isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
@@ -79,7 +79,7 @@ function CompanyMissionChat (): JSX.Element {
               <Tab className='std-mission__text' label={t('student.dashboard.groups.chat')} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <GroupMissionChat />
+              <PreMissionChat />
             </CustomTabPanel>
           </div>
         </div>
@@ -88,4 +88,4 @@ function CompanyMissionChat (): JSX.Element {
   )
 }
 
-export default CompanyMissionChat
+export default CompanyPreMissionChat

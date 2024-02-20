@@ -16,7 +16,7 @@ import ModalValidation from '../../Component/ModalValidation'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../Router/routes'
 
-function StudentDetailedMission (): JSX.Element {
+function StudentPotentialDetailedMission (): JSX.Element {
   isPrivateRoute()
   const potential = true
   const [open, setOpen] = useState(false)
@@ -45,16 +45,6 @@ function StudentDetailedMission (): JSX.Element {
       mark: 5,
       nbrMission: 10,
       historic: [
-        {
-          logo: '/assets/anonymLogo.jpg',
-          name: 'Vous',
-          action: 'avez indiqué la mission est en cours'
-        },
-        {
-          logo: '/assets/anonymLogo.jpg',
-          name: 'Vous',
-          action: 'avez accepté la mission'
-        },
         {
           logo: '/assets/anonymLogo.jpg',
           name: 'TheoTestCompany',
@@ -105,7 +95,7 @@ function StudentDetailedMission (): JSX.Element {
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
   const state = DashboardState
   const { t } = useTranslation()
-  const [activeStep, setActiveStep] = useState(3)
+  const [activeStep, setActiveStep] = useState(0)
   const steps = [
     t('student.detailed_mission.accepted'),
     t('student.detailed_mission.provisionée'),
@@ -115,7 +105,7 @@ function StudentDetailedMission (): JSX.Element {
 
   const navigate = useNavigate()
   const handleClick = (): void => {
-    navigate(ROUTES.STUDENT_MISSION_CHAT)
+    navigate(ROUTES.STUDENT_PRE_MISSION_CHAT)
   }
 
   return (
@@ -125,6 +115,16 @@ function StudentDetailedMission (): JSX.Element {
         <SidebarDashboard state={state.MISSION} />
         <div className='std-bord-container__content'>
           <div className='std-detailed-mission__section'>
+            { potential
+              ? <div className='std-detailed-mission__potential-section'>
+                  <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.potential_mission') } </p>
+                  <div className='std-detailed-mission__potential-button'>
+                    <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen}/>
+                    <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
+                  </div>
+                </div>
+              : <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.potential_mission') } </p>
+            }
             <p className='std-detailed-mission__section__title-3'> { data.title } </p>
             <Stepper activeStep={activeStep - 1} alternativeLabel>
               {steps.map((label, index) => (
@@ -230,4 +230,4 @@ function StudentDetailedMission (): JSX.Element {
   )
 }
 
-export default StudentDetailedMission
+export default StudentPotentialDetailedMission

@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
-import '../../CSS/StudentMission.scss'
-import '../../CSS/StudentDashboard.scss'
-import GroupApi from '../../API/GroupApi'
-import { DashboardState } from '../../Enum'
+import '../../../CSS/StudentMission.scss'
+import '../../../CSS/StudentDashboard.scss'
+import GroupApi from '../../../API/GroupApi'
+import { DashboardState } from '../../../Enum'
 import { useTranslation } from 'react-i18next'
 import React, { useEffect, useState } from 'react'
+import PreMissionChat from './partials/PreMissionChat'
 import HotbarDashboard from '../Partials/HotbarDashboard'
-import GroupMissionChat from './partials/GroupMissionChat'
-import isPrivateRoute from '../../Component/isPrivateRoute'
 import SidebarDashboard from '../Partials/SidebarDashboard'
-import type { Group as GroupData } from '../../Typage/Type'
+import isPrivateRoute from '../../../Component/isPrivateRoute'
+import type { Group as GroupData } from '../../../Typage/Type'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -43,7 +43,7 @@ function a11yProps (index: number): any {
   }
 }
 
-function CompanyMissionChat (): JSX.Element {
+function StudentPreMissionChat (): JSX.Element {
   isPrivateRoute()
   const state = DashboardState
   const { t } = useTranslation()
@@ -79,7 +79,7 @@ function CompanyMissionChat (): JSX.Element {
               <Tab className='std-mission__text' label={t('student.dashboard.groups.chat')} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <GroupMissionChat />
+              <PreMissionChat data={groupData} onReturn={handleRefetch} />
             </CustomTabPanel>
           </div>
         </div>
@@ -88,4 +88,4 @@ function CompanyMissionChat (): JSX.Element {
   )
 }
 
-export default CompanyMissionChat
+export default StudentPreMissionChat

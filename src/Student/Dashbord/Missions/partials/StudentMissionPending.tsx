@@ -26,8 +26,7 @@ function StudentMissionsPending (): JSX.Element {
   // }, [])
 
   const [data] = useState<Array<{ logo: string, title: string, motant: number, begin?: string, end: string, bill: string, participants: number }>>([
-    { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 },
-    { logo: '/assets/anonymLogo.jpg', title: 'Développement d’une application mobile pour une salle de sports', motant: 880.00, begin: '25/03/2023', end: '15/04/2023', bill: 'KP250320231200', participants: 3 }
+    { logo: '/assets/anonymLogo.jpg', title: 'Mission de test.', motant: 9000, begin: '22/01/2024', end: '25/01/2024', bill: '', participants: 2 }
   ])
   const [nbrMission] = useState(data.length)
   const { t } = useTranslation()

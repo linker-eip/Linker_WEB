@@ -1,5 +1,5 @@
 import '../../../../CSS/StudentGroup.scss'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import GroupApi from '../../../../API/GroupApi'
 import io, { type Socket } from 'socket.io-client'
@@ -67,14 +67,14 @@ function GroupMissionChat (props: Props): JSX.Element {
     setRefetch(!refetch)
   }
 
-  const { missionId } = useParams()
+  // const { missionId } = useParams()
 
   const [newMessage, setNewMessage] = useState('')
   const [groupMessages, setGroupMessages] = useState<GroupMessage[]>([])
   const socket = useRef<Socket | null>(null)
 
   const jwtToken = localStorage.getItem('jwtToken') as string
-  const id = missionId
+  const id = 59
 
   const connect = (): void => {
     const socketConfig = {

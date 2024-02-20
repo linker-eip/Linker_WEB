@@ -152,6 +152,7 @@ i18n
               text_2: 'sur toutes vos missions notées par vos clients'
             },
             detailed_mission: {
+              potential_mission: 'Mission potentielle ⌛',
               pending_mission: 'Mission en cours ⌛',
               accepted: 'Proposition acceptée',
               provisionée: 'Mission provisionée',
@@ -161,6 +162,7 @@ i18n
               details: 'Détail de la mission',
               historic: 'Historique de la mission',
               conversation: 'Accéder à la conversation',
+              pre_conversation: 'Test Faizal Live veut discuter avec vous!',
               mission: 'mission(s)',
               tab: {
                 detail: 'Détail',
@@ -264,6 +266,7 @@ i18n
               details: 'Détail de la mission',
               historic: 'Historique de la mission',
               conversation: 'Accéder à la conversation',
+              pre_conversation: 'Test Faizal Live veut discuter avec vous!',
               mission: 'missions',
               participants: 'Participants',
               no_participants: 'Aucun groupe trouvée',
@@ -428,6 +431,7 @@ i18n
               text_2: 'sur toutes vos missions notées par vos clients'
             },
             detailed_mission: {
+              potential_mission: 'Mission potentielle ⌛',
               pending_mission: 'Mission en cours ⌛',
               accepted: 'Proposition acceptée',
               provisionée: 'Mission provisionée',
@@ -437,6 +441,7 @@ i18n
               details: 'Détail de la mission',
               historic: 'Historique de la mission',
               conversation: 'Accéder à la conversation',
+              pre_conversation: 'Test Faizal Live veut discuter avec vous!',
               mission: 'mission(s)',
               tab: {
                 detail: 'Détail',

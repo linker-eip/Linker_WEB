@@ -18,6 +18,10 @@ function MissionGroup (props: Props): JSX.Element {
     navigate(`${ROUTES.COMPANY_MISSION_CHAT.replace(':missionId', props.missionData.mission.id.toString())}`)
   }
 
+  const handlePreClick = (): void => {
+    navigate(`${ROUTES.COMPANY_PRE_MISSION_CHAT.replace(':missionId', props.missionData.mission.id.toString())}`)
+  }
+
   return (
     <div className='cpn-detailed-mission__section'>
       <p className='cpn-detailed-mission__section__title-4'> { t('company.detailed_mission.participants')} </p>
@@ -29,15 +33,17 @@ function MissionGroup (props: Props): JSX.Element {
                 <p className='cpn-detailed-mission__section__subtitle'> { props.missionData.group.name } </p>
               </div>
             </div>
-            <p className='cpn-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
+            <div className='std-detailed-mission__conversation' onClick={handleClick}>
+              {t('student.detailed_mission.conversation')}
+            </div>
           </div>
         : <div className='cpn-detailed-mission__column-2'>
             <img className='cpn-detailed-mission__img' src='/assets/groups_image.svg' />
             <div className='cpn-detailed-mission__row'>
               { t('company.detailed_mission.no_participants')}
             </div>
-            <div className='std-detailed-mission__conversation' onClick={handleClick}>
-              {t('student.detailed_mission.conversation')}
+            <div className='std-detailed-mission__conversation' onClick={handlePreClick}>
+              {t('student.detailed_mission.pre_conversation')}
             </div>
           </div>
       }

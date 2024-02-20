@@ -1,13 +1,22 @@
 /* eslint-disable */
-import '../../../CSS/StudentGroup.scss'
-import GroupApi from '../../../API/GroupApi'
-import { useParams } from 'react-router-dom'
+import '../../../../CSS/StudentGroup.scss'
+// import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import GroupApi from '../../../../API/GroupApi'
 import io, { type Socket } from 'socket.io-client'
 import MessageIcon from '@mui/icons-material/Message'
+import MemberCard from '../../Group/partials/MemberCard'
 import { TextField, InputAdornment } from '@mui/material'
 import React, { useEffect, useState, useRef } from 'react'
-import ClassicButton from '../../../Component/ClassicButton'
+import ClassicButton from '../../../../Component/ClassicButton'
+import ModalCreateGroup from '../../Group/partials/ModalCreateGroup'
+import MemberInvitedCard from '../../Group/partials/MemberInvitedCard'
+import type { Group as GroupData, InvitedMember } from '../../../../Typage/Type'
+
+interface Props {
+  data: GroupData | undefined
+  onReturn: () => void
+}
 
 interface GroupMessage {
   id: number
@@ -18,17 +27,57 @@ interface GroupMessage {
   timestamp: string
 }
 
-function GroupMissionChat (): JSX.Element {
+function PreMissionChat (props: Props): JSX.Element {
   const { t } = useTranslation()
+  const [hasGroup, setStatus] = useState<boolean>(false)
+  const [creationGroup, setCreationGroup] = useState<boolean>(false)
+  const [memberInvited, setMemberInvited] = useState<InvitedMember[] | undefined>()
+  const [refetch, setRefetch] = useState<boolean>(false)
 
-  const { missionId } = useParams()
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    function setGroupStatusOnMounted () {
+      if (props.data?.data?.name === undefined) {
+        setStatus(false)
+      } else {
+        setStatus(true)
+      }
+    }
+    setGroupStatusOnMounted()
+  }, [props.data])
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function setInvitedData () {
+      const response = await GroupApi.getMemberInvited(localStorage.getItem('jwtToken') as string)
+      setMemberInvited(response.data)
+    }
+    setInvitedData()
+  }, [refetch])
+
+  const handleCreateGroup = (): void => {
+    setCreationGroup(false)
+    props.onReturn()
+  }
+
+  const openModal = (): void => {
+    setCreationGroup(true)
+  }
+
+  const handleRefetch = (): void => {
+    setRefetch(!refetch)
+  }
+
+  // const { missionId } = useParams()
 
   const [newMessage, setNewMessage] = useState('')
   const [groupMessages, setGroupMessages] = useState<GroupMessage[]>([])
   const socket = useRef<Socket | null>(null)
 
   const jwtToken = localStorage.getItem('jwtToken') as string
-  const id = 59
+
+  const missionId = 61
+  const groupId = 106
 
   const connect = (): void => {
     const socketConfig = {
@@ -47,7 +96,7 @@ function GroupMissionChat (): JSX.Element {
       console.error(`error => ${JSON.stringify(message)}`)
     })
 
-    newSocket.on('missionHistory', (message) => {
+    newSocket.on('premissionHistory', (message) => {
       if (Array.isArray(message)) {
         const groupMessages = message.map((dict: GroupMessage) => ({
           content: dict.content ?? '',
@@ -64,8 +113,8 @@ function GroupMissionChat (): JSX.Element {
       }
     })
 
-    newSocket.on('missionMessage', (newMessage: any) => {
-      if (newMessage.missionId === id) {
+    newSocket.on('groupMessage', (newMessage: any) => {
+      if (newMessage.missionId === missionId && newMessage.groupId == groupId) {
         setGroupMessages(prevMessages => [...prevMessages, newMessage])
       }
     })
@@ -83,13 +132,13 @@ function GroupMissionChat (): JSX.Element {
 
   const askForMissionHistory = (): void => {
     if (socket.current != null) {
-      socket.current.emit('missionHistory', { id })
+      socket.current.emit('premissionHistory', { missionId, groupId })
     }
   }
 
   const sendMissionMessage = (message: string): void => {
     if (socket.current != null) {
-      socket.current.emit('sendMission', { message: message, id })
+      socket.current.emit('sendPremission', { message: message, missionId, groupId })
       askForMissionHistory()
     }
   }
@@ -116,7 +165,8 @@ function GroupMissionChat (): JSX.Element {
 
   return (
     <div>
-        <div className='std-group__container'>
+      { hasGroup
+        ? <div className='std-group__container'>
             <div className='std-group__details-section'>
                 <div className='std-group__chat-messages'>
                   {groupMessages.map((msg, index) => (
@@ -157,9 +207,26 @@ function GroupMissionChat (): JSX.Element {
                     />
                 </div>
             </div>
+            <div className='std-group__member-container'>
+                <div className='std-group__member-title'> {t('student.dashboard.groups.member_title')} </div>
+                <MemberCard member={props.data?.data?.members} />
+                <div className='std-group__member-title'> {t('student.dashboard.groups.invited')} </div>
+                <MemberInvitedCard member={memberInvited} onDelete={handleRefetch} />
+            </div>
+          </div>
+        : <div className='std-group'>
+          <div className='std-group__section'>
+            <div className='std-group__text'> { t('student.dashboard.groups.no_group') } </div>
+            <ClassicButton title={t('student.dashboard.groups.create_group_button')} onClick={openModal}/>
+          </div>
+          <div className='std-group__image' >
+            <img src='/assets/groups_image.svg' />
+          </div>
+          <ModalCreateGroup open={creationGroup} onClose={handleCreateGroup}/>
         </div>
+      }
     </div>
   )
 }
 
-export default GroupMissionChat
+export default PreMissionChat
