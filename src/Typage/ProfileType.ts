@@ -7,14 +7,15 @@ export interface Profile {
   phone: string
   location: string
   picture: string
-  studies: [ {
-    name: string
-    logo: string
-    city: string
-    duration: string
-    description: string
-    position: string
-  }
+  studies: [
+    {
+      name: string
+      logo: string
+      city: string
+      duration: string
+      description: string
+      position: string
+    }
   ]
   skills: [
     {
@@ -58,23 +59,24 @@ export interface StudentProfileInfo {
   phone: string
   location: string
   picture: string
-  studies: [ {
-    id: number
-    name: string
-    logo: string
-    city: string
-    duration: string
-    description: string
-    position: string
-  }
-  ]
-  skills: [
+  studies: [
     {
       id: number
       name: string
       logo: string
+      city: string
+      duration: string
+      description: string
+      position: string
     }
   ]
+  skills: {
+    Development: []
+    'No-Code': []
+    'Design & Produit': []
+    Data: []
+    'Marketing & Sales': []
+  }
   jobs: [
     {
       id: number
@@ -88,4 +90,14 @@ export interface StudentProfileInfo {
   ]
   website: string
   note: number
+}
+
+export interface SkillsListInfo {
+  skills: {
+    Development: []
+    'No-code': []
+    'Design & Produit': []
+    Data: []
+    'Marketing & Sales': []
+  }
 }
