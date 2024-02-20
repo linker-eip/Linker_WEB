@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+.skills-card {
+  font-family: 'Poppins';
+  border: 1px solid #000000;
+  border-radius: 16px;
+  padding: 0.5em;
+  padding-right: 1em;
+
+  &:hover {
+    cursor: pointer;
+    border-color: #3da1cc;
+  }
+
+  &:active {
+    background-color: rgba($color: #878787, $alpha: 0.2);
+  }
+
+  &__selected {
+    border-color: #3da1cc;
+    padding-left: 1em;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+  }
+}

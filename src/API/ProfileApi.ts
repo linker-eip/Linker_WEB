@@ -1,4 +1,4 @@
-import type { StudentProfileInfo, Profile, ProfileCompany } from '../Typage/ProfileType'
+import type { StudentProfileInfo, Profile, ProfileCompany, SkillsListInfo } from '../Typage/ProfileType'
 import type { CompanyInfo } from '../Typage/Type'
 import axios from 'axios'
 
@@ -31,7 +31,26 @@ class ProfileApi {
     return response.data
   }
 
+  static async getSkillsList (jwtToken: string): Promise<SkillsListInfo> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/skills/list`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
+
   static async updateProfile (jwtToken: string, dto: FormData): Promise<Profile> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async updateProfileSkill (jwtToken: string, dto: any): Promise<Profile> {
     const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, dto, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
