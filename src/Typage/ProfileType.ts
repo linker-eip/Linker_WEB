@@ -72,7 +72,7 @@ export interface StudentProfileInfo {
   ]
   skills: {
     Development: []
-    'No-Code': []
+    'No-code': []
     'Design & Produit': []
     Data: []
     'Marketing & Sales': []
