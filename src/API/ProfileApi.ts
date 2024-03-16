@@ -54,7 +54,7 @@ class ProfileApi {
     const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, dto, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/json'
       }
     })
     return response.data

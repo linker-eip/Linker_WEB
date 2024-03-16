@@ -167,70 +167,171 @@ function StudentProfileCompetence (props: Props): JSX.Element {
         <div className="std-profile-comp__container">
           <div className="std-profile-comp__skill-list">
             {isEdit
-              ? <div className="std-profile-comp__skills">
-                {dataSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} removed onClick={() => handleRemoveDataSkill(item)} />
-                ))}
-                {designSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} removed onClick={() => handleRemoveDesignSkill(item)} />
-                ))}
-                {devSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} removed onClick={() => handleRemoveDevSkill(item)}/>
-                ))}
-                {marketSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} removed onClick={() => handleRemoveMarketSkill(item)}/>
-                ))}
-                {noCodeSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} removed onClick={() => handleRemoveNoCodeSkill(item)}/>
-                ))}
+              ? <div className="std-profile-comp__skills-section">
+                  <div className="std-profile-comp__skills-title"> Data </div>
+                  <div className="std-profile-comp__skills">
+                    {dataSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveDataSkill(item)} />
+                    ))}
+                    {dataSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Design & product </div>
+                  <div className="std-profile-comp__skills">
+                    {designSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveDesignSkill(item)} />
+                    ))}
+                    {designSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Development </div>
+                  <div className="std-profile-comp__skills">
+                    {devSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveDevSkill(item)} />
+                    ))}
+                    {devSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
+                  <div className="std-profile-comp__skills">
+                    {marketSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveMarketSkill(item)} />
+                    ))}
+                    {marketSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> No-Code </div>
+                  <div className="std-profile-comp__skills">
+                    {noCodeSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveNoCodeSkill(item)} />
+                    ))}
+                    {noCodeSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
               </div>
-              : <div className="std-profile-comp__skills">
-                {dataSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} selected />
-                ))}
-                {designSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} selected />
-                ))}
-                {devSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} selected />
-                ))}
-                {marketSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} selected />
-                ))}
-                {noCodeSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} selected />
-                ))}
-              </div>
+              : <div className="std-profile-comp__skills-section">
+                  <div className="std-profile-comp__skills-title"> Data </div>
+                  <div className="std-profile-comp__skills">
+                    {dataSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {dataSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Design & product </div>
+                  <div className="std-profile-comp__skills">
+                    {designSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {designSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Development </div>
+                  <div className="std-profile-comp__skills">
+                    {devSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {devSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
+                  <div className="std-profile-comp__skills">
+                    {marketSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {marketSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> No-Code </div>
+                  <div className="std-profile-comp__skills">
+                    {noCodeSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {noCodeSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                </div>
             }
             {isEdit
               ? <div className="std-profile-comp__sep">Ajoute une compétence</div>
               : null}
-            <div className="std-profile-comp__skills">
+            <div className="std-profile-comp__skills-section">
               {isEdit
-                ? tmpDataSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} onClick={() => handleDataSkill(item)} />
-                ))
-                : null}
+                ? <div className="std-profile-comp__skills-title"> Data </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpDataSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleDataSkill(item)} />
+                  ))
+                  : null}
+              </div>
               {isEdit
-                ? tmpDesignSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} onClick={() => handleDesignSkill(item)} />
-                ))
-                : null}
+                ? <div className="std-profile-comp__skills-title"> Design & product </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpDesignSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleDesignSkill(item)} />
+                  ))
+                  : null
+                }
+              </div>
               {isEdit
-                ? tmpDevSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} onClick={() => handleDevSkill(item)} />
-                ))
-                : null}
+                ? <div className="std-profile-comp__skills-title"> Development </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpDevSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleDevSkill(item)} />
+                  ))
+                  : null}
+              </div>
               {isEdit
-                ? tmpMarketSkill.map(
-                  (item, index) => <SkillCard key={index} data={item} onClick={() => handleMarketSkill(item)} />
-                )
-                : null}
+                ? <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpMarketSkill.map(
+                    (item, index) => <SkillCard key={index} data={item} onClick={() => handleMarketSkill(item)} />
+                  )
+                  : null}
+              </div>
               {isEdit
-                ? tmpNoCodeSkill.map((item, index) => (
-                  <SkillCard key={index} data={item} onClick={() => handleNoCodeSkill(item)} />
-                ))
-                : null}
+                ? <div className="std-profile-comp__skills-title"> No-Code </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpNoCodeSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleNoCodeSkill(item)} />
+                  ))
+                  : null}
+              </div>
             </div>
             {isEdit
               ? <ClassicButton title='Valider' onClick={handleValidSkill} />

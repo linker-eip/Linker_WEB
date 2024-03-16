@@ -39,3 +39,10 @@ export enum TaskStatus {
   PENDING = 'PENDING',
   FINISHED = 'FINISHED'
 }
+
+export enum NotificationType {
+  MESSAGE,
+  GROUP,
+  MISSION,
+  DOCUMENT,
+}
