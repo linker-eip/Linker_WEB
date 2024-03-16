@@ -69,7 +69,13 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
   }
 }))
 
-function HotbarDashboard (props: { children: string | any }): JSX.Element {
+interface Props {
+  children: string | any
+  hideNotif?: boolean
+  hideName?: boolean
+}
+
+function HotbarDashboard (props: Props): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [profile, setProfile] = useState<StudentProfileInfo | null>(null)
   const [notifOpen, setNotifOpen] = useState<boolean>(false)
@@ -145,42 +151,48 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
     <div className='hotbar-container'>
       <img src="/assets/logo.svg" alt='logo' />
       <p className='hotbar-container__title'>{props.children}</p>
-      <NotificationButton title='Notification' isClicked={notifOpen} data={NotificationsData ?? []} onClick={callNotification} onReload={reloadNotif} newNotif={newNotif} />
-      <div className='hotbar-container__info'>
-        <Avatar alt='avatar' src={profile?.picture} />
-        <ThemeProvider theme={theme}>
-          <Button
-            id="demo-customized-button"
-            aria-controls={open ? 'demo-customized-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            variant="contained"
-            disableElevation
-            onClick={handleClick}
-            endIcon={<KeyboardArrowDownIcon />}
-          >
-            {profile !== null ? <p> {profile.firstName} {profile.lastName}</p> : 'Prenom NOM'}
-          </Button>
-        </ThemeProvider>
-        <StyledMenu
-          id="demo-customized-menu"
-          MenuListProps={{
-            'aria-labelledby': 'demo-customized-button'
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleProfile} disableRipple>
-            <EditIcon />
-            {t('student.dashboard.hotbar.profil')}
-          </MenuItem>
-          <MenuItem onClick={handleDisconnect} disableRipple>
-            <ExitToAppOutlinedIcon />
-            {t('student.dashboard.hotbar.quit')}
-          </MenuItem>
-        </StyledMenu>
-      </div>
+      { props.hideNotif ?? false
+        ? null
+        : <NotificationButton title='Notification' isClicked={notifOpen} data={NotificationsData ?? []} onClick={callNotification} onReload={reloadNotif} newNotif={newNotif} />
+      }
+      {props.hideName ?? false
+        ? null
+        : <div className='hotbar-container__info'>
+            <Avatar alt='avatar' src={profile?.picture} />
+            <ThemeProvider theme={theme}>
+              <Button
+                id="demo-customized-button"
+                aria-controls={open ? 'demo-customized-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                variant="contained"
+                disableElevation
+                onClick={handleClick}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                {profile !== null ? <p> {profile.firstName} {profile.lastName}</p> : 'Prenom NOM'}
+              </Button>
+            </ThemeProvider>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                'aria-labelledby': 'demo-customized-button'
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleProfile} disableRipple>
+                <EditIcon />
+                {t('student.dashboard.hotbar.profil')}
+              </MenuItem>
+              <MenuItem onClick={handleDisconnect} disableRipple>
+                <ExitToAppOutlinedIcon />
+                {t('student.dashboard.hotbar.quit')}
+              </MenuItem>
+            </StyledMenu>
+          </div>
+      }
     </div>
   )
 }

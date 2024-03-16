@@ -33,6 +33,7 @@ import AdminDashboard from './Admin/adminDashboard'
 import AdminMissions from './Admin/Missions/adminMissions'
 import AdminDocuments from './Admin/Documents/adminDocuments'
 import AdminUsers from './Admin/Users/adminUsers'
+import MentionLegales from './Transverse/mentionLegales'
 
 import * as ROUTES from './Router/routes'
 
@@ -69,6 +70,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>
         <Route path={ROUTES.ADMIN_DOCUMENTS_DASHBOARD} element={<AdminDocuments/>}/>
         <Route path={ROUTES.ADMIN_USERS_DASHBOARD} element={<AdminUsers/>}/>
+        <Route path={ROUTES.MENTION_LEGALES} element={<MentionLegales/>}/>
       </Routes>
     </Router>
   )
