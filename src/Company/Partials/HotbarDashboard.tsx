@@ -92,7 +92,6 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
   }
 
   const handleClose = (): void => {
-    navigate(ROUTES.COMPANY_LOGIN_PAGE)
     setAnchorEl(null)
   }
 

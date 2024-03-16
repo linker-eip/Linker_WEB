@@ -131,4 +131,17 @@
     flex-wrap: wrap;
     gap: 1em;
   }
+
+  &__skills-title {
+    color: #005275;
+    font-size: 20px;
+    font-family: 'Poppins';
+    font-weight: 600;
+  }
+
+  &__skills-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
 }
