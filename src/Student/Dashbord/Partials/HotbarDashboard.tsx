@@ -101,7 +101,6 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
       })
       setNewNotif(count)
       setNotificationData(response)
-      console.log('reloading 2')
     }
     fetchData()
   }, [reload])
@@ -126,7 +125,6 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
   }
 
   const reloadNotif = (): void => {
-    console.log('reloading')
     setReload(!reload)
   }
 
