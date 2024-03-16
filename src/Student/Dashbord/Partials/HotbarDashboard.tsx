@@ -92,7 +92,7 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
   useEffect(() => {
     const fetchData = async (): Promise<any> => {
       const response = await NotificationApi.getNotifications(localStorage.getItem('jwtToken') as string)
-      var count = 0
+      let count = 0
       response.forEach(item => {
         if (!item.alreadySeen) {
           count += 1

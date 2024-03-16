@@ -30,27 +30,41 @@ function NotificationCard (props: Props): JSX.Element {
     if (props.data.type === NotificationType.GROUP) {
       navigate(ROUTES.STUDENT_GROUP)
     }
+    if (props.data.type === NotificationType.MISSION) {
+      navigate(ROUTES.STUDENT_MISSIONS)
+    }
+    if (props.data.type === NotificationType.DOCUMENT) {
+      navigate(ROUTES.STUDENT_DOCUMENTS_DASHBOARD)
+    }
+    if (props.data.type === NotificationType.MESSAGE) {
+      navigate(ROUTES.STUDENT_GROUP)
+    }
   }
 
   return (
     <div className='notif-card' onClick={redirectNotification}>
-      <div className='notif-card__close' onClick={handleRemoveNotif}>
-        <CloseIcon />
-      </div>
-      {props.data.alreadySeen
-        ? null
-        : <div className='notif-card__new'>
-          <img src='/assets/new_notif.svg' />
+      <div className='notif-card__section'>
+        <div className='notif-card__close' onClick={handleRemoveNotif}>
+          <CloseIcon />
         </div>
-      }
-      <div className='notif-card__title'>
-        {props.data.title}
+        {props.data.alreadySeen
+          ? null
+          : <div className='notif-card__new'>
+            <img src='/assets/new_notif.svg' />
+          </div>
+        }
+        <div className='notif-card__title'>
+          {props.data.title}
+        </div>
+        <div className='notif-card__text'>
+          {props.data.text}
+        </div>
+        <div className='notif-card__date'>
+          le {date}
+        </div>
       </div>
-      <div className='notif-card__text'>
-        {props.data.text}
-      </div>
-      <div className='notif-card__date'>
-        le {date}
+      <div className='notif-card__section-2'>
+        <img className='notif-card__img' src='/assets/notif_arrow.svg' />
       </div>
     </div>
   )
