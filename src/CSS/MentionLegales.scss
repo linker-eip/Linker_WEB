@@ -8,8 +8,15 @@
     flex-direction: column;
     // align-items: center;
     font-family: 'Poppins';
-    margin-right: 6em;
-    margin-left:  6em;
+    margin-right: 5em;
+    margin-left:  5em;
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 0em;
+        margin-bottom: 2em;
+    }
 
     &__title {
         align-self: center;
@@ -23,7 +30,7 @@
     &__subtitle {
         font-size: 24px;
         font-weight: 600;
-        margin-bottom: 0.5em;
+        margin-bottom: 0.3em;
     }
 
     &__text {
