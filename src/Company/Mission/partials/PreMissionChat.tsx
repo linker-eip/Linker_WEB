@@ -104,6 +104,7 @@ function PreMissionChat (): JSX.Element {
     }
 
     socket.current?.on('connect', handleConnect)
+    askForMissionHistory()
 
     return () => {
       disconnect()

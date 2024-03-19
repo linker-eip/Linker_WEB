@@ -135,7 +135,7 @@ function GroupMissionChat (props: Props): JSX.Element {
 
   const sendMissionMessage = (message: string): void => {
     if (socket.current != null) {
-      socket.current.emit('sendMission', { message: message, id })
+      socket.current.emit('sendMission', { message, id })
       askForMissionHistory()
     }
   }

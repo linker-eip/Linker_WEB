@@ -36,3 +36,6 @@ export const ADMIN_DASHBOARD = '/admin/dashboard'
 export const ADMIN_MISSIONS_DASHBOARD = '/admin/missions'
 export const ADMIN_DOCUMENTS_DASHBOARD = '/admin/documents'
 export const ADMIN_USERS_DASHBOARD = '/admin/users'
+
+export const STUDENT_GOOGLE_OAUTH = '/teststudent'
+export const COMPANY_GOOGLE_OAUTH = '/testcompany'
