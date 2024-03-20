@@ -290,7 +290,9 @@ i18n
               homeTitle: 'Mon panel',
               utilisateur: 'Utilisateurs',
               mission: 'Missions',
-              doc: 'Documents'
+              doc: 'Documents',
+              verifyCompanyDoc: 'Vérification Entreprise',
+              verifyStudentDoc: 'Vérification Étudiante'
             }
           },
           snackbar: {
@@ -535,7 +537,9 @@ i18n
               homeTitle: 'Mon panel',
               utilisateur: 'Utilisateurs',
               mission: 'Missions',
-              doc: 'Documents'
+              doc: 'Documents',
+              verifyCompanyDoc: 'Vérification Entreprise',
+              verifyStudentDoc: 'Vérification Étudiante'
             }
           }
         }

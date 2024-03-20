@@ -12,7 +12,9 @@ export enum AdminDashboardState {
   DASHBOARD = 'dashboard',
   USERS = 'users',
   MISSIONS = 'missions',
-  DOCUMENTS = 'documents'
+  DOCUMENTS = 'documents',
+  VERIFY_COMPANY_DOCUMENTS = 'verify_company_documents',
+  VERIFY_STUDENT_DOCUMENTS = 'verify_student_documents'
 }
 
 export enum ModalType {
