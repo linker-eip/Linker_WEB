@@ -272,6 +272,9 @@ i18n
                 price: 'Prix',
                 task: 'Tâches'
               },
+              devis: {
+                title: 'Devis pour la mission: {{name}}'
+              },
               task: {
                 modal_title: 'Ajouter une tâche',
                 name: 'Nom',
