@@ -16,6 +16,7 @@ interface Row {
   documentType: string
   file: string
   status: string
+  email: string
 }
 
 function openUrlInNewWindow (url: string): void {
@@ -36,14 +37,23 @@ function AdminVerifyStudentContent (): JSX.Element {
   useEffect(() => {
     fetch('https://dev.linker-app.fr/api/admin/document-verification/students')
       .then(async response => await response.json())
-      .then((data: Record<string, Row>) => {
-        const formattedData = Object.entries(data).map(([key, item]) => ({
-          id: key,
-          studentId: item.studentId,
-          documentType: item.documentType,
-          file: item.file,
-          status: item.status
-        }))
+      .then(async (data: Record<string, Row>) => {
+        const formattedData = await Promise.all(
+          Object.entries(data).map(async ([key, item]) => {
+            const emailResponse = await fetch(`https://dev.linker-app.fr/api/admin/users/student/${item.studentId}`)
+            const emailData = await emailResponse.json()
+            const email = emailData.email
+
+            return {
+              id: key,
+              studentId: item.studentId,
+              documentType: item.documentType,
+              file: item.file,
+              status: item.status,
+              email
+            }
+          })
+        )
         setRows(formattedData)
       })
       .catch(error => {
@@ -249,7 +259,7 @@ function AdminVerifyStudentContent (): JSX.Element {
             {pendingDocuments.map((row) => {
               if (
                 row.documentType?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.studentId?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+                row.email?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
                 row.id?.toString().toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return (
@@ -270,7 +280,7 @@ function AdminVerifyStudentContent (): JSX.Element {
                       align='center'
                       sx={{ fontFamily: 'Poppins', fontSize: '24px' }}
                     >
-                      {row.studentId}
+                      {row.email}
                     </TableCell>
                     <TableCell align='center'>
                       <IconButton onClick={() => { handleVisualize(row) }}>
