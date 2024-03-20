@@ -39,7 +39,11 @@ i18n
               subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
             },
             leave: {
-              subtitle: 'Etes-vous sur de vouloir quitter:'
+              subtitle: 'Êtes-vous sur de vouloir quitter:'
+            },
+            account: {
+              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
+              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
             }
           },
           validate: 'Valider',
@@ -319,6 +323,10 @@ i18n
             },
             leave: {
               subtitle: 'Etes-vous sur de vouloir quitter:'
+            },
+            account: {
+              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
+              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
             }
           },
           validate: 'Valider',

@@ -24,6 +24,8 @@ export enum ModalType {
   COMMENT = 'comment',
   LEAVE = 'leave',
   EXCLUSION = 'exclusion',
+  DELETE_ACCOUNT = 'delete_account',
+  DEACTIVATE_ACCOUNT = 'deactivate_account'
 }
 
 export enum MissionStatus {

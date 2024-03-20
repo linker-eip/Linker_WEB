@@ -156,6 +156,18 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.DEACTIVATE_ACCOUNT
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.account.deactivate') }
+            </div>
+          : null
+        }
+        {props.type === ModalType.DELETE_ACCOUNT
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.account.delete') }
+            </div>
+          : null
+        }
         {props.type === ModalType.NOTATION
           ? <div>
               <div className='modal-validation__subtitle'>
@@ -290,6 +302,14 @@ function ModalValidation (props: Props): JSX.Element {
           }
           { props.type === ModalType.LEAVE
             ? <ClassicButton title='Quitter' refuse onClick={handleValidation} />
+            : null
+          }
+          { props.type === ModalType.DEACTIVATE_ACCOUNT
+            ? <ClassicButton title='Désactiver' refuse onClick={handleValidation} />
+            : null
+          }
+          { props.type === ModalType.DELETE_ACCOUNT
+            ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
             : null
           }
           <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />
