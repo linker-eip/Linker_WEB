@@ -24,8 +24,9 @@ function AdminContactsContent (): JSX.Element {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentData, setCurrentData] = useState<Row | null>(null)
 
+  const [openVisualize, setOpenVisualize] = useState(false)
+  const [openArchivate, setOpenArchivate] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
-  const [openValidate, setOpenValidate] = useState(false)
 
   useEffect(() => {
     fetch('https://dev.linker-app.fr/api/admin/contact')
@@ -46,21 +47,43 @@ function AdminContactsContent (): JSX.Element {
       })
   }, [])
 
-  const handleVisualize = (rowData: Row): void => {
-    console.log('handleVisualize')
-  }
-
-  const handleOpenValidate = (rowData: Row): void => {
+  const handleOpenVisualize = (rowData: Row): void => {
     setCurrentData(rowData)
-    setOpenValidate(true)
+    setOpenVisualize(true)
   }
 
-  const handleCloseValidate = (): void => {
-    setOpenValidate(false)
+  const handleCloseVisualize = (): void => {
+    setOpenVisualize(false)
   }
 
-  const handleValidate = (): void => {
-    console.log('handleValidate')
+  const handleVisualize = (): void => {}
+
+  const handleOpenArchivate = (rowData: Row): void => {
+    setCurrentData(rowData)
+    setOpenArchivate(true)
+  }
+
+  const handleCloseArchivate = (): void => {
+    setOpenArchivate(false)
+  }
+
+  const handleArchivate = (): void => {
+    const payload = { isTreated: true }
+    fetch(`https://dev.linker-app.fr/api/admin/contact/${String(currentData?.id)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(async response => await response.json())
+      .then(() => {
+        handleCloseArchivate()
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la modifcation de la demande de contact: ${String(error)}`)
+      })
   }
 
   const handleOpenDelete = (rowData: Row): void => {
@@ -77,7 +100,7 @@ function AdminContactsContent (): JSX.Element {
       method: 'DELETE'
     })
       .then(() => {
-        setOpenDelete(false)
+        handleCloseDelete()
         window.location.reload()
       })
       .catch((error) => {
@@ -256,12 +279,12 @@ function AdminContactsContent (): JSX.Element {
                       })}
                     </TableCell>
                     <TableCell align='center'>
-                      <IconButton onClick={() => { handleVisualize(row) }}>
+                      <IconButton onClick={() => { handleOpenVisualize(row) }}>
                         <VisibilityIcon fontSize='large' />
                       </IconButton>
                     </TableCell>
                     <TableCell align='center'>
-                      <IconButton onClick={() => { handleOpenValidate(row) }}>
+                      <IconButton onClick={() => { handleOpenArchivate(row) }}>
                         <ArchiveIcon fontSize='large' />
                       </IconButton>
                     </TableCell>
@@ -276,8 +299,8 @@ function AdminContactsContent (): JSX.Element {
               return null
             })}
           </TableBody>
-          {/* MODALE POUR VALIDER */}
-          <Dialog open={openValidate} onClose={handleCloseValidate}>
+          {/* MODALE POUR VISUALISER */}
+          <Dialog open={openVisualize} onClose={handleCloseVisualize}>
             <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Valider un document</DialogTitle>
             <DialogContent>
               <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
@@ -286,14 +309,39 @@ function AdminContactsContent (): JSX.Element {
             </DialogContent>
             <DialogActions>
               <Button
-                onClick={handleCloseValidate}
+                onClick={handleCloseVisualize}
                 color="primary"
                 sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
               >
                 Non
               </Button>
               <Button
-                onClick={() => { handleValidate() }}
+                onClick={() => { handleVisualize() }}
+                color="primary"
+                sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+              >
+                Oui
+              </Button>
+            </DialogActions>
+          </Dialog>
+          {/* MODALE POUR ARCHIVER */}
+          <Dialog open={openArchivate} onClose={handleCloseArchivate}>
+            <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Archiver une demande</DialogTitle>
+            <DialogContent>
+              <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
+                Êtes-vous sûr de vouloir archiver cette demande de contact ?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleCloseArchivate}
+                color="primary"
+                sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+              >
+                Non
+              </Button>
+              <Button
+                onClick={() => { handleArchivate() }}
                 color="primary"
                 sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
               >
