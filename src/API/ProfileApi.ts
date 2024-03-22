@@ -1,3 +1,4 @@
+
 import type { StudentProfileInfo, Profile, ProfileCompany, SkillsListInfo } from '../Typage/ProfileType'
 import type { CompanyInfo } from '../Typage/Type'
 import axios from 'axios'
@@ -8,6 +9,46 @@ class ProfileApi {
     const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
+
+  static async deactivateCompanyAccount (jwtToken: string): Promise<void> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/auth/company/disable`, {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async deleteCompanyAccount (jwtToken: string): Promise<void> {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/auth/company/delete`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async deactivateStudentAccount (jwtToken: string): Promise<void> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/auth/student/disable`, {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async deleteStudentAccount (jwtToken: string): Promise<void> {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/auth/student/delete`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
       }
     })
     return response.data

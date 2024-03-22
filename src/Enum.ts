@@ -12,7 +12,9 @@ export enum AdminDashboardState {
   DASHBOARD = 'dashboard',
   USERS = 'users',
   MISSIONS = 'missions',
-  DOCUMENTS = 'documents'
+  DOCUMENTS = 'documents',
+  VERIFY_COMPANY_DOCUMENTS = 'verify_company_documents',
+  VERIFY_STUDENT_DOCUMENTS = 'verify_student_documents'
 }
 
 export enum ModalType {
@@ -24,6 +26,8 @@ export enum ModalType {
   COMMENT = 'comment',
   LEAVE = 'leave',
   EXCLUSION = 'exclusion',
+  DELETE_ACCOUNT = 'delete_account',
+  DEACTIVATE_ACCOUNT = 'deactivate_account'
 }
 
 export enum MissionStatus {

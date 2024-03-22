@@ -34,6 +34,12 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case AdminDashboardState.DOCUMENTS:
         navigate(ROUTES.ADMIN_DOCUMENTS_DASHBOARD)
         break
+      case AdminDashboardState.VERIFY_COMPANY_DOCUMENTS:
+        navigate(ROUTES.ADMIN_VERIFY_COMPANY_DOCUMENTS)
+        break
+      case AdminDashboardState.VERIFY_STUDENT_DOCUMENTS:
+        navigate(ROUTES.ADMIN_VERIFY_STUDENT_DOCUMENTS)
+        break
       default:
         break
     }
@@ -60,6 +66,14 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             <p className={ stateDashboard === AdminDashboardState.DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.DOCUMENTS) }}>
               <TopicOutlinedIcon />
               { t('admin.dashboard.doc') }
+            </p>
+            <p className={ stateDashboard === AdminDashboardState.VERIFY_COMPANY_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_COMPANY_DOCUMENTS) }}>
+              <TopicOutlinedIcon />
+              { t('admin.dashboard.verifyCompanyDoc') }
+            </p>
+            <p className={ stateDashboard === AdminDashboardState.VERIFY_STUDENT_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_STUDENT_DOCUMENTS) }}>
+              <TopicOutlinedIcon />
+              { t('admin.dashboard.verifyStudentDoc') }
             </p>
           </div>
         </div>
