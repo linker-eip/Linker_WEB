@@ -5,6 +5,7 @@ import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread'
 import { AdminDashboardState } from '../../Enum'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../Router/routes'
@@ -40,6 +41,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case AdminDashboardState.VERIFY_STUDENT_DOCUMENTS:
         navigate(ROUTES.ADMIN_VERIFY_STUDENT_DOCUMENTS)
         break
+      case AdminDashboardState.CONTACTS:
+        navigate(ROUTES.ADMIN_CONTACTS)
+        break
       default:
         break
     }
@@ -74,6 +78,10 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             <p className={ stateDashboard === AdminDashboardState.VERIFY_STUDENT_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_STUDENT_DOCUMENTS) }}>
               <TopicOutlinedIcon />
               { t('admin.dashboard.verifyStudentDoc') }
+            </p>
+            <p className={ stateDashboard === AdminDashboardState.CONTACTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.CONTACTS) }}>
+              <MarkEmailUnreadIcon />
+              { t('admin.dashboard.contacts') }
             </p>
           </div>
         </div>

@@ -292,7 +292,8 @@ i18n
               mission: 'Missions',
               doc: 'Documents',
               verifyCompanyDoc: 'Vérification Entreprise',
-              verifyStudentDoc: 'Vérification Étudiante'
+              verifyStudentDoc: 'Vérification Étudiante',
+              contacts: 'Contact'
             }
           },
           snackbar: {
@@ -539,7 +540,8 @@ i18n
               mission: 'Missions',
               doc: 'Documents',
               verifyCompanyDoc: 'Vérification Entreprise',
-              verifyStudentDoc: 'Vérification Étudiante'
+              verifyStudentDoc: 'Vérification Étudiante',
+              contacts: 'Contact'
             }
           }
         }

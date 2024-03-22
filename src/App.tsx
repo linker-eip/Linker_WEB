@@ -30,11 +30,12 @@ import CompanyInvoices from './Company/Dashbord/MesFactures/companyInvoices'
 
 import AdminLoginPage from './Admin/adminLoginPage'
 import AdminDashboard from './Admin/adminDashboard'
+import AdminUsers from './Admin/Users/adminUsers'
 import AdminMissions from './Admin/Missions/adminMissions'
 import AdminDocuments from './Admin/Documents/adminDocuments'
-import AdminUsers from './Admin/Users/adminUsers'
 import AdminVerifyCompany from './Admin/VerifyCompanyDocuments/adminVerifyCompany'
 import AdminVerifyStudent from './Admin/VerifyStudentDocuments/adminVerifyStudent'
+import AdminContacts from './Admin/Contacts/adminContacts'
 
 import MentionLegales from './Transverse/mentionLegales'
 
@@ -75,6 +76,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.ADMIN_USERS_DASHBOARD} element={<AdminUsers/>}/>
         <Route path={ROUTES.ADMIN_VERIFY_COMPANY_DOCUMENTS} element={<AdminVerifyCompany/>}/>
         <Route path={ROUTES.ADMIN_VERIFY_STUDENT_DOCUMENTS} element={<AdminVerifyStudent/>}/>
+        <Route path={ROUTES.ADMIN_CONTACTS} element={<AdminContacts/>}/>
         <Route path={ROUTES.MENTION_LEGALES} element={<MentionLegales/>}/>
       </Routes>
     </Router>
