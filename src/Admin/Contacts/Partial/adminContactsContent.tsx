@@ -24,7 +24,7 @@ function AdminContactsContent (): JSX.Element {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentData, setCurrentData] = useState<Row | null>(null)
 
-  const [openDeny, setOpenDeny] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
   const [openValidate, setOpenValidate] = useState(false)
 
   useEffect(() => {
@@ -63,17 +63,26 @@ function AdminContactsContent (): JSX.Element {
     console.log('handleValidate')
   }
 
-  const handleOpenDeny = (rowData: Row): void => {
+  const handleOpenDelete = (rowData: Row): void => {
     setCurrentData(rowData)
-    setOpenDeny(true)
+    setOpenDelete(true)
   }
 
-  const handleCloseDeny = (): void => {
-    setOpenDeny(false)
+  const handleCloseDelete = (): void => {
+    setOpenDelete(false)
   }
 
-  const handleDeny = (): void => {
-    console.log('handleDeny', currentData)
+  const handleDelete = (): void => {
+    fetch(`https://dev.linker-app.fr/api/admin/contact/${String(currentData?.id)}`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        setOpenDelete(false)
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la suppression de la demande de contact: ${String(error)}`)
+      })
   }
 
   return (
@@ -207,7 +216,7 @@ function AdminContactsContent (): JSX.Element {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => {
+            {rows.filter(row => !row.isTreated).map((row) => {
               if (
                 row.id?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
                 row.email?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -257,7 +266,7 @@ function AdminContactsContent (): JSX.Element {
                       </IconButton>
                     </TableCell>
                     <TableCell align='center'>
-                      <IconButton onClick={() => { handleOpenDeny(row) }}>
+                      <IconButton onClick={() => { handleOpenDelete(row) }}>
                         <DeleteIcon fontSize='large' />
                       </IconButton>
                     </TableCell>
@@ -292,24 +301,24 @@ function AdminContactsContent (): JSX.Element {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* MODALE POUR REFUSER */}
-          <Dialog open={openDeny} onClose={handleCloseDeny}>
-            <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Refuser un document</DialogTitle>
+          {/* MODALE POUR SUPPRIMER */}
+          <Dialog open={openDelete} onClose={handleCloseDelete}>
+            <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Supprimer une demande</DialogTitle>
             <DialogContent>
               <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
-                Êtes-vous sûr de vouloir refuser ce document ?
+                Êtes-vous sûr de vouloir supprimer cette demande de contact ?
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button
-                onClick={handleCloseDeny}
+                onClick={handleCloseDelete}
                 color="primary"
                 sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
               >
                 Non
               </Button>
               <Button
-                onClick={() => { handleDeny() }}
+                onClick={() => { handleDelete() }}
                 color="primary"
                 sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
               >
