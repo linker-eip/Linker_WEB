@@ -15,7 +15,8 @@ export enum AdminDashboardState {
   DOCUMENTS = 'documents',
   VERIFY_COMPANY_DOCUMENTS = 'verify_company_documents',
   VERIFY_STUDENT_DOCUMENTS = 'verify_student_documents',
-  CONTACTS = 'contacts'
+  CONTACTS = 'contacts',
+  ARCHIVES = 'archives'
 }
 
 export enum ModalType {

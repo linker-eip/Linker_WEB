@@ -6,6 +6,7 @@ import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread'
+import ArchiveIcon from '@mui/icons-material/Archive'
 import { AdminDashboardState } from '../../Enum'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../Router/routes'
@@ -43,6 +44,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
         break
       case AdminDashboardState.CONTACTS:
         navigate(ROUTES.ADMIN_CONTACTS)
+        break
+      case AdminDashboardState.ARCHIVES:
+        navigate(ROUTES.ADMIN_ARCHIVES)
         break
       default:
         break
@@ -82,6 +86,10 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             <p className={ stateDashboard === AdminDashboardState.CONTACTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.CONTACTS) }}>
               <MarkEmailUnreadIcon />
               { t('admin.dashboard.contacts') }
+            </p>
+            <p className={ stateDashboard === AdminDashboardState.ARCHIVES ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.ARCHIVES) }}>
+              <ArchiveIcon />
+              { t('admin.dashboard.archives') }
             </p>
           </div>
         </div>

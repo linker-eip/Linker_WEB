@@ -293,7 +293,8 @@ i18n
               doc: 'Documents',
               verifyCompanyDoc: 'Vérification Entreprise',
               verifyStudentDoc: 'Vérification Étudiante',
-              contacts: 'Contact'
+              contacts: 'Contact',
+              archives: 'Archives'
             }
           },
           snackbar: {
@@ -541,7 +542,8 @@ i18n
               doc: 'Documents',
               verifyCompanyDoc: 'Vérification Entreprise',
               verifyStudentDoc: 'Vérification Étudiante',
-              contacts: 'Contact'
+              contacts: 'Contact',
+              archives: 'Archives'
             }
           }
         }

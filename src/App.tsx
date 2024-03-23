@@ -36,6 +36,7 @@ import AdminDocuments from './Admin/Documents/adminDocuments'
 import AdminVerifyCompany from './Admin/VerifyCompanyDocuments/adminVerifyCompany'
 import AdminVerifyStudent from './Admin/VerifyStudentDocuments/adminVerifyStudent'
 import AdminContacts from './Admin/Contacts/adminContacts'
+import AdminArchives from './Admin/Archives/adminArchives'
 
 import MentionLegales from './Transverse/mentionLegales'
 
@@ -77,6 +78,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.ADMIN_VERIFY_COMPANY_DOCUMENTS} element={<AdminVerifyCompany/>}/>
         <Route path={ROUTES.ADMIN_VERIFY_STUDENT_DOCUMENTS} element={<AdminVerifyStudent/>}/>
         <Route path={ROUTES.ADMIN_CONTACTS} element={<AdminContacts/>}/>
+        <Route path={ROUTES.ADMIN_ARCHIVES} element={<AdminArchives/>}/>
         <Route path={ROUTES.MENTION_LEGALES} element={<MentionLegales/>}/>
       </Routes>
     </Router>

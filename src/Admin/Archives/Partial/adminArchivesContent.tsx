@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import EmailIcon from '@mui/icons-material/Email'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SearchIcon from '@mui/icons-material/Search'
-import ArchiveIcon from '@mui/icons-material/Archive'
 import SubjectIcon from '@mui/icons-material/Subject'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import {
@@ -21,13 +20,12 @@ interface Row {
   isTreated: boolean
 }
 
-function AdminContactsContent (): JSX.Element {
+function AdminArchivesContent (): JSX.Element {
   const [rows, setRows] = useState<Row[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [currentData, setCurrentData] = useState<Row | null>(null)
 
   const [openVisualize, setOpenVisualize] = useState(false)
-  const [openArchivate, setOpenArchivate] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
 
   useEffect(() => {
@@ -56,34 +54,6 @@ function AdminContactsContent (): JSX.Element {
 
   const handleCloseVisualize = (): void => {
     setOpenVisualize(false)
-  }
-
-  const handleOpenArchivate = (rowData: Row): void => {
-    setCurrentData(rowData)
-    setOpenArchivate(true)
-  }
-
-  const handleCloseArchivate = (): void => {
-    setOpenArchivate(false)
-  }
-
-  const handleArchivate = (): void => {
-    const payload = { isTreated: true }
-    fetch(`https://dev.linker-app.fr/api/admin/contact/${String(currentData?.id)}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(async response => await response.json())
-      .then(() => {
-        handleCloseArchivate()
-        window.location.reload()
-      })
-      .catch((error) => {
-        alert(`Erreur lors de la modifcation de la demande de contact: ${String(error)}`)
-      })
   }
 
   const handleOpenDelete = (rowData: Row): void => {
@@ -221,25 +191,12 @@ function AdminContactsContent (): JSX.Element {
                 paddingLeft: '50px',
                 paddingRight: '50px'
               }}>
-                  Archiver
-              </TableCell>
-              <TableCell
-              align='center'
-              sx={{
-                fontFamily: 'Poppins',
-                fontWeight: 'bold',
-                fontSize: '30px',
-                color: '#FFFFFF',
-                backgroundColor: '#005275',
-                paddingLeft: '50px',
-                paddingRight: '50px'
-              }}>
                   Supprimer
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.filter(row => !row.isTreated).map((row) => {
+            {rows.filter(row => row.isTreated).map((row) => {
               if (
                 row.id?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
                 row.email?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -281,11 +238,6 @@ function AdminContactsContent (): JSX.Element {
                     <TableCell align='center'>
                       <IconButton onClick={() => { handleOpenVisualize(row) }}>
                         <VisibilityIcon fontSize='large' />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell align='center'>
-                      <IconButton onClick={() => { handleOpenArchivate(row) }}>
-                        <ArchiveIcon fontSize='large' />
                       </IconButton>
                     </TableCell>
                     <TableCell align='center'>
@@ -370,31 +322,6 @@ function AdminContactsContent (): JSX.Element {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* MODALE POUR ARCHIVER */}
-          <Dialog open={openArchivate} onClose={handleCloseArchivate}>
-            <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Archiver une demande</DialogTitle>
-            <DialogContent>
-              <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
-                Êtes-vous sûr de vouloir archiver cette demande de contact ?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={handleCloseArchivate}
-                color="primary"
-                sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-              >
-                Non
-              </Button>
-              <Button
-                onClick={() => { handleArchivate() }}
-                color="primary"
-                sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-              >
-                Oui
-              </Button>
-            </DialogActions>
-          </Dialog>
           {/* MODALE POUR SUPPRIMER */}
           <Dialog open={openDelete} onClose={handleCloseDelete}>
             <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Supprimer une demande</DialogTitle>
@@ -427,4 +354,4 @@ function AdminContactsContent (): JSX.Element {
   )
 }
 
-export default AdminContactsContent
+export default AdminArchivesContent
