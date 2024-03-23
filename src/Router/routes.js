@@ -28,10 +28,12 @@ export const COMPANY_PROFILE = '/company/profile'
 
 export const ADMIN_LOGIN_PAGE = '/admin/login'
 export const ADMIN_DASHBOARD = '/admin/dashboard'
+export const ADMIN_USERS_DASHBOARD = '/admin/users'
 export const ADMIN_MISSIONS_DASHBOARD = '/admin/missions'
 export const ADMIN_DOCUMENTS_DASHBOARD = '/admin/documents'
 export const ADMIN_VERIFY_COMPANY_DOCUMENTS = '/admin/verify-company-documents'
 export const ADMIN_VERIFY_STUDENT_DOCUMENTS = '/admin/verify-student-documents'
-export const ADMIN_USERS_DASHBOARD = '/admin/users'
+export const ADMIN_CONTACTS = '/admin/contacts'
+export const ADMIN_ARCHIVES = '/admin/archives'
 
 export const MENTION_LEGALES = '/mention-legales'
