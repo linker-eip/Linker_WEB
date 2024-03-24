@@ -30,16 +30,9 @@ import CompanyInvoices from './Company/Dashbord/MesFactures/companyInvoices'
 
 import AdminLoginPage from './Admin/adminLoginPage'
 import AdminDashboard from './Admin/adminDashboard'
-import AdminUsers from './Admin/Users/adminUsers'
 import AdminMissions from './Admin/Missions/adminMissions'
 import AdminDocuments from './Admin/Documents/adminDocuments'
-import AdminVerifyCompany from './Admin/VerifyCompanyDocuments/adminVerifyCompany'
-import AdminVerifyStudent from './Admin/VerifyStudentDocuments/adminVerifyStudent'
-import AdminContacts from './Admin/Contacts/adminContacts'
-import AdminArchives from './Admin/Archives/adminArchives'
-
-import MentionLegales from './Transverse/mentionLegales'
-import Footer from './Transverse/Footer'
+import AdminUsers from './Admin/Users/adminUsers'
 
 import * as ROUTES from './Router/routes'
 
@@ -47,55 +40,35 @@ function App (): JSX.Element {
   return (
     <Router>
       <Routes>
-        <Route path={ROUTES.LANDING_PAGE} element={
-          <div>
-            <LandingPage />
-            <Footer />
-          </div>
-        } />
-        <Route path={ROUTES.STUDENT_REGISTER_PAGE} element={<StudentRegisterPage />} />
-        <Route path={ROUTES.COMPANY_REGISTER_PAGE} element={<CompanyRegisterPage />} />
-        <Route path={ROUTES.STUDENT_LOGIN_PAGE} element={<StudentLoginPage />} />
-        <Route path={ROUTES.COMPANY_LOGIN_PAGE} element={<CompanyLoginPage />} />
+        <Route path={ROUTES.LANDING_PAGE} element={<LandingPage/>}/>
+        <Route path={ROUTES.STUDENT_REGISTER_PAGE} element={<StudentRegisterPage/>}/>
+        <Route path={ROUTES.COMPANY_REGISTER_PAGE} element={<CompanyRegisterPage/>}/>
+        <Route path={ROUTES.STUDENT_LOGIN_PAGE} element={<StudentLoginPage/>}/>
+        <Route path={ROUTES.COMPANY_LOGIN_PAGE} element={<CompanyLoginPage/>}/>
         <Route path={ROUTES.STUDENT_DASHBOARD} element={<StudentDashboard />} />
-        <Route path={ROUTES.COMPANY_DASHBOARD} element={<CompanyDashboard />} />
-        <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments />} />
-        <Route path={ROUTES.STUDENT_PROFILE} element={<StudentProfile />} />
-        <Route path={ROUTES.STUDENT_MISSIONS} element={<StudentMissions />} />
-        <Route path={ROUTES.STUDENT_DETAILED_MISSION} element={<StudentDetailedMission />} />
-        <Route path={ROUTES.STUDENT_STATISTICS} element={<StudentStatistics />} />
-        <Route path={ROUTES.STUDENT_GROUP} element={<StudentGroup />} />
-        <Route path={ROUTES.COMPANY_DOCUMENTS_DASHBOARD} element={<CompanyDocuments />} />
-        <Route path={ROUTES.COMPANY_FORGOT_PASSWORD} element={<CompanyForgetPassword />} />
-        <Route path={ROUTES.COMPANY_RESET_PASSWORD} element={<CompanyResetPassword />} />
-        <Route path={ROUTES.STUDENT_FORGOT_PASSWORD} element={<StudentForgetPassword />} />
-        <Route path={ROUTES.STUDENT_RESET_PASSWORD} element={<StudentResetPassword />} />
-        <Route path={ROUTES.AUTH_VERIFY_PWD} element={
-          <div>
-            <AuthVerifyPwd />
-            <Footer />
-          </div>
-        } />
-        <Route path={ROUTES.STUDENT_INVOICES_DASHBOARD} element={<StudentInvoices />} />
-        <Route path={ROUTES.COMPANY_INVOICES_DASHBOARD} element={<CompanyInvoices />} />
-        <Route path={ROUTES.COMPANY_MISSIONS} element={<CompanyMissions />} />
-        <Route path={ROUTES.COMPANY_DETAILED_MISSION} element={<CompanyDetailedMission />} />
-        <Route path={ROUTES.COMPANY_PROFILE} element={<CompanyProfile />} />
-        <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage />} />
-        <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
-        <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions />} />
-        <Route path={ROUTES.ADMIN_DOCUMENTS_DASHBOARD} element={<AdminDocuments />} />
-        <Route path={ROUTES.ADMIN_USERS_DASHBOARD} element={<AdminUsers />} />
-        <Route path={ROUTES.ADMIN_VERIFY_COMPANY_DOCUMENTS} element={<AdminVerifyCompany />} />
-        <Route path={ROUTES.ADMIN_VERIFY_STUDENT_DOCUMENTS} element={<AdminVerifyStudent />} />
-        <Route path={ROUTES.ADMIN_CONTACTS} element={<AdminContacts />} />
-        <Route path={ROUTES.ADMIN_ARCHIVES} element={<AdminArchives />} />
-        <Route path={ROUTES.MENTION_LEGALES} element={
-          <div>
-            <MentionLegales />
-            <Footer />
-          </div>
-        } />
+        <Route path={ROUTES.COMPANY_DASHBOARD} element={<CompanyDashboard/>}/>
+        <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments/>}/>
+        <Route path={ROUTES.STUDENT_PROFILE} element={<StudentProfile/>}/>
+        <Route path={ROUTES.STUDENT_MISSIONS} element={<StudentMissions/>}/>
+        <Route path={ROUTES.STUDENT_DETAILED_MISSION} element={<StudentDetailedMission />}/>
+        <Route path={ROUTES.STUDENT_STATISTICS} element={<StudentStatistics />}/>
+        <Route path={ROUTES.STUDENT_GROUP} element={<StudentGroup />}/>
+        <Route path={ROUTES.COMPANY_DOCUMENTS_DASHBOARD} element={<CompanyDocuments/>}/>
+        <Route path={ROUTES.COMPANY_FORGOT_PASSWORD} element={<CompanyForgetPassword/>}/>
+        <Route path={ROUTES.COMPANY_RESET_PASSWORD} element={<CompanyResetPassword/>}/>
+        <Route path={ROUTES.STUDENT_FORGOT_PASSWORD} element={<StudentForgetPassword/>}/>
+        <Route path={ROUTES.STUDENT_RESET_PASSWORD} element={<StudentResetPassword/>}/>
+        <Route path={ROUTES.AUTH_VERIFY_PWD} element={<AuthVerifyPwd/>} />
+        <Route path={ROUTES.STUDENT_INVOICES_DASHBOARD} element={<StudentInvoices/>}/>
+        <Route path={ROUTES.COMPANY_INVOICES_DASHBOARD} element={<CompanyInvoices/>}/>
+        <Route path={ROUTES.COMPANY_MISSIONS} element={<CompanyMissions/>}/>
+        <Route path={ROUTES.COMPANY_DETAILED_MISSION} element={<CompanyDetailedMission/>}/>
+        <Route path={ROUTES.COMPANY_PROFILE} element={<CompanyProfile />}/>
+        <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage/>}/>
+        <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard/>}/>
+        <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions/>}/>
+        <Route path={ROUTES.ADMIN_DOCUMENTS_DASHBOARD} element={<AdminDocuments/>}/>
+        <Route path={ROUTES.ADMIN_USERS_DASHBOARD} element={<AdminUsers/>}/>
       </Routes>
     </Router>
   )

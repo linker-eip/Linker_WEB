@@ -11,11 +11,8 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
-import type { StudentProfileInfo } from '../../../Typage/ProfileType'
+import type { Profile } from '../../../Typage/ProfileType'
 import ProfileApi from '../../../API/ProfileApi'
-import NotificationApi from '../../../API/NotificationApi'
-import type { Notifications } from '../../../Typage/NotificationType'
-import NotificationButton from './NotificationButton'
 
 const theme = createTheme({
   palette: {
@@ -29,27 +26,27 @@ const theme = createTheme({
 })
 
 const StyledMenu = styled((props: MenuProps): JSX.Element => (
-  <Menu
-    elevation={0}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'right'
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right'
-    }}
-    {...props}
-  />
+    <Menu
+      elevation={0}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right'
+      }}
+      {...props}
+    />
 ))(({ theme }) => ({
   '& .MuiPaper-root': {
     borderRadius: 6,
     marginTop: theme.spacing(1),
     minWidth: 180,
     color:
-      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+        theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
     boxShadow:
-      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+        'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
       padding: '4px 0'
     },
@@ -69,22 +66,11 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
   }
 }))
 
-interface Props {
-  children: string | any
-  hideNotif?: boolean
-  hideName?: boolean
-}
-
-function HotbarDashboard (props: Props): JSX.Element {
+function HotbarDashboard (props: { children: string | any }): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const [profile, setProfile] = useState<StudentProfileInfo | null>(null)
-  const [notifOpen, setNotifOpen] = useState<boolean>(false)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
-  const [NotificationsData, setNotificationData] = useState<Notifications[]>()
-  const [ids] = useState<string[]>([])
-  const [reload, setReload] = useState<boolean>(false)
-  const [newNotif, setNewNotif] = useState<number>(0)
 
   useEffect(() => {
     const fetchData = async (): Promise<any> => {
@@ -94,22 +80,6 @@ function HotbarDashboard (props: Props): JSX.Element {
     }
     fetchData()
   }, [])
-
-  useEffect(() => {
-    const fetchData = async (): Promise<any> => {
-      const response = await NotificationApi.getNotifications(localStorage.getItem('jwtToken') as string)
-      let count = 0
-      response.forEach(item => {
-        if (!item.alreadySeen) {
-          count += 1
-        }
-        return item
-      })
-      setNewNotif(count)
-      setNotificationData(response)
-    }
-    fetchData()
-  }, [reload])
 
   const handleClick = (event: React.MouseEvent<HTMLElement>): any => {
     setAnchorEl(event.currentTarget)
@@ -130,37 +100,15 @@ function HotbarDashboard (props: Props): JSX.Element {
     setAnchorEl(null)
   }
 
-  const reloadNotif = (): void => {
-    setReload(!reload)
-  }
-
-  const callNotification = (): void => {
-    if (!notifOpen) {
-      NotificationsData?.map(item => ids.push(item.id.toString()))
-      const dto = {
-        ids
-      }
-      NotificationApi.changeNotificationStatus(localStorage.getItem('jwtToken') as string, dto)
-      reloadNotif()
-    }
-    setNotifOpen(!notifOpen)
-  }
-
   const { t } = useTranslation()
   return (
     <div className='hotbar-container'>
-      <img src="/assets/logo.svg" alt='logo' />
-      <p className='hotbar-container__title'>{props.children}</p>
-      { props.hideNotif ?? false
-        ? null
-        : <NotificationButton title='Notification' isClicked={notifOpen} data={NotificationsData ?? []} onClick={callNotification} onReload={reloadNotif} newNotif={newNotif} />
-      }
-      {props.hideName ?? false
-        ? null
-        : <div className='hotbar-container__info'>
-            <Avatar alt='avatar' src={profile?.picture} />
-            <ThemeProvider theme={theme}>
-              <Button
+      <img src="/assets/logo.svg" alt='logo'/>
+      <p className='hotbar-container__title'>{ props.children }</p>
+      <div className='hotbar-container__info'>
+        <Avatar alt='avatar' src={profile?.picture} />
+        <ThemeProvider theme={theme}>
+            <Button
                 id="demo-customized-button"
                 aria-controls={open ? 'demo-customized-menu' : undefined}
                 aria-haspopup="true"
@@ -169,30 +117,29 @@ function HotbarDashboard (props: Props): JSX.Element {
                 disableElevation
                 onClick={handleClick}
                 endIcon={<KeyboardArrowDownIcon />}
-              >
-                {profile !== null ? <p> {profile.firstName} {profile.lastName}</p> : 'Prenom NOM'}
-              </Button>
-            </ThemeProvider>
-            <StyledMenu
-              id="demo-customized-menu"
-              MenuListProps={{
-                'aria-labelledby': 'demo-customized-button'
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
+                >
+                { profile !== null ? <p> { profile.firstName } { profile.lastName }</p> : 'Prenom NOM'}
+            </Button>
+        </ThemeProvider>
+        <StyledMenu
+            id="demo-customized-menu"
+            MenuListProps={{
+              'aria-labelledby': 'demo-customized-button'
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
             >
-              <MenuItem onClick={handleProfile} disableRipple>
-                <EditIcon />
-                {t('student.dashboard.hotbar.profil')}
-              </MenuItem>
-              <MenuItem onClick={handleDisconnect} disableRipple>
-                <ExitToAppOutlinedIcon />
-                {t('student.dashboard.hotbar.quit')}
-              </MenuItem>
-            </StyledMenu>
-          </div>
-      }
+            <MenuItem onClick={handleProfile} disableRipple>
+                  <EditIcon />
+                  { t('student.dashboard.hotbar.profil') }
+                </MenuItem>
+                <MenuItem onClick={handleDisconnect} disableRipple>
+                  <ExitToAppOutlinedIcon />
+                  { t('student.dashboard.hotbar.quit') }
+                </MenuItem>
+        </StyledMenu>
+      </div>
     </div>
   )
 }

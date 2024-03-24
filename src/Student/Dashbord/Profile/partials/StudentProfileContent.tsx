@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState, useEffect, type ChangeEvent } from 'react'
 import '../../../../CSS/StudentProfileContent.scss'
 import Avatar from '@mui/material/Avatar'
@@ -6,24 +5,18 @@ import PlaceIcon from '@mui/icons-material/Place'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 import ProfileApi from '../../../../API/ProfileApi'
-import type { StudentProfileInfo } from '../../../../Typage/ProfileType'
+import type { Profile } from '../../../../Typage/ProfileType'
 import { TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZone from '../../../../Component/DropZone'
-import ClassicButton from '../../../../Component/ClassicButton'
-import ModalValidation from '../../../../Component/ModalValidation'
-import { ModalType } from '../../../../Enum'
-import { useNavigate } from 'react-router-dom'
-import * as ROUTES from '../../../../Router/routes'
 
 interface Props {
   editable: boolean
-  data: StudentProfileInfo
-  update: () => void
 }
 
-function StudentProfileContent (props: Props): JSX.Element {
+function StudentProfileContent ({ editable }: Props): JSX.Element {
+  const [profileData, setProfileData] = useState<Profile>()
   const { t } = useTranslation()
   const [description, setDescription] = useState<string | undefined>(undefined)
   const [location, setLocation] = useState<string | undefined>(undefined)
@@ -31,19 +24,42 @@ function StudentProfileContent (props: Props): JSX.Element {
   const [isEdit, setIsEdit] = useState(false)
   const [isAvatarEditing, setIsAvatarEditing] = useState(false)
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
+  const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined)
   const maxLength = 500
-  const [deactivateModal, setDeactivateModal] = useState<boolean>(false)
-  const [deleteModal, setDeleteModal] = useState<boolean>(false)
-  const navigate = useNavigate()
-
   useEffect(() => {
-    setDescription(props.data.description)
-    setLocation(props.data.location)
-    setWebsite(props.data.website)
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function fetchData () {
+      try {
+        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
+        setProfileData(data)
+        setDescription(data.description)
+        setLocation(data.location)
+        setWebsite(data.website)
+        setProfilePicture(data.picture)
+      } catch (error) {
+        console.error('Error fetching profile data:', error)
+      }
+    }
+
+    fetchData()
   }, [])
 
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function refetchData () {
+      try {
+        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
+        setProfileData(data)
+      } catch (error) {
+        console.error('Error fetching profile data:', error)
+      }
+    }
+
+    refetchData()
+  }, [isEdit])
+
   const handleAvatarEditing = (): void => {
-    if (props.editable) {
+    if (editable) {
       setIsAvatarEditing(!isAvatarEditing)
     }
   }
@@ -51,6 +67,9 @@ function StudentProfileContent (props: Props): JSX.Element {
   const handleEditMode = (): void => {
     setIsEdit(!isEdit)
   }
+
+  const [starsMark, setStarsMark] = useState(5)
+  const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
 
   const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
     setAvatarImage(event)
@@ -68,64 +87,51 @@ function StudentProfileContent (props: Props): JSX.Element {
     setWebsite(event.target.value)
   }
 
-  const handleValidNewInfo = async (): Promise<void> => {
+  const handleValidNewInfo = (): void => {
     handleEditMode()
     const fd = new FormData()
     fd.append('description', description ?? '')
     fd.append('location', location ?? '')
     fd.append('website', website ?? '')
-    const response = await ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, fd)
-    if (response !== undefined) {
-      props.update()
-    }
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, fd)
   }
 
-  const handleNewPicture = async (): Promise<void> => {
+  const handleNewPicture = (): void => {
     setIsAvatarEditing(!isAvatarEditing)
     const picture = new FormData()
     picture.append('picture', AvatarImage[0])
-    const response = await ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, picture)
-    if (response !== undefined) {
-      props.update()
+    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, picture)
+  }
+
+  const handleChangeStars = (): void => {
+    if (starsMark !== 5) {
+      setStarsMark(starsMark + 1)
+    } else {
+      setStarsMark(0)
     }
-  }
 
-  const openDeactivateModal = (): void => {
-    setDeactivateModal(true)
-  }
-
-  const openDeleteModal = (): void => {
-    setDeleteModal(true)
-  }
-
-  const closeDeactivateModal = (): void => {
-    setDeactivateModal(false)
-  }
-
-  const closeDeleteModal = (): void => {
-    setDeleteModal(false)
-  }
-
-  const deactivateAccount = (): void => {
-    setDeactivateModal(false)
-    ProfileApi.deactivateStudentAccount(localStorage.getItem('jwtToken') as string)
-      .then(() => {
-        navigate(ROUTES.STUDENT_LOGIN_PAGE)
-      })
-      .catch((error) => {
-        console.error('[ERROR] - Unable to deactivate account:', error)
-      })
-  }
-
-  const deleteAccount = (): void => {
-    setDeleteModal(false)
-    ProfileApi.deleteStudentAccount(localStorage.getItem('jwtToken') as string)
-      .then(() => {
-        navigate(ROUTES.STUDENT_REGISTER_PAGE)
-      })
-      .catch((error) => {
-        console.error('[ERROR] - Unable to delete account:', error)
-      })
+    switch (starsMark) {
+      case 0:
+        setStarsStatus(['no', 'no', 'no', 'no', 'no'])
+        break
+      case 1:
+        setStarsStatus(['selected', 'no', 'no', 'no', 'no'])
+        break
+      case 2:
+        setStarsStatus(['selected', 'selected', 'no', 'no', 'no'])
+        break
+      case 3:
+        setStarsStatus(['selected', 'selected', 'selected', 'no', 'no'])
+        break
+      case 4:
+        setStarsStatus(['selected', 'selected', 'selected', 'selected', 'no'])
+        break
+      case 5:
+        setStarsStatus(['selected', 'selected', 'selected', 'selected', 'selected'])
+        break
+      default:
+        break
+    }
   }
 
   return (
@@ -133,7 +139,6 @@ function StudentProfileContent (props: Props): JSX.Element {
       {
         !isEdit
           ? <div className='std-profile-content__container'>
-            <div className='std-profile-content__container-2'>
               { isAvatarEditing
                 ? <div>
                     <div onClick={handleAvatarEditing}>
@@ -147,99 +152,63 @@ function StudentProfileContent (props: Props): JSX.Element {
                         </div>
                       : null }
                   </div>
-                : <div onClick={handleAvatarEditing} className='std-profile-content__avatar-section'>
-                    { props.data.picture !== null && props.data.picture !== undefined ? <Avatar alt='avatar' className='std-profile-content__avatar' src={props.data.picture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
+                : <div onClick={handleAvatarEditing}>
+                    { profilePicture !== '' ? <Avatar alt='avatar' className='std-profile-content__avatar' src={profilePicture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
                   </div>
               }
             <div className='std-profile-content__content'>
               <h1 className='std-profile-content__title'>
-                { props.data.firstName } { props.data.lastName }
+                { profileData?.firstName } { profileData?.lastName }
               </h1>
-              { props.data.description !== '' ? <p> { props.data.description } </p> : <p> Description </p>}
-              <div className='std-profile-content__mark'>
-                { props.data.note !== null
-                  ? props.data.note
-                  : 'pas de note'
-                }
-                { props.data.note !== null
-                  ? <img src='/assets/stars.svg' alt='stars' className='std-profile-content__stars-selected' />
-                  : null
+              { profileData?.description !== '' ? <p> { profileData?.description } </p> : <p> Description </p>}
+              <div className='std-profile-content__mark' onClick={handleChangeStars}>
+                {
+                  starsStatus.map((item, index) => {
+                    if (item === 'selected') {
+                      return <img src='/assets/stars.svg' alt='stars' className='std-profile-content__stars-selected' key={index} />
+                    } else {
+                      return <img src='/assets/stars.svg' alt='stars' className='std-profile-content__stars' key={index} />
+                    }
+                  })
                 }
                 <div className='std-profile-content__circle' />
-                <p> mission réalisé : <strong> {props.data.note} </strong></p>
+                <p> nbr mission</p>
               </div>
                 <div className='std-profile-content__section'>
                   <PlaceIcon />
-                  { props.data.location !== '' ? <p> { props.data.location } </p> : <p> Localité </p> }
+                  { profileData?.location !== '' ? <p> { profileData?.location } </p> : <p> Localité </p> }
                 </div>
                 <div className='std-profile-content__section'>
-                  { props.data.website !== '' ? <p className='std-profile-content__site'> { props.data.website } </p> : <p> Site Web </p> }
+                  { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
                 </div>
               </div>
-            </div>
-            { props.editable
+            { editable
               ? <div onClick={handleEditMode}>
-                  <EditIcon className='std-profile-content__edit' />
+                <EditIcon className='std-profile-content__edit' />
                 </div>
-              : null
+              : <div></div>
             }
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'>
-              <div className='std-profile-content__section'>
-                <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
-              </div>
-              <div className='std-profile-content__section'>
-                <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
-              </div>
-              {
-                props.data.firstName !== null && props.data.firstName !== undefined &&
-                props.data.lastName !== null && props.data.lastName !== undefined && (
-                  <>
-                    <ModalValidation
-                      subject={props.data.lastName + ' ' + props.data.firstName}
-                      open={deactivateModal}
-                      onClose={closeDeactivateModal}
-                      type={ModalType.DEACTIVATE_ACCOUNT}
-                      onValid={deactivateAccount}
-                    />
-                    <ModalValidation
-                      subject={props.data.lastName + ' ' + props.data.firstName}
-                      open={deleteModal}
-                      onClose={closeDeleteModal}
-                      type={ModalType.DELETE_ACCOUNT}
-                      onValid={deleteAccount}
-                    />
-                  </>
-                )
-              }
-            </div>
           </div>
           : <div className='std-profile-content__container'>
-            <div className='std-profile-content__container-2'>
               { isAvatarEditing
                 ? <div>
                     <div onClick={handleAvatarEditing}>
-                      <CloseIcon className='std-profile-content__edit'/>
+                      <CloseIcon className='std-profile-exp__edit'/>
                     </div>
                     <DropZone onObjectChange={handleAvatarImage}/>
                     { AvatarImage !== undefined
-                      ? <div className='std-profile-content__avatar-section'>
+                      ? <div>
                           <p> {AvatarImage[0].path } </p>
                           <BaseButton title='Envoyer' onClick={handleNewPicture} />
                         </div>
                       : null }
                   </div>
                 : <div onClick={handleAvatarEditing}>
-                    { props.data.picture !== null && props.data.picture !== undefined ? <Avatar alt='avatar' className='std-profile-content__avatar' src={props.data.picture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
+                    { profilePicture !== '' ? <Avatar alt='avatar' className='std-profile-content__avatar' src={profilePicture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
                   </div>
               }
               <div className='std-profile-content__content'>
-              <div className='std-profile-content__row'>
+                <div className='std-profile-content__row'>
                   <TextField
                     defaultValue={description}
                     onChange={handleDesc}
@@ -268,9 +237,8 @@ function StudentProfileContent (props: Props): JSX.Element {
                 />
                 <BaseButton title='Envoyer' onClick={handleValidNewInfo} />
               </div>
-            </div>
               <div onClick={handleEditMode}>
-                <CloseIcon className='std-profile-content__edit'/>
+                <CloseIcon className='std-profile-exp__edit'/>
               </div>
           </div>
       }

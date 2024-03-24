@@ -14,12 +14,6 @@ i18n
     resources: {
       fr: {
         translation: {
-          footer: {
-            need_help: 'Besoin d’aide ?',
-            contact: 'Contactez-nous',
-            networks: 'Pour mieux nous connaitre !',
-            download: 'Téléchargez l’app'
-          },
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
@@ -45,11 +39,7 @@ i18n
               subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
             },
             leave: {
-              subtitle: 'Êtes-vous sur de vouloir quitter:'
-            },
-            account: {
-              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
-              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
+              subtitle: 'Etes-vous sur de vouloir quitter:'
             }
           },
           validate: 'Valider',
@@ -223,9 +213,6 @@ i18n
               button: 'Créer le groupe',
               invite: {
                 title: 'Ajouter un membre'
-              },
-              exclude: {
-                title: 'Exclure un membre'
               }
             }
           },
@@ -296,11 +283,7 @@ i18n
               homeTitle: 'Mon panel',
               utilisateur: 'Utilisateurs',
               mission: 'Missions',
-              doc: 'Documents',
-              verifyCompanyDoc: 'Vérification Entreprise',
-              verifyStudentDoc: 'Vérification Étudiante',
-              contacts: 'Contact',
-              archives: 'Archives'
+              doc: 'Documents'
             }
           },
           snackbar: {
@@ -322,9 +305,6 @@ i18n
             accept: {
               subtitle: 'Etes-vous sur de vouloir accepter:'
             },
-            exclude: {
-              subtitle: 'Etes-vous sur de vouloir exclure:'
-            },
             delete: {
               subtitle: 'Etes-vous sûr de vouloir supprimer:',
               groups: {
@@ -333,10 +313,6 @@ i18n
             },
             leave: {
               subtitle: 'Etes-vous sur de vouloir quitter:'
-            },
-            account: {
-              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
-              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
             }
           },
           validate: 'Valider',
@@ -545,11 +521,7 @@ i18n
               homeTitle: 'Mon panel',
               utilisateur: 'Utilisateurs',
               mission: 'Missions',
-              doc: 'Documents',
-              verifyCompanyDoc: 'Vérification Entreprise',
-              verifyStudentDoc: 'Vérification Étudiante',
-              contacts: 'Contact',
-              archives: 'Archives'
+              doc: 'Documents'
             }
           }
         }

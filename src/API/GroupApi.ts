@@ -61,21 +61,6 @@ class GroupApi {
     }
   }
 
-  static async ejectGroup (jwtToken: string, memberId: number): Promise<Group> {
-    try {
-      const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/group/eject/${memberId}`, {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-          'Content-Type': 'application/json'
-        }
-      }
-      )
-      return response
-    } catch (error: any) {
-      return error
-    }
-  }
-
   static async getMemberInvited (jwtToken: string): Promise<GroupeInvitedMember> {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/group/groupInvites`, {

@@ -177,7 +177,6 @@ export interface GroupInvitation {
   name: string
   picture: string
   leaderName: string
-  description: string
 }
 
 export interface GroupInvitationData {

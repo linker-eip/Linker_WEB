@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import type { ProfileCompany } from '../../Typage/ProfileType'
 import ProfileApi from '../../API/ProfileApi'
 import { useTranslation } from 'react-i18next'
-import NotificationApi from '../../API/NotificationApi'
-import type { Notifications } from '../../Typage/NotificationType'
-import NotificationButton from './NotificationButton'
 
 // MUI imports.
 import Avatar from '@mui/material/Avatar'
@@ -53,11 +50,6 @@ const StyledMenu = styled((props: MenuProps): JSX.Element => (
 function HotbarDashboard (props: { children: string | any }): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [profile, setProfile] = useState<ProfileCompany | null>(null)
-  const [NotificationsData, setNotificationData] = useState<Notifications[]>()
-  const [ids] = useState<string[]>([])
-  const [reload, setReload] = useState<boolean>(false)
-  const [newNotif, setNewNotif] = useState<number>(0)
-  const [notifOpen, setNotifOpen] = useState<boolean>(false)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -71,27 +63,12 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
     fetchData()
   }, [])
 
-  useEffect(() => {
-    const fetchData = async (): Promise<any> => {
-      const response = await NotificationApi.getNotifications(localStorage.getItem('jwtToken') as string)
-      let count = 0
-      response.forEach(item => {
-        if (!item.alreadySeen) {
-          count += 1
-        }
-        return item
-      })
-      setNewNotif(count)
-      setNotificationData(response)
-    }
-    fetchData()
-  }, [reload])
-
   const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleClose = (): void => {
+    navigate(ROUTES.COMPANY_LOGIN_PAGE)
     setAnchorEl(null)
   }
 
@@ -106,27 +83,10 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
     setAnchorEl(null)
   }
 
-  const reloadNotif = (): void => {
-    setReload(!reload)
-  }
-
-  const callNotification = (): void => {
-    if (!notifOpen) {
-      NotificationsData?.map(item => ids.push(item.id.toString()))
-      const dto = {
-        ids
-      }
-      NotificationApi.changeNotificationStatus(localStorage.getItem('jwtToken') as string, dto)
-      reloadNotif()
-    }
-    setNotifOpen(!notifOpen)
-  }
-
   return (
     <div className='hotbar-container'>
       <img src="/assets/logo.svg" alt='logo'/>
       <p className='hotbar-container__title'>{ props.children }</p>
-      <NotificationButton title='Notification' isClicked={notifOpen} data={NotificationsData ?? []} onClick={callNotification} onReload={reloadNotif} newNotif={newNotif} />
       <div className='hotbar-container__info'>
         <Avatar alt='avatar' src={profile?.picture} />
         <ThemeProvider theme={theme}>

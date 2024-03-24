@@ -1,352 +1,271 @@
 @font-face {
-  font-family: 'Poppins';
-  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
-}
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  }
 
 .std-group {
-  margin: 2em 2em 2em 0em;
-  font-family: 'Poppins';
+    margin: 2em 2em 2em 0em;
+    font-family: 'Poppins';
 
-  &__container {
-    display: grid;
-    grid-template-columns: 5fr 1.2fr;
-  }
+    &__container {
+        display: grid;
+        grid-template-columns: 5fr 1.2fr;
+    }
 
-  &__member-container {
-    background-color: #fff;
-    min-height: 91.5vh;
-    margin-top: -96px;
-  }
+    &__member-container {
+        background-color: #fff;
+        min-height: 91.5vh;
+        margin-top: -96px;
+    }
 
-  &__button-container {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 1em;
-    margin-right: 2em;
-    height: fit-content;
-  }
+    &__button-container {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 1em;
+        margin-right: 2em;
+        height: fit-content;
+    }
 
-  &__member-title {
-    padding-top: 1em;
-    color: #4b4b4b;
-    opacity: 30%;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 20px;
-    font-weight: 600;
-  }
+    &__member-title {
+        padding-top: 1em;
+        color: #4b4b4b;
+        opacity: 30%;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 20px;
+        font-weight: 600;
+    }
 
-  &__section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+    &__section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-  &__picture {
-    height: 120px;
-    border-radius: 10%;
-  }
+    &__picture {
+        height: 120px;
+        border-radius: 10%;
+    }
 
-  &__details {
-    display: flex;
-    flex-direction: row;
-    margin: 1em;
-    gap: 1em;
-  }
+    &__details {
+        display: flex;
+        flex-direction: row;
+        margin: 1em;
+        gap: 1em;
+    }
 
-  &__details-section {
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-between;
-  }
+    &__details-section {
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-between;
+        
+    }
 
-  &__image {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding-top: 20vh;
-    padding-bottom: 20vh;
-  }
+    &__image {
+        display: flex;
+        flex-direction: row;
+        justify-content:space-around;
+        padding-top: 20vh;
+        padding-bottom: 20vh;
+    }
 
-  &__text {
-    color: #000;
-    font-size: 1.25em;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
+    &__text {
+        color: #000;
+        font-size: 1.25em;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
 }
 
 .std-group-modal {
-  font-family: 'Poppins';
-  background-color: white;
-  //padding: 2em;
-  width: fit-content;
-  margin-top: 35vh;
-  //margin-left: 50vh;
-  border-radius: 10px;
-
-  @media screen and (min-width: 1700px) {
-    margin-left: 50vh;
-  }
-
-  @media screen and (min-width: 1400px) and (max-width: 1700px) {
-    margin-left: 40vh;
-  }
-
-  @media screen and (min-width: 1250px) and (max-width: 1400px) {
-    margin-left: 25vh;
-  }
-
-  @media screen and (min-width: 1000px) and (max-width: 1250px) {
-    margin-left: 20vh;
-    width: 50em;
-  }
-
-  @media screen and (min-width: 800px) and (max-width: 1000px) {
-    margin-left: 10vh;
-    width: 40em;
-  }
-
-  @media screen and (min-width: 645px) and (max-width: 800px) {
-    margin-left: 10vh;
-    width: 30em;
-  }
-
-  @media screen and (min-width: 557px) and (max-width: 645px) {
-    margin-left: 8vh;
-    width: 30em;
-  }
-
-  @media screen and (min-width: 300px) and (max-width: 557px) {
-    margin-left: 1vh;
-    width: 30em;
-  }
-
-  &__title-section {
-    display: flex;
-    justify-content: center;
-    padding: 2em 2em 1em 2em;
-    border-bottom: #d9d9d9 1px solid;
-  }
-
-  &__title {
-    color: #000;
-    font-family: Poppins;
-    font-size: 2em;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
-
-  &__content-section {
-    padding: 1em 2em 2em 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  &__textfield {
-    border-radius: 10px;
-    padding: 1em;
-    margin-top: 2em;
     font-family: 'Poppins';
-  }
+    background-color: white;
+    //padding: 2em;
+    width: fit-content;
+    margin-top: 35vh;
+    //margin-left: 50vh;
+    border-radius: 10px;
+    
+    @media screen and (min-width: 1700px) {
+        margin-left: 50vh;
+    }
 
-  &__button {
-    margin-top: 2em;
-    text-align: center;
-  }
+    @media screen and (min-width: 1400px) and (max-width: 1700px) {
+        margin-left: 40vh;
+    }
+
+    @media screen and (min-width: 1250px) and (max-width: 1400px) {
+        margin-left: 25vh;
+    }
+
+    @media screen and (min-width: 1000px) and (max-width: 1250px) {
+        margin-left: 20vh;
+        width: 50em;
+    }
+
+    @media screen and (min-width: 800px) and (max-width: 1000px) {
+        margin-left: 10vh;
+        width: 40em;
+    }
+
+    @media screen and (min-width: 645px) and (max-width: 800px) {
+        margin-left: 10vh;
+        width: 30em;
+    }
+
+    @media screen and (min-width: 557px) and (max-width: 645px) {
+        margin-left: 8vh;
+        width: 30em;
+    }
+
+    @media screen and (min-width: 300px) and (max-width: 557px) {
+        margin-left: 1vh;
+        width: 30em;
+    }
+
+    &__title-section {
+        display: flex;
+        justify-content: center;
+        padding: 2em 2em 1em 2em;
+        border-bottom: #D9D9D9 1px solid;
+    }
+
+    &__title {
+        color: #000;
+        font-family: Poppins;
+        font-size: 2em;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    
+    &__content-section {
+        padding: 1em 2em 2em 2em; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__textfield {
+        border-radius: 10px;
+        padding: 1em;
+        margin-top: 2em;
+        font-family: 'Poppins';
+    }
+
+    &__button {
+        margin-top: 2em;
+        text-align: center;
+    }
 }
 
 .std-invite-modal {
-  font-family: 'Poppins';
-  background-color: white;
-  width: fit-content;
-  min-width: 40em;
-  margin-top: 30vh;
-  border-radius: 10px;
+    font-family: 'Poppins';
+    background-color: white;
+    width: fit-content;
+    min-width: 40em;
+    margin-top: 30vh;
+    border-radius: 10px;
+    
+    @media screen and (min-width: 1700px) {
+        margin-left: 60vh;
+    }
 
-  @media screen and (min-width: 1700px) {
-    margin-left: 60vh;
-  }
+    @media screen and (min-width: 1400px) and (max-width: 1700px) {
+        margin-left: 52vh;
+    }
 
-  @media screen and (min-width: 1400px) and (max-width: 1700px) {
-    margin-left: 52vh;
-  }
+    @media screen and (min-width: 1250px) and (max-width: 1400px) {
+        margin-left: 35vh;
+        min-width: 30em;
+    }
 
-  @media screen and (min-width: 1250px) and (max-width: 1400px) {
-    margin-left: 35vh;
-    min-width: 30em;
-  }
+    @media screen and (min-width: 1000px) and (max-width: 1250px) {
+        margin-left: 20vh;
+        min-width: 30em;
+    }
 
-  @media screen and (min-width: 1000px) and (max-width: 1250px) {
-    margin-left: 20vh;
-    min-width: 30em;
-  }
+    @media screen and (min-width: 800px) and (max-width: 1000px) {
+        margin-left: 18vh;
+        min-width: 30em;
+    }
 
-  @media screen and (min-width: 800px) and (max-width: 1000px) {
-    margin-left: 18vh;
-    min-width: 30em;
-  }
+    @media screen and (min-width: 645px) and (max-width: 800px) {
+        margin-left: 15vh;
+        min-width: 28em;
+    }
 
-  @media screen and (min-width: 645px) and (max-width: 800px) {
-    margin-left: 15vh;
-    min-width: 28em;
-  }
+    @media screen and (min-width: 557px) and (max-width: 645px) {
+        margin-left: 8vh;
+        min-width: 20em;
+    }
 
-  @media screen and (min-width: 557px) and (max-width: 645px) {
-    margin-left: 8vh;
-    min-width: 20em;
-  }
+    @media screen and (min-width: 300px) and (max-width: 557px) {
+        margin-left: 1vh;
+        min-width: 20em;
+    }
 
-  @media screen and (min-width: 300px) and (max-width: 557px) {
-    margin-left: 1vh;
-    min-width: 20em;
-  }
+    &__title-section {
+        display: flex;
+        justify-content: center;
+        padding: 2em 2em 1em 2em;
+        border-bottom: #D9D9D9 1px solid;
+    }
 
-  &__title-section {
-    display: flex;
-    justify-content: center;
-    padding: 2em 2em 1em 2em;
-    border-bottom: #d9d9d9 1px solid;
-  }
+    &__title {
+        color: #000;
+        font-family: Poppins;
+        font-size: 2em;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    
+    &__content-section {
+        padding: 1em 2em 2em 2em; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+    }
 
-  &__title {
-    color: #000;
-    font-family: Poppins;
-    font-size: 2em;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
+    &__searchbar-section {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+    }
 
-  &__content-section {
-    padding: 1em 2em 2em 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: auto;
-  }
+    &__searchbar-container {
+        position: relative;
+        display: grid;
+    }
 
-  &__searchbar-section {
-    display: flex;
-    flex-direction: column;
-    width: auto;
-  }
+    &__search-icon {
+        position: absolute;
+        top: 4px;
+        left: 5px;
+        width: 28px;
+        cursor: pointer;
+    }
 
-  &__searchbar-container {
-    position: relative;
-    display: grid;
-  }
+    &__searchbar {
+        border-radius: 20px;
+        padding-left: 2.5em;
+        height: 30px;
+        width: auto;
+    }
 
-  &__search-icon {
-    position: absolute;
-    top: 4px;
-    left: 5px;
-    width: 28px;
-    cursor: pointer;
-  }
+    &__list {
+        padding-left: 0 !important;
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+    }
 
-  &__searchbar {
-    border-radius: 20px;
-    padding-left: 2.5em;
-    height: 30px;
-    width: auto;
-  }
-
-  &__list {
-    padding-left: 0 !important;
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-  }
-
-  &__button {
-    margin-top: 2em;
-    text-align: center;
-  }
-}
-
-.std-exclude-modal {
-  font-family: 'Poppins';
-  background-color: white;
-  padding: 2em;
-  width: fit-content;
-  max-width: 90%;
-  border-radius: 10px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  &__title-section {
-    display: flex;
-    justify-content: center;
-    padding: 2em 2em 1em 2em;
-    border-bottom: #d9d9d9 1px solid;
-  }
-
-  &__close-icon {
-    position: absolute;
-    top: 100;
-    left: 90%;
-    cursor: pointer;
-  }
-
-  &__title {
-    color: #000;
-    font-family: Poppins;
-    font-size: 2em;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
-
-  &__content-section {
-    padding: 1em 2em 2em 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: auto;
-  }
-
-  &__searchbar-section {
-    display: flex;
-    flex-direction: column;
-    width: auto;
-  }
-
-  &__searchbar-container {
-    position: relative;
-    display: grid;
-  }
-
-  &__search-icon {
-    position: absolute;
-    top: 4px;
-    left: 5px;
-    width: 28px;
-    cursor: pointer;
-  }
-
-  &__searchbar {
-    border-radius: 20px;
-    padding-left: 2.5em;
-    height: 30px;
-    width: auto;
-  }
-
-  &__list {
-    padding-left: 0 !important;
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-  }
-
-  &__button {
-    margin-top: 2em;
-    text-align: center;
-  }
+    &__button {
+        margin-top: 2em;
+        text-align: center;
+    }
 }
