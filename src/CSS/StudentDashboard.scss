@@ -1,39 +1,31 @@
 @font-face {
-  font-family: 'Poppins';
-  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
-}
-
-.std-bord-container {
-  display: flex;
-  flex-direction: column;
-
-  &__page {
-    display: flex;
-    flex-direction: row;
-    height: inherit;
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
   }
 
-  &__content {
-    width: 100%;
-    height: inherit;
-    background-color: #f2f2f2;
+.std-bord-container {
     display: flex;
     flex-direction: column;
 
-    @media screen and (max-width: 1300px) {
-      align-items: center;
-      width: fit-content;
-    }
-  }
+    &__page {
+        display: flex;
+        flex-direction: row;
+        height: inherit;
 
-  &__row {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-
-    @media screen and (max-width: 1300px) {
-      display: flex;
-      flex-direction: column;
-      // grid-template-columns: 1fr;
     }
-  }
+
+    &__content {
+        width: 100%;
+        height: inherit;
+        background-color: #f2f2f2;
+    }
+
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+
+        @media screen  and (max-width: 1300px) {
+            grid-template-columns: 1fr;
+        }
+    }
 }
