@@ -14,6 +14,12 @@ i18n
     resources: {
       fr: {
         translation: {
+          footer: {
+            need_help: 'Besoin d’aide ?',
+            contact: 'Contactez-nous',
+            networks: 'Pour mieux nous connaitre !',
+            download: 'Téléchargez l’app'
+          },
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
