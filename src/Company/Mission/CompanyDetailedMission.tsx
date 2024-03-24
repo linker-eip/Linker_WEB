@@ -210,7 +210,6 @@ function CompanyDetailedMission (): JSX.Element {
   }
 
   const finishMission = async (): Promise<void> => {
-    console.log(missionData)
     if (missionData?.mission !== undefined && missionData.mission.id !== undefined) {
       try {
         const response = await MissionApi.finishMission(localStorage.getItem('jwtToken') as string, missionData.mission.id)

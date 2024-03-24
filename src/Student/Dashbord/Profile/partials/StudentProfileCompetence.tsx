@@ -1,119 +1,355 @@
-import React, { useState, type ChangeEvent, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import React, { useState } from 'react'
 import '../../../../CSS/StudentProfileCompetence.scss'
 import { useTranslation } from 'react-i18next'
-import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
-import Modal from '@mui/material/Modal'
-import { TextField } from '@mui/material'
-import BaseButton from '../../../../Component/BaseButton'
 import ProfileApi from '../../../../API/ProfileApi'
-import type { Profile } from '../../../../Typage/ProfileType'
-import DropZone from '../../../../Component/DropZone'
+import type { StudentProfileInfo, SkillsListInfo } from '../../../../Typage/ProfileType'
+import ClassicButton from '../../../../Component/ClassicButton'
+import SkillCard from './SkillCard'
 
-function StudentProfileCompetence (): JSX.Element {
-  const [profileData, setProfileData] = useState<Profile>()
-  const [skillName, setSkillName] = useState<string>()
+interface Props {
+  data: StudentProfileInfo
+  skills: SkillsListInfo
+  update: () => void
+}
+
+function StudentProfileCompetence (props: Props): JSX.Element {
   const [isEdit, setIsEdit] = useState(false)
-  const [open, setOpen] = React.useState(false)
-  const [AvatarImage, setAvatarImage] = useState<any>(undefined)
-  const handleSkillOpen = (): void => { setOpen(true) }
-  const handleSkillClose = (): void => { setOpen(false) }
+  const [dataSkill, setData] = useState<string[]>([...props.data.skills.Data])
+  const [designSkill, setDesign] = useState<string[]>([...props.data.skills['Design & Produit']])
+  const [devSkill, setDev] = useState<string[]>([...props.data.skills.Development])
+  const [noCodeSkill, setNoCode] = useState<string[]>([...props.data.skills['No-code']])
+  const [marketSkill, setMarket] = useState<string[]>([...props.data.skills['Marketing & Sales']])
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    async function fetchData () {
-      try {
-        const data = await ProfileApi.getProfile(localStorage.getItem('jwtToken') as string)
-        setProfileData(data)
-      } catch (error) {
-        console.error('Error fetching profile data:', error)
-      }
-    }
+  const [tmpDataSkill, setTmpData] = useState<string[]>([...props.skills.skills.Data.filter(item => !props.data.skills.Data.includes(item))])
+  const [tmpDesignSkill, setTmpDesign] = useState<string[]>([...props.skills.skills['Design & Produit'].filter(item => !props.data.skills['Design & Produit'].includes(item))])
+  const [tmpDevSkill, setTmpDev] = useState<string[]>([...props.skills.skills.Development.filter(item => !props.data.skills.Development.includes(item))])
+  const [tmpNoCodeSkill, setTmpNoCode] = useState<string[]>([...props.skills.skills['No-code'].filter(item => !props.data.skills['No-code'].includes(item))])
+  const [tmpMarketSkill, setTmpMarket] = useState<string[]>([...props.skills.skills['Marketing & Sales'].filter(item => !props.data.skills['Marketing & Sales'].includes(item))])
 
-    fetchData()
-  }, [])
+  const handleRemoveTmpDataItem = (item: string): void => {
+    setTmpData(tmpDataSkill.filter(elements => elements !== item))
+  }
 
-  const handleAvatarImage = (event: ChangeEvent<HTMLInputElement>): void => {
-    setAvatarImage(event)
+  const handleRemoveTmpDesignItem = (item: string): void => {
+    setTmpDesign(tmpDesignSkill.filter(elements => elements !== item))
+  }
+
+  const handleRemoveTmpDevItem = (item: string): void => {
+    setTmpDev(tmpDevSkill.filter(elements => elements !== item))
+  }
+
+  const handleRemoveTmpNoCodeItem = (item: string): void => {
+    setTmpNoCode(tmpNoCodeSkill.filter(elements => elements !== item))
+  }
+
+  const handleRemoveTmpMarketItem = (item: string): void => {
+    setTmpMarket(tmpMarketSkill.filter(elements => elements !== item))
+  }
+
+  const handleCloseEditMode = (): void => {
+    setIsEdit(false)
   }
 
   const handleEditMode = (): void => {
+    if (isEdit) {
+      setTmpData([...props.skills.skills.Data.filter(item => !props.data.skills.Data.includes(item))])
+      setTmpDesign([...props.skills.skills['Design & Produit'].filter(item => !props.data.skills['Design & Produit'].includes(item))])
+      setTmpDev([...props.skills.skills.Development.filter(item => !props.data.skills.Development.includes(item))])
+      setTmpNoCode([...props.skills.skills['No-code'].filter(item => !props.data.skills['No-code'].includes(item))])
+      setTmpMarket([...props.skills.skills['Marketing & Sales'].filter(item => !props.data.skills['Marketing & Sales'].includes(item))])
+      setData([...props.data.skills.Data])
+      setDev([...props.data.skills.Development])
+      setDesign([...props.data.skills['Design & Produit']])
+      setMarket([...props.data.skills['Marketing & Sales']])
+      setNoCode([...props.data.skills['No-code']])
+    }
     setIsEdit(!isEdit)
   }
 
-  const handleSkillName = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSkillName(event.target.value)
+  const handleDataSkill = (skill: string): void => {
+    dataSkill?.push(skill)
+    handleRemoveTmpDataItem(skill)
   }
 
-  const callApi = async (): Promise<void> => {
-    const file = new FormData()
-    file.append('file', AvatarImage[0])
-    const returnValue = await ProfileApi.uploadFile(localStorage.getItem('jwtToken') as string, file)
-    const skills = new FormData()
-    skills.append('skills[0][name]', skillName ?? '')
-    skills.append('skills[0][logo]', String(returnValue))
-    setSkillName('')
-    ProfileApi.updateProfile(localStorage.getItem('jwtToken') as string, skills)
+  const handleDesignSkill = (skill: string): void => {
+    designSkill?.push(skill)
+    handleRemoveTmpDesignItem(skill)
   }
 
-  const handleNewSkill = (): void => {
-    handleEditMode()
-    callApi()
-    handleSkillClose()
+  const handleDevSkill = (skill: string): void => {
+    devSkill?.push(skill)
+    handleRemoveTmpDevItem(skill)
+  }
+
+  const handleMarketSkill = (skill: string): void => {
+    marketSkill?.push(skill)
+
+    handleRemoveTmpMarketItem(skill)
+  }
+
+  const handleNoCodeSkill = (skill: string): void => {
+    noCodeSkill?.push(skill)
+    handleRemoveTmpNoCodeItem(skill)
+  }
+
+  const handleRemoveDataSkill = (skill: string): void => {
+    if (dataSkill.length === 1) {
+      dataSkill.pop()
+    }
+    setData(dataSkill.filter(item => item !== skill))
+  }
+
+  const handleRemoveDesignSkill = (skill: string): void => {
+    if (designSkill.length === 1) {
+      designSkill.pop()
+    }
+    setDesign(designSkill.filter(item => item !== skill))
+  }
+
+  const handleRemoveDevSkill = (skill: string): void => {
+    if (devSkill.length === 1) {
+      devSkill.pop()
+    } else {
+      setDev(devSkill.filter(item => item !== skill))
+    }
+  }
+
+  const handleRemoveMarketSkill = (skill: string): void => {
+    if (marketSkill.length === 1) {
+      marketSkill.pop()
+    }
+    setMarket(marketSkill.filter(item => item !== skill))
+  }
+
+  const handleRemoveNoCodeSkill = (skill: string): void => {
+    if (noCodeSkill.length === 1) {
+      console.log(noCodeSkill, noCodeSkill.length)
+      noCodeSkill.pop()
+    } else {
+      setNoCode(noCodeSkill.filter(item => item !== skill))
+    }
+  }
+
+  const handleValidSkill = async (): Promise<void> => {
+    const skills = {
+      skills: {
+        Data: dataSkill,
+        'Design & Produit': designSkill,
+        Development: devSkill,
+        'Marketing & Sales': marketSkill,
+        'No-code': noCodeSkill
+      }
+    }
+    const response = await ProfileApi.updateProfileSkill(
+      localStorage.getItem('jwtToken') as string,
+      skills
+    )
+    if (response !== undefined) {
+      handleCloseEditMode()
+      props.update()
+    }
   }
 
   const { t } = useTranslation()
   return (
-    <div className='std-profile-comp'>
-      <div className='std-profile-comp__columns'>
-        <div className='std-profile-comp__title-container'>
-          <h1 className='std-profile-comp__title'> { t('student.profile.skills.title') } </h1>
+    <div className="std-profile-comp">
+      <div className="std-profile-comp__columns">
+        <div className="std-profile-comp__title-container">
+          <h1 className="std-profile-comp__title">
+            {' '}
+            {t('student.profile.skills.title')}{' '}
+          </h1>
         </div>
-        <div className='std-profile-comp__container'>
-          { profileData?.skills.map((item, index) => (
-          <div className='std-profile-comp__section' key={index}>
-            <img src={item.logo} className='std-profile-comp__img' />
-            <p> {item.name} </p>
-          </div>
-          )) }
-        </div>
-        { isEdit
-          ? <div className='std-profile-comp__add' onClick={handleSkillOpen}>
-            <img src='/assets/adder.svg'/>
-            <p> { t('student.profile.skills.add_skill') } </p>
-          </div>
-          : <></>
-      }
-      </div>
-      { !isEdit
-        ? <div onClick={handleEditMode}>
-            <EditIcon className='std-profile-comp__edit'/>
-          </div>
-        : <div onClick={handleEditMode}>
-            <CloseIcon className='std-profile-comp__edit'/>
-          </div>
-        }
-      <Modal open={open} onClose={handleSkillClose} >
-        <div className='std-profile-comp__modal'>
-          <h1> Ajoute ta compétence </h1>
-            <div className='std-profile-comp__content'>
-            <DropZone onObjectChange={handleAvatarImage}/>
-            { AvatarImage !== undefined
-              ? <div>
-                  <p> {AvatarImage[0].path } </p>
+        <div className="std-profile-comp__container">
+          <div className="std-profile-comp__skill-list">
+            {isEdit
+              ? <div className="std-profile-comp__skills-section">
+                  <div className="std-profile-comp__skills-title"> Data </div>
+                  <div className="std-profile-comp__skills">
+                    {dataSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveDataSkill(item)} />
+                    ))}
+                    {dataSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Design & product </div>
+                  <div className="std-profile-comp__skills">
+                    {designSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveDesignSkill(item)} />
+                    ))}
+                    {designSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Development </div>
+                  <div className="std-profile-comp__skills">
+                    {devSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveDevSkill(item)} />
+                    ))}
+                    {devSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
+                  <div className="std-profile-comp__skills">
+                    {marketSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveMarketSkill(item)} />
+                    ))}
+                    {marketSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> No-Code </div>
+                  <div className="std-profile-comp__skills">
+                    {noCodeSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} removed onClick={() => handleRemoveNoCodeSkill(item)} />
+                    ))}
+                    {noCodeSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+              </div>
+              : <div className="std-profile-comp__skills-section">
+                  <div className="std-profile-comp__skills-title"> Data </div>
+                  <div className="std-profile-comp__skills">
+                    {dataSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {dataSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Design & product </div>
+                  <div className="std-profile-comp__skills">
+                    {designSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {designSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Development </div>
+                  <div className="std-profile-comp__skills">
+                    {devSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {devSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
+                  <div className="std-profile-comp__skills">
+                    {marketSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {marketSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
+                  <div className="std-profile-comp__skills-title"> No-Code </div>
+                  <div className="std-profile-comp__skills">
+                    {noCodeSkill.map((item, index) => (
+                      <SkillCard key={index} data={item} selected />
+                    ))}
+                    {noCodeSkill.length > 0
+                      ? null
+                      : <div> Aucune compétence </div>
+                    }
+                  </div>
                 </div>
-              : null }
-              <TextField
-                value={skillName}
-                onChange={handleSkillName}
-                variant='standard'
-                id="standard-required"
-                label="Nom de la compétence"
-              />
-              <BaseButton title='submit' onClick={handleNewSkill} />
+            }
+            {isEdit
+              ? <div className="std-profile-comp__sep">Ajoute une compétence</div>
+              : null}
+            <div className="std-profile-comp__skills-section">
+              {isEdit
+                ? <div className="std-profile-comp__skills-title"> Data </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpDataSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleDataSkill(item)} />
+                  ))
+                  : null}
+              </div>
+              {isEdit
+                ? <div className="std-profile-comp__skills-title"> Design & product </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpDesignSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleDesignSkill(item)} />
+                  ))
+                  : null
+                }
+              </div>
+              {isEdit
+                ? <div className="std-profile-comp__skills-title"> Development </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpDevSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleDevSkill(item)} />
+                  ))
+                  : null}
+              </div>
+              {isEdit
+                ? <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpMarketSkill.map(
+                    (item, index) => <SkillCard key={index} data={item} onClick={() => handleMarketSkill(item)} />
+                  )
+                  : null}
+              </div>
+              {isEdit
+                ? <div className="std-profile-comp__skills-title"> No-Code </div>
+                : null
+              }
+              <div className="std-profile-comp__skills">
+                {isEdit
+                  ? tmpNoCodeSkill.map((item, index) => (
+                    <SkillCard key={index} data={item} onClick={() => handleNoCodeSkill(item)} />
+                  ))
+                  : null}
+              </div>
             </div>
+            {isEdit
+              ? <ClassicButton title='Valider' onClick={handleValidSkill} />
+              : null
+            }
+          </div>
         </div>
-      </Modal>
+      </div>
+      {!isEdit
+        ? <div onClick={handleEditMode}>
+          <img className="std-profile-comp__edit" src="/assets/NewEdit.svg" />
+        </div>
+        : (
+          <div onClick={handleEditMode}>
+            <CloseIcon className="std-profile-comp__edit" />
+          </div>
+          )
+      }
     </div>
   )
 }

@@ -144,9 +144,27 @@ function ModalValidation (props: Props): JSX.Element {
             </div>
           : null
         }
+        {props.type === ModalType.EXCLUSION
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.exclude.subtitle') }
+            </div>
+          : null
+        }
         {props.type === ModalType.DELETE_GROUP
           ? <div className='modal-validation__subtitle'>
               { t('modal.delete.groups.subtitle') }
+            </div>
+          : null
+        }
+        {props.type === ModalType.DEACTIVATE_ACCOUNT
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.account.deactivate') }
+            </div>
+          : null
+        }
+        {props.type === ModalType.DELETE_ACCOUNT
+          ? <div className='modal-validation__subtitle'>
+              { t('modal.account.delete') }
             </div>
           : null
         }
@@ -266,6 +284,10 @@ function ModalValidation (props: Props): JSX.Element {
             ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
             : null
           }
+          { props.type === ModalType.EXCLUSION
+            ? <ClassicButton title='Exclure' refuse onClick={handleValidation} />
+            : null
+          }
           { props.type === ModalType.DELETE_GROUP
             ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
             : null
@@ -280,6 +302,14 @@ function ModalValidation (props: Props): JSX.Element {
           }
           { props.type === ModalType.LEAVE
             ? <ClassicButton title='Quitter' refuse onClick={handleValidation} />
+            : null
+          }
+          { props.type === ModalType.DEACTIVATE_ACCOUNT
+            ? <ClassicButton title='Désactiver' refuse onClick={handleValidation} />
+            : null
+          }
+          { props.type === ModalType.DELETE_ACCOUNT
+            ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
             : null
           }
           <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />

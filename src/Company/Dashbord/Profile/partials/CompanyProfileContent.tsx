@@ -13,6 +13,11 @@ import { TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZone from '../../../../Component/DropZone'
+import ClassicButton from '../../../../Component/ClassicButton'
+import ModalValidation from '../../../../Component/ModalValidation'
+import { ModalType } from '../../../../Enum'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../../Router/routes'
 
 interface Props {
   editable: boolean
@@ -31,6 +36,9 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   const [profilePicture, setProfilePicture] = useState<string | undefined>(undefined)
   const maxLength = 500
+  const [deactivateModal, setDeactivateModal] = useState<boolean>(false)
+  const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch('https://dev.linker-app.fr/api/mission', {
@@ -137,6 +145,44 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
     window.location.reload()
   }
 
+  const openDeactivateModal = (): void => {
+    setDeactivateModal(true)
+  }
+
+  const openDeleteModal = (): void => {
+    setDeleteModal(true)
+  }
+
+  const closeDeactivateModal = (): void => {
+    setDeactivateModal(false)
+  }
+
+  const closeDeleteModal = (): void => {
+    setDeleteModal(false)
+  }
+
+  const deactivateAccount = (): void => {
+    setDeactivateModal(false)
+    ProfileApi.deactivateCompanyAccount(localStorage.getItem('jwtToken') as string)
+      .then(() => {
+        navigate(ROUTES.COMPANY_LOGIN_PAGE)
+      })
+      .catch((error) => {
+        console.error('[ERROR] - Unable to deactivate account:', error)
+      })
+  }
+
+  const deleteAccount = (): void => {
+    setDeleteModal(false)
+    ProfileApi.deleteCompanyAccount(localStorage.getItem('jwtToken') as string)
+      .then(() => {
+        navigate(ROUTES.COMPANY_REGISTER_PAGE)
+      })
+      .catch((error) => {
+        console.error('[ERROR] - Unable to delete account:', error)
+      })
+  }
+
   return (
     <div className='std-profile-content'>
       {
@@ -187,6 +233,39 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
                 </div>
               : <div></div>
             }
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'>
+              <div className='std-profile-content__section'>
+                <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
+              </div>
+              <div className='std-profile-content__section'>
+                <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
+              </div>
+              {
+                profileData !== null && profileData !== undefined && (
+                  <>
+                    <ModalValidation
+                      subject={profileData.name}
+                      open={deactivateModal}
+                      onClose={closeDeactivateModal}
+                      type={ModalType.DEACTIVATE_ACCOUNT}
+                      onValid={deactivateAccount}
+                    />
+                    <ModalValidation
+                      subject={profileData.name}
+                      open={deleteModal}
+                      onClose={closeDeleteModal}
+                      type={ModalType.DELETE_ACCOUNT}
+                      onValid={deleteAccount}
+                    />
+                  </>
+                )
+              }
+            </div>
           </div>
           : <div className='std-profile-content__container'>
               { isAvatarEditing
