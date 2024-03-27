@@ -14,6 +14,38 @@ i18n
     resources: {
       fr: {
         translation: {
+          verify_page: {
+            success: {
+              text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
+              text_2: 'Vous pouvez maintenant profiter pleinement des fonctionnalités de ',
+              text_3: 'Linker.',
+              text_4: 'Connectez-vous à votre compte pour commencer à explorer les opportunités de collaboration entre étudiants et entreprises.',
+              text_5: 'Si vous avez des questions ou si vous avez besoin d\'assistance, n\'hésitez pas à nous contacter à l\'adresse suivante : ',
+              text_6: 'contact@linker-app.fr.',
+              text_7: 'Bienvenue sur ',
+              text_8: ' Linker',
+              text_9: ', et bonne chance dans vos futures collaborations !',
+              button_text: 'Se connecter à Linker',
+              button_title_1: 'Espace',
+              button_title_2: 'Étudiant',
+              button_subtext: 'À la recherche de missions ?'
+            },
+            failed: {
+              text_1: 'La vérification de votre adresse e-mail a échoué.',
+              text_2: 'Veuillez vous assurer que vous avez saisi le code correctement.',
+              text_3: 'Vous pouvez réessayer en cliquant sur le lien de vérification que nous vous avons envoyé.',
+              text_4: 'Si le problème persiste, veuillez contacter notre équipe d\'assistance à l\'adresse suivante :',
+              text_5: 'contact@linker-app.fr.',
+              text_6: 'Nous sommes là pour vous aider à résoudre ce problème.',
+              button_text: 'Revenir en lieu sûr'
+            }
+          },
+          footer: {
+            need_help: 'Besoin d’aide ?',
+            contact: 'Contactez-nous',
+            networks: 'Pour mieux nous connaitre !',
+            download: 'Téléchargez l’app'
+          },
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
