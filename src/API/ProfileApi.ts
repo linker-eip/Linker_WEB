@@ -191,6 +191,26 @@ class ProfileApi {
     })
     return response.data
   }
+
+  static async uploadCompanyDocumentVerification (jwtToken: string, dto: FormData): Promise<any> {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/company/documentVerification`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async uploadStudentDocumentVerification (jwtToken: string, dto: FormData): Promise<any> {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/student/documentVerification`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
 }
 
 export default ProfileApi
