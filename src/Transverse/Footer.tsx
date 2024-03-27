@@ -13,6 +13,22 @@ function Footer (): JSX.Element {
     })
   }
 
+  const redirectToInstagram = (): void => {
+    window.location.href = 'https://www.instagram.com/'
+  }
+
+  const redirectToTwitter = (): void => {
+    window.location.href = 'https://twitter.com/'
+  }
+
+  const redirectToFacebook = (): void => {
+    window.location.href = 'https://www.facebook.com/'
+  }
+
+  const redirectToLinkedIn = (): void => {
+    window.location.href = 'https://www.linkedin.com/feed/'
+  }
+
   return (
     <div className='footer'>
       <div className='footer__container'>
@@ -25,10 +41,10 @@ function Footer (): JSX.Element {
           <div className='footer__content'>
             <div className='footer__text-1'> {t('footer.networks')} </div>
             <div className='footer__row'>
-              <img className='footer__social' src='/assets/linkedin.svg' />
-              <img className='footer__social' src='/assets/facebook.svg' />
-              <img className='footer__social' src='/assets/instagram.svg' />
-              <img className='footer__social' src='/assets/twitter.svg' />
+              <img onClick={redirectToLinkedIn} className='footer__social' src='/assets/linkedin.svg' />
+              <img onClick={redirectToFacebook} className='footer__social' src='/assets/facebook.svg' />
+              <img onClick={redirectToInstagram} className='footer__social' src='/assets/instagram.svg' />
+              <img onClick={redirectToTwitter} className='footer__social' src='/assets/twitter.svg' />
             </div>
           </div>
           <div className='footer__content'>
