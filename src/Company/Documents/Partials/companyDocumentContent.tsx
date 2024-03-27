@@ -1,6 +1,9 @@
 import React, { useState, type ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
+// Enum.
+import { CompanyDocumentType } from '../../../Enum'
+
 // API.
 import axios from 'axios'
 import ProfileApi from '../../../API/ProfileApi'
@@ -15,10 +18,7 @@ import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 import '../../../CSS/BaseButton.scss'
 import '../../../CSS/StudentDocumentContent.scss'
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
-  props,
-  ref
-) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
@@ -97,7 +97,7 @@ function CompanyDocumentContent (): JSX.Element {
     if (cniFile.length > 0) {
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
-      cniFormData.append('documentType', 'CNI')
+      cniFormData.append('documentType', CompanyDocumentType.CNI)
       try {
         await ProfileApi.uploadCompanyDocumentVerification(
           localStorage.getItem('jwtToken') as string,
@@ -113,7 +113,7 @@ function CompanyDocumentContent (): JSX.Element {
     if (kbisFile.length > 0) {
       const kbisFormData = new FormData()
       kbisFormData.append('file', kbisFile[0])
-      kbisFormData.append('documentType', 'KBIS')
+      kbisFormData.append('documentType', CompanyDocumentType.KBIS)
       try {
         await ProfileApi.uploadCompanyDocumentVerification(
           localStorage.getItem('jwtToken') as string,
