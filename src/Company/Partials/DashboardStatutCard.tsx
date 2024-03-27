@@ -46,6 +46,7 @@ function DashboardStatusCard (): JSX.Element {
 
   const [cniStatus, setCniStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
   const [kbisStatus, setKbisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [siretStatus, setSiretStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -58,6 +59,9 @@ function DashboardStatusCard (): JSX.Element {
             break
           case 'KBIS':
             setKbisStatus(doc.status)
+            break
+          case 'SIRET':
+            setSiretStatus(doc.status)
             break
           default:
             break
@@ -85,6 +89,9 @@ function DashboardStatusCard (): JSX.Element {
         </p>
         <p className='std-dashboard-card__file'>
           <ShowIcon status={kbisStatus} /> {t('company.dashboard.card.status.kbis')}
+        </p>
+        <p className='std-dashboard-card__file'>
+          <ShowIcon status={siretStatus} /> {t('company.dashboard.card.status.siret')}
         </p>
       </div>
     </div>
