@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import './i18n'
 
-import LandingPage from './LandingPage'
+import HomePage from './HomePage'
 import StudentLoginPage from './Student/studentLoginPage'
 import CompanyLoginPage from './Company/companyLoginPage'
 import CompanyRegisterPage from './Company/companyRegisterPage'
@@ -49,7 +49,7 @@ function App (): JSX.Element {
       <Routes>
         <Route path={ROUTES.LANDING_PAGE} element={
           <div>
-            <LandingPage />
+            <HomePage />
             <Footer />
           </div>
         } />
