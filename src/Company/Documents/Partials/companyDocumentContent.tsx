@@ -1,10 +1,12 @@
 import React, { useState, type ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TextField } from '@mui/material'
 
+// Components.
+import { TextField } from '@mui/material'
 import DropZone from '../../../Component/DropZone'
 import BaseButton from '../../../Component/BaseButton'
 
+// Styles.
 import '../../../CSS/BaseButton.scss'
 import '../../../CSS/StudentDocumentContent.scss'
 
@@ -53,15 +55,6 @@ function CompanyDocumentContent (): JSX.Element {
 
   const [cniFile, setCniFile] = useState<any>([])
   const [kbisFile, setKbisFile] = useState<any>([])
-  const [siret, setSiret] = useState('')
-
-  const handleSiretChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSiret(event.target.value)
-  }
-
-  const resetSiret = (): void => {
-    setSiret('')
-  }
 
   const resetCniFile = (): void => {
     setCniFile([])
@@ -72,10 +65,7 @@ function CompanyDocumentContent (): JSX.Element {
   }
 
   const postFile = (): any => {
-    // TODO: Faire une query axios pour post les documents.
-
     const documentsDto = {
-      siret,
       cni: cniFile,
       kbis: kbisFile
     }
@@ -88,11 +78,10 @@ function CompanyDocumentContent (): JSX.Element {
       <div className='std-document-card'>
         <h2 className='std-document-card__title'> { t('student.dashboard.doc') } </h2>
         <div className='std-document-card__content'>
-          <Document isSet={siret !== ''} label="SIRET" data={siret} handleReset={resetSiret} handleChange={handleSiretChange} />
           <Document isSet={cniFile.length > 0} label="CNI" data={cniFile} handleReset={resetCniFile} handleFileChange={setCniFile} />
           <Document isSet={kbisFile.length > 0} label="KBIS" data={kbisFile} handleReset={resetKbisFile} handleFileChange={setKbisFile} />
 
-          { cniFile.length === 0 && siret === '' && kbisFile.length === 0
+          { cniFile.length === 0 && kbisFile.length === 0
             ? <div className='std-document-card__button'>
                   <BaseButton onClick={postFile} title={t('validate')} />
                 </div>
