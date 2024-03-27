@@ -73,6 +73,7 @@ interface Props {
   children: string | any
   hideNotif?: boolean
   hideName?: boolean
+  homepage?: boolean
 }
 
 function HotbarDashboard (props: Props): JSX.Element {
@@ -148,8 +149,8 @@ function HotbarDashboard (props: Props): JSX.Element {
 
   const { t } = useTranslation()
   return (
-    <div className='hotbar-container'>
-      <img src="/assets/logo.svg" alt='logo' />
+    <div className={props.homepage ?? false ? 'hotbar-container-2' : 'hotbar-container'} >
+      <img className='hotbar-container__logo' src="/assets/LinkerFull.png" alt='logo' />
       <p className='hotbar-container__title'>{props.children}</p>
       { props.hideNotif ?? false
         ? null
