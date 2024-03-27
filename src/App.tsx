@@ -2,7 +2,6 @@ import React from 'react'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import './i18n'
 
-// import LandingPage from './LandingPage'
 import HomePage from './HomePage'
 import StudentLoginPage from './Student/studentLoginPage'
 import CompanyLoginPage from './Company/companyLoginPage'
