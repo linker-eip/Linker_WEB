@@ -94,7 +94,7 @@ function CompanyDocumentContent (): JSX.Element {
   }
 
   const postFile = async (): Promise<void> => {
-    if (cniFile.length > 0) {
+    if (cniFile.length > 0 && cniFile[0].size <= 2 * 1024 * 1024) {
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
       cniFormData.append('documentType', CompanyDocumentType.CNI)
@@ -108,9 +108,11 @@ function CompanyDocumentContent (): JSX.Element {
           setCniSnackBarValue(true)
         }
       }
+    } else if (cniFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
 
-    if (kbisFile.length > 0) {
+    if (kbisFile.length > 0 && kbisFile[0].size <= 2 * 1024 * 1024) {
       const kbisFormData = new FormData()
       kbisFormData.append('file', kbisFile[0])
       kbisFormData.append('documentType', CompanyDocumentType.KBIS)
@@ -124,6 +126,8 @@ function CompanyDocumentContent (): JSX.Element {
           setKbisSnackBarValue(true)
         }
       }
+    } else if (kbisFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
   }
 
