@@ -120,7 +120,7 @@ function StudentDocumentContent (): JSX.Element {
   }
 
   const postFile = async (): Promise<void> => {
-    if (cniFile.length > 0) {
+    if (cniFile.length > 0 && cniFile[0].size <= 2 * 1024 * 1024) {
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
       cniFormData.append('documentType', StudentDocumentType.CNI)
@@ -134,9 +134,11 @@ function StudentDocumentContent (): JSX.Element {
           setCniSnackBarValue(true)
         }
       }
+    } else if (cniFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
 
-    if (sirenFile.length > 0) {
+    if (sirenFile.length > 0 && sirenFile[0].size <= 2 * 1024 * 1024) {
       const sirenFormData = new FormData()
       sirenFormData.append('file', sirenFile[0])
       sirenFormData.append('documentType', StudentDocumentType.SIREN)
@@ -150,9 +152,11 @@ function StudentDocumentContent (): JSX.Element {
           setSirenSnackBarValue(true)
         }
       }
+    } else if (sirenFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
 
-    if (urssafFile.length > 0) {
+    if (urssafFile.length > 0 && urssafFile[0].size <= 2 * 1024 * 1024) {
       const urssafFormData = new FormData()
       urssafFormData.append('file', urssafFile[0])
       urssafFormData.append('documentType', StudentDocumentType.URSSAF)
@@ -166,9 +170,11 @@ function StudentDocumentContent (): JSX.Element {
           setUrssafSnackBarValue(true)
         }
       }
+    } else if (urssafFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
 
-    if (ribFile.length > 0) {
+    if (ribFile.length > 0 && ribFile[0].size <= 2 * 1024 * 1024) {
       const ribFormData = new FormData()
       ribFormData.append('file', ribFile[0])
       ribFormData.append('documentType', StudentDocumentType.RIB)
@@ -182,6 +188,8 @@ function StudentDocumentContent (): JSX.Element {
           setRibSnackBarValue(true)
         }
       }
+    } else if (ribFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
   }
 
