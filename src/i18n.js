@@ -104,9 +104,10 @@ i18n
                 status: {
                   title: 'Mon statut Linker',
                   content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir réaliser des missions. C\'est la dernière ligne droite !',
-                  statut: 'Statut auto-entrepreneur',
+                  statut: 'SIREN',
                   cni: 'Carte d\'identité',
-                  rib: 'RIB'
+                  rib: 'RIB',
+                  urssaf: 'URSSAF'
                 },
                 faq: {
                   title: 'Linker, c\'est...',
@@ -390,9 +391,10 @@ i18n
                 status: {
                   title: 'Mon statut Linker',
                   content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir réaliser des missions. C\'est la dernière ligne droite !',
-                  statut: 'Statut auto-entrepreneur',
+                  statut: 'SIREN',
                   cni: 'Carte d\'identité',
-                  rib: 'RIB'
+                  rib: 'RIB',
+                  urssaf: 'URSSAF'
                 },
                 faq: {
                   title: 'Linker, c\'est...',

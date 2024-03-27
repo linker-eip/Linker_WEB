@@ -52,3 +52,23 @@ export enum NotificationType {
   MISSION,
   DOCUMENT,
 }
+
+export enum CompanyDocumentType {
+  CNI = 'CNI',
+  SIRET = 'SIRET',
+  KBIS = 'KBIS'
+}
+
+export enum StudentDocumentType {
+  CNI = 'CNI',
+  SIREN = 'SIREN',
+  URSSAF = 'URSSAF',
+  RIB = 'RIB'
+}
+
+export enum DocumentStatus {
+  NOT_FILLED,
+  PENDING = 'PENDING',
+  VERIFIED = 'VERIFIED',
+  DENIED = 'DENIED'
+}
