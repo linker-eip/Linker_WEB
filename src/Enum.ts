@@ -12,7 +12,11 @@ export enum AdminDashboardState {
   DASHBOARD = 'dashboard',
   USERS = 'users',
   MISSIONS = 'missions',
-  DOCUMENTS = 'documents'
+  DOCUMENTS = 'documents',
+  VERIFY_COMPANY_DOCUMENTS = 'verify_company_documents',
+  VERIFY_STUDENT_DOCUMENTS = 'verify_student_documents',
+  CONTACTS = 'contacts',
+  ARCHIVES = 'archives'
 }
 
 export enum ModalType {
@@ -22,7 +26,10 @@ export enum ModalType {
   DELETE_GROUP = 'delete_group',
   NOTATION = 'notation',
   COMMENT = 'comment',
-  LEAVE = 'leave'
+  LEAVE = 'leave',
+  EXCLUSION = 'exclusion',
+  DELETE_ACCOUNT = 'delete_account',
+  DEACTIVATE_ACCOUNT = 'deactivate_account'
 }
 
 export enum MissionStatus {
@@ -37,4 +44,31 @@ export enum MissionStatus {
 export enum TaskStatus {
   PENDING = 'PENDING',
   FINISHED = 'FINISHED'
+}
+
+export enum NotificationType {
+  MESSAGE,
+  GROUP,
+  MISSION,
+  DOCUMENT,
+}
+
+export enum CompanyDocumentType {
+  CNI = 'CNI',
+  SIRET = 'SIRET',
+  KBIS = 'KBIS'
+}
+
+export enum StudentDocumentType {
+  CNI = 'CNI',
+  SIREN = 'SIREN',
+  URSSAF = 'URSSAF',
+  RIB = 'RIB'
+}
+
+export enum DocumentStatus {
+  NOT_FILLED,
+  PENDING = 'PENDING',
+  VERIFIED = 'VERIFIED',
+  DENIED = 'DENIED'
 }

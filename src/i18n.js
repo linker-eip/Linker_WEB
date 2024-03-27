@@ -14,6 +14,26 @@ i18n
     resources: {
       fr: {
         translation: {
+          homepage: {
+            text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
+            text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
+            title_1: 'Linker',
+            title_2: ', la nouvelle plateforme',
+            title_3: 'étudiante',
+            espace: 'Espace',
+            company: {
+              title: 'Entreprise',
+              text_1: 'Trouvez des équipes complètes en quelques clics',
+              text_2: 'Sélectionnez des groupes d\'étudiants déjà formés, ayant les compétences nécessaires pour vos missions.'
+            },
+            student: {
+              title: 'Étudiant',
+              text_1: 'Libérez votre potentiel en freelance',
+              text_2: 'Trouvez des opportunités de travail en tant que freelance, mettez en avant vos compétences, et travaillez sur des projets passionnants.'
+            },
+            register: 'S’inscrire sur Linker',
+            login: 'Se connecter à Linker'
+          },
           verify_page: {
             success: {
               text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
