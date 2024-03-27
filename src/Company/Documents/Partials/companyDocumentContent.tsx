@@ -1,12 +1,26 @@
 import React, { useState, type ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TextField } from '@mui/material'
 
+// Enum.
+import { CompanyDocumentType } from '../../../Enum'
+
+// API.
+import axios from 'axios'
+import ProfileApi from '../../../API/ProfileApi'
+
+// Components.
 import DropZone from '../../../Component/DropZone'
+import { TextField, Snackbar } from '@mui/material'
 import BaseButton from '../../../Component/BaseButton'
+import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 
+// Styles.
 import '../../../CSS/BaseButton.scss'
 import '../../../CSS/StudentDocumentContent.scss'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 interface DocumentProps {
   isSet: boolean
@@ -53,15 +67,9 @@ function CompanyDocumentContent (): JSX.Element {
 
   const [cniFile, setCniFile] = useState<any>([])
   const [kbisFile, setKbisFile] = useState<any>([])
-  const [siret, setSiret] = useState('')
 
-  const handleSiretChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSiret(event.target.value)
-  }
-
-  const resetSiret = (): void => {
-    setSiret('')
-  }
+  const [cniSnackBarValue, setCniSnackBarValue] = useState<boolean>(false)
+  const [kbisSnackBarValue, setKbisSnackBarValue] = useState<boolean>(false)
 
   const resetCniFile = (): void => {
     setCniFile([])
@@ -71,16 +79,56 @@ function CompanyDocumentContent (): JSX.Element {
     setKbisFile([])
   }
 
-  const postFile = (): any => {
-    // TODO: Faire une query axios pour post les documents.
+  const closeCniSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setCniSnackBarValue(false)
+  }
 
-    const documentsDto = {
-      siret,
-      cni: cniFile,
-      kbis: kbisFile
+  const closeKbisSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setKbisSnackBarValue(false)
+  }
+
+  const postFile = async (): Promise<void> => {
+    if (cniFile.length > 0 && cniFile[0].size <= 2 * 1024 * 1024) {
+      const cniFormData = new FormData()
+      cniFormData.append('file', cniFile[0])
+      cniFormData.append('documentType', CompanyDocumentType.CNI)
+      try {
+        await ProfileApi.uploadCompanyDocumentVerification(
+          localStorage.getItem('jwtToken') as string,
+          cniFormData
+        )
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 409) {
+          setCniSnackBarValue(true)
+        }
+      }
+    } else if (cniFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
 
-    return documentsDto
+    if (kbisFile.length > 0 && kbisFile[0].size <= 2 * 1024 * 1024) {
+      const kbisFormData = new FormData()
+      kbisFormData.append('file', kbisFile[0])
+      kbisFormData.append('documentType', CompanyDocumentType.KBIS)
+      try {
+        await ProfileApi.uploadCompanyDocumentVerification(
+          localStorage.getItem('jwtToken') as string,
+          kbisFormData
+        )
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 409) {
+          setKbisSnackBarValue(true)
+        }
+      }
+    } else if (kbisFile.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
+    }
   }
 
   return (
@@ -88,16 +136,36 @@ function CompanyDocumentContent (): JSX.Element {
       <div className='std-document-card'>
         <h2 className='std-document-card__title'> { t('student.dashboard.doc') } </h2>
         <div className='std-document-card__content'>
-          <Document isSet={siret !== ''} label="SIRET" data={siret} handleReset={resetSiret} handleChange={handleSiretChange} />
-          <Document isSet={cniFile.length > 0} label="CNI" data={cniFile} handleReset={resetCniFile} handleFileChange={setCniFile} />
-          <Document isSet={kbisFile.length > 0} label="KBIS" data={kbisFile} handleReset={resetKbisFile} handleFileChange={setKbisFile} />
-
-          { cniFile.length === 0 && siret === '' && kbisFile.length === 0
+          <Document
+            isSet={cniFile.length > 0}
+            label="CNI"
+            data={cniFile}
+            handleReset={resetCniFile}
+            handleFileChange={setCniFile}
+          />
+          <Document
+            isSet={kbisFile.length > 0}
+            label="KBIS"
+            data={kbisFile}
+            handleReset={resetKbisFile}
+            handleFileChange={setKbisFile}
+          />
+          { cniFile.length > 0 || kbisFile.length > 0
             ? <div className='std-document-card__button'>
-                  <BaseButton onClick={postFile} title={t('validate')} />
-                </div>
+                <BaseButton onClick={() => { postFile() }} title={t('validate')} />
+              </div>
             : null
           }
+          <Snackbar open={cniSnackBarValue} autoHideDuration={6000} onClose={closeCniSnackBar}>
+            <Alert onClose={closeCniSnackBar} severity="error" sx={{ width: '100%' }}>
+              Votre carte d&apos;identité a déjà été validée.
+            </Alert>
+          </Snackbar>
+          <Snackbar open={kbisSnackBarValue} autoHideDuration={6000} onClose={closeKbisSnackBar}>
+            <Alert onClose={closeKbisSnackBar} severity="error" sx={{ width: '100%' }}>
+              Votre extrait KBIS a déjà été validé.
+            </Alert>
+          </Snackbar>
         </div>
       </div>
     </div>
