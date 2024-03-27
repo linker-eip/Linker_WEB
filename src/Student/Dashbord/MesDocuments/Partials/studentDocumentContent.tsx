@@ -159,7 +159,7 @@ function StudentDocumentContent (): JSX.Element {
       try {
         await ProfileApi.uploadStudentDocumentVerification(
           localStorage.getItem('jwtToken') as string,
-          urssafFile
+          urssafFormData
         )
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 409) {
