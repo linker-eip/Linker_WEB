@@ -3,7 +3,8 @@ import axios from 'axios'
 import type { CompanyInfo } from '../Typage/Type'
 import type {
   StudentProfileInfo, Profile, ProfileCompany,
-  SkillsListInfo, CompanyDocumentStatusInfo, StudentDocumentStatusInfo
+  SkillsListInfo, CompanyDocumentStatusInfo, StudentDocumentStatusInfo,
+  StudentStatisticsResponse
 } from '../Typage/ProfileType'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
@@ -207,6 +208,15 @@ class ProfileApi {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
         'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
+  static async getStudentStatistics (jwtToken: string): Promise<StudentStatisticsResponse> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/statistics/student`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
       }
     })
     return response.data
