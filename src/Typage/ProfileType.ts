@@ -115,3 +115,36 @@ export interface StudentDocumentStatusInfo {
   status: DocumentStatus
   comment: string
 }
+
+interface Mission {
+  id: number
+  name: string
+  status: string
+  description: string
+  companyId: number
+  groupId: number
+  startOfMission: string
+  endOfMission: string
+  createdAt: string
+  amount: number
+  skills: string
+}
+
+interface Review {
+  missionId: number
+  review: string
+}
+
+export interface Income {
+  missionId: number
+  amount: number
+  paymentDate: string
+}
+
+export interface StudentStatisticsResponse {
+  missions: Mission[]
+  reviews: Review[]
+  note: number
+  noteNumber: number
+  incomes: Income[]
+}
