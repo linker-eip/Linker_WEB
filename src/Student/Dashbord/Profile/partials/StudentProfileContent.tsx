@@ -16,6 +16,7 @@ import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../../Router/routes'
+import ModalLinkedIn from './ModalLinkedIn'
 
 interface Props {
   editable: boolean
@@ -34,6 +35,7 @@ function StudentProfileContent (props: Props): JSX.Element {
   const maxLength = 500
   const [deactivateModal, setDeactivateModal] = useState<boolean>(false)
   const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const [linkedInModal, setLinkedInModal] = useState<boolean>(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -104,6 +106,14 @@ function StudentProfileContent (props: Props): JSX.Element {
 
   const closeDeleteModal = (): void => {
     setDeleteModal(false)
+  }
+
+  const openLinkedInModal = (): void => {
+    setLinkedInModal(true)
+  }
+
+  const closeLinkedInModal = (): void => {
+    setLinkedInModal(false)
   }
 
   const deactivateAccount = (): void => {
@@ -196,6 +206,10 @@ function StudentProfileContent (props: Props): JSX.Element {
               <div className='std-profile-content__section'>
                 <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
               </div>
+              <div className='std-profile-content__section'>
+                <ClassicButton title='Remplir avec LinkedIn' onClick={openLinkedInModal} />
+              </div>
+              <ModalLinkedIn open={linkedInModal} onClose={closeLinkedInModal} />
               {
                 props.data.firstName !== null && props.data.firstName !== undefined &&
                 props.data.lastName !== null && props.data.lastName !== undefined && (
