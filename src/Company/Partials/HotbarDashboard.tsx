@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ProfileCompany } from '../../Typage/ProfileType'

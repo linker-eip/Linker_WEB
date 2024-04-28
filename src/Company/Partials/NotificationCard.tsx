@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+
 import React from 'react'
 import '../../CSS/NotificationCard.scss'
 import type { Notifications } from '../../Typage/NotificationType'

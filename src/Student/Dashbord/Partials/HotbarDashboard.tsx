@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+
 import React, { useState, useEffect } from 'react'
 import '../../../CSS/Hotbar.scss'
 import Avatar from '@mui/material/Avatar'
