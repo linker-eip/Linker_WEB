@@ -18,7 +18,7 @@ interface Props {
   onReload: () => void
 }
 
-function NotificationCard(props: Props): JSX.Element {
+function NotificationCard (props: Props): JSX.Element {
   const navigate = useNavigate()
   moment.locale('fr')
   const date = moment(props.data.date).format('DD MMMM YYYY')

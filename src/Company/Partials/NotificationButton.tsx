@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useEffect } from 'react'
-import '../../../CSS/NotificationButton.scss'
-import type { Notifications } from '../../../Typage/NotificationType'
+import '../../CSS/NotificationButton.scss'
+import type { Notifications } from '../../Typage/NotificationType'
 import NotificationCard from './NotificationCard'
 
 interface Props {
@@ -35,9 +35,9 @@ function NotificationButton (props: Props): JSX.Element {
     <div className='notif-button'>
       {props.newNotif > 0
         ? <div className='notif-button__new-notif'>
-            <div className='notif-button__count'> {props.newNotif} </div>
-            <img className='notif-button__bg' src='/assets/new_notif.svg' />
-          </div>
+          <div className='notif-button__count'> {props.newNotif} </div>
+          <img className='notif-button__bg' src='/assets/new_notif.svg' />
+        </div>
         : null
       }
       <img className='notif-button__img' src='/assets/notification.svg' onClick={props.onClick} />
@@ -49,8 +49,8 @@ function NotificationButton (props: Props): JSX.Element {
             }
           </div>
           : <div className='notif-button__container-2' style={{ maxHeight: '379px', overflowY: 'auto' }}>
-              <img src='/assets/notification.svg' className='notif-button__img2' />
-            </div>
+            <img src='/assets/notification.svg' className='notif-button__img2' />
+          </div>
         : null
       }
     </div>

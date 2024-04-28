@@ -1,10 +1,10 @@
 import type { AnyObject } from 'chart.js/dist/types/basic'
-import type { Notifications } from '../Typage/NotificationType.ts'
+import type { Notifications } from '../Typage/NotificationType'
 import axios from 'axios'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class NotificationApi {
-  static async getNotifications(jwtToken: string): Promise<Notifications[]> {
+  static async getNotifications (jwtToken: string): Promise<Notifications[]> {
     const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/notifications`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
@@ -13,7 +13,7 @@ class NotificationApi {
     return response.data
   }
 
-  static async removeNotification(jwtToken: string, id: number): Promise<Notifications> {
+  static async removeNotification (jwtToken: string, id: number): Promise<Notifications> {
     const response = await axios.delete(`${process.env.REACT_APP_API_URL as string}/api/notifications/${id}`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -23,7 +23,7 @@ class NotificationApi {
     return response.data
   }
 
-  static async changeNotificationStatus(jwtToken: string, dto: AnyObject): Promise<string> {
+  static async changeNotificationStatus (jwtToken: string, dto: AnyObject): Promise<string> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/notifications`, dto, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
