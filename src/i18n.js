@@ -96,6 +96,10 @@ i18n
             account: {
               deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
               delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
+            },
+            linkedIn: {
+              title: 'Remplir son profil avec LinkedIn',
+              textarea: 'Rentrez le lien de votre profil LinkedIn'
             }
           },
           validate: 'Valider',
