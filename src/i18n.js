@@ -14,6 +14,58 @@ i18n
     resources: {
       fr: {
         translation: {
+          homepage: {
+            text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
+            text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
+            title_1: 'Linker',
+            title_2: ', la nouvelle plateforme',
+            title_3: 'étudiante',
+            espace: 'Espace',
+            company: {
+              title: 'Entreprise',
+              text_1: 'Trouvez des équipes complètes en quelques clics',
+              text_2: 'Sélectionnez des groupes d\'étudiants déjà formés, ayant les compétences nécessaires pour vos missions.'
+            },
+            student: {
+              title: 'Étudiant',
+              text_1: 'Libérez votre potentiel en freelance',
+              text_2: 'Trouvez des opportunités de travail en tant que freelance, mettez en avant vos compétences, et travaillez sur des projets passionnants.'
+            },
+            register: 'S’inscrire sur Linker',
+            login: 'Se connecter à Linker'
+          },
+          verify_page: {
+            success: {
+              text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
+              text_2: 'Vous pouvez maintenant profiter pleinement des fonctionnalités de ',
+              text_3: 'Linker.',
+              text_4: 'Connectez-vous à votre compte pour commencer à explorer les opportunités de collaboration entre étudiants et entreprises.',
+              text_5: 'Si vous avez des questions ou si vous avez besoin d\'assistance, n\'hésitez pas à nous contacter à l\'adresse suivante : ',
+              text_6: 'contact@linker-app.fr.',
+              text_7: 'Bienvenue sur ',
+              text_8: ' Linker',
+              text_9: ', et bonne chance dans vos futures collaborations !',
+              button_text: 'Se connecter à Linker',
+              button_title_1: 'Espace',
+              button_title_2: 'Étudiant',
+              button_subtext: 'À la recherche de missions ?'
+            },
+            failed: {
+              text_1: 'La vérification de votre adresse e-mail a échoué.',
+              text_2: 'Veuillez vous assurer que vous avez saisi le code correctement.',
+              text_3: 'Vous pouvez réessayer en cliquant sur le lien de vérification que nous vous avons envoyé.',
+              text_4: 'Si le problème persiste, veuillez contacter notre équipe d\'assistance à l\'adresse suivante :',
+              text_5: 'contact@linker-app.fr.',
+              text_6: 'Nous sommes là pour vous aider à résoudre ce problème.',
+              button_text: 'Revenir en lieu sûr'
+            }
+          },
+          footer: {
+            need_help: 'Besoin d’aide ?',
+            contact: 'Contactez-nous',
+            networks: 'Pour mieux nous connaitre !',
+            download: 'Téléchargez l’app'
+          },
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
@@ -39,7 +91,15 @@ i18n
               subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
             },
             leave: {
-              subtitle: 'Etes-vous sur de vouloir quitter:'
+              subtitle: 'Êtes-vous sur de vouloir quitter:'
+            },
+            account: {
+              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
+              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
+            },
+            linkedIn: {
+              title: 'Remplir son profil avec LinkedIn',
+              textarea: 'Rentrez le lien de votre profil LinkedIn'
             }
           },
           validate: 'Valider',
@@ -100,9 +160,10 @@ i18n
                 status: {
                   title: 'Mon statut Linker',
                   content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir réaliser des missions. C\'est la dernière ligne droite !',
-                  statut: 'Statut auto-entrepreneur',
+                  statut: 'SIREN',
                   cni: 'Carte d\'identité',
-                  rib: 'RIB'
+                  rib: 'RIB',
+                  urssaf: 'URSSAF'
                 },
                 faq: {
                   title: 'Linker, c\'est...',
@@ -291,7 +352,11 @@ i18n
               homeTitle: 'Mon panel',
               utilisateur: 'Utilisateurs',
               mission: 'Missions',
-              doc: 'Documents'
+              doc: 'Documents',
+              verifyCompanyDoc: 'Vérification Entreprise',
+              verifyStudentDoc: 'Vérification Étudiante',
+              contacts: 'Contact',
+              archives: 'Archives'
             }
           },
           snackbar: {
@@ -324,6 +389,10 @@ i18n
             },
             leave: {
               subtitle: 'Etes-vous sur de vouloir quitter:'
+            },
+            account: {
+              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
+              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
             }
           },
           validate: 'Valider',
@@ -383,9 +452,10 @@ i18n
                 status: {
                   title: 'Mon statut Linker',
                   content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir réaliser des missions. C\'est la dernière ligne droite !',
-                  statut: 'Statut auto-entrepreneur',
+                  statut: 'SIREN',
                   cni: 'Carte d\'identité',
-                  rib: 'RIB'
+                  rib: 'RIB',
+                  urssaf: 'URSSAF'
                 },
                 faq: {
                   title: 'Linker, c\'est...',
@@ -532,7 +602,11 @@ i18n
               homeTitle: 'Mon panel',
               utilisateur: 'Utilisateurs',
               mission: 'Missions',
-              doc: 'Documents'
+              doc: 'Documents',
+              verifyCompanyDoc: 'Vérification Entreprise',
+              verifyStudentDoc: 'Vérification Étudiante',
+              contacts: 'Contact',
+              archives: 'Archives'
             }
           }
         }

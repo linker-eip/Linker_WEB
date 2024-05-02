@@ -11,6 +11,12 @@ import { TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZone from '../../../../Component/DropZone'
+import ClassicButton from '../../../../Component/ClassicButton'
+import ModalValidation from '../../../../Component/ModalValidation'
+import { ModalType } from '../../../../Enum'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../../Router/routes'
+import ModalLinkedIn from './ModalLinkedIn'
 
 interface Props {
   editable: boolean
@@ -27,6 +33,11 @@ function StudentProfileContent (props: Props): JSX.Element {
   const [isAvatarEditing, setIsAvatarEditing] = useState(false)
   const [AvatarImage, setAvatarImage] = useState<any>(undefined)
   const maxLength = 500
+  const [deactivateModal, setDeactivateModal] = useState<boolean>(false)
+  const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const [linkedInModal, setLinkedInModal] = useState<boolean>(false)
+  const navigate = useNavigate()
+
   useEffect(() => {
     setDescription(props.data.description)
     setLocation(props.data.location)
@@ -80,6 +91,53 @@ function StudentProfileContent (props: Props): JSX.Element {
       props.update()
     }
   }
+
+  const openDeactivateModal = (): void => {
+    setDeactivateModal(true)
+  }
+
+  const openDeleteModal = (): void => {
+    setDeleteModal(true)
+  }
+
+  const closeDeactivateModal = (): void => {
+    setDeactivateModal(false)
+  }
+
+  const closeDeleteModal = (): void => {
+    setDeleteModal(false)
+  }
+
+  const openLinkedInModal = (): void => {
+    setLinkedInModal(true)
+  }
+
+  const closeLinkedInModal = (): void => {
+    setLinkedInModal(false)
+  }
+
+  const deactivateAccount = (): void => {
+    setDeactivateModal(false)
+    ProfileApi.deactivateStudentAccount(localStorage.getItem('jwtToken') as string)
+      .then(() => {
+        navigate(ROUTES.STUDENT_LOGIN_PAGE)
+      })
+      .catch((error) => {
+        console.error('[ERROR] - Unable to deactivate account:', error)
+      })
+  }
+
+  const deleteAccount = (): void => {
+    setDeleteModal(false)
+    ProfileApi.deleteStudentAccount(localStorage.getItem('jwtToken') as string)
+      .then(() => {
+        navigate(ROUTES.STUDENT_REGISTER_PAGE)
+      })
+      .catch((error) => {
+        console.error('[ERROR] - Unable to delete account:', error)
+      })
+  }
+
   return (
     <div className='std-profile-content'>
       {
@@ -135,6 +193,45 @@ function StudentProfileContent (props: Props): JSX.Element {
                 </div>
               : null
             }
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'></div>
+            <div className='std-profile-content__content'>
+              <div className='std-profile-content__section'>
+                <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
+              </div>
+              <div className='std-profile-content__section'>
+                <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
+              </div>
+              <div className='std-profile-content__section'>
+                <ClassicButton title='Remplir avec LinkedIn' onClick={openLinkedInModal} />
+              </div>
+              <ModalLinkedIn open={linkedInModal} onClose={closeLinkedInModal} />
+              {
+                props.data.firstName !== null && props.data.firstName !== undefined &&
+                props.data.lastName !== null && props.data.lastName !== undefined && (
+                  <>
+                    <ModalValidation
+                      subject={props.data.lastName + ' ' + props.data.firstName}
+                      open={deactivateModal}
+                      onClose={closeDeactivateModal}
+                      type={ModalType.DEACTIVATE_ACCOUNT}
+                      onValid={deactivateAccount}
+                    />
+                    <ModalValidation
+                      subject={props.data.lastName + ' ' + props.data.firstName}
+                      open={deleteModal}
+                      onClose={closeDeleteModal}
+                      type={ModalType.DELETE_ACCOUNT}
+                      onValid={deleteAccount}
+                    />
+                  </>
+                )
+              }
+            </div>
           </div>
           : <div className='std-profile-content__container'>
             <div className='std-profile-content__container-2'>

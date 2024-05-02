@@ -1,3 +1,5 @@
+import { type CompanyDocumentType, type StudentDocumentType, type DocumentStatus } from '../Enum'
+
 export interface Profile {
   id: 0
   firstName: string
@@ -100,4 +102,49 @@ export interface SkillsListInfo {
     Data: []
     'Marketing & Sales': []
   }
+}
+
+export interface CompanyDocumentStatusInfo {
+  documentType: CompanyDocumentType
+  status: DocumentStatus
+  comment: string
+}
+
+export interface StudentDocumentStatusInfo {
+  documentType: StudentDocumentType
+  status: DocumentStatus
+  comment: string
+}
+
+interface Mission {
+  id: number
+  name: string
+  status: string
+  description: string
+  companyId: number
+  groupId: number
+  startOfMission: string
+  endOfMission: string
+  createdAt: string
+  amount: number
+  skills: string
+}
+
+interface Review {
+  missionId: number
+  review: string
+}
+
+export interface Income {
+  missionId: number
+  amount: number
+  paymentDate: string
+}
+
+export interface StudentStatisticsResponse {
+  missions: Mission[]
+  reviews: Review[]
+  note: number
+  noteNumber: number
+  incomes: Income[]
 }
