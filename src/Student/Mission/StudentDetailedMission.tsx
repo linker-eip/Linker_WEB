@@ -254,7 +254,7 @@ function StudentDetailedMission (): JSX.Element {
                   </div>
                 </div>
                 <div>
-                   <div className='std-detailed-mission__section'>
+                  <div className='std-detailed-mission__section'>
                     <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
                     {missionData !== undefined && missionData.group !== null
                       ? <Historic missionStatus={missionData?.mission.status} companyName={missionData.mission.name} groupName={missionData.group.name} companyLogo={missionData.group.picture} groupLogo={missionData.group.picture} />

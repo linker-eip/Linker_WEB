@@ -14,6 +14,18 @@ i18n
     resources: {
       fr: {
         translation: {
+          contact: {
+            title: 'Nous sommes là pour vous aider. Contactez-nous pour toute question ou assistance.',
+            lastname: 'Nom de famille',
+            firstname: 'Prénom',
+            email: 'Adresse E-mail',
+            object: 'Sujet du message',
+            message: 'Message',
+            send: 'Envoyer',
+            info: 'Information général',
+            number: 'Numéro de téléphone',
+            message_sended: 'Votre message a été envoyé avec succès.'
+          },
           homepage: {
             text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
             text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
@@ -361,6 +373,9 @@ i18n
       },
       en: {
         translation: {
+          contact: {
+
+          },
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',
