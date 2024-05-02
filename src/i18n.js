@@ -273,7 +273,9 @@ i18n
                 task: 'Tâches'
               },
               devis: {
-                title: 'Devis pour la mission: {{name}}'
+                title: 'Devis pour la mission: {{name}}',
+                no_devis: 'Pas de devis renseigné pour la mission: {{name}}',
+                devis: 'Importez votre devis'
               },
               task: {
                 modal_title: 'Ajouter une tâche',

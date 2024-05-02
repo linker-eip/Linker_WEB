@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, type ChangeEvent } from 'react'
 import '../../CSS/StudentDashboard.scss'
 import '../../CSS/CompanyDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
@@ -20,6 +20,7 @@ import MissionApi from '../../API/MissionApi'
 import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
+import DropZone from '../../Component/DropZone'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -41,6 +42,9 @@ function CompanyDetailedMission (): JSX.Element {
   const [hasCompanyCommented, setHasCompanyCommented] = useState<number>(0)
   const [refetchMissionData, setRefetch] = useState<boolean>(false)
   const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
+  const [devis, setDevis] = useState<any>()
+  const [isDevis, setIsDevis] = useState<boolean>(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -223,7 +227,22 @@ function CompanyDetailedMission (): JSX.Element {
   }
 
   const downloadDevis = (): void => {
-    console.log('downloading devis')
+    console.log(devis)
+  }
+
+  const handleDevis = (event: ChangeEvent<HTMLInputElement>): void => {
+    setIsValid(true)
+    setDevis(event)
+  }
+
+  const validDevis = (): void => {
+    setIsDevis(true)
+  }
+
+  const resetDevis = (): void => {
+    setIsDevis(false)
+    setIsValid(false)
+    setDevis(undefined)
   }
 
   return (
@@ -304,10 +323,30 @@ function CompanyDetailedMission (): JSX.Element {
                     }
                   </div>
                 </div>
-                <div className='cpn-detailed-mission__devis' onClick={downloadDevis}>
-                  <img src='/assets/downloadInvoice.png' />
-                  { t('company.detailed_mission.devis.title', { name: missionData.mission.name }) }
-                </div>
+                {isValid
+                  ? null
+                  : <div>
+                      <div> { t('company.detailed_mission.devis.devis') } </div>
+                      <DropZone onObjectChange={handleDevis} />
+                    </div>
+                }
+                { devis !== undefined && isValid && !isDevis
+                  ? <div className='cpn-detailed-mission__import-section'>
+                      <img src='/assets/downloadInvoice.png' />
+                      <p> {devis[0].path } </p>
+                      <ClassicButton title='Valider' onClick={validDevis} />
+                      <ClassicButton title='Remplacer' onClick={resetDevis} />
+                    </div>
+                  : null }
+                { isDevis
+                  ? <div className='cpn-detailed-mission__devis'>
+                      <img src='/assets/downloadInvoice.png' />
+                      { t('company.detailed_mission.devis.title', { name: missionData.mission.name }) }
+                      <ClassicButton title='remplacer' onClick={resetDevis} />
+                      <ClassicButton title='Télécharger' onClick={downloadDevis} />
+                    </div>
+                  : null
+                }
                 {missionData.missionTaskArray.length > 0
                   ? <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} onCallback={handleRefetch} />
                   : null

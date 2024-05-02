@@ -34,6 +34,7 @@ function StudentDetailedMission (): JSX.Element {
   const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
   const [companyData, setCompanyData] = useState<CompanyInfo>()
   const [groupId, setGroupId] = useState<number>()
+  const [isDevis, setIsDevis] = useState<boolean>(false)
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -140,6 +141,10 @@ function StudentDetailedMission (): JSX.Element {
     }
   }, [missionData])
 
+  const downloadDevis = (): void => {
+    console.log('Yes i\'m downloading the devis...')
+  }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
@@ -193,32 +198,6 @@ function StudentDetailedMission (): JSX.Element {
                 </div>
             : null
           }
-          {/* <div className='std-detailed-mission__section'>
-            { potential
-              ? <div className='std-detailed-mission__potential-section'>
-                  <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
-                  <div className='std-detailed-mission__potential-button'>
-                    <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen}/>
-                    <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
-                  </div>
-                </div>
-              : <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
-            }
-            <p className='std-detailed-mission__section__title-3'> { missionData?.mission.name } </p>
-            <Stepper activeStep={activeStep - 1} alternativeLabel>
-              {steps.map((label, index) => (
-                <Step key={label}>
-                  <StepLabel>
-                    { index <= activeStep - 1
-                      ? <p className='std-detailed-mission__stepper-active'>{label}</p>
-                      : <p className='std-detailed-mission__stepper'>{label}</p>
-                    }
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </div> */}
-
           <div className='std-detailed-mission__container'>
             <div className='cpn-detailed-mission__section'>
               <div className='std-detailed-mission__row-2'>
@@ -232,6 +211,16 @@ function StudentDetailedMission (): JSX.Element {
                   }
                 </div>
               </div>
+              { isDevis
+                ? <div className='cpn-detailed-mission__devis'>
+                    <img src='/assets/downloadInvoice.png' />
+                    { t('company.detailed_mission.devis.title', { name: missionData?.mission.name }) }
+                    <ClassicButton title='Télécharger' onClick={downloadDevis} />
+                  </div>
+                : <div className='cpn-detailed-mission__devis'>
+                    { t('company.detailed_mission.devis.no_devis', { name: missionData?.mission.name }) }
+                  </div>
+              }
               {missionData !== undefined
                 ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} onCallback={handleRefetch}/>
                 : <div />
@@ -254,7 +243,7 @@ function StudentDetailedMission (): JSX.Element {
                   </div>
                 </div>
                 <div>
-                   <div className='std-detailed-mission__section'>
+                  <div className='std-detailed-mission__section'>
                     <p className='std-detailed-mission__container__title'> { t('student.detailed_mission.historic') } </p>
                     {missionData !== undefined && missionData.group !== null
                       ? <Historic missionStatus={missionData?.mission.status} companyName={missionData.mission.name} groupName={missionData.group.name} companyLogo={missionData.group.picture} groupLogo={missionData.group.picture} />

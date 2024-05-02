@@ -313,4 +313,11 @@
       cursor: pointer;
     }
   }
+
+  &__import-section {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: center;
+  }
 }
