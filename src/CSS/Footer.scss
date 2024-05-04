@@ -60,6 +60,10 @@
         }
     }
 
+    &__clickable {
+        cursor: pointer;
+    }
+
     &__text-2 {
         color: #fff;
         font-weight: 600;
