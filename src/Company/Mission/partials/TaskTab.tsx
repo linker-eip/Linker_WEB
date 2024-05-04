@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import React, { useState, useEffect } from 'react'
-import type { MissionTaskArrayInfo } from '../../../Typage/Type'
+import type { GroupInfo, MissionTaskArrayInfo } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
 import '../../../CSS/CompanyDetailedMission.scss'
 import ModalTaskCreation from './ModalTaskCreation'
@@ -15,6 +15,7 @@ interface Props {
   missionTask: MissionTaskArrayInfo[]
   missionId: number
   missionStatus: string
+  groupInfo: GroupInfo
   onCallback: () => void
 }
 
@@ -126,7 +127,7 @@ function TaskTab (props: Props): JSX.Element {
             </div>
           </div>
         : null}
-      <ModalTaskCreation open={taskModal} missionId={props.missionId} onValidation={validTaskModal} onClose={closeTaskModal} />
+      <ModalTaskCreation open={taskModal} missionId={props.missionId} /* members={props.groupInfo.members} */ onValidation={validTaskModal} onClose={closeTaskModal} />
       <div className='cpn-detailed-mission__total-section'>
         <div />
         <div className='cpn-detailed-mission__total'>

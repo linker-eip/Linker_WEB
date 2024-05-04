@@ -17,7 +17,7 @@ import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
 import MissionApi from '../../API/MissionApi'
-import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo } from '../../Typage/Type'
+import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo, GroupInfo, GroupType } from '../../Typage/Type'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
 import ProfileApi from '../../API/ProfileApi'
@@ -34,6 +34,7 @@ function StudentDetailedMission (): JSX.Element {
   const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
   const [companyData, setCompanyData] = useState<CompanyInfo>()
   const [groupId, setGroupId] = useState<number>()
+  const [groupData, setGroup] = useState<GroupType>()
   const [isDevis, setIsDevis] = useState<boolean>(false)
 
   useEffect(() => {
@@ -53,6 +54,7 @@ function StudentDetailedMission (): JSX.Element {
       const response3 = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
       if (response3 !== undefined) {
         setGroupId(response3.data?.groupId)
+        setGroup(response3.data)
       }
     }
     fetchData()
@@ -221,8 +223,8 @@ function StudentDetailedMission (): JSX.Element {
                     { t('company.detailed_mission.devis.no_devis', { name: missionData?.mission.name }) }
                   </div>
               }
-              {missionData !== undefined
-                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} onCallback={handleRefetch}/>
+              {missionData !== undefined && groupData !== undefined
+                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} groupInfo={groupData} onCallback={handleRefetch}/>
                 : <div />
               }
             </div>

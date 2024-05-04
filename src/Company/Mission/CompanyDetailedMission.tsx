@@ -347,11 +347,7 @@ function CompanyDetailedMission (): JSX.Element {
                     </div>
                   : null
                 }
-                {missionData.missionTaskArray.length > 0
-                  ? <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} onCallback={handleRefetch} />
-                  : null
-                }
-                <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} onCallback={handleRefetch} />
+                <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} groupInfo={missionData.group} onCallback={handleRefetch} />
               </div>
               <div className='cpn-detailed-mission__column'>
                 <MissionGroup missionData={missionData} />
