@@ -134,7 +134,7 @@ function TaskTab (props: Props): JSX.Element {
                 ? <div className='tableau__cell'>
                     <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
                     <img onClick={openEditTaskModal} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
-                    <ModalTaskEdition open={editTaskModal} taskId={task.missionTask.id} onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={task.missionTask.name} description={task.missionTask.description} amount={task.missionTask.amount} />
+                    <ModalTaskEdition open={editTaskModal} taskId={task.missionTask.id} members={props.groupInfo.members} onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={task.missionTask.name} description={task.missionTask.description} amount={task.missionTask.amount} />
                   </div>
                 : <div className='tableau__cell'> { t('company.detailed_mission.tab.no_action') } </div>
               }

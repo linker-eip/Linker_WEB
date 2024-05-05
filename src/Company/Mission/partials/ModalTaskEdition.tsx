@@ -3,9 +3,10 @@ import React, { type ChangeEvent, useState } from 'react'
 import '../../../CSS/ModalTaskCreation.scss'
 import { useTranslation } from 'react-i18next'
 import Modal from '@mui/material/Modal'
-import { TextField } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent, TextField } from '@mui/material'
 import ClassicButton from '../../../Component/ClassicButton'
 import MissionApi from '../../../API/MissionApi'
+import { type Members } from '../../../Typage/Type'
 
 interface Props {
   open: boolean
@@ -13,6 +14,7 @@ interface Props {
   name: string
   description: string
   amount: number
+  members?: Members[]
   onClose: () => void
   onValidation: () => void
 }
@@ -28,6 +30,12 @@ function ModalTaskEdition (props: Props): JSX.Element {
   const [errorName, setErrorName] = useState(false)
   const [errorDesc, setErrorDesc] = useState(false)
   const [errorPrice, setErrorPrice] = useState(false)
+
+  const [student, setStudent] = useState('')
+
+  const handleChange = (event: SelectChangeEvent): void => {
+    setStudent(event.target.value)
+  }
 
   const checkError = (): void => {
     if (name.length === 0) {
@@ -82,7 +90,7 @@ function ModalTaskEdition (props: Props): JSX.Element {
         name,
         description,
         amount: price,
-        studentId: null,
+        studentId: student === '-1' ? null : student,
         skills: ''
       }
       MissionApi.editTask(localStorage.getItem('jwtToken') as string, props.taskId, data)
@@ -134,6 +142,24 @@ function ModalTaskEdition (props: Props): JSX.Element {
                 error={errorPrice}
                 helperText={errorPrice ? 'Veuillez rentrer un prix pour votre tâche.' : false}
               />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Attribution</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={student}
+                  label="Attribution"
+                  onChange={handleChange}
+                  >
+                    { props.members !== undefined
+                      ? props.members.map((member, index) => (
+                          <MenuItem key={index} value={member.id}> {member.firstName} {member.lastName} </MenuItem>
+                      ))
+                      : null
+                    }
+                  <MenuItem value={'-1'}> Aucun </MenuItem>
+                </Select>
+              </FormControl>
               <div className='cpn-modal-task__button-section'>
                 <ClassicButton title='Valider' onClick={handleValidation} />
                 <ClassicButton title='Annuler' cancelled onClick={props.onClose}/>

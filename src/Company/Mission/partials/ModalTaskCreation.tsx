@@ -160,7 +160,7 @@ function ModalTaskCreation (props: Props): JSX.Element {
                     }
                   <MenuItem value={'-1'}> Aucun </MenuItem>
                 </Select>
-            </FormControl>
+              </FormControl>
               <div className='cpn-modal-task__button-section'>
                 <ClassicButton title='Valider' onClick={handleValidation} />
                 <ClassicButton title='Annuler' cancelled onClick={props.onClose}/>
