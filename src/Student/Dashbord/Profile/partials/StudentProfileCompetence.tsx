@@ -127,7 +127,6 @@ function StudentProfileCompetence (props: Props): JSX.Element {
 
   const handleRemoveNoCodeSkill = (skill: string): void => {
     if (noCodeSkill.length === 1) {
-      console.log(noCodeSkill, noCodeSkill.length)
       noCodeSkill.pop()
     } else {
       setNoCode(noCodeSkill.filter(item => item !== skill))

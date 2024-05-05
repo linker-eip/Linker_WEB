@@ -93,7 +93,6 @@ function TaskTab (props: Props): JSX.Element {
   }
 
   const handleDevisValidation = (): void => {
-    console.log('le devis a été validé...')
     setDevisValidate(true)
   }
 

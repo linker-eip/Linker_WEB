@@ -94,7 +94,6 @@ function StudentDetailedMission (): JSX.Element {
 
   const acceptMission = async (): Promise<void> => {
     if (missionData !== undefined) {
-      console.log('Mission accepted')
       const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, groupId ?? 0)
       if (response !== undefined) {
         window.location.reload()
@@ -103,7 +102,6 @@ function StudentDetailedMission (): JSX.Element {
   }
 
   const refuseMission = async (): Promise<void> => {
-    console.log('test')
     if (missionData !== undefined) {
       const response = await MissionApi.refuseMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, groupId ?? 0)
       if (response !== undefined) {
