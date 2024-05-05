@@ -51,7 +51,7 @@ function StudentDetailedMission (): JSX.Element {
           setIsDevis(true)
         }
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
-        const response2 = await ProfileApi.getSpecificCompanyProfile(localStorage.getItem('jwtToken') as string, 35/* response.mission.companyId */)
+        const response2 = await ProfileApi.getSpecificCompanyProfile(localStorage.getItem('jwtToken') as string, response.mission.companyId)
         setCompanyData(response2)
       }
       const response3 = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
@@ -225,7 +225,7 @@ function StudentDetailedMission (): JSX.Element {
                   </div>
               }
               {missionData !== undefined && groupData !== undefined
-                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} groupInfo={groupData} onCallback={handleRefetch}/>
+                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} groupInfo={groupData} groupId={groupId ?? 0} onCallback={handleRefetch}/>
                 : <div />
               }
             </div>

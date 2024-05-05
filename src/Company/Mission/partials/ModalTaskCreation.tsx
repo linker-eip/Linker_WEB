@@ -12,6 +12,7 @@ interface Props {
   open: boolean
   missionId: number
   members?: Members[]
+  isStudent?: boolean
   onClose: () => void
   onValidation: () => void
 }
@@ -90,8 +91,11 @@ function ModalTaskCreation (props: Props): JSX.Element {
         studentId: student === '-1' ? null : student,
         skills: ''
       }
-      console.log(data)
-      MissionApi.createTask(localStorage.getItem('jwtToken') as string, props.missionId, data)
+      if (props.isStudent !== null && props.isStudent !== undefined && props.isStudent) {
+        MissionApi.createTaskAsStudent(localStorage.getItem('jwtToken') as string, props.missionId, data)
+      } else {
+        MissionApi.createTask(localStorage.getItem('jwtToken') as string, props.missionId, data)
+      }
       setName('')
       setDescription('')
       setPrice(0)

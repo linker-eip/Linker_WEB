@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useState, useEffect } from 'react'
 import type { GroupType, MissionTaskArrayInfo } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +20,7 @@ interface Props {
   missionId: number
   missionStatus: string
   groupInfo: GroupType
+  groupId: number
   onCallback: () => void
 }
 
@@ -29,6 +31,11 @@ function TaskTab (props: Props): JSX.Element {
   const [taskModal, setTaskModal] = useState<boolean>(false)
   const [editTaskModal, setEditTaskModal] = useState<boolean>(false)
   const [devisValidate, setDevisValidate] = useState<boolean>(false)
+  const [selectedTask, setSelectedTask] = useState<MissionTaskArrayInfo | null>(null)
+  const [selectedName, setSelectedName] = useState<string>('')
+  const [selectedId, setSelectedId] = useState<number>(0)
+  const [selectedDescription, setSelectedDescription] = useState<string>('')
+  const [selectedAmount, setSelectedAmount] = useState<number>(0)
 
   useEffect(() => {
     setTaskTab(props.missionTask.slice().sort((a, b) => a.missionTask.id - b.missionTask.id))
@@ -81,18 +88,24 @@ function TaskTab (props: Props): JSX.Element {
     closeEditTaskModal()
   }
 
-  const openEditTaskModal = (): void => {
+  const openEditTaskModal = (task: MissionTaskArrayInfo, name: string, id: number, description: string, amount: number): void => {
+    setSelectedName(name)
+    setSelectedAmount(amount)
+    setSelectedDescription(description)
+    setSelectedId(id)
+    setSelectedTask(task)
     setEditTaskModal(true)
   }
 
   const deleteTask = (taskId: number): void => {
-    const response = MissionApi.deleteTask(localStorage.getItem('jwtToken') as string, taskId)
+    const response = MissionApi.deleteTaskAsStudent(localStorage.getItem('jwtToken') as string, taskId)
     if (response !== undefined) {
       props.onCallback()
     }
   }
 
-  const handleDevisValidation = (): void => {
+  const handleDevisValidation = async (): Promise<void> => {
+    const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, props.missionId, props.groupId ?? 0)
     setDevisValidate(true)
   }
 
@@ -101,7 +114,7 @@ function TaskTab (props: Props): JSX.Element {
       return 'Aucun'
     }
     if (props.groupInfo.members !== undefined) {
-      return '' + props.groupInfo.members.find(member => member.id === assignedId)?.firstName + props.groupInfo.members.find(member => member.id === assignedId)?.firstName
+      return '' + props.groupInfo.members.find(member => member.id === assignedId)?.firstName + ' ' + props.groupInfo.members.find(member => member.id === assignedId)?.lastName
     } else {
       return 'Aucun'
     }
@@ -133,10 +146,13 @@ function TaskTab (props: Props): JSX.Element {
               {props.missionStatus === MissionStatus.PENDING
                 ? <div className='tableau__cell'>
                     <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
-                    <img onClick={openEditTaskModal} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
-                    <ModalTaskEdition open={editTaskModal} taskId={task.missionTask.id} members={props.groupInfo.members} onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={task.missionTask.name} description={task.missionTask.description} amount={task.missionTask.amount} />
+                    <img onClick={() => openEditTaskModal(task, task.missionTask.name, task.missionTask.id, task.missionTask.description, task.missionTask.amount)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
                   </div>
                 : <div className='tableau__cell'> { t('company.detailed_mission.tab.no_action') } </div>
+              }
+              {selectedTask?.missionTask
+                ? <ModalTaskEdition isStudent open={editTaskModal} taskId={selectedId} members={props.groupInfo.members} onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={selectedName} description={selectedDescription} amount={selectedAmount} />
+                : null
               }
             </div>
           )
@@ -154,7 +170,7 @@ function TaskTab (props: Props): JSX.Element {
             </div>
           : null
         }
-      <ModalTaskCreation open={taskModal} missionId={props.missionId} members={props.groupInfo.members} onValidation={validTaskModal} onClose={closeTaskModal} />
+      <ModalTaskCreation isStudent open={taskModal} missionId={props.missionId} members={props.groupInfo.members} onValidation={validTaskModal} onClose={closeTaskModal} />
       <div className='cpn-detailed-mission__total-section'>
         <div />
         <div className='cpn-detailed-mission__total'>

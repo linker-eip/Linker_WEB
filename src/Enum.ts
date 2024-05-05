@@ -38,7 +38,14 @@ export enum MissionStatus {
   PROVISIONED = 'PROVISIONED',
   IN_PROGRESS = 'IN_PROGRESS',
   FINISHED = 'FINISHED',
-  CANCELLED = 'CANCELLED'
+  CANCELLED = 'CANCELLED',
+}
+
+export enum MissionInviteStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  REFUSED = 'REFUSED',
+  GROUP_ACCEPTED = 'GROUP_ACCEPTED',
 }
 
 export enum TaskStatus {

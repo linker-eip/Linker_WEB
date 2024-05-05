@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useState, useEffect } from 'react'
 import type { GroupInfo, MissionTaskArrayInfo } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
@@ -18,6 +19,8 @@ interface Props {
   missionId: number
   missionStatus: string
   groupInfo: GroupInfo
+  displayId: string
+  groupListToAccept: number[] | null
   onCallback: () => void
 }
 
@@ -28,10 +31,17 @@ function TaskTab (props: Props): JSX.Element {
   const [taskTab, setTaskTab] = useState<MissionTaskArrayInfo[]>()
   const [totalAmount, setTotalAmount] = useState<number>(0)
   const [devisValidate, setDevisValidate] = useState<boolean>(false)
+  const [selectedTask, setSelectedTask] = useState<MissionTaskArrayInfo | null>(null)
 
   useEffect(() => {
-    setTaskTab(props.missionTask.slice().sort((a, b) => a.missionTask.id - b.missionTask.id))
-  }, [props.missionTask])
+    if (props.missionStatus === MissionStatus.PENDING) {
+      setTaskTab(props.missionTask
+        .filter((task) => task.missionTask.groupId === parseInt(props.displayId))
+        .sort((a, b) => a.missionTask.id - b.missionTask.id))
+    } else {
+      setTaskTab(props.missionTask.sort((a, b) => a.missionTask.id - b.missionTask.id))
+    }
+  }, [props.missionTask, props.displayId])
 
   useEffect(() => {
     let amount = 0
@@ -62,7 +72,8 @@ function TaskTab (props: Props): JSX.Element {
     closeEditTaskModal()
   }
 
-  const openEditTaskModal = (): void => {
+  const openEditTaskModal = (task: MissionTaskArrayInfo): void => {
+    setSelectedTask(task)
     setEditTaskModal(true)
   }
 
@@ -92,16 +103,17 @@ function TaskTab (props: Props): JSX.Element {
   }
 
   const handleDevisValidation = (): void => {
-    console.log('le devis a été validé...')
+    MissionApi.acceptGroupToMission(localStorage.getItem('jwtToken') as string, props.missionId, props.displayId)
     setDevisValidate(true)
+    window.location.reload()
   }
 
   const findMemberName = (assignedId: number): string => {
     if (assignedId === null) {
       return 'Aucun'
     }
-    if (props.groupInfo.members !== undefined) {
-      return '' + props.groupInfo.members.find(member => member.id === assignedId)?.firstName + props.groupInfo.members.find(member => member.id === assignedId)?.firstName
+    if (props.groupInfo?.members !== undefined && props.groupInfo?.members !== null) {
+      return '' + props.groupInfo.members.find(member => member.id === assignedId)?.firstName + ' ' + props.groupInfo.members.find(member => member.id === assignedId)?.lastName
     } else {
       return 'Aucun'
     }
@@ -116,31 +128,65 @@ function TaskTab (props: Props): JSX.Element {
         <p className='tableau__top'> {t('company.detailed_mission.tab.task')} </p>
         <p className='tableau__top'> Action </p>
       </div>
-        {taskTab !== undefined && taskTab?.length > 0
-          ? taskTab.map((task: MissionTaskArrayInfo, index: number) =>
-            <div key={task.missionTask.id} className={props.missionStatus === MissionStatus.PENDING ? 'tableau' : 'tableau'}>
-              <div className='tableau__cell tableau__cell--details '>
-                <div> {task.missionTask.name} </div>
-                <li> {task.missionTask.description} </li>
-              </div>
-              <div className='tableau__cell'>
-                { findMemberName(task.missionTask.studentId) }
-              </div>
-              <div className='tableau__cell'> {task.missionTask.amount} </div>
-              <div className='tableau__cell'>
-                <Checkbox onClick={() => changeTaskStatus(task.missionTask.id)} checked={isChecked(task.missionTask.status)} />
-              </div>
-              {props.missionStatus === MissionStatus.PENDING
-                ? <div className='tableau__cell'>
-                    <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
-                    <img onClick={openEditTaskModal} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
-                    <ModalTaskEdition open={editTaskModal} taskId={task.missionTask.id} /* members={props.groupInfo.members} */ onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={task.missionTask.name} description={task.missionTask.description} amount={task.missionTask.amount} />
-                  </div>
-                : <div className='tableau__cell'> { t('company.detailed_mission.tab.no_action') } </div>
-              }
-            </div>
-          )
-          : null
+        {props.missionStatus === MissionStatus.PENDING
+          ? taskTab !== undefined && taskTab?.length > 0
+            ? taskTab.map((task: MissionTaskArrayInfo, index: number) =>
+              task.missionTask.groupId === parseInt(props.displayId)
+                ? (<div key={task.missionTask.id} className={props.missionStatus === MissionStatus.PENDING ? 'tableau' : 'tableau'}>
+                    <div className='tableau__cell tableau__cell--details '>
+                      <div> {task.missionTask.name} </div>
+                      <li> {task.missionTask.description} </li>
+                    </div>
+                    <div className='tableau__cell'>
+                      { findMemberName(task.missionTask.studentId) }
+                    </div>
+                    <div className='tableau__cell'> {task.missionTask.amount} </div>
+                    <div className='tableau__cell'>
+                      <Checkbox onClick={() => changeTaskStatus(task.missionTask.id)} checked={isChecked(task.missionTask.status)} />
+                    </div>
+                    {props.missionStatus === MissionStatus.PENDING
+                      ? <div className='tableau__cell'>
+                          <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
+                          <img onClick={() => openEditTaskModal(task)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
+                          {selectedTask?.missionTask
+                            ? <ModalTaskEdition open={editTaskModal} taskId={selectedTask?.missionTask.id} /* members={props.groupInfo.members} */ onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={selectedTask?.missionTask.name} description={selectedTask?.missionTask.description} amount={selectedTask?.missionTask.amount} />
+                            : null
+                          }
+                            </div>
+                      : <div className='tableau__cell'> { t('company.detailed_mission.tab.no_action') } </div>
+                    }
+                  </div>)
+                : null
+            )
+            : null
+          : taskTab !== undefined && taskTab?.length > 0
+            ? taskTab.map((task: MissionTaskArrayInfo, index: number) =>
+              (<div key={task.missionTask.id} className={props.missionStatus === MissionStatus.PENDING ? 'tableau' : 'tableau'}>
+                    <div className='tableau__cell tableau__cell--details '>
+                      <div> {task.missionTask.name} </div>
+                      <li> {task.missionTask.description} </li>
+                    </div>
+                    <div className='tableau__cell'>
+                      { findMemberName(task.missionTask.studentId) }
+                    </div>
+                    <div className='tableau__cell'> {task.missionTask.amount} </div>
+                    <div className='tableau__cell'>
+                      <Checkbox onClick={() => changeTaskStatus(task.missionTask.id)} checked={isChecked(task.missionTask.status)} />
+                    </div>
+                    {props.missionStatus === MissionStatus.PENDING
+                      ? <div className='tableau__cell'>
+                          <img onClick={() => deleteTask(task.missionTask.id)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/remove.svg' />
+                          <img onClick={() => openEditTaskModal(task)} className='cpn-detailed-mission__edit-logo cpn-detailed-mission__sub-section--delete' src='/assets/edit.svg' />
+                          {selectedTask?.missionTask
+                            ? <ModalTaskEdition open={editTaskModal} taskId={selectedTask?.missionTask.id} /* members={props.groupInfo.members} */ onValidation={validEditTaskModal} onClose={closeEditTaskModal} name={selectedTask?.missionTask.name} description={selectedTask?.missionTask.description} amount={selectedTask?.missionTask.amount} />
+                            : null
+                          }
+                            </div>
+                      : <div className='tableau__cell'> { t('company.detailed_mission.tab.no_action') } </div>
+                    }
+                  </div>)
+            )
+            : null
         }
         {props.missionStatus === MissionStatus.PENDING
           ? <div className='tableau tableau--add-task'>
@@ -165,7 +211,9 @@ function TaskTab (props: Props): JSX.Element {
       {props.missionStatus === MissionStatus.PENDING
         ? devisValidate
           ? <div> {'En attente d\'une validation du groupe d\'étudiant...' } </div>
-          : <ClassicButton title='Valider le devis' onClick={handleDevisValidation} />
+          : props.groupListToAccept?.includes(parseInt(props.displayId))
+            ? <ClassicButton title='Valider le devis' onClick={handleDevisValidation} />
+            : null
         : null
       }
     </div>

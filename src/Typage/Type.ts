@@ -1,3 +1,5 @@
+import { MissionInviteStatus } from "../Enum"
+
 export interface GroupError {
   data: {
     message: string
@@ -21,6 +23,12 @@ export interface GroupType {
   members: Members[]
   leaderId: number
   isLeader: boolean
+  groupId: number
+}
+
+export interface GroupInvitedList {
+  groupName: string
+  intitedStatus: MissionInviteStatus
   groupId: number
 }
 
@@ -143,6 +151,7 @@ export interface MissionTaskInfo {
   id: number
   name: string
   description: string
+  groupId: number
   studentId: number
   missionId: number
   amount: number

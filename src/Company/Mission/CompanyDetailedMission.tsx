@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
 import React, { useState, useEffect, type ChangeEvent } from 'react'
 import '../../CSS/StudentDashboard.scss'
 import '../../CSS/CompanyDetailedMission.scss'
@@ -14,8 +15,8 @@ import StepLabel from '@mui/material/StepLabel'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
-import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material'
-import type { CompanyMissionDetails, MissionInfo, MissionTaskArrayInfo } from '../../Typage/Type'
+import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from '@mui/material'
+import type { CompanyMissionDetails, GroupInvitedList, MissionInfo, MissionTaskArrayInfo } from '../../Typage/Type'
 import MissionApi from '../../API/MissionApi'
 import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
@@ -45,6 +46,14 @@ function CompanyDetailedMission (): JSX.Element {
   const [devis, setDevis] = useState<any>()
   const [isDevis, setIsDevis] = useState<boolean>(false)
   const [isValid, setIsValid] = useState<boolean>(false)
+  const [invitedGroups, setInvitedGroups] = useState<GroupInvitedList[]>()
+  const [groupToAccept, setGroupToAccept] = useState<number[]>()
+
+  const [group, setGroup] = useState('')
+
+  const handleChange = (event: SelectChangeEvent): void => {
+    setGroup(event.target.value)
+  }
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -62,6 +71,14 @@ function CompanyDetailedMission (): JSX.Element {
           setIsValid(true)
           setDevis(response.mission.specificationsFile)
         }
+      }
+      const response2 = await MissionApi.getGroupList(localStorage.getItem('jwtToken') as string, missionId)
+      if (response2 !== undefined) {
+        setInvitedGroups(response2)
+      }
+      const response3 = await MissionApi.getGroupAcceptedMission(localStorage.getItem('jwtToken') as string, missionId)
+      if (response3 !== undefined) {
+        setGroupToAccept(response3)
       }
     }
     fetchData()
@@ -266,9 +283,10 @@ function CompanyDetailedMission (): JSX.Element {
         console.error(error)
       }
     } else if (devis.length > 0) {
-      alert('Votre fichier ne doit pas exécder 2 Mb.')
+      alert('Votre fichier ne doit pas exéder 2 Mb.')
     }
   }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> {t('student.dashboard.mission')} </HotbarDashboard>
@@ -371,7 +389,29 @@ function CompanyDetailedMission (): JSX.Element {
                     </div>
                   : null
                 }
-                <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} groupInfo={missionData.group} onCallback={handleRefetch} />
+                { missionData.mission.status === MissionStatus.PENDING
+                  ? <div className='cpn-detailed-mission__selection'>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label"> { t('company.detailed_mission.selection') } </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={group}
+                          label={ t('company.detailed_mission.selection') }
+                          onChange={handleChange}
+                          >
+                            {invitedGroups !== undefined
+                              ? invitedGroups.map((element: GroupInvitedList, index: number) => (
+                                <MenuItem key={index} value={element.groupId}> {element.groupName} </MenuItem>
+                              ))
+                              : null
+                            }
+                        </Select>
+                      </FormControl>
+                    </div>
+                  : null
+                }
+                <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} groupInfo={missionData.group} displayId={group} groupListToAccept={groupToAccept ?? null} onCallback={handleRefetch} />
               </div>
               <div className='cpn-detailed-mission__column'>
                 <MissionGroup missionData={missionData} />

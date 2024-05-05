@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { type ChangeEvent, useState } from 'react'
+import React, { type ChangeEvent, useState, useEffect } from 'react'
 import '../../../CSS/ModalTaskCreation.scss'
 import { useTranslation } from 'react-i18next'
 import Modal from '@mui/material/Modal'
@@ -15,11 +15,18 @@ interface Props {
   description: string
   amount: number
   members?: Members[]
+  isStudent?: boolean
   onClose: () => void
   onValidation: () => void
 }
 
 function ModalTaskEdition (props: Props): JSX.Element {
+  useEffect(() => {
+    setName(props.name)
+    setDescription(props.description)
+    setPrice(props.amount)
+  }, [props.name, props.description])
+
   const { t } = useTranslation()
   const [name, setName] = useState(props.name)
   const [description, setDescription] = useState(props.description)
@@ -93,9 +100,17 @@ function ModalTaskEdition (props: Props): JSX.Element {
         studentId: student === '-1' ? null : student,
         skills: ''
       }
-      MissionApi.editTask(localStorage.getItem('jwtToken') as string, props.taskId, data)
+      if (props.isStudent !== null && props.isStudent !== undefined && props.isStudent) {
+        MissionApi.editTaskAsStudent(localStorage.getItem('jwtToken') as string, props.taskId, data)
+      } else {
+        MissionApi.editTask(localStorage.getItem('jwtToken') as string, props.taskId, data)
+      }
       props.onValidation()
     }
+  }
+
+  const handleCloseEditMode = (): void => {
+    props.onClose()
   }
 
   return (
@@ -106,7 +121,7 @@ function ModalTaskEdition (props: Props): JSX.Element {
             </div>
             <div className='cpn-modal-task__section'>
               <TextField
-                defaultValue={name}
+                defaultValue={props.name}
                 onChange={handleName}
                 variant='outlined'
                 id="standard-required"
@@ -116,7 +131,7 @@ function ModalTaskEdition (props: Props): JSX.Element {
                 helperText={errorName ? 'Veuillez rentrer un nom pour votre tâche.' : false}
               />
               <TextField
-                defaultValue={description}
+                defaultValue={props.description}
                 onChange={handleDesc}
                 variant='outlined'
                 id="outlined-multiline-static fullWidth"
@@ -129,7 +144,7 @@ function ModalTaskEdition (props: Props): JSX.Element {
                 helperText={errorDesc ? 'Veuillez rentrer une description pour votre tâche.' : false}
               />
               <TextField
-                defaultValue={price}
+                defaultValue={props.amount}
                 onChange={handlePrice}
                 variant='outlined'
                 id="outlined-number"
@@ -162,7 +177,7 @@ function ModalTaskEdition (props: Props): JSX.Element {
               </FormControl>
               <div className='cpn-modal-task__button-section'>
                 <ClassicButton title='Valider' onClick={handleValidation} />
-                <ClassicButton title='Annuler' cancelled onClick={props.onClose}/>
+                <ClassicButton title='Annuler' cancelled onClick={handleCloseEditMode}/>
               </div>
             </div>
         </div>

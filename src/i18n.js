@@ -327,6 +327,7 @@ i18n
               mission: 'missions',
               participants: 'Participants',
               no_participants: 'Aucun groupe trouvée',
+              selection: 'Liste des groupes',
               tab: {
                 detail: 'Détail',
                 quantity: 'Quantité',
