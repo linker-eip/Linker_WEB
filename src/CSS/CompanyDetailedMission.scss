@@ -107,14 +107,14 @@
     border-radius: 10px;
     margin-left: -1em;
     display: grid;
-    grid-template-columns: 5fr 1.1fr 1.1fr;
+    grid-template-columns: 4fr 1.1fr 1.1fr 1.1fr;
     color: #4B4B4B;
 
     &--colored {
       border-radius: 10px;
       margin-left: -1em;
       display: grid;
-      grid-template-columns: 5fr 1fr 1fr;
+      grid-template-columns: 3.5fr 1.5fr 1fr 1fr;
       margin-top: 1.5em;
       padding: 0.9em;
       background: rgba(0, 82, 117, 0.50);
@@ -129,7 +129,7 @@
       border-radius: 10px;
       margin-left: -1em;
       display: grid;
-      grid-template-columns: 10fr 1.1fr 1.1fr 0.1fr;
+      grid-template-columns: 6.5fr 1.5fr 2.5fr 0.5fr 0.1fr;
       color: #4B4B4B;
     }
   }  
@@ -319,5 +319,48 @@
     flex-direction: row;
     gap: 1em;
     align-items: center;
+  }
+}
+
+.tableau {
+  display: grid;
+  grid-template-columns: 3.5fr 1.5fr 1fr 1fr 1fr;
+  border-bottom: solid 1px #E0DED9;
+  font-family: 'Poppins' !important;
+  color: #4B4B4B;
+
+  &--colored {
+    border-radius: 10px;
+    background-color: rgba(0, 82, 117, 0.50);
+    color: #FFF;
+    margin-top: 1.5em;
+  }
+
+  &--add-task {
+    border-bottom: none;
+  }
+  
+  &__top {
+      padding: 0.9em;
+      color: #FFF;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    justify-self: center;
+  }
+
+  &__cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+    text-align: center;
+    
+    &--details {
+      text-align: start;
+      padding: 1em 0em 1em 1em;
+      justify-self: self-start;
+    }
   }
 }

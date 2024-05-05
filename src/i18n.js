@@ -331,7 +331,10 @@ i18n
                 detail: 'Détail',
                 quantity: 'Quantité',
                 price: 'Prix',
-                task: 'Tâches'
+                task: 'Tâches',
+                attribution: 'Attribution',
+                no_action: 'Aucune action à réaliser'
+
               },
               devis: {
                 title: 'Devis pour la mission: {{name}}',
