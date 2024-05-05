@@ -57,6 +57,11 @@ function CompanyDetailedMission (): JSX.Element {
       setMissionData(response)
       if (response !== undefined) {
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
+        if (response.mission.specificationsFile !== undefined && response.mission.specificationsFile !== null) {
+          setIsDevis(true)
+          setIsValid(true)
+          setDevis(response.mission.specificationsFile)
+        }
       }
     }
     fetchData()
@@ -227,7 +232,7 @@ function CompanyDetailedMission (): JSX.Element {
   }
 
   const downloadDevis = (): void => {
-    console.log(devis)
+    window.open(devis, '_blank')
   }
 
   const handleDevis = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -237,6 +242,7 @@ function CompanyDetailedMission (): JSX.Element {
 
   const validDevis = (): void => {
     setIsDevis(true)
+    uploadSpecifications()
   }
 
   const resetDevis = (): void => {
@@ -245,6 +251,24 @@ function CompanyDetailedMission (): JSX.Element {
     setDevis(undefined)
   }
 
+  const uploadSpecifications = async (): Promise<void> => {
+    if (devis.length > 0 && devis[0].size <= 2 * 1024 * 1024) {
+      const specificationsFormData = new FormData()
+      specificationsFormData.append('specifications', devis[0])
+      try {
+        if (missionData?.mission.id !== undefined) {
+          const response = await MissionApi.uploadSpecifications(localStorage.getItem('jwtToken') as string, missionData?.mission.id, specificationsFormData)
+          if (response !== undefined) {
+            window.location.reload()
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    } else if (devis.length > 0) {
+      alert('Votre fichier ne doit pas exécder 2 Mb.')
+    }
+  }
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> {t('student.dashboard.mission')} </HotbarDashboard>

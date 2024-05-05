@@ -131,6 +131,7 @@ export interface MissionInfo {
   createdAt: string
   amount: number
   skills: string
+  specificationsFile: string
 }
 
 export interface MissionTaskArrayInfo {

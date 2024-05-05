@@ -47,6 +47,9 @@ function StudentDetailedMission (): JSX.Element {
       const response = await MissionApi.getStudentDetailedMission(localStorage.getItem('jwtToken') as string, missionId)
       setMissionData(response)
       if (response !== undefined) {
+        if (response.mission.specificationsFile !== undefined && response.mission.specificationsFile !== null) {
+          setIsDevis(true)
+        }
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
         const response2 = await ProfileApi.getSpecificCompanyProfile(localStorage.getItem('jwtToken') as string, 35/* response.mission.companyId */)
         setCompanyData(response2)
@@ -144,7 +147,7 @@ function StudentDetailedMission (): JSX.Element {
   }, [missionData])
 
   const downloadDevis = (): void => {
-    console.log('Yes i\'m downloading the devis...')
+    window.open(missionData?.mission.specificationsFile, '_blank')
   }
 
   return (

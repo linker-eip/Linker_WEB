@@ -63,6 +63,16 @@ class MissionApi {
     return response.data
   }
 
+  static async uploadSpecifications (jwtToken: string, id: number, dto: FormData): Promise<any> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/mission/${id}`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
+  }
+
   static async createTask (jwtToken: string, missionId: number, data: any): Promise<MissionTaskInfo> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/mission/task/${missionId}`, data, {
       headers: {
