@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import { MissionInviteStatus } from "../Enum"
 
 export interface GroupError {

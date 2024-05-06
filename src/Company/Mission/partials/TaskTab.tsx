@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useState, useEffect } from 'react'
-import type { GroupInfo, MissionTaskArrayInfo } from '../../../Typage/Type'
+import { type GroupInfo, type MissionTaskArrayInfo } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
 import '../../../CSS/CompanyDetailedMission.scss'
 import ModalTaskCreation from './ModalTaskCreation'
@@ -102,10 +102,20 @@ function TaskTab (props: Props): JSX.Element {
     }
   }
 
-  const handleDevisValidation = (): void => {
-    MissionApi.acceptGroupToMission(localStorage.getItem('jwtToken') as string, props.missionId, props.displayId)
-    setDevisValidate(true)
-    window.location.reload()
+  const handleDevisValidation = async (): Promise<void> => {
+    const response = await MissionApi.acceptGroupToMission(localStorage.getItem('jwtToken') as string, props.missionId, props.displayId)
+    if (response !== undefined) {
+      setDevisValidate(true)
+      window.location.reload()
+    }
+  }
+
+  const handleDevisRefuse = async (): Promise<void> => {
+    const response = await MissionApi.refuseGroupToMission(localStorage.getItem('jwtToken') as string, props.missionId, props.displayId)
+    if (response !== undefined) {
+      setDevisValidate(false)
+      window.location.reload()
+    }
   }
 
   const findMemberName = (assignedId: number): string => {
@@ -210,9 +220,12 @@ function TaskTab (props: Props): JSX.Element {
       </div>
       {props.missionStatus === MissionStatus.PENDING
         ? devisValidate
-          ? <div> {'En attente d\'une validation du groupe d\'étudiant...' } </div>
+          ? null
           : props.groupListToAccept?.includes(parseInt(props.displayId))
-            ? <ClassicButton title='Valider le devis' onClick={handleDevisValidation} />
+            ? <div>
+                <ClassicButton title='Valider le devis' onClick={handleDevisValidation} />
+                <ClassicButton title='Refuser le devis' onClick={handleDevisRefuse} />
+              </div>
             : null
         : null
       }

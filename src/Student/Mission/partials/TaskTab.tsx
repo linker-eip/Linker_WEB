@@ -37,6 +37,24 @@ function TaskTab (props: Props): JSX.Element {
   const [selectedDescription, setSelectedDescription] = useState<string>('')
   const [selectedAmount, setSelectedAmount] = useState<number>(0)
 
+  const [isAccepted, setIsAccepted] = useState<boolean>()
+
+  useEffect(() => {
+    async function fetchData (): Promise<void> {
+      const response = await MissionApi.getStudentMissionInvitations(localStorage.getItem('jwtToken') as string, MissionStatus.GROUP_ACCEPTED)
+      if (response !== undefined) {
+        const result = response.find(element => element.id === props.missionId)
+        if (result) {
+          setIsAccepted(true)
+        } else {
+          setIsAccepted(false)
+        }
+      }
+    }
+
+    fetchData()
+  }, [])
+
   useEffect(() => {
     setTaskTab(props.missionTask.slice().sort((a, b) => a.missionTask.id - b.missionTask.id))
   }, [props.missionTask])
@@ -179,7 +197,7 @@ function TaskTab (props: Props): JSX.Element {
         </div>
       </div>
       {props.missionStatus === MissionStatus.PENDING
-        ? devisValidate
+        ? isAccepted
           ? <div> {'En attente d\'une validation de l\'entreprise...' } </div>
           : <ClassicButton title='Valider le devis' onClick={handleDevisValidation} />
         : null
