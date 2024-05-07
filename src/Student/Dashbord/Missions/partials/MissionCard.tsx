@@ -65,8 +65,6 @@ function MissionCard (props: Props): JSX.Element {
   }
 
   const acceptMission = async (): Promise<void> => {
-    console.log('here')
-    console.log(missionData)
     if (missionData !== undefined) {
       const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
       if (response !== undefined) {

@@ -17,7 +17,7 @@ import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
 import MissionApi from '../../API/MissionApi'
-import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo } from '../../Typage/Type'
+import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo, GroupInfo, GroupType } from '../../Typage/Type'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
 import ProfileApi from '../../API/ProfileApi'
@@ -34,6 +34,8 @@ function StudentDetailedMission (): JSX.Element {
   const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
   const [companyData, setCompanyData] = useState<CompanyInfo>()
   const [groupId, setGroupId] = useState<number>()
+  const [groupData, setGroup] = useState<GroupType>()
+  const [isDevis, setIsDevis] = useState<boolean>(false)
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -45,13 +47,17 @@ function StudentDetailedMission (): JSX.Element {
       const response = await MissionApi.getStudentDetailedMission(localStorage.getItem('jwtToken') as string, missionId)
       setMissionData(response)
       if (response !== undefined) {
+        if (response.mission.specificationsFile !== undefined && response.mission.specificationsFile !== null) {
+          setIsDevis(true)
+        }
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
-        const response2 = await ProfileApi.getSpecificCompanyProfile(localStorage.getItem('jwtToken') as string, 35/* response.mission.companyId */)
+        const response2 = await ProfileApi.getSpecificCompanyProfile(localStorage.getItem('jwtToken') as string, response.mission.companyId)
         setCompanyData(response2)
       }
       const response3 = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
       if (response3 !== undefined) {
         setGroupId(response3.data?.groupId)
+        setGroup(response3.data)
       }
     }
     fetchData()
@@ -88,7 +94,6 @@ function StudentDetailedMission (): JSX.Element {
 
   const acceptMission = async (): Promise<void> => {
     if (missionData !== undefined) {
-      console.log('Mission accepted')
       const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, groupId ?? 0)
       if (response !== undefined) {
         window.location.reload()
@@ -97,7 +102,6 @@ function StudentDetailedMission (): JSX.Element {
   }
 
   const refuseMission = async (): Promise<void> => {
-    console.log('test')
     if (missionData !== undefined) {
       const response = await MissionApi.refuseMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, groupId ?? 0)
       if (response !== undefined) {
@@ -139,6 +143,10 @@ function StudentDetailedMission (): JSX.Element {
         break
     }
   }, [missionData])
+
+  const downloadDevis = (): void => {
+    window.open(missionData?.mission.specificationsFile, '_blank')
+  }
 
   return (
     <div className='std-bord-container'>
@@ -193,32 +201,6 @@ function StudentDetailedMission (): JSX.Element {
                 </div>
             : null
           }
-          {/* <div className='std-detailed-mission__section'>
-            { potential
-              ? <div className='std-detailed-mission__potential-section'>
-                  <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
-                  <div className='std-detailed-mission__potential-button'>
-                    <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen}/>
-                    <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
-                  </div>
-                </div>
-              : <p className='std-detailed-mission__section__title'> { t('student.detailed_mission.pending_mission') } </p>
-            }
-            <p className='std-detailed-mission__section__title-3'> { missionData?.mission.name } </p>
-            <Stepper activeStep={activeStep - 1} alternativeLabel>
-              {steps.map((label, index) => (
-                <Step key={label}>
-                  <StepLabel>
-                    { index <= activeStep - 1
-                      ? <p className='std-detailed-mission__stepper-active'>{label}</p>
-                      : <p className='std-detailed-mission__stepper'>{label}</p>
-                    }
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </div> */}
-
           <div className='std-detailed-mission__container'>
             <div className='cpn-detailed-mission__section'>
               <div className='std-detailed-mission__row-2'>
@@ -232,8 +214,18 @@ function StudentDetailedMission (): JSX.Element {
                   }
                 </div>
               </div>
-              {missionData !== undefined
-                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} onCallback={handleRefetch}/>
+              { isDevis
+                ? <div className='cpn-detailed-mission__devis'>
+                    <img src='/assets/downloadInvoice.png' />
+                    { t('company.detailed_mission.devis.title', { name: missionData?.mission.name }) }
+                    <ClassicButton title='Télécharger' onClick={downloadDevis} />
+                  </div>
+                : <div className='cpn-detailed-mission__devis'>
+                    { t('company.detailed_mission.devis.no_devis', { name: missionData?.mission.name }) }
+                  </div>
+              }
+              {missionData !== undefined && groupData !== undefined
+                ? <TaskTab missionTask={missionData.missionTaskArray } missionId={parseInt(missionId ?? '0', 10)} missionStatus={missionData?.mission.status} groupInfo={groupData} groupId={groupId ?? 0} onCallback={handleRefetch}/>
                 : <div />
               }
             </div>

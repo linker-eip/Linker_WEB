@@ -339,11 +339,20 @@ i18n
               mission: 'missions',
               participants: 'Participants',
               no_participants: 'Aucun groupe trouvée',
+              selection: 'Liste des groupes',
               tab: {
                 detail: 'Détail',
                 quantity: 'Quantité',
                 price: 'Prix',
-                task: 'Tâches'
+                task: 'Tâches',
+                attribution: 'Attribution',
+                no_action: 'Aucune action à réaliser'
+
+              },
+              devis: {
+                title: 'Devis pour la mission: {{name}}',
+                no_devis: 'Pas de devis renseigné pour la mission: {{name}}',
+                devis: 'Importez votre devis'
               },
               task: {
                 modal_title: 'Ajouter une tâche',
