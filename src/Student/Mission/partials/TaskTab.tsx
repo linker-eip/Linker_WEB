@@ -124,7 +124,10 @@ function TaskTab (props: Props): JSX.Element {
 
   const handleDevisValidation = async (): Promise<void> => {
     const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, props.missionId, props.groupId ?? 0)
-    setDevisValidate(true)
+    if (response !== undefined) {
+      setDevisValidate(true)
+      window.location.reload()
+    }
   }
 
   const findMemberName = (assignedId: number): string => {

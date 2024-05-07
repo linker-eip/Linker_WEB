@@ -88,7 +88,7 @@ function ModalTaskCreation (props: Props): JSX.Element {
         name,
         description,
         amount: price,
-        studentId: student === '-1' ? null : student,
+        studentId: student === null ? -1 : parseInt(student),
         skills: ''
       }
       if (props.isStudent !== null && props.isStudent !== undefined && props.isStudent) {
