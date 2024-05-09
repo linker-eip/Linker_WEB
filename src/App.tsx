@@ -41,6 +41,7 @@ import AdminArchives from './Admin/Archives/adminArchives'
 import MentionLegales from './Transverse/mentionLegales'
 import Footer from './Transverse/Footer'
 import Contact from './Transverse/contact'
+import WaitVerifiedStudentAccount from './Transverse/waitVerifyAccount'
 
 import * as ROUTES from './Router/routes'
 
@@ -100,6 +101,12 @@ function App (): JSX.Element {
         <Route path={ROUTES.CONTACT} element={
           <div>
             <Contact />
+            <Footer />
+          </div>
+        } />
+        <Route path={ROUTES.WAIT_VERIFIED_STUDENT_ACCOUNT} element={
+          <div>
+            <WaitVerifiedStudentAccount />
             <Footer />
           </div>
         } />

@@ -47,6 +47,7 @@ i18n
             login: 'Se connecter à Linker'
           },
           verify_page: {
+            waiting: 'Afin de vous rendre sur le site de Linker, nous vous prions de vérifier votre compte en utilisant le lien que vous avez reçu par email.',
             success: {
               text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
               text_2: 'Vous pouvez maintenant profiter pleinement des fonctionnalités de ',
