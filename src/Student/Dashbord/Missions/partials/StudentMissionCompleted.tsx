@@ -11,9 +11,12 @@ function StudentMissionsCompleted (): JSX.Element {
   useEffect(() => {
     async function fetchData (): Promise<void> {
       const response = await MissionApi.getStudentMissions(localStorage.getItem('jwtToken') as string, MissionStatus.FINISHED)
-      if (response !== undefined) {
-        setData(response)
-        setNbrMission(response.length)
+      const secondResponse = await MissionApi.getStudentMissions(localStorage.getItem('jwtToken') as string, MissionStatus.PROVISIONED)
+      const combinedResponse = [...response, ...secondResponse]
+
+      if (combinedResponse !== undefined) {
+        setData(combinedResponse)
+        setNbrMission(combinedResponse.length)
       }
     }
     fetchData()

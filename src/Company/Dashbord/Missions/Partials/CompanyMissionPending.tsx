@@ -94,7 +94,7 @@ function CompanyMissionsPending (): JSX.Element {
             { t('company.mission.pending.no_mission') }
           </p>
         : filteredData.map((item, index) => (
-          <MissionCardPotential data={item} key={index} />
+          <MissionCardPotential data={item} key={index} in_progress />
         ))
       }
     </div>
