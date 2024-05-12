@@ -9,11 +9,10 @@ import { DashboardState } from '../../../Enum'
 import isPrivateRoute from '../../../Component/isPrivateRoute'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import { Typography } from '@mui/material'
+import GroupChat from './partials/GroupChat'
 import Group from './partials/Group'
 import GroupApi from '../../../API/GroupApi'
-import type { GroupType, GroupError, Group as GroupData, GroupInvitationData } from '../../../Typage/Type'
+import type { Group as GroupData, GroupInvitationData } from '../../../Typage/Type'
 import Invitations from './partials/Invitations'
 
 interface TabPanelProps {
@@ -83,12 +82,16 @@ function StudentGroup (): JSX.Element {
           <div className='std-mission__group-page'>
             <Tabs className='std-mission__text' value={value} onChange={handleChange} aria-label="basic tabs example">
               <Tab className='std-mission__text' label={ groupData?.data?.name ?? t('student.dashboard.groups.my_group')} {...a11yProps(0)} />
+              <Tab className='std-mission__text' label={t('student.dashboard.groups.chat')} {...a11yProps(0)} />
               <Tab className='std-mission__text' label={t('student.dashboard.groups.invite', { nbrInvitation: groupInvitationData?.data?.length ?? 0 })} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
               <Group data={groupData} onReturn={handleRefetch} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
+              <GroupChat data={groupData} onReturn={handleRefetch} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
               <Invitations data={groupInvitationData?.data} onReturn={handleRefetch} />
             </CustomTabPanel>
           </div>
