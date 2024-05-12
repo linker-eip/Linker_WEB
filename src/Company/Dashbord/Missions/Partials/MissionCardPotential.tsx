@@ -123,7 +123,7 @@ function MissionCardPotential (props: Props): JSX.Element {
             </div>
           }
         </div>
-        { props.potential === true && (props.in_progress === null || props.in_progress === undefined) &&
+        { props.potential ??
           <div className='mission-card__link' onClick={handleNavigation}>
             <p> {t('missionCard.see_mission')} </p>
           </div>
@@ -145,9 +145,6 @@ function MissionCardPotential (props: Props): JSX.Element {
         }
         { props.in_progress === true
           ? <div className='mission-card__link-section'>
-              <div className='mission-card__link' onClick={handleNavigation}>
-                <p> {t('missionCard.see_mission')} </p>
-              </div>
               <ClassicButton
                 title='Payer la mission'
                 onClick={() => { handlePaymentCheckout() }}

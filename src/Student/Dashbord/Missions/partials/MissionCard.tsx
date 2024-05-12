@@ -86,6 +86,12 @@ function MissionCard (props: Props): JSX.Element {
     navigate(`${ROUTES.STUDENT_DETAILED_MISSION.replace(':missionId', props.data.id.toString())}`)
   }
 
+  function formatDate (missionDate: string): string {
+    const [date] = missionDate.split('T')
+    const [year, month, day] = date.split('-')
+    return `${day}-${month}-${year}`
+  }
+
   return (
     <div className='mission-card'>
         <img className='mission-card__logo' src={companyData?.companyPicture} />
@@ -102,7 +108,7 @@ function MissionCard (props: Props): JSX.Element {
             props.data.startOfMission !== undefined &&
             <div className='mission-card__section'>
               <p className='mission-card__text'> {t('missionCard.begin')} </p>
-              <p className='mission-card__value'> { props.data.startOfMission } </p>
+              <p className='mission-card__value'> { formatDate(props.data.startOfMission.toString()) } </p>
             </div>
           }
           <div className='mission-card__section'>
@@ -110,16 +116,17 @@ function MissionCard (props: Props): JSX.Element {
               ? <p className='mission-card__text'> {t('missionCard.cancelled')} </p>
               : <p className='mission-card__text'> {t('missionCard.end')} </p>
             }
-            <p className='mission-card__value'> { props.cancelled !== null && props.cancelled === true ? props.data.endOfMission : props.data.endOfMission } </p>
+            <p className='mission-card__value'> {
+              props.cancelled !== null && props.cancelled === true
+                ? formatDate(props.data.endOfMission.toString())
+                : formatDate(props.data.endOfMission.toString())
+              }
+            </p>
           </div>
           <div className='mission-card__section'>
             <p className='mission-card__text'> {t('missionCard.participants')} </p>
             <p className='mission-card__value'> { groupData?.members.length } personnes </p>
           </div>
-          {/* <div className='mission-card__section'>
-            <p className='mission-card__text'> {t('missionCard.bill')} </p>
-            <p className='mission-card__text-important'> { props.data.bill } </p>
-          </div> */}
         </div>
         { props.potential ??
           <div className='mission-card__link' onClick={handleNavigation}>
