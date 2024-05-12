@@ -199,20 +199,22 @@ i18n
               pending: {
                 title: 'En cours',
                 pending_mission: 'Missions en cours ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission en cours'
+                no_mission: 'Vous n\'avez aucune mission en cours.'
               },
               completed: {
                 title: 'Terminées',
                 completed_mission: 'Missions terminées ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission terminée'
+                no_mission: 'Vous n\'avez aucune mission terminée.'
               },
               cancelled: {
                 title: 'Annulées',
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission annulée'
+                no_mission: 'Vous n\'avez aucune mission annulée.'
               },
               potential: {
-                title: 'potentielle'
+                title: 'Potentielles',
+                potential_mission: 'Missions potentielles ({{nbrMission}})',
+                no_mission: 'Vous n\'avez aucune mission potentielle.'
               }
             },
             sales: {
@@ -498,20 +500,22 @@ i18n
               pending: {
                 title: 'En cours',
                 pending_mission: 'Missions en cours ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission en cours'
+                no_mission: 'Vous n\'avez aucune mission en cours.'
               },
               completed: {
                 title: 'Terminées',
                 completed_mission: 'Missions terminées ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission terminée'
+                no_mission: 'Vous n\'avez aucune mission terminée.'
               },
               cancelled: {
                 title: 'Annulées',
                 cancelled_mission: 'Missions annulées ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission annulée'
+                no_mission: 'Vous n\'avez aucune mission annulée.'
               },
               potential: {
-                title: 'potentielle'
+                title: 'Potentielles',
+                potential_mission: 'Missions potentielles ({{nbrMission}})',
+                no_mission: 'Vous n\'avez aucune mission potentielle.'
               }
             },
             sales: {
