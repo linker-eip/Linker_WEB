@@ -7,6 +7,8 @@ import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { IconButton } from '@mui/material'
+import ClassicButton from '../../../../Component/ClassicButton'
+import MissionApi from '../../../../API/MissionApi'
 
 interface MissionPotentialItems {
   id: number
@@ -24,6 +26,7 @@ interface Props {
   data: MissionPotentialItems
   cancelled?: boolean
   potential?: boolean
+  in_progress?: boolean
 }
 
 function MissionCardPotential (props: Props): JSX.Element {
@@ -52,6 +55,20 @@ function MissionCardPotential (props: Props): JSX.Element {
     const [date] = missionDate.split('T')
     const [year, month, day] = date.split('-')
     return `${day}-${month}-${year}`
+  }
+
+  const handlePaymentCheckout = async (): Promise<void> => {
+    try {
+      const paymentCheckout = await MissionApi.getCompanyMissionCheckout(localStorage.getItem('jwtToken') as string, props.data.id)
+
+      if (typeof paymentCheckout.sessionUrl === 'string' && paymentCheckout.sessionUrl.trim() !== '') {
+        window.open(paymentCheckout.sessionUrl, '_blank', 'noopener,noreferrer')
+      } else {
+        console.log('[ERROR] - Session URL is missing in the response.')
+      }
+    } catch (error) {
+      console.error('[ERROR] - Unable to proceed payment checkout:', error)
+    }
   }
 
   return (
@@ -106,7 +123,7 @@ function MissionCardPotential (props: Props): JSX.Element {
             </div>
           }
         </div>
-        { props.potential ??
+        { props.potential === true && (props.in_progress === null || props.in_progress === undefined) &&
           <div className='mission-card__link' onClick={handleNavigation}>
             <p> {t('missionCard.see_mission')} </p>
           </div>
@@ -123,6 +140,18 @@ function MissionCardPotential (props: Props): JSX.Element {
               >
                 <DeleteOutlineIcon sx={{ color: 'red' }} />
               </IconButton>
+            </div>
+          : null
+        }
+        { props.in_progress === true
+          ? <div className='mission-card__link-section'>
+              <div className='mission-card__link' onClick={handleNavigation}>
+                <p> {t('missionCard.see_mission')} </p>
+              </div>
+              <ClassicButton
+                title='Payer la mission'
+                onClick={() => { handlePaymentCheckout() }}
+              />
             </div>
           : null
         }

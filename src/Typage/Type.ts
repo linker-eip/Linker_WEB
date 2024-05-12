@@ -240,3 +240,16 @@ export interface CompanyAdminInfo {
   lastConnectedAt: string
   createdAt: string
 }
+
+export interface PaymentCheckoutResponse {
+  companyId: number
+  createdAt: string
+  email: string | null
+  id: number
+  missionId: number
+  priceId: string
+  productId: string
+  sessionId: string
+  sessionUrl: string
+  status: string
+}
