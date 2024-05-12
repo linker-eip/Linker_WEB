@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+import React, { useState, useEffect, type ChangeEvent } from 'react'
 import '../../CSS/StudentDashboard.scss'
 import '../../CSS/CompanyDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
@@ -14,12 +15,13 @@ import StepLabel from '@mui/material/StepLabel'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
 import { useParams } from 'react-router-dom'
-import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material'
-import type { CompanyMissionDetails, MissionInfo, MissionTaskArrayInfo } from '../../Typage/Type'
+import { Avatar, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from '@mui/material'
+import type { CompanyMissionDetails, GroupInvitedList, MissionInfo, MissionTaskArrayInfo } from '../../Typage/Type'
 import MissionApi from '../../API/MissionApi'
 import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
+import DropZone from '../../Component/DropZone'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -41,6 +43,17 @@ function CompanyDetailedMission (): JSX.Element {
   const [hasCompanyCommented, setHasCompanyCommented] = useState<number>(0)
   const [refetchMissionData, setRefetch] = useState<boolean>(false)
   const [nbrFinishedTask, setFinishedTask] = useState<number>(0)
+  const [devis, setDevis] = useState<any>()
+  const [isDevis, setIsDevis] = useState<boolean>(false)
+  const [isValid, setIsValid] = useState<boolean>(false)
+  const [invitedGroups, setInvitedGroups] = useState<GroupInvitedList[]>()
+  const [groupToAccept, setGroupToAccept] = useState<number[]>()
+
+  const [group, setGroup] = useState('')
+
+  const handleChange = (event: SelectChangeEvent): void => {
+    setGroup(event.target.value)
+  }
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
@@ -53,6 +66,19 @@ function CompanyDetailedMission (): JSX.Element {
       setMissionData(response)
       if (response !== undefined) {
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
+        if (response.mission.specificationsFile !== undefined && response.mission.specificationsFile !== null) {
+          setIsDevis(true)
+          setIsValid(true)
+          setDevis(response.mission.specificationsFile)
+        }
+      }
+      const response2 = await MissionApi.getGroupList(localStorage.getItem('jwtToken') as string, missionId)
+      if (response2 !== undefined) {
+        setInvitedGroups(response2)
+      }
+      const response3 = await MissionApi.getGroupAcceptedMission(localStorage.getItem('jwtToken') as string, missionId)
+      if (response3 !== undefined) {
+        setGroupToAccept(response3)
       }
     }
     fetchData()
@@ -222,149 +248,234 @@ function CompanyDetailedMission (): JSX.Element {
     }
   }
 
+  const downloadDevis = (): void => {
+    window.open(devis, '_blank')
+  }
+
+  const handleDevis = (event: ChangeEvent<HTMLInputElement>): void => {
+    setIsValid(true)
+    setDevis(event)
+  }
+
+  const validDevis = (): void => {
+    setIsDevis(true)
+    uploadSpecifications()
+  }
+
+  const resetDevis = (): void => {
+    setIsDevis(false)
+    setIsValid(false)
+    setDevis(undefined)
+  }
+
+  const uploadSpecifications = async (): Promise<void> => {
+    if (devis.length > 0 && devis[0].size <= 2 * 1024 * 1024) {
+      const specificationsFormData = new FormData()
+      specificationsFormData.append('specifications', devis[0])
+      try {
+        if (missionData?.mission.id !== undefined) {
+          const response = await MissionApi.uploadSpecifications(localStorage.getItem('jwtToken') as string, missionData?.mission.id, specificationsFormData)
+          if (response !== undefined) {
+            window.location.reload()
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    } else if (devis.length > 0) {
+      alert('Votre fichier ne doit pas exéder 2 Mb.')
+    }
+  }
+
   return (
     <div className='std-bord-container'>
-      <HotbarDashboard> { t('student.dashboard.mission') } </HotbarDashboard>
+      <HotbarDashboard> {t('student.dashboard.mission')} </HotbarDashboard>
       <div className='std-bord-container__page'>
         <SidebarDashboard state={state.MISSION} />
-        { missionData !== undefined && missionData !== null
+        {missionData !== undefined && missionData !== null
           ? <div className='std-bord-container__content'>
-              <div className='cpn-detailed-mission__section'>
-                { missionData.mission.status === MissionStatus.PENDING
-                  ? <div className='cpn-detailed-mission__potential-section'>
-                    <p className='cpn-detailed-mission__section__title'> { t('company.detailed_mission.research_mission') } </p>
-                      <div className='cpn-detailed-mission__potential-button'>
-                        <ClassicButton title='Modifier' onClick={handleEditOpen}/>
-                        <ClassicButton title='Supprimer' refuse onClick={handleRefuseOpen}/>
-                      </div>
-                    </div>
-                  : null
-                }
-                { missionData.mission.status === MissionStatus.ACCEPTED
-                  ? <div className='cpn-detailed-mission__potential-section'>
-                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_pending') } </p>
-                    </div>
-                  : null
-                }
-                { missionData.mission.status === MissionStatus.FINISHED
-                  ? <div className='cpn-detailed-mission__potential-section'>
-                      <p className='cpn-detailed-mission__section__title'> { t('student.detailed_mission.mission_completed') } </p>
-                    </div>
-                  : null
-                }
-                <p className='cpn-detailed-mission__section__title-3'>{ missionData.mission.name }</p>
-                <p className='cpn-detailed-mission__section__title-4'>{ missionData.mission.description }</p>
-                <Stepper
-                  activeStep={activeStep - 1}
-                  alternativeLabel
-                >
-                  {steps.map((label, index) => (
-                    <Step key={label}>
-                      <StepLabel>
-                        <p className={
-                            index === activeStep - 1
-                              ? 'cpn-detailed-mission__stepper-active'
-                              : 'cpn-detailed-mission__stepper'
-                          }>
-                          {label}
-                        </p>
-                      </StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              </div>
-              <div className='cpn-detailed-mission__container'>
-                <div className='cpn-detailed-mission__section'>
-                  <div className='cpn-detailed-mission__section__notation'>
-                    <p className='cpn-detailed-mission__container__title'>{ t('student.detailed_mission.details') }</p>
-                    {
-                      missionData.mission.status === MissionStatus.IN_PROGRESS
-                        ? <div>
-                            { `Tâches terminées: ${nbrFinishedTask}/${missionData.missionTaskArray.length}` }
-                          </div>
-                        : null
-                    }
-                    {
-                      missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && missionData.mission.status === MissionStatus.IN_PROGRESS
-                        ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
-                        : null
-                    }
-                    <div>
-                      { missionData.mission.status === MissionStatus.FINISHED && hasCompanyNoted === 0
-                        ? <ClassicButton title='Noter' onClick={handleNotationOpen} />
-                        : null
-                      }
-                      { missionData.mission.status === MissionStatus.FINISHED && hasCompanyCommented === 0
-                        ? <ClassicButton title='Laisser un avis' onClick={handleCommentOpen} />
-                        : null
-                      }
-                    </div>
+            <div className='cpn-detailed-mission__section'>
+              {missionData.mission.status === MissionStatus.PENDING
+                ? <div className='cpn-detailed-mission__potential-section'>
+                  <p className='cpn-detailed-mission__section__title'> {t('company.detailed_mission.research_mission')} </p>
+                  <div className='cpn-detailed-mission__potential-button'>
+                    <ClassicButton title='Modifier' onClick={handleEditOpen} />
+                    <ClassicButton title='Supprimer' refuse onClick={handleRefuseOpen} />
                   </div>
-                  <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} onCallback={handleRefetch}/>
                 </div>
-                <div className='cpn-detailed-mission__column'>
-                <MissionGroup missionData={missionData} />
+                : null
+              }
+              {missionData.mission.status === MissionStatus.ACCEPTED
+                ? <div className='cpn-detailed-mission__potential-section'>
+                  <p className='cpn-detailed-mission__section__title'> {t('student.detailed_mission.mission_pending')} </p>
+                </div>
+                : null
+              }
+              {missionData.mission.status === MissionStatus.FINISHED
+                ? <div className='cpn-detailed-mission__potential-section'>
+                  <p className='cpn-detailed-mission__section__title'> {t('student.detailed_mission.mission_completed')} </p>
+                </div>
+                : null
+              }
+              <p className='cpn-detailed-mission__section__title-3'>{missionData.mission.name}</p>
+              <p className='cpn-detailed-mission__section__title-4'>{missionData.mission.description}</p>
+              <Stepper
+                activeStep={activeStep - 1}
+                alternativeLabel
+              >
+                {steps.map((label, index) => (
+                  <Step key={label}>
+                    <StepLabel>
+                      <p className={
+                        index === activeStep - 1
+                          ? 'cpn-detailed-mission__stepper-active'
+                          : 'cpn-detailed-mission__stepper'
+                      }>
+                        {label}
+                      </p>
+                    </StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </div>
+            <div className='cpn-detailed-mission__container'>
+              <div className='cpn-detailed-mission__section'>
+                <div className='cpn-detailed-mission__section__notation'>
+                  <p className='cpn-detailed-mission__container__title'>{t('student.detailed_mission.details')}</p>
+                  {
+                    missionData.mission.status === MissionStatus.IN_PROGRESS
+                      ? <div>
+                        {`Tâches terminées: ${nbrFinishedTask}/${missionData.missionTaskArray.length}`}
+                      </div>
+                      : null
+                  }
+                  {
+                    missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && missionData.mission.status === MissionStatus.IN_PROGRESS
+                      ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
+                      : null
+                  }
                   <div>
-                    <div className='cpn-detailed-mission__section'>
-                      <p className='cpn-detailed-mission__container__title'> { t('company.detailed_mission.historic') } </p>
-                      <Historic missionStatus={missionData.mission.status} companyName={missionData.companyProfile.name} groupName={missionData.group !== null ? missionData.group.name : 'GroupName'} companyLogo={missionData.companyProfile.picture} groupLogo={missionData.group !== null ? missionData.group.picture : 'GroupName'} />
-                      { hasCompanyNoted > 0 && (
-                        <div className='cpn-detailed-mission__sub-section'>
-                          <div className='cpn-detailed-mission__row'>
-                            <Avatar className='cpn-detailed-mission__historic-logo' src={historicData[0].logo} />
-                            <div className='cpn-detailed-mission__text-important'> {historicData[0].name}</div>
-                            <div className='cpn-detailed-mission__text '> {historicData[0].action} </div>
-                          </div>
-                        </div>
-                      )}
-                      { hasCompanyCommented > 0 && (
-                        <div className='cpn-detailed-mission__sub-section'>
-                          <div className='cpn-detailed-mission__row'>
-                            <Avatar className='cpn-detailed-mission__historic-logo' src={historicData[1].logo} />
-                            <div className='cpn-detailed-mission__text-important'> {historicData[1].name}</div>
-                            <div className='cpn-detailed-mission__text '> {historicData[1].action} </div>
-                          </div>
-                        </div>
-                      )}
+                    {missionData.mission.status === MissionStatus.FINISHED && hasCompanyNoted === 0
+                      ? <ClassicButton title='Noter' onClick={handleNotationOpen} />
+                      : null
+                    }
+                    {missionData.mission.status === MissionStatus.FINISHED && hasCompanyCommented === 0
+                      ? <ClassicButton title='Laisser un avis' onClick={handleCommentOpen} />
+                      : null
+                    }
+                  </div>
+                </div>
+                {isValid
+                  ? null
+                  : <div>
+                      <div> { t('company.detailed_mission.devis.devis') } </div>
+                      <DropZone onObjectChange={handleDevis} />
                     </div>
+                }
+                { devis !== undefined && isValid && !isDevis
+                  ? <div className='cpn-detailed-mission__import-section'>
+                      <img src='/assets/downloadInvoice.png' />
+                      <p> {devis[0].path } </p>
+                      <ClassicButton title='Valider' onClick={validDevis} />
+                      <ClassicButton title='Remplacer' onClick={resetDevis} />
+                    </div>
+                  : null }
+                { isDevis
+                  ? <div className='cpn-detailed-mission__devis'>
+                      <img src='/assets/downloadInvoice.png' />
+                      { t('company.detailed_mission.devis.title', { name: missionData.mission.name }) }
+                      <ClassicButton title='remplacer' onClick={resetDevis} />
+                      <ClassicButton title='Télécharger' onClick={downloadDevis} />
+                    </div>
+                  : null
+                }
+                { missionData.mission.status === MissionStatus.PENDING
+                  ? <div className='cpn-detailed-mission__selection'>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label"> { t('company.detailed_mission.selection') } </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={group}
+                          label={ t('company.detailed_mission.selection') }
+                          onChange={handleChange}
+                          >
+                            {invitedGroups !== undefined
+                              ? invitedGroups.map((element: GroupInvitedList, index: number) => (
+                                <MenuItem key={index} value={element.groupId}> {element.groupName} </MenuItem>
+                              ))
+                              : null
+                            }
+                        </Select>
+                      </FormControl>
+                    </div>
+                  : null
+                }
+                <TaskTab missionStatus={missionData.mission.status} missionTask={missionData.missionTaskArray} missionId={parseInt(missionId ?? '0', 10)} groupInfo={missionData.group} displayId={group} groupListToAccept={groupToAccept ?? null} onCallback={handleRefetch} />
+              </div>
+              <div className='cpn-detailed-mission__column'>
+                <MissionGroup missionData={missionData} />
+                <div>
+                  <div className='cpn-detailed-mission__section'>
+                    <p className='cpn-detailed-mission__container__title'> {t('company.detailed_mission.historic')} </p>
+                    <Historic missionStatus={missionData.mission.status} companyName={missionData.companyProfile.name} groupName={missionData.group !== null ? missionData.group.name : 'GroupName'} companyLogo={missionData.companyProfile.picture} groupLogo={missionData.group !== null ? missionData.group.picture : 'GroupName'} />
+                    {hasCompanyNoted > 0 && (
+                      <div className='cpn-detailed-mission__sub-section'>
+                        <div className='cpn-detailed-mission__row'>
+                          <Avatar className='cpn-detailed-mission__historic-logo' src={historicData[0].logo} />
+                          <div className='cpn-detailed-mission__text-important'> {historicData[0].name}</div>
+                          <div className='cpn-detailed-mission__text '> {historicData[0].action} </div>
+                        </div>
+                      </div>
+                    )}
+                    {hasCompanyCommented > 0 && (
+                      <div className='cpn-detailed-mission__sub-section'>
+                        <div className='cpn-detailed-mission__row'>
+                          <Avatar className='cpn-detailed-mission__historic-logo' src={historicData[1].logo} />
+                          <div className='cpn-detailed-mission__text-important'> {historicData[1].name}</div>
+                          <div className='cpn-detailed-mission__text '> {historicData[1].action} </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
+          </div>
           : null}
       </div>
       {
         open
           ? <ModalValidation
-              subject={missionData?.mission.name ?? ''}
-              open={open}
-              type={ModalType.DELETE}
-              id={missionData?.mission.id}
-              isDetails={true}
-              onClose={handleRefuseClose}
-            />
+            subject={missionData?.mission.name ?? ''}
+            open={open}
+            type={ModalType.DELETE}
+            id={missionData?.mission.id}
+            isDetails={true}
+            onClose={handleRefuseClose}
+          />
           : null
       }
       {
         notationModal
           ? <ModalValidation
-              subject={missionData?.mission.name ?? ''}
-              open={notationModal}
-              type={ModalType.NOTATION}
-              onClose={handleNotationClose}
-              onValid={() => { setHasCompanyNoted(1) }}
-            />
+            subject={missionData?.mission.name ?? ''}
+            open={notationModal}
+            type={ModalType.NOTATION}
+            onClose={handleNotationClose}
+            onValid={() => { setHasCompanyNoted(1) }}
+          />
           : null
       }
       {
         commentModal
           ? <ModalValidation
-              subject={missionData?.mission.name ?? ''}
-              open={commentModal}
-              type={ModalType.COMMENT}
-              onClose={handleCommentClose}
-              onValid={() => { setHasCompanyCommented(1) }}
-            />
+            subject={missionData?.mission.name ?? ''}
+            open={commentModal}
+            type={ModalType.COMMENT}
+            onClose={handleCommentClose}
+            onValid={() => { setHasCompanyCommented(1) }}
+          />
           : null
       }
       <Dialog open={edit} onClose={handleEditClose}>

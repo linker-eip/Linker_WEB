@@ -11,6 +11,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import HotbarStudent from './Partials/HotbarStudent'
 import '../CSS/LoginPage.scss'
 import * as ROUTES from '../Router/routes'
+import AuthApi from '../API/AuthApi'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const isEmailValid = (email: string): boolean => emailRegex.test(email)
@@ -50,13 +51,22 @@ const StudentLoginPage = (): JSX.Element => {
     axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/login`, credentials)
       .then((response) => {
         localStorage.setItem('jwtToken', response.data.token)
-        if (response.data.error === undefined) navigate(ROUTES.STUDENT_DASHBOARD)
+        if (response.data.error === undefined) checkVerifiedAccount(response.data.token)
       })
       .catch((error) => { console.error(error) })
   }
 
   const togglePasswordVisibility = (): void => {
     setShowPassword(prevState => !prevState)
+  }
+
+  const checkVerifiedAccount = async (token: string): Promise<void> => {
+    const returnValue = await AuthApi.VerifyStudentAccount(token)
+    if (returnValue !== undefined && returnValue) {
+      navigate(ROUTES.STUDENT_DASHBOARD)
+    } else {
+      navigate(ROUTES.WAIT_VERIFIED_STUDENT_ACCOUNT)
+    }
   }
 
   return (

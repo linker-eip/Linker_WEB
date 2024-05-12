@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+.waiting-account {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins';
+    padding: 4vw;
+    height: 77vh;
+    justify-content: center;
+    align-items: center;
+
+    &__title {
+        text-align: center;
+        font-size: 2.5vw;
+        padding-bottom: 3vw;
+        color: #4B4B4B;
+    }
+
+    &__button {
+        margin-top: 3vw;
+    }
+}

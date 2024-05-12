@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+import { MissionInviteStatus } from "../Enum"
+
 export interface GroupError {
   data: {
     message: string
@@ -21,6 +25,12 @@ export interface GroupType {
   members: Members[]
   leaderId: number
   isLeader: boolean
+  groupId: number
+}
+
+export interface GroupInvitedList {
+  groupName: string
+  intitedStatus: MissionInviteStatus
   groupId: number
 }
 
@@ -131,6 +141,7 @@ export interface MissionInfo {
   createdAt: string
   amount: number
   skills: string
+  specificationsFile: string
 }
 
 export interface MissionTaskArrayInfo {
@@ -142,6 +153,7 @@ export interface MissionTaskInfo {
   id: number
   name: string
   description: string
+  groupId: number
   studentId: number
   missionId: number
   amount: number

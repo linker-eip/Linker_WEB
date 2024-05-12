@@ -37,3 +37,5 @@ export const ADMIN_CONTACTS = '/admin/contacts'
 export const ADMIN_ARCHIVES = '/admin/archives'
 
 export const MENTION_LEGALES = '/mention-legales'
+export const CONTACT = '/contact'
+export const WAIT_VERIFIED_STUDENT_ACCOUNT = '/waiting-student-account'

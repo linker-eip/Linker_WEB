@@ -2,9 +2,11 @@ import React from 'react'
 import '../CSS/Footer.scss'
 import * as ROUTES from '../Router/routes'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 function Footer (): JSX.Element {
   const { t } = useTranslation()
+  const navigate = useNavigate()
 
   const scrollToTop = (): void => {
     window.scrollTo({
@@ -29,14 +31,24 @@ function Footer (): JSX.Element {
     window.location.href = 'https://www.linkedin.com/feed/'
   }
 
+  const redirectToContact = (): void => {
+    scrollToTop()
+    navigate(ROUTES.CONTACT)
+  }
+
+  const redirectToHomePage = (): void => {
+    scrollToTop()
+    navigate(ROUTES.LANDING_PAGE)
+  }
+
   return (
     <div className='footer'>
       <div className='footer__container'>
         <div className='footer__section'>
-          <img src='/assets/linker_logo.svg' className='footer__logo' />
+          <img src='/assets/linker_logo.svg' onClick={redirectToHomePage} className='footer__logo footer__clickable' />
           <div className='footer__content'>
             <div className='footer__text-1'> {t('footer.need_help')} </div>
-            <div className='footer__text-1'> {t('footer.contact')} </div>
+            <div className='footer__text-1 footer__clickable' onClick={redirectToContact}> {t('footer.contact')} </div>
           </div>
           <div className='footer__content'>
             <div className='footer__text-1'> {t('footer.networks')} </div>

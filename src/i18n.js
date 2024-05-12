@@ -14,6 +14,18 @@ i18n
     resources: {
       fr: {
         translation: {
+          contact: {
+            title: 'Nous sommes là pour vous aider. Contactez-nous pour toute question ou assistance.',
+            lastname: 'Nom de famille',
+            firstname: 'Prénom',
+            email: 'Adresse E-mail',
+            object: 'Sujet du message',
+            message: 'Message',
+            send: 'Envoyer',
+            info: 'Information général',
+            number: 'Numéro de téléphone',
+            message_sended: 'Votre message a été envoyé avec succès.'
+          },
           homepage: {
             text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
             text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
@@ -35,6 +47,7 @@ i18n
             login: 'Se connecter à Linker'
           },
           verify_page: {
+            waiting: 'Afin de vous rendre sur le site de Linker, nous vous prions de vérifier votre compte en utilisant le lien que vous avez reçu par email.',
             success: {
               text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
               text_2: 'Vous pouvez maintenant profiter pleinement des fonctionnalités de ',
@@ -96,6 +109,10 @@ i18n
             account: {
               deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
               delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
+            },
+            linkedIn: {
+              title: 'Remplir son profil avec LinkedIn',
+              textarea: 'Rentrez le lien de votre profil LinkedIn'
             }
           },
           validate: 'Valider',
@@ -323,11 +340,20 @@ i18n
               mission: 'missions',
               participants: 'Participants',
               no_participants: 'Aucun groupe trouvée',
+              selection: 'Liste des groupes',
               tab: {
                 detail: 'Détail',
                 quantity: 'Quantité',
                 price: 'Prix',
-                task: 'Tâches'
+                task: 'Tâches',
+                attribution: 'Attribution',
+                no_action: 'Aucune action à réaliser'
+
+              },
+              devis: {
+                title: 'Devis pour la mission: {{name}}',
+                no_devis: 'Pas de devis renseigné pour la mission: {{name}}',
+                devis: 'Importez votre devis'
               },
               task: {
                 modal_title: 'Ajouter une tâche',
@@ -357,6 +383,9 @@ i18n
       },
       en: {
         translation: {
+          contact: {
+
+          },
           modal: {
             title: 'Confirmer votre choix',
             deleteTitle: 'Confirmer la suppression',

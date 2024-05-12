@@ -21,6 +21,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import HotbarStudent from './Partials/HotbarStudent'
 import * as ROUTES from '../Router/routes'
 import '../CSS/LoginPage.scss'
+import AuthApi from '../API/AuthApi'
 
 function StudentRegisterPage (): JSX.Element {
   const { t } = useTranslation()
@@ -59,11 +60,20 @@ function StudentRegisterPage (): JSX.Element {
       const response = await axios.post(`${apiUrl}/api/auth/student/register`, credentials)
       localStorage.setItem('jwtToken', response.data.token)
       if (response.status >= 200 && response.status < 204) {
-        navigate(ROUTES.STUDENT_DASHBOARD)
+        checkVerifiedAccount(response.data.token)
       }
     } catch (error) {
       console.error(error)
       setError('An error occurred while registering.')
+    }
+  }
+
+  const checkVerifiedAccount = async (token: string): Promise<void> => {
+    const returnValue = await AuthApi.VerifyStudentAccount(token)
+    if (returnValue !== undefined && returnValue) {
+      navigate(ROUTES.STUDENT_DASHBOARD)
+    } else {
+      navigate(ROUTES.WAIT_VERIFIED_STUDENT_ACCOUNT)
     }
   }
 
