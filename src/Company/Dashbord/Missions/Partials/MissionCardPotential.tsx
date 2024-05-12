@@ -58,9 +58,9 @@ function MissionCardPotential (props: Props): JSX.Element {
   }
 
   const handlePaymentCheckout = async (): Promise<PaymentCheckoutResponse> => {
-    const test = await MissionApi.getCompanyMissionCheckout(localStorage.getItem('jwtToken') as string, props.data.id)
+    const paymentCheckout = await MissionApi.getCompanyMissionCheckout(localStorage.getItem('jwtToken') as string, props.data.id)
     console.log('résultat', test)
-    return test
+    return paymentCheckout
   }
 
   return (
