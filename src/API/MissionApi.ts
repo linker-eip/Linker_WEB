@@ -1,6 +1,10 @@
 import axios from 'axios'
-import type { CompanyMissionDetails, MissionTaskInfo, MissionInfo, CompanyAdminInfo, StudentMissionDetails, GroupInvitedList } from '../Typage/Type'
 import { type MissionStatus, TaskStatus } from '../Enum'
+import type {
+  CompanyMissionDetails, MissionTaskInfo, MissionInfo,
+  CompanyAdminInfo, StudentMissionDetails, GroupInvitedList,
+  PaymentCheckoutResponse
+} from '../Typage/Type'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class MissionApi {
@@ -225,6 +229,20 @@ class MissionApi {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/mission/refuse/${missionId}/${groupId}`, null, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
+
+  static async getCompanyMissionCheckout (jwtToken: string, missionId: number): Promise<PaymentCheckoutResponse> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/payment/checkout`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'x-api-key': `${process.env.REACT_STRIPE_SECRET_KEY as string}`,
+        'Content-Type': 'application/json'
+      },
+      params: {
+        mission_id: missionId
       }
     })
     return response.data

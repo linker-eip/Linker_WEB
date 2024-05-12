@@ -7,6 +7,9 @@ import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { IconButton } from '@mui/material'
+import ClassicButton from '../../../../Component/ClassicButton'
+import MissionApi from '../../../../API/MissionApi'
+import type { PaymentCheckoutResponse } from '../../../../Typage/Type'
 
 interface MissionPotentialItems {
   id: number
@@ -52,6 +55,12 @@ function MissionCardPotential (props: Props): JSX.Element {
     const [date] = missionDate.split('T')
     const [year, month, day] = date.split('-')
     return `${day}-${month}-${year}`
+  }
+
+  const handlePaymentCheckout = async (): Promise<PaymentCheckoutResponse> => {
+    const test = await MissionApi.getCompanyMissionCheckout(localStorage.getItem('jwtToken') as string, props.data.id)
+    console.log('résultat', test)
+    return test
   }
 
   return (
@@ -107,8 +116,14 @@ function MissionCardPotential (props: Props): JSX.Element {
           }
         </div>
         { props.potential ??
-          <div className='mission-card__link' onClick={handleNavigation}>
-            <p> {t('missionCard.see_mission')} </p>
+          <div className='mission-card__link-section'>
+            <div className='mission-card__link' onClick={handleNavigation}>
+              <p> {t('missionCard.see_mission')} </p>
+            </div>
+            <ClassicButton
+              title='Payer la mission'
+              onClick={() => { handlePaymentCheckout() }}
+            />
           </div>
         }
         { props.potential === true
