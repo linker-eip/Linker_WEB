@@ -29,7 +29,7 @@ function CompanyMissionsCompleted (): JSX.Element {
     })
       .then(async response => await response.json())
       .then(data => {
-        const pendingMissions = data.filter((item: any) => item.status === 'FINISHED').map((item: any) => ({
+        const pendingMissions = data.filter((item: any) => item.status === 'FINISHED' || item.status === 'PROVISIONED').map((item: any) => ({
           id: item.id,
           name: item.name,
           status: item.status,

@@ -242,5 +242,14 @@ export interface CompanyAdminInfo {
 }
 
 export interface PaymentCheckoutResponse {
-  url: string
+  companyId: number
+  createdAt: string
+  email: string | null
+  id: number
+  missionId: number
+  priceId: string
+  productId: string
+  sessionId: string
+  sessionUrl: string
+  status: string
 }
