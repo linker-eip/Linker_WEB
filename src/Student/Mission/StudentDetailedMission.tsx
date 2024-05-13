@@ -15,13 +15,14 @@ import StepLabel from '@mui/material/StepLabel'
 import { Avatar } from '@mui/material'
 import ClassicButton from '../../Component/ClassicButton'
 import ModalValidation from '../../Component/ModalValidation'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import MissionApi from '../../API/MissionApi'
 import type { StudentMissionDetails, MissionTaskArrayInfo, CompanyInfo, GroupInfo, GroupType } from '../../Typage/Type'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
 import ProfileApi from '../../API/ProfileApi'
 import GroupApi from '../../API/GroupApi'
+import * as ROUTES from '../../Router/routes'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -121,6 +122,17 @@ function StudentDetailedMission (): JSX.Element {
     t('company.detailed_mission.in_progress'),
     t('company.detailed_mission.completed')
   ]
+
+  const navigate = useNavigate()
+
+  const handleClick = (): void => {
+    if (missionId !== null && missionId !== undefined && missionId !== '') {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      navigate(`${ROUTES.STUDENT_MISSION_CHAT.replace(':missionId', missionId)}`)
+    } else {
+      console.error('Mission ID is undefined or invalid')
+    }
+  }
 
   useEffect(() => {
     switch (missionData?.mission.status) {
@@ -242,7 +254,9 @@ function StudentDetailedMission (): JSX.Element {
                       }
                   </div>
                   <div className='std-detailed-mission__column-2'>
-                    <p className='std-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
+                    <div className='std-detailed-mission__conversation' onClick={handleClick}>
+                      {t('student.detailed_mission.conversation')}
+                    </div>
                   </div>
                 </div>
                 <div>
