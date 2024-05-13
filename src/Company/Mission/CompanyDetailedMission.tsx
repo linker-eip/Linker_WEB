@@ -350,7 +350,7 @@ function CompanyDetailedMission (): JSX.Element {
                       : null
                   }
                   {
-                    missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && missionData.mission.status === MissionStatus.IN_PROGRESS
+                    missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && (missionData.mission.status === MissionStatus.IN_PROGRESS || missionData.mission.status === MissionStatus.PROVISIONED)
                       ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
                       : null
                   }
