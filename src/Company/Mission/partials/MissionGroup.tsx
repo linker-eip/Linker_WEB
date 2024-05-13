@@ -3,6 +3,8 @@ import type { CompanyMissionDetails } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
 import { Avatar } from '@mui/material'
 import ModalInvitationGroup from './ModalInvitationGroup'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../Router/routes'
 
 interface Props {
   missionData: CompanyMissionDetails
@@ -19,6 +21,14 @@ function MissionGroup (props: Props): JSX.Element {
   const closeInviteModal = (): void => {
     setInviteModal(false)
   }
+
+  const navigate = useNavigate()
+
+  const handleClick = (): void => {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    navigate(`${ROUTES.COMPANY_MISSION_CHAT.replace(':missionId', props.missionData.mission.id.toString())}`)
+  }
+
   return (
     <div className='cpn-detailed-mission__section'>
       <p className='cpn-detailed-mission__section__title-3'> { t('company.detailed_mission.participants')} </p>
@@ -30,7 +40,9 @@ function MissionGroup (props: Props): JSX.Element {
                 <p className='cpn-detailed-mission__section__subtitle'> { props.missionData.group.name } </p>
               </div>
             </div>
-            <p className='cpn-detailed-mission__conversation'> {t('student.detailed_mission.conversation')} </p>
+            <div className='cpn-detailed-mission__conversation' onClick={handleClick}>
+              {t('student.detailed_mission.conversation')}
+            </div>
           </div>
         : <div className='cpn-detailed-mission__column-2'>
             <img className='cpn-detailed-mission__img' src='/assets/groups_image.svg' />
