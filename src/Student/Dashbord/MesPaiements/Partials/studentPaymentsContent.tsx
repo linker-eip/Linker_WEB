@@ -1,7 +1,8 @@
 import '../../../../CSS/Hotbar.scss'
 import React, { useState, useEffect } from 'react'
+import { PaymentStatus } from '../../../../Enum'
 import SearchIcon from '@mui/icons-material/Search'
-import VisibilityIcon from '@mui/icons-material/Visibility'
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward'
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, IconButton, Dialog, DialogActions, DialogContent, DialogTitle,
@@ -11,7 +12,7 @@ import {
 interface Row {
   id: number
   missionName: string
-  status: string
+  status: PaymentStatus
   amount: number
 }
 
@@ -57,6 +58,13 @@ function StudentPaymentsContent (): JSX.Element {
   const handleCashOut = (): void => {
     console.log('Prochainement')
     handleCloseCashOut()
+  }
+
+  const statusDisplayMap: { [key in PaymentStatus]: string } = {
+    [PaymentStatus.PENDING]: 'En attente',
+    [PaymentStatus.MISSING_RIB]: 'RIB manquant',
+    [PaymentStatus.WAITING]: 'En cours',
+    [PaymentStatus.PAID]: 'Payé'
   }
 
   return (
@@ -169,7 +177,7 @@ function StudentPaymentsContent (): JSX.Element {
                       align='center'
                       sx={{ fontFamily: 'Poppins', fontSize: '24px' }}
                     >
-                      {row.status}
+                      {statusDisplayMap[row.status]}
                     </TableCell>
                     <TableCell
                       align='center'
@@ -179,7 +187,7 @@ function StudentPaymentsContent (): JSX.Element {
                     </TableCell>
                     <TableCell align='center'>
                       <IconButton onClick={() => { handleOpenCashOut(row) }}>
-                        <VisibilityIcon fontSize='large' />
+                        <ArrowOutwardIcon fontSize='large' />
                       </IconButton>
                     </TableCell>
                   </TableRow>

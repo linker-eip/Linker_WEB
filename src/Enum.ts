@@ -81,3 +81,10 @@ export enum DocumentStatus {
   VERIFIED = 'VERIFIED',
   DENIED = 'DENIED'
 }
+
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  MISSING_RIB = 'MISSING_RIB',
+  WAITING = 'WAITING',
+  PAID = 'PAID'
+}
