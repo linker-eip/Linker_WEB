@@ -2,6 +2,7 @@ export enum DashboardState {
   DASHBOARD = 'dashboard',
   MISSION = 'mission',
   FACTURES = 'factures',
+  PAIEMENTS = 'paiements',
   PROFIL = 'profil',
   DOCUMENTS = 'documents',
   STATISTICS = 'statistics',
@@ -79,4 +80,11 @@ export enum DocumentStatus {
   PENDING = 'PENDING',
   VERIFIED = 'VERIFIED',
   DENIED = 'DENIED'
+}
+
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  MISSING_RIB = 'MISSING_RIB',
+  WAITING = 'WAITING',
+  PAID = 'PAID'
 }
