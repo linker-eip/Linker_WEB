@@ -25,6 +25,7 @@ import CompanyDetailedMission from './Company/Mission/CompanyDetailedMission'
 import CompanyProfile from './Company/Dashbord/Profile/CompanyProfile'
 import CompanyMissionChat from './Company/Mission/CompanyMissionChat'
 import StudentMissionChat from './Student/Dashbord/Missions/StudentMissionChat'
+import StudentPayments from './Student/Dashbord/MesPaiements/studentPayments'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
@@ -70,6 +71,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_STATISTICS} element={<StudentStatistics />} />
         <Route path={ROUTES.STUDENT_GROUP} element={<StudentGroup />} />
         <Route path={ROUTES.STUDENT_MISSION_CHAT} element={<StudentMissionChat/>}/>
+        <Route path={ROUTES.STUDENT_PAYMENTS} element={<StudentPayments/>} />
         <Route path={ROUTES.COMPANY_DOCUMENTS_DASHBOARD} element={<CompanyDocuments />} />
         <Route path={ROUTES.COMPANY_FORGOT_PASSWORD} element={<CompanyForgetPassword />} />
         <Route path={ROUTES.COMPANY_RESET_PASSWORD} element={<CompanyResetPassword />} />
