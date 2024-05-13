@@ -76,6 +76,40 @@
     font-weight: 500;
     line-height: normal;
   }
+
+  &__chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 600px;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-right: 4em;
+    padding: 0.5em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  &__message {
+      margin-bottom: 0.5em;
+      padding: 0.5em;
+      background-color: #ffffff;
+      border-radius: 5px;
+  }
+
+  &__chat-input {
+      display: flex;
+      width: 95%;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3em;
+  }
+
+  &__chat-input input {
+      flex-grow: 1;
+      margin-right: 1em;
+      padding: 0.5em;
+  }
 }
 
 .std-group-modal {
