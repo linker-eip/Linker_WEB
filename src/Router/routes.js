@@ -11,6 +11,7 @@ export const STUDENT_MISSIONS = '/student/missions'
 export const STUDENT_DETAILED_MISSION = '/student/detailed-mission/:missionId'
 export const STUDENT_MISSION_CHAT = '/student/mission/chat/:missionId'
 export const STUDENT_STATISTICS = '/student/statistics'
+export const STUDENT_PAYMENTS = '/student/payments'
 export const STUDENT_GROUP = '/student/group'
 
 export const AUTH_VERIFY_PWD = '/auth/verify/:code'
