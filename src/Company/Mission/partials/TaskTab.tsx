@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useState, useEffect } from 'react'
-import { type GroupInfo, type MissionTaskArrayInfo } from '../../../Typage/Type'
+import type { GroupStudentInfo, GroupInfo, MissionTaskArrayInfo } from '../../../Typage/Type'
 import { useTranslation } from 'react-i18next'
 import '../../../CSS/CompanyDetailedMission.scss'
 import ModalTaskCreation from './ModalTaskCreation'
@@ -21,6 +21,7 @@ interface Props {
   groupInfo: GroupInfo
   displayId: string
   groupListToAccept: number[] | null
+  groupStudentInfo: GroupStudentInfo[]
   onCallback: () => void
 }
 
@@ -122,8 +123,13 @@ function TaskTab (props: Props): JSX.Element {
     if (assignedId === null) {
       return 'Aucun'
     }
-    if (props.groupInfo?.members !== undefined && props.groupInfo?.members !== null) {
-      return '' + props.groupInfo.members.find(member => member.id === assignedId)?.firstName + ' ' + props.groupInfo.members.find(member => member.id === assignedId)?.lastName
+    if (props.groupStudentInfo !== null && props.groupStudentInfo !== undefined) {
+      const student = props.groupStudentInfo.find(s => s.studentProfile.studentId === assignedId)
+      if (student !== undefined && student !== null) {
+        return '' + student.studentProfile.firstName + ' ' + student.studentProfile.lastName
+      } else {
+        return 'Aucun'
+      }
     } else {
       return 'Aucun'
     }
