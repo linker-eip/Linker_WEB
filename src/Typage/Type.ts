@@ -208,17 +208,7 @@ export interface GroupInfo {
 }
 
 export interface GroupStudentInfo {
-  id: number
-  studentId: number
-  firstName: string
-  lastName: string
-  description: string
-  email: string
-  phone: string
-  location: string
-  picture: string
-  website: string
-  note: number
+  studentProfile: StudentProfileInfo
 }
 
 export interface StudentMissionDetails {
