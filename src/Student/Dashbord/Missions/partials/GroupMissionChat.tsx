@@ -110,10 +110,8 @@ function GroupMissionChat (props: Props): JSX.Element {
       }
     })
 
-    newSocket.on('missionMessage', (newMessage: any) => {
-      if (newMessage.missionId === id) {
-        setGroupMessages(prevMessages => [...prevMessages, newMessage])
-      }
+    newSocket.on('missionMessage', (newMessage: GroupMessage) => {
+      setGroupMessages(prevMessages => [...prevMessages, newMessage])
     })
 
     socket.current = newSocket
@@ -136,7 +134,6 @@ function GroupMissionChat (props: Props): JSX.Element {
   const sendMissionMessage = (message: string): void => {
     if (socket.current != null) {
       socket.current.emit('sendMission', { message, id })
-      askForMissionHistory()
     }
   }
 
