@@ -3,6 +3,9 @@ import React, { useEffect } from 'react'
 import '../../../CSS/NotificationButton.scss'
 import type { Notifications } from '../../../Typage/NotificationType'
 import NotificationCard from './NotificationCard'
+import Switch from '@mui/material/Switch'
+import { useTranslation } from 'react-i18next'
+import NotificationApi from '../../../API/NotificationApi'
 
 interface Props {
   onClick: () => void
@@ -17,6 +20,7 @@ interface Props {
 }
 
 function NotificationButton (props: Props): JSX.Element {
+  const { t } = useTranslation()
   useEffect(() => {
     const handleClickOutside = (event: any): void => {
       if (props.isClicked && !event.target.closest('.notif-button__container')) {
@@ -31,6 +35,16 @@ function NotificationButton (props: Props): JSX.Element {
     }
   }, [props.isClicked])
 
+  const handleChangeNotification = (): void => {
+    const dto = {
+      mailNotifMessage: true,
+      mailNotifGroup: true,
+      mailNotifMission: true,
+      mailNotifDocument: true
+    }
+    NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+  }
+
   return (
     <div className='notif-button'>
       {props.newNotif > 0
@@ -44,6 +58,10 @@ function NotificationButton (props: Props): JSX.Element {
       {props.isClicked
         ? props.data.length > 0
           ? <div className='notif-button__container' style={{ maxHeight: '379px', overflowY: 'auto' }}>
+              <div className='notif-button__email'>
+                <div> { t('notifications.email') } </div>
+                <Switch onChange={handleChangeNotification} />
+              </div>
             {
               props.data.map((item, index) => <NotificationCard key={index} data={item} onReload={props.onReload} />)
             }

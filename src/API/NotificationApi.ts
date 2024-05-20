@@ -33,6 +33,16 @@ class NotificationApi {
     return response.data
   }
 
+  static async changeStudentNotificationPreferences (jwtToken: string, dto: AnyObject): Promise<string> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/student/preferences`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
   // static async getProfile (jwtToken: string): Promise<StudentProfileInfo> {
   //   const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/student/profile`, {
   //     headers: {
