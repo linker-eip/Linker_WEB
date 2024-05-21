@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../CSS/NotificationButton.scss'
 import type { Notifications } from '../../../Typage/NotificationType'
 import NotificationCard from './NotificationCard'
@@ -21,6 +21,8 @@ interface Props {
 
 function NotificationButton (props: Props): JSX.Element {
   const { t } = useTranslation()
+  const [isEmailNotification, setIsEmailNotification] = useState<boolean>(false)
+
   useEffect(() => {
     const handleClickOutside = (event: any): void => {
       if (props.isClicked && !event.target.closest('.notif-button__container')) {
@@ -35,14 +37,39 @@ function NotificationButton (props: Props): JSX.Element {
     }
   }, [props.isClicked])
 
-  const handleChangeNotification = (): void => {
-    const dto = {
-      mailNotifMessage: true,
-      mailNotifGroup: true,
-      mailNotifMission: true,
-      mailNotifDocument: true
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      const response = await NotificationApi.getStudentPreferences(localStorage.getItem('jwtToken') as string)
+      if (response !== undefined) {
+        if (response.mailNotifDocument || response.mailNotifGroup || response.mailNotifMessage || response.mailNotifMission) {
+          setIsEmailNotification(true)
+        }
+      }
     }
-    NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+
+    fetchData()
+  }, [])
+
+  const handleChangeNotification = (): void => {
+    if (isEmailNotification) {
+      const dto = {
+        mailNotifMessage: false,
+        mailNotifGroup: false,
+        mailNotifMission: false,
+        mailNotifDocument: false
+      }
+      NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+      setIsEmailNotification(!isEmailNotification)
+    } else {
+      const dto = {
+        mailNotifMessage: true,
+        mailNotifGroup: true,
+        mailNotifMission: true,
+        mailNotifDocument: true
+      }
+      NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+      setIsEmailNotification(!isEmailNotification)
+    }
   }
 
   return (
@@ -60,7 +87,10 @@ function NotificationButton (props: Props): JSX.Element {
           ? <div className='notif-button__container' style={{ maxHeight: '379px', overflowY: 'auto' }}>
               <div className='notif-button__email'>
                 <div> { t('notifications.email') } </div>
-                <Switch onChange={handleChangeNotification} />
+                { isEmailNotification
+                  ? <Switch defaultChecked onChange={handleChangeNotification} />
+                  : <Switch onChange={handleChangeNotification} />
+                }
               </div>
             {
               props.data.map((item, index) => <NotificationCard key={index} data={item} onReload={props.onReload} />)
