@@ -11,3 +11,10 @@ export interface Notifications {
   alreadySeen: boolean
   date: string
 }
+
+export interface StudentPreferences {
+  mailNotifMessage: boolean,
+  mailNotifGroup: boolean,
+  mailNotifMission: boolean,
+  mailNotifDocument: boolean
+}

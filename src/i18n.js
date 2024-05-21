@@ -14,6 +14,9 @@ i18n
     resources: {
       fr: {
         translation: {
+          notifications: {
+            email: 'Recevoir les notifications par mail'
+          },
           contact: {
             title: 'Nous sommes là pour vous aider. Contactez-nous pour toute question ou assistance.',
             lastname: 'Nom de famille',
