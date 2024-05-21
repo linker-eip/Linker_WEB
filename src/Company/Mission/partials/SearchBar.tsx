@@ -25,7 +25,7 @@ const SearchBar = (props: Props): JSX.Element => {
   }, [])
 
   const handleSearch = (element: any): void => {
-    const searchTerm = element.target.value.toLowerCase()
+    const searchTerm = element.target.value
     setSearchTerm(searchTerm)
   }
 
