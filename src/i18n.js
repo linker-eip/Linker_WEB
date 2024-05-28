@@ -14,6 +14,13 @@ i18n
     resources: {
       fr: {
         translation: {
+          document: {
+            no_document: 'Veuillez renseigner votre ',
+            cni: 'CNI',
+            siren: 'SIREN',
+            urssaf: 'URSSAF',
+            rib: 'RIB'
+          },
           notifications: {
             email: 'Recevoir les notifications par mail'
           },

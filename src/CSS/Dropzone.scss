@@ -14,3 +14,47 @@
         cursor: pointer;
     }
 }
+
+.dropzoneV2 {
+    font-family: 'poppins';
+    font-size: '20px';
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    padding: 0.5em;
+    color: #3DA1CC;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 2px #3DA1CC solid;
+    
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__text {
+        font-weight: 100;
+        font-size: 16px;
+    }
+
+    &__container {
+        position: relative;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        border: 2px #3DA1CC dotted;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5vw;
+    }
+
+    &__img {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -4,7 +4,8 @@ import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
 import { useTranslation } from 'react-i18next'
 import { DashboardState } from '../../../Enum'
-import StudentDocuentContent from './Partials/studentDocumentContent'
+// import StudentDocumentContent from './Partials/studentDocumentContent'
+import StudentDocumentContentV2 from './Partials/studentDocumentContentV2'
 import isPrivateRoute from '../../../Component/isPrivateRoute'
 
 function StudentDocuments (): JSX.Element {
@@ -18,7 +19,7 @@ function StudentDocuments (): JSX.Element {
       <div className='std-bord-container__page'>
         <SidebarDashboard state={state.DOCUMENTS} />
         <div className='std-bord-container__content'>
-          <StudentDocuentContent />
+          <StudentDocumentContentV2 />
         </div>
       </div>
     </div>
