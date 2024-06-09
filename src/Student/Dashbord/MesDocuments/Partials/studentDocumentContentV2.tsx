@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, type ChangeEvent } from 'react'
+import React, { useEffect, useState, type ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // Enum.
-import { StudentDocumentType } from '../../../../Enum'
+import { DocumentStatus, StudentDocumentType } from '../../../../Enum'
 
 // API.
 import axios from 'axios'
@@ -78,6 +78,23 @@ function StudentDocumentContentV2 (): JSX.Element {
   const [urssafSnackBarValue, setUrssafSnackBarValue] = useState<boolean>(false)
   const [ribSnackBarValue, setRibSnackBarValue] = useState<boolean>(false)
 
+  const [cniStatus, setCniStatus] = useState<DocumentStatus>()
+  const [sirenStatus, setSirenStatus] = useState<DocumentStatus>()
+  const [urssafStatus, setUrssafStatus] = useState<DocumentStatus>()
+  const [ribStatus, setRibStatus] = useState<DocumentStatus>()
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function fetchData () {
+      const response = await ProfileApi.getStudentDocumentStatus(localStorage.getItem('jwtToken') as string)
+      setCniStatus(response[0].status)
+      setSirenStatus(response[1].status)
+      setUrssafStatus(response[2].status)
+      setRibStatus(response[3].status)
+    }
+    fetchData()
+  }, [])
+
   const resetCniFile = (): void => {
     setCniFile([])
   }
@@ -92,6 +109,22 @@ function StudentDocumentContentV2 (): JSX.Element {
 
   const resetRibFile = (): void => {
     setRibFile([])
+  }
+
+  const changeCniStatus = (): void => {
+    setCniStatus(DocumentStatus.NOT_FILLED)
+  }
+
+  const changeSirenStatus = (): void => {
+    setSirenStatus(DocumentStatus.NOT_FILLED)
+  }
+
+  const changeUrssafStatus = (): void => {
+    setUrssafStatus(DocumentStatus.NOT_FILLED)
+  }
+
+  const changeRibStatus = (): void => {
+    setRibStatus(DocumentStatus.NOT_FILLED)
   }
 
   const closeCniSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
@@ -198,44 +231,117 @@ function StudentDocumentContentV2 (): JSX.Element {
 
   return (
     <div className='std-documentV2'>
-      <div className='std-documentV2__container'>
-        <div className='std-documentV2__title'> { t('student.dashboard.doc') } </div>
-        <div className='std-documentV2__content'>
-          <div className='std-documentV2__content--text-section'>
-            <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-            <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
-            <div className='std-documentV2__content--text'> : </div>
+      <div className='std-documentV2__top-section'>
+        <div className='std-documentV2__container'>
+          <div className='std-documentV2__section'>
+            {cniStatus !== DocumentStatus.NOT_FILLED
+              ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__content--text-section'>
+                    <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
+                    <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
+                  </div>
+                  <div className='std-documentV2__button'>
+                    <ClassicButton title={t('document.replace')} onClick={changeCniStatus} />
+                  </div>
+                </div>
+              : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__content--text-section'>
+                    <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
+                    <div className='std-documentV2__content--text'> : </div>
+                  </div>
+                  <DropZoneV2 onObjectChange={setCniFile} onClose={resetCniFile} />
+                </div>
+            }
+            {sirenStatus !== DocumentStatus.NOT_FILLED
+              ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__content--text-section'>
+                    <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
+                    <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
+                  </div>
+                  <div className='std-documentV2__button'>
+                    <ClassicButton title={t('document.replace')} onClick={changeSirenStatus} />
+                  </div>
+                </div>
+              : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__content--text-section'>
+                    <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
+                    <div className='std-documentV2__content--text'> : </div>
+                  </div>
+                  <DropZoneV2 onObjectChange={setSirenFile} onClose={resetSirenFile} />
+                </div>
+            }
           </div>
-          <DropZoneV2 onObjectChange={setCniFile} onClose={resetCniFile} />
-        </div>
-        <div className='std-documentV2__content'>
-          <div className='std-documentV2__content--text-section'>
-            <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-            <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
-            <div className='std-documentV2__content--text'> : </div>
+          <div className='std-documentV2__section'>
+          {urssafStatus !== DocumentStatus.NOT_FILLED
+            ? <div className='std-documentV2__content'>
+                <div className='std-documentV2__content--text-section'>
+                  <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                  <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
+                  <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
+                </div>
+                <div className='std-documentV2__button'>
+                  <ClassicButton title={t('document.replace')} onClick={changeUrssafStatus} />
+                </div>
+              </div>
+            : <div className='std-documentV2__content'>
+                <div className='std-documentV2__content--text-section'>
+                  <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                  <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
+                  <div className='std-documentV2__content--text'> : </div>
+                </div>
+                <DropZoneV2 onObjectChange={setUrssafFile} onClose={resetUrssafFile} />
+              </div>
+            }
+            {ribStatus !== DocumentStatus.NOT_FILLED
+              ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__content--text-section'>
+                    <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
+                    <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
+                  </div>
+                  <div className='std-documentV2__button'>
+                    <ClassicButton title={t('document.replace')} onClick={changeRibStatus} />
+                  </div>
+                </div>
+              : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__content--text-section'>
+                    <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
+                    <div className='std-documentV2__content--text'> : </div>
+                  </div>
+                  <DropZoneV2 onObjectChange={setRibFile} onClose={resetRibFile} />
+                </div>
+            }
           </div>
-          <DropZoneV2 onObjectChange={setSirenFile} onClose={resetSirenFile} />
-        </div>
-        <div className='std-documentV2__content'>
-          <div className='std-documentV2__content--text-section'>
-            <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-            <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
-            <div className='std-documentV2__content--text'> : </div>
-          </div>
-          <DropZoneV2 onObjectChange={setUrssafFile} onClose={resetUrssafFile} />
-        </div>
-        <div className='std-documentV2__content'>
-          <div className='std-documentV2__content--text-section'>
-            <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-            <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
-            <div className='std-documentV2__content--text'> : </div>
-          </div>
-          <DropZoneV2 onObjectChange={setRibFile} onClose={resetRibFile} />
         </div>
         <div className='std-documentV2__button'>
-          <ClassicButton title={t('document.send')} />
+          <ClassicButton title={t('document.send')} onClick={() => { postFile() }} />
         </div>
       </div>
+      <Snackbar open={cniSnackBarValue} autoHideDuration={6000} onClose={closeCniSnackBar}>
+        <Alert onClose={closeCniSnackBar} severity="error" sx={{ width: '100%' }}>
+          Votre carte d&apos;identité a déjà été validée.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={sirenSnackBarValue} autoHideDuration={6000} onClose={closeSirenSnackBar}>
+        <Alert onClose={closeSirenSnackBar} severity="error" sx={{ width: '100%' }}>
+          Votre numéro de SIREN a déjà été validé.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={urssafSnackBarValue} autoHideDuration={6000} onClose={closeUrssafSnackBar}>
+        <Alert onClose={closeUrssafSnackBar} severity="error" sx={{ width: '100%' }}>
+          Votre attestation de vigilence Urssaf a déjà été validée.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={ribSnackBarValue} autoHideDuration={6000} onClose={closeRibSnackBar}>
+        <Alert onClose={closeRibSnackBar} severity="error" sx={{ width: '100%' }}>
+          Votre RIB a déjà été validé.
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
