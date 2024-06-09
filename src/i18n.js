@@ -19,7 +19,8 @@ i18n
             cni: 'CNI',
             siren: 'SIREN',
             urssaf: 'URSSAF',
-            rib: 'RIB'
+            rib: 'RIB',
+            send: 'ENVOYER LES DOCUMENTS'
           },
           notifications: {
             email: 'Recevoir les notifications par mail'

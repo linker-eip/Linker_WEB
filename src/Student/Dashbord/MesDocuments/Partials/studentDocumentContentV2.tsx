@@ -14,6 +14,7 @@ import DropZone from '../../../../Component/DropZone'
 import DropZoneV2 from '../../../../Component/DropZoneV2'
 import { TextField, Snackbar } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
+import ClassicButton from '../../../../Component/ClassicButton'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 
 // Styles.
@@ -230,6 +231,9 @@ function StudentDocumentContentV2 (): JSX.Element {
             <div className='std-documentV2__content--text'> : </div>
           </div>
           <DropZoneV2 onObjectChange={setRibFile} onClose={resetRibFile} />
+        </div>
+        <div className='std-documentV2__button'>
+          <ClassicButton title={t('document.send')} />
         </div>
       </div>
     </div>

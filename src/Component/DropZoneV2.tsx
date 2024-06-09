@@ -18,7 +18,7 @@ function DropZoneV2 (props: Props): JSX.Element {
   return (
     filename !== null
       ? <div className='dropzoneV2__container'>
-          <img src='/assets/logo_pdf.svg' />
+          <img className='dropzoneV2__image2' src='/assets/logo_pdf.svg' />
           <img className='dropzoneV2__img' src='/assets/close.svg' onClick={handleClose} />
           <div className='dropzoneV2__text'>
             {filename}
@@ -35,7 +35,10 @@ function DropZoneV2 (props: Props): JSX.Element {
           <div {...getRootProps()}>
             <input {...getInputProps()} />
               <div className='dropzoneV2'>
-                Déposez votre fichier
+                <img className='dropzoneV2__image' src='/assets/file-upload.svg' />
+                <div className='dropzoneV2__text'>
+                  Déposez votre fichier
+                </div>
               </div>
           </div>
         </section>
