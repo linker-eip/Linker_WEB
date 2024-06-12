@@ -14,6 +14,20 @@ i18n
     resources: {
       fr: {
         translation: {
+          document: {
+            is_document: {
+              part1: 'Votre document:',
+              part2: 'a été renseigné avec succès.'
+            },
+            no_document: 'Veuillez renseigner votre ',
+            cni: 'CNI',
+            siren: 'SIREN',
+            urssaf: 'URSSAF',
+            rib: 'RIB',
+            kbis: 'KBIS',
+            send: 'ENVOYER LES DOCUMENTS',
+            replace: 'REMPLACER'
+          },
           notifications: {
             email: 'Recevoir les notifications par mail'
           },
