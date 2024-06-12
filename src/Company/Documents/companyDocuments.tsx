@@ -7,7 +7,7 @@ import { DashboardState } from '../../Enum'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import SidebarDashboard from '../Partials/SidebarDashboard'
-import CompanyDocumentContent from './Partials/companyDocumentContent'
+import CompanyDocumentContentV2 from './Partials/companyDocumentContentV2'
 
 function CompanyDocuments (): JSX.Element {
   isPrivateRoute()
@@ -20,7 +20,7 @@ function CompanyDocuments (): JSX.Element {
       <div className='company-bord-container__page'>
         <SidebarDashboard state={state.DOCUMENTS} />
         <div className='company-bord-container__content'>
-          <CompanyDocumentContent />
+          <CompanyDocumentContentV2 />
         </div>
       </div>
     </div>

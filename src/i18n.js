@@ -24,6 +24,7 @@ i18n
             siren: 'SIREN',
             urssaf: 'URSSAF',
             rib: 'RIB',
+            kbis: 'KBIS',
             send: 'ENVOYER LES DOCUMENTS',
             replace: 'REMPLACER'
           },

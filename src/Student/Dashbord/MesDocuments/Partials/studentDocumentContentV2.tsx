@@ -78,19 +78,31 @@ function StudentDocumentContentV2 (): JSX.Element {
   const [urssafSnackBarValue, setUrssafSnackBarValue] = useState<boolean>(false)
   const [ribSnackBarValue, setRibSnackBarValue] = useState<boolean>(false)
 
-  const [cniStatus, setCniStatus] = useState<DocumentStatus>()
-  const [sirenStatus, setSirenStatus] = useState<DocumentStatus>()
-  const [urssafStatus, setUrssafStatus] = useState<DocumentStatus>()
-  const [ribStatus, setRibStatus] = useState<DocumentStatus>()
+  const [cniStatus, setCniStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [sirenStatus, setSirenStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [urssafStatus, setUrssafStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [ribStatus, setRibStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
       const response = await ProfileApi.getStudentDocumentStatus(localStorage.getItem('jwtToken') as string)
-      setCniStatus(response[0].status)
-      setSirenStatus(response[1].status)
-      setUrssafStatus(response[2].status)
-      setRibStatus(response[3].status)
+      if (response.length > 0) {
+        response.forEach((element): void => {
+          if (element.documentType === StudentDocumentType.CNI) {
+            setCniStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.SIREN) {
+            setSirenStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.URSSAF) {
+            setUrssafStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.RIB) {
+            setRibStatus(element.status)
+          }
+        })
+      }
     }
     fetchData()
   }, [])
@@ -227,6 +239,7 @@ function StudentDocumentContentV2 (): JSX.Element {
     } else if (ribFile.length > 0) {
       alert('Votre fichier ne doit pas exécder 2 Mb.')
     }
+    window.location.reload()
   }
 
   return (
