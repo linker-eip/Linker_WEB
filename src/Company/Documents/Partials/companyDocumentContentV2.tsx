@@ -240,6 +240,9 @@ function CompanyDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={cniBisStatus} />
                         {t('student.dashboard.card.status.cni')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -260,7 +263,10 @@ function CompanyDocumentContentV2 (): JSX.Element {
                     ? null
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={cniBisStatus} />
-                        {t('student.dashboard.card.status.cni')}
+                        {t('company.dashboard.card.status.cni')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -282,6 +288,9 @@ function CompanyDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={kbisBisStatus} />
                         {t('company.dashboard.card.status.kbis')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>

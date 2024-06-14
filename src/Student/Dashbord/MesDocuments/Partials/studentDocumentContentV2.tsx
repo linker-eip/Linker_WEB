@@ -309,6 +309,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={cniBisStatus} />
                         {t('student.dashboard.card.status.cni')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -330,6 +333,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={cniBisStatus} />
                         {t('student.dashboard.card.status.cni')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -351,6 +357,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={sirenBisStatus} />
                         {t('student.dashboard.card.status.statut')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -372,6 +381,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={sirenBisStatus} />
                         {t('student.dashboard.card.status.statut')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -395,6 +407,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                   : <div className='std-documentV2__status-content'>
                       <ShowIcon status={urssafBisStatus} />
                       {t('student.dashboard.card.status.urssaf')}
+                      <div>
+                          {t('document.statut.bis')}
+                        </div>
                     </div>
                 }
                 <div className='std-documentV2__content--text-section'>
@@ -416,6 +431,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                   : <div className='std-documentV2__status-content'>
                       <ShowIcon status={urssafBisStatus} />
                       {t('student.dashboard.card.status.urssaf')}
+                      <div>
+                          {t('document.statut.bis')}
+                        </div>
                     </div>
                 }
                 <div className='std-documentV2__content--text-section'>
@@ -437,6 +455,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={ribBisStatus} />
                         {t('student.dashboard.card.status.rib')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
@@ -458,6 +479,9 @@ function StudentDocumentContentV2 (): JSX.Element {
                     : <div className='std-documentV2__status-content'>
                         <ShowIcon status={ribBisStatus} />
                         {t('student.dashboard.card.status.rib')}
+                        <div>
+                          {t('document.statut.bis')}
+                        </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>

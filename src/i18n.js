@@ -15,6 +15,9 @@ i18n
       fr: {
         translation: {
           document: {
+            statut: {
+              bis: 'de remplacement'
+            },
             is_document: {
               part1: 'Votre document:',
               part2: 'a été renseigné avec succès.'
