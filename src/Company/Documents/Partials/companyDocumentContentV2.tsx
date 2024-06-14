@@ -21,6 +21,12 @@ import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 import '../../../CSS/BaseButton.scss'
 import '../../../CSS/StudentDocumentContent.scss'
 
+// Icons
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
@@ -32,6 +38,25 @@ interface DocumentProps {
   handleReset: () => void
   handleChange?: (event: ChangeEvent<HTMLInputElement>) => void
   handleFileChange?: (value: any) => void
+}
+
+interface ShowIconProps {
+  status: DocumentStatus
+}
+
+function ShowIcon ({ status }: ShowIconProps): JSX.Element {
+  switch (status) {
+    case DocumentStatus.NOT_FILLED:
+      return <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
+    case DocumentStatus.PENDING:
+      return <PendingOutlinedIcon className='std-dashboard-card__pending' />
+    case DocumentStatus.VERIFIED:
+      return <CheckCircleOutlineIcon className='std-dashboard-card__validated' />
+    case DocumentStatus.DENIED:
+      return <CloseOutlinedIcon className='std-dashboard-card__denied' />
+    default:
+      return <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
+  }
 }
 
 const Document: React.FC<DocumentProps> = ({ isSet, label, data, handleReset, handleChange, handleFileChange }) => {
@@ -74,6 +99,15 @@ function CompanyDocumentContentV2 (): JSX.Element {
   const [cniSnackBarValue, setCniSnackBarValue] = useState<boolean>(false)
   const [kbisSnackBarValue, setKbisSnackBarValue] = useState<boolean>(false)
 
+  const [cniStatus, setCniStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [kbisStatus, setKbisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+
+  const [cniBisStatus, setCniBisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [kbisBisStatus, setKbisBisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+
+  const [cniReplace, setCniReplace] = useState<boolean>(false)
+  const [kbisReplace, setKbisReplace] = useState<boolean>(false)
+
   const resetCniFile = (): void => {
     setCniFile([])
   }
@@ -82,20 +116,23 @@ function CompanyDocumentContentV2 (): JSX.Element {
     setKbisFile([])
   }
 
-  const [cniStatus, setCniStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
-  const [kbisStatus, setKbisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
-
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
       const response = await ProfileApi.getCompanyDocumentStatus(localStorage.getItem('jwtToken') as string)
       if (response.length > 0) {
         response.forEach((element): void => {
-          if (element.documentType === CompanyDocumentType.CNI) {
+          if (element.documentType === CompanyDocumentType.CNI && element.bis === false) {
             setCniStatus(element.status)
           }
-          if (element.documentType === CompanyDocumentType.KBIS) {
+          if (element.documentType === CompanyDocumentType.KBIS && element.bis === false) {
             setKbisStatus(element.status)
+          }
+          if (element.documentType === CompanyDocumentType.CNI && element.bis === true) {
+            setCniBisStatus(element.status)
+          }
+          if (element.documentType === CompanyDocumentType.KBIS && element.bis === true) {
+            setKbisBisStatus(element.status)
           }
         })
       }
@@ -104,11 +141,11 @@ function CompanyDocumentContentV2 (): JSX.Element {
   }, [])
 
   const changeCniStatus = (): void => {
-    setCniStatus(DocumentStatus.NOT_FILLED)
+    setCniReplace(true)
   }
 
   const changeKbisStatus = (): void => {
-    setKbisStatus(DocumentStatus.NOT_FILLED)
+    setKbisReplace(true)
   }
 
   const closeCniSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
@@ -130,14 +167,24 @@ function CompanyDocumentContentV2 (): JSX.Element {
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
       cniFormData.append('documentType', CompanyDocumentType.CNI)
-      try {
-        await ProfileApi.uploadCompanyDocumentVerification(
-          localStorage.getItem('jwtToken') as string,
-          cniFormData
-        )
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setCniSnackBarValue(true)
+      if (cniStatus === DocumentStatus.VERIFIED) {
+        try {
+          const response = await ProfileApi.replaceCompanyDocument(localStorage.getItem('jwtToken') as string, cniFormData)
+          if (response.status === 201) {
+            console.log('File: CNI has been updated successfully')
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setCniSnackBarValue(true)
+          }
+        }
+      } else {
+        try {
+          await ProfileApi.uploadCompanyDocumentVerification(localStorage.getItem('jwtToken') as string, cniFormData)
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setCniSnackBarValue(true)
+          }
         }
       }
     } else if (cniFile.length > 0) {
@@ -145,17 +192,30 @@ function CompanyDocumentContentV2 (): JSX.Element {
     }
 
     if (kbisFile.length > 0 && kbisFile[0].size <= 2 * 1024 * 1024) {
-      const sirenFormData = new FormData()
-      sirenFormData.append('file', kbisFile[0])
-      sirenFormData.append('documentType', CompanyDocumentType.KBIS)
-      try {
-        await ProfileApi.uploadCompanyDocumentVerification(
-          localStorage.getItem('jwtToken') as string,
-          sirenFormData
-        )
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setKbisSnackBarValue(true)
+      const kbisFormData = new FormData()
+      kbisFormData.append('file', kbisFile[0])
+      kbisFormData.append('documentType', CompanyDocumentType.KBIS)
+      if (kbisStatus === DocumentStatus.VERIFIED) {
+        try {
+          const response = await ProfileApi.replaceCompanyDocument(localStorage.getItem('jwtToken') as string, kbisFormData)
+          if (response.status === 201) {
+            console.log('File: KBIS has been updated successfully')
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setKbisSnackBarValue(true)
+          }
+        }
+      } else {
+        try {
+          await ProfileApi.uploadCompanyDocumentVerification(
+            localStorage.getItem('jwtToken') as string,
+            kbisFormData
+          )
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setKbisSnackBarValue(true)
+          }
         }
       }
     } else if (kbisFile.length > 0) {
@@ -169,8 +229,19 @@ function CompanyDocumentContentV2 (): JSX.Element {
       <div className='std-documentV2__top-section'>
         <div className='std-documentV2__container'>
           <div className='std-documentV2__section'>
-            {cniStatus !== DocumentStatus.NOT_FILLED && cniStatus !== DocumentStatus.DENIED
+            {cniStatus !== DocumentStatus.NOT_FILLED && cniStatus !== DocumentStatus.DENIED && !cniReplace
               ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={cniStatus} />
+                    {t('student.dashboard.card.status.cni')}
+                  </div>
+                  {cniBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={cniBisStatus} />
+                        {t('student.dashboard.card.status.cni')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
@@ -181,6 +252,17 @@ function CompanyDocumentContentV2 (): JSX.Element {
                   </div>
                 </div>
               : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={cniStatus} />
+                    {t('student.dashboard.card.status.cni')}
+                  </div>
+                  {cniBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={cniBisStatus} />
+                        {t('student.dashboard.card.status.cni')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
@@ -189,8 +271,19 @@ function CompanyDocumentContentV2 (): JSX.Element {
                   <DropZoneV2 onObjectChange={setCniFile} onClose={resetCniFile} />
                 </div>
             }
-            {kbisStatus !== DocumentStatus.NOT_FILLED && kbisStatus !== DocumentStatus.DENIED
+            {kbisStatus !== DocumentStatus.NOT_FILLED && kbisStatus !== DocumentStatus.DENIED && !kbisReplace
               ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={kbisStatus} />
+                    {t('company.dashboard.card.status.kbis')}
+                  </div>
+                  {kbisBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={kbisBisStatus} />
+                        {t('company.dashboard.card.status.kbis')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.kbis') } </div>
@@ -201,6 +294,17 @@ function CompanyDocumentContentV2 (): JSX.Element {
                   </div>
                 </div>
               : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={kbisStatus} />
+                    {t('company.dashboard.card.status.kbis')}
+                  </div>
+                  {kbisBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={kbisBisStatus} />
+                        {t('company.dashboard.card.status.kbis')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.kbis') } </div>

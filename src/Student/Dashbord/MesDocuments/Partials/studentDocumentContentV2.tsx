@@ -17,6 +17,12 @@ import BaseButton from '../../../../Component/BaseButton'
 import ClassicButton from '../../../../Component/ClassicButton'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 
+// Icons
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+
 // Styles.
 import '../../../../CSS/BaseButton.scss'
 import '../../../../CSS/StudentDocumentContent.scss'
@@ -25,44 +31,23 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (props
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-interface DocumentProps {
-  isSet: boolean
-  label: string
-  data: any
-  handleReset: () => void
-  handleChange?: (event: ChangeEvent<HTMLInputElement>) => void
-  handleFileChange?: (value: any) => void
+interface ShowIconProps {
+  status: DocumentStatus
 }
 
-const Document: React.FC<DocumentProps> = ({ isSet, label, data, handleReset, handleChange, handleFileChange }) => {
-  if (isSet) {
-    return (
-      <div className='std-document-card__line'>
-        Vous avez bien renseigné votre {label}
-        <div className='std-document-card__button'>
-          <button className='base-button__little' onClick={handleReset}>
-            Remplacer
-          </button>
-        </div>
-      </div>
-    )
+function ShowIcon ({ status }: ShowIconProps): JSX.Element {
+  switch (status) {
+    case DocumentStatus.NOT_FILLED:
+      return <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
+    case DocumentStatus.PENDING:
+      return <PendingOutlinedIcon className='std-dashboard-card__pending' />
+    case DocumentStatus.VERIFIED:
+      return <CheckCircleOutlineIcon className='std-dashboard-card__validated' />
+    case DocumentStatus.DENIED:
+      return <CloseOutlinedIcon className='std-dashboard-card__denied' />
+    default:
+      return <HelpOutlineOutlinedIcon className='std-dashboard-card__notfilled' />
   }
-
-  if (handleChange != null) {
-    return (
-      <div className='std-document-card__textfield-container'>
-        Veuillez renseigner votre {label}
-        <TextField onChange={handleChange} id={label.toLowerCase()} label={label} variant="standard" />
-      </div>
-    )
-  }
-
-  return (
-    <div className='std-document-card__dropzone'>
-      <p>Veuillez renseigner votre {label}:</p>
-      { data.length > 0 ? <div className='std-document-card__dropzone-filename'> { data[0].path } </div> : <DropZone onObjectChange={handleFileChange}/> }
-    </div>
-  )
 }
 
 function StudentDocumentContentV2 (): JSX.Element {
@@ -83,23 +68,45 @@ function StudentDocumentContentV2 (): JSX.Element {
   const [urssafStatus, setUrssafStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
   const [ribStatus, setRibStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
 
+  const [cniBisStatus, setCniBisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [sirenBisStatus, setSirenBisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [urssafBisStatus, setUrssafBisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+  const [ribBisStatus, setRibBisStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
+
+  const [cniReplace, setCniReplace] = useState<boolean>(false)
+  const [sirenReplace, setSirenReplace] = useState<boolean>(false)
+  const [urssafReplace, setUrssafReplace] = useState<boolean>(false)
+  const [ribReplace, setRibReplace] = useState<boolean>(false)
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
       const response = await ProfileApi.getStudentDocumentStatus(localStorage.getItem('jwtToken') as string)
       if (response.length > 0) {
         response.forEach((element): void => {
-          if (element.documentType === StudentDocumentType.CNI) {
+          if (element.documentType === StudentDocumentType.CNI && element.bis === false) {
             setCniStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.SIREN) {
+          if (element.documentType === StudentDocumentType.SIREN && element.bis === false) {
             setSirenStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.URSSAF) {
+          if (element.documentType === StudentDocumentType.URSSAF && element.bis === false) {
             setUrssafStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.RIB) {
+          if (element.documentType === StudentDocumentType.RIB && element.bis === false) {
             setRibStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.CNI && element.bis === true) {
+            setCniBisStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.SIREN && element.bis === true) {
+            setSirenBisStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.URSSAF && element.bis === true) {
+            setUrssafBisStatus(element.status)
+          }
+          if (element.documentType === StudentDocumentType.RIB && element.bis === true) {
+            setRibBisStatus(element.status)
           }
         })
       }
@@ -124,19 +131,19 @@ function StudentDocumentContentV2 (): JSX.Element {
   }
 
   const changeCniStatus = (): void => {
-    setCniStatus(DocumentStatus.NOT_FILLED)
+    setCniReplace(true)
   }
 
   const changeSirenStatus = (): void => {
-    setSirenStatus(DocumentStatus.NOT_FILLED)
+    setSirenReplace(true)
   }
 
   const changeUrssafStatus = (): void => {
-    setUrssafStatus(DocumentStatus.NOT_FILLED)
+    setUrssafReplace(true)
   }
 
   const changeRibStatus = (): void => {
-    setRibStatus(DocumentStatus.NOT_FILLED)
+    setRibReplace(true)
   }
 
   const closeCniSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
@@ -172,14 +179,24 @@ function StudentDocumentContentV2 (): JSX.Element {
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
       cniFormData.append('documentType', StudentDocumentType.CNI)
-      try {
-        await ProfileApi.uploadStudentDocumentVerification(
-          localStorage.getItem('jwtToken') as string,
-          cniFormData
-        )
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setCniSnackBarValue(true)
+      if (cniStatus === DocumentStatus.VERIFIED) {
+        try {
+          const response = await ProfileApi.replaceStudentDocument(localStorage.getItem('jwtToken') as string, cniFormData)
+          if (response.status === 201) {
+            console.log('File: CNI has been updated successfully')
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setCniSnackBarValue(true)
+          }
+        }
+      } else {
+        try {
+          await ProfileApi.uploadStudentDocumentVerification(localStorage.getItem('jwtToken') as string, cniFormData)
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setCniSnackBarValue(true)
+          }
         }
       }
     } else if (cniFile.length > 0) {
@@ -190,14 +207,27 @@ function StudentDocumentContentV2 (): JSX.Element {
       const sirenFormData = new FormData()
       sirenFormData.append('file', sirenFile[0])
       sirenFormData.append('documentType', StudentDocumentType.SIREN)
-      try {
-        await ProfileApi.uploadStudentDocumentVerification(
-          localStorage.getItem('jwtToken') as string,
-          sirenFormData
-        )
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setSirenSnackBarValue(true)
+      if (sirenStatus === DocumentStatus.VERIFIED) {
+        try {
+          const response = await ProfileApi.replaceStudentDocument(localStorage.getItem('jwtToken') as string, sirenFormData)
+          if (response.status === 201) {
+            console.log('File: SIREN has been updated successfully')
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setSirenSnackBarValue(true)
+          }
+        }
+      } else {
+        try {
+          await ProfileApi.uploadStudentDocumentVerification(
+            localStorage.getItem('jwtToken') as string,
+            sirenFormData
+          )
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setSirenSnackBarValue(true)
+          }
         }
       }
     } else if (sirenFile.length > 0) {
@@ -208,14 +238,25 @@ function StudentDocumentContentV2 (): JSX.Element {
       const urssafFormData = new FormData()
       urssafFormData.append('file', urssafFile[0])
       urssafFormData.append('documentType', StudentDocumentType.URSSAF)
-      try {
-        await ProfileApi.uploadStudentDocumentVerification(
-          localStorage.getItem('jwtToken') as string,
-          urssafFormData
-        )
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setUrssafSnackBarValue(true)
+      if (urssafStatus === DocumentStatus.VERIFIED) {
+        try {
+          const response = await ProfileApi.replaceStudentDocument(localStorage.getItem('jwtToken') as string, urssafFormData)
+          if (response.status === 201) {
+            console.log('File: URSSAF has been updated successfully')
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setUrssafSnackBarValue(true)
+          }
+        }
+      } else {
+        try {
+          await ProfileApi.uploadStudentDocumentVerification(
+            localStorage.getItem('jwtToken') as string, urssafFormData)
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setUrssafSnackBarValue(true)
+          }
         }
       }
     } else if (urssafFile.length > 0) {
@@ -226,14 +267,24 @@ function StudentDocumentContentV2 (): JSX.Element {
       const ribFormData = new FormData()
       ribFormData.append('file', ribFile[0])
       ribFormData.append('documentType', StudentDocumentType.RIB)
-      try {
-        await ProfileApi.uploadStudentDocumentVerification(
-          localStorage.getItem('jwtToken') as string,
-          ribFormData
-        )
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          setRibSnackBarValue(true)
+      if (ribStatus === DocumentStatus.VERIFIED) {
+        try {
+          const response = await ProfileApi.replaceStudentDocument(localStorage.getItem('jwtToken') as string, ribFormData)
+          if (response.status === 201) {
+            console.log('File: RIB has been updated successfully')
+          }
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setRibSnackBarValue(true)
+          }
+        }
+      } else {
+        try {
+          await ProfileApi.uploadStudentDocumentVerification(localStorage.getItem('jwtToken') as string, ribFormData)
+        } catch (error) {
+          if (axios.isAxiosError(error) && error.response?.status === 409) {
+            setRibSnackBarValue(true)
+          }
         }
       }
     } else if (ribFile.length > 0) {
@@ -247,8 +298,19 @@ function StudentDocumentContentV2 (): JSX.Element {
       <div className='std-documentV2__top-section'>
         <div className='std-documentV2__container'>
           <div className='std-documentV2__section'>
-            {cniStatus !== DocumentStatus.NOT_FILLED
+            {cniStatus !== DocumentStatus.NOT_FILLED && !cniReplace && cniStatus !== DocumentStatus.DENIED
               ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={cniStatus} />
+                    {t('student.dashboard.card.status.cni')}
+                  </div>
+                  {cniBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={cniBisStatus} />
+                        {t('student.dashboard.card.status.cni')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
@@ -259,6 +321,17 @@ function StudentDocumentContentV2 (): JSX.Element {
                   </div>
                 </div>
               : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={cniStatus} />
+                    {t('student.dashboard.card.status.cni')}
+                  </div>
+                  {cniBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={cniBisStatus} />
+                        {t('student.dashboard.card.status.cni')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
@@ -267,8 +340,19 @@ function StudentDocumentContentV2 (): JSX.Element {
                   <DropZoneV2 onObjectChange={setCniFile} onClose={resetCniFile} />
                 </div>
             }
-            {sirenStatus !== DocumentStatus.NOT_FILLED
+            {sirenStatus !== DocumentStatus.NOT_FILLED && !sirenReplace && sirenStatus !== DocumentStatus.DENIED
               ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={sirenStatus} />
+                    {t('student.dashboard.card.status.statut')}
+                  </div>
+                  {sirenBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={sirenBisStatus} />
+                        {t('student.dashboard.card.status.statut')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
@@ -279,6 +363,17 @@ function StudentDocumentContentV2 (): JSX.Element {
                   </div>
                 </div>
               : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={sirenStatus} />
+                    {t('student.dashboard.card.status.statut')}
+                  </div>
+                  {sirenBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={sirenBisStatus} />
+                        {t('student.dashboard.card.status.statut')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
@@ -289,8 +384,19 @@ function StudentDocumentContentV2 (): JSX.Element {
             }
           </div>
           <div className='std-documentV2__section'>
-          {urssafStatus !== DocumentStatus.NOT_FILLED
+          {urssafStatus !== DocumentStatus.NOT_FILLED && !urssafReplace && urssafStatus !== DocumentStatus.DENIED
             ? <div className='std-documentV2__content'>
+                <div className='std-documentV2__status-content'>
+                  <ShowIcon status={urssafStatus} />
+                  {t('student.dashboard.card.status.urssaf')}
+                </div>
+                {urssafBisStatus === DocumentStatus.NOT_FILLED
+                  ? null
+                  : <div className='std-documentV2__status-content'>
+                      <ShowIcon status={urssafBisStatus} />
+                      {t('student.dashboard.card.status.urssaf')}
+                    </div>
+                }
                 <div className='std-documentV2__content--text-section'>
                   <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
                   <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
@@ -301,6 +407,17 @@ function StudentDocumentContentV2 (): JSX.Element {
                 </div>
               </div>
             : <div className='std-documentV2__content'>
+                <div className='std-documentV2__status-content'>
+                  <ShowIcon status={urssafStatus} />
+                  {t('student.dashboard.card.status.urssaf')}
+                </div>
+                {urssafBisStatus === DocumentStatus.NOT_FILLED
+                  ? null
+                  : <div className='std-documentV2__status-content'>
+                      <ShowIcon status={urssafBisStatus} />
+                      {t('student.dashboard.card.status.urssaf')}
+                    </div>
+                }
                 <div className='std-documentV2__content--text-section'>
                   <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
                   <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
@@ -309,8 +426,19 @@ function StudentDocumentContentV2 (): JSX.Element {
                 <DropZoneV2 onObjectChange={setUrssafFile} onClose={resetUrssafFile} />
               </div>
             }
-            {ribStatus !== DocumentStatus.NOT_FILLED
+            {ribStatus !== DocumentStatus.NOT_FILLED && !ribReplace && ribStatus !== DocumentStatus.DENIED
               ? <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={ribStatus} />
+                    {t('student.dashboard.card.status.rib')}
+                  </div>
+                  {ribBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={ribBisStatus} />
+                        {t('student.dashboard.card.status.rib')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
@@ -321,6 +449,17 @@ function StudentDocumentContentV2 (): JSX.Element {
                   </div>
                 </div>
               : <div className='std-documentV2__content'>
+                  <div className='std-documentV2__status-content'>
+                    <ShowIcon status={ribStatus} />
+                    {t('student.dashboard.card.status.rib')}
+                  </div>
+                  {ribBisStatus === DocumentStatus.NOT_FILLED
+                    ? null
+                    : <div className='std-documentV2__status-content'>
+                        <ShowIcon status={ribBisStatus} />
+                        {t('student.dashboard.card.status.rib')}
+                      </div>
+                  }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
                     <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
