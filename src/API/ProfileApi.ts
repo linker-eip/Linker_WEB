@@ -203,6 +203,16 @@ class ProfileApi {
     return response.data
   }
 
+  static async replaceCompanyDocument (jwtToken: string, dto: FormData): Promise<any> {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/company/replaceDocument`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response
+  }
+
   static async uploadStudentDocumentVerification (jwtToken: string, dto: FormData): Promise<any> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/student/documentVerification`, dto, {
       headers: {
@@ -211,6 +221,16 @@ class ProfileApi {
       }
     })
     return response.data
+  }
+
+  static async replaceStudentDocument (jwtToken: string, dto: FormData): Promise<any> {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/student/replaceDocument`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response
   }
 
   static async getStudentStatistics (jwtToken: string): Promise<StudentStatisticsResponse> {

@@ -76,7 +76,7 @@ export enum StudentDocumentType {
 }
 
 export enum DocumentStatus {
-  NOT_FILLED,
+  NOT_FILLED = 'NOT_FILLED',
   PENDING = 'PENDING',
   VERIFIED = 'VERIFIED',
   DENIED = 'DENIED'
