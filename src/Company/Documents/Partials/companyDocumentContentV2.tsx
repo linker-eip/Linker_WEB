@@ -122,16 +122,16 @@ function CompanyDocumentContentV2 (): JSX.Element {
       const response = await ProfileApi.getCompanyDocumentStatus(localStorage.getItem('jwtToken') as string)
       if (response.length > 0) {
         response.forEach((element): void => {
-          if (element.documentType === CompanyDocumentType.CNI && element.bis === false) {
+          if (element.documentType === CompanyDocumentType.CNI && !element.bis) {
             setCniStatus(element.status)
           }
-          if (element.documentType === CompanyDocumentType.KBIS && element.bis === false) {
+          if (element.documentType === CompanyDocumentType.KBIS && !element.bis) {
             setKbisStatus(element.status)
           }
-          if (element.documentType === CompanyDocumentType.CNI && element.bis === true) {
+          if (element.documentType === CompanyDocumentType.CNI && element.bis) {
             setCniBisStatus(element.status)
           }
-          if (element.documentType === CompanyDocumentType.KBIS && element.bis === true) {
+          if (element.documentType === CompanyDocumentType.KBIS && element.bis) {
             setKbisBisStatus(element.status)
           }
         })

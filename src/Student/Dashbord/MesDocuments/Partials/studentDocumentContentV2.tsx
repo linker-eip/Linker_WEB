@@ -84,28 +84,28 @@ function StudentDocumentContentV2 (): JSX.Element {
       const response = await ProfileApi.getStudentDocumentStatus(localStorage.getItem('jwtToken') as string)
       if (response.length > 0) {
         response.forEach((element): void => {
-          if (element.documentType === StudentDocumentType.CNI && element.bis === false) {
+          if (element.documentType === StudentDocumentType.CNI && !element.bis) {
             setCniStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.SIREN && element.bis === false) {
+          if (element.documentType === StudentDocumentType.SIREN && !element.bis) {
             setSirenStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.URSSAF && element.bis === false) {
+          if (element.documentType === StudentDocumentType.URSSAF && !element.bis) {
             setUrssafStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.RIB && element.bis === false) {
+          if (element.documentType === StudentDocumentType.RIB && !element.bis) {
             setRibStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.CNI && element.bis === true) {
+          if (element.documentType === StudentDocumentType.CNI && element.bis) {
             setCniBisStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.SIREN && element.bis === true) {
+          if (element.documentType === StudentDocumentType.SIREN && element.bis) {
             setSirenBisStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.URSSAF && element.bis === true) {
+          if (element.documentType === StudentDocumentType.URSSAF && element.bis) {
             setUrssafBisStatus(element.status)
           }
-          if (element.documentType === StudentDocumentType.RIB && element.bis === true) {
+          if (element.documentType === StudentDocumentType.RIB && element.bis) {
             setRibBisStatus(element.status)
           }
         })
