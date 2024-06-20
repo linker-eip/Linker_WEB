@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react'
+
 import '../../../CSS/Hotbar.scss'
-import SearchIcon from '@mui/icons-material/Search'
-import EditIcon from '@mui/icons-material/Edit'
+
 import { MissionStatus, PaymentStatus } from '../../../Enum'
+
+import EditIcon from '@mui/icons-material/Edit'
+import SearchIcon from '@mui/icons-material/Search'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, IconButton, Dialog, DialogActions, DialogContent, DialogTitle,
   Button, TextField, DialogContentText, InputAdornment
 } from '@mui/material'
 
+interface StudentRibModel {
+  File: string
+}
+
 interface StudentModel {
+  id: number
   email: string
 }
 
@@ -28,6 +38,7 @@ interface PaymentsModel {
 
 interface Row {
   id: number
+  studentId: number
   missionName: string
   missionStatus: MissionStatus
   studentEmail: string
@@ -49,7 +60,13 @@ const paymentStatusMapping: { [key in PaymentStatus]: string } = {
   [PaymentStatus.PENDING]: 'En attente',
   [PaymentStatus.MISSING_RIB]: 'RIB manquant',
   [PaymentStatus.WAITING]: 'Demandé par l\'étudiant',
-  [PaymentStatus.PAID]: 'Payée'
+  [PaymentStatus.PAID]: 'Payé'
+}
+
+function openUrlInNewWindow (url: string): void {
+  if (url.trim() === '') return
+
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 function AdminPaymentsContent (): JSX.Element {
@@ -68,6 +85,7 @@ function AdminPaymentsContent (): JSX.Element {
           .filter((item: PaymentsModel) => item.status !== 'PENDING')
         const formattedData = filteredData.map((item: PaymentsModel) => ({
           id: item.id,
+          studentId: item.student.id,
           missionName: item.mission.name,
           missionStatus: missionStatusMapping[item.mission.status],
           studentEmail: item.student.email,
@@ -81,6 +99,19 @@ function AdminPaymentsContent (): JSX.Element {
       })
   }, [])
 
+  const handleVisualize = (rowData: Row): void => {
+    setCurrentData(rowData)
+
+    fetch(`https://dev.linker-app.fr/api/admin/documents/studentRib/${rowData.studentId}`)
+      .then(async (response) => await response.json())
+      .then((data: StudentRibModel) => {
+        openUrlInNewWindow(data.File)
+      })
+      .catch(error => {
+        alert(`Erreur lors de la récupération du RIB: ${String(error)}`)
+      })
+  }
+
   const handleOpenUpdate = (rowData: Row): void => {
     setCurrentData(rowData)
     setOpenUpdate(true)
@@ -93,8 +124,6 @@ function AdminPaymentsContent (): JSX.Element {
   const handleUpdate = async (): Promise<void> => {
     console.log(currentData)
   }
-
-  const pendingDocuments = rows.filter(row => row.paymentStatus === 'PENDING')
 
   return (
     <div className='std-document-content'>
@@ -187,6 +216,20 @@ function AdminPaymentsContent (): JSX.Element {
                     paddingRight: '50px'
                   }}
                 >
+                  RIB
+                </TableCell>
+                <TableCell
+                  align='center'
+                  sx={{
+                    fontFamily: 'Poppins',
+                    fontWeight: 'bold',
+                    fontSize: '30px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#005275',
+                    paddingLeft: '50px',
+                    paddingRight: '50px'
+                  }}
+                >
                   Paiement
                 </TableCell>
                 <TableCell
@@ -220,7 +263,7 @@ function AdminPaymentsContent (): JSX.Element {
               </TableRow>
             </TableHead>
             <TableBody>
-              {pendingDocuments.map((row) => {
+              {rows.map((row) => {
                 if (
                   row.missionName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                   row.studentEmail?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -235,6 +278,11 @@ function AdminPaymentsContent (): JSX.Element {
                       </TableCell>
                       <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
                         {row.studentEmail}
+                      </TableCell>
+                      <TableCell align='center'>
+                        <IconButton onClick={() => { handleVisualize(row) }}>
+                          <VisibilityIcon fontSize='large' />
+                        </IconButton>
                       </TableCell>
                       <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
                         {row.paymentStatus}
