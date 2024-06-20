@@ -115,6 +115,19 @@ class GroupApi {
     }
   }
 
+  static async searchGroupById (jwtToken: string, id: number): Promise<SearchGroups> {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/group/company/searchGroups?missionId=${id}`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      })
+      return response
+    } catch (error: any) {
+      return error
+    }
+  }
+
   static async inviteMember (jwtToken: string, userId: number): Promise<Group> {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/group/invite/${userId}`, null, {

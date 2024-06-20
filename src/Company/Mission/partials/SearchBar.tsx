@@ -16,7 +16,7 @@ const SearchBar = (props: Props): JSX.Element => {
 
   useEffect(() => {
     async function fetchData (): Promise<void> {
-      const response = await GroupApi.searchGroup(localStorage.getItem('jwtToken') as string, '')
+      const response = await GroupApi.searchGroupById(localStorage.getItem('jwtToken') as string, props.missionId)
       if (response !== undefined) {
         setSearchResults(response.data)
       }
