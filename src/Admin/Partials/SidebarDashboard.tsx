@@ -3,6 +3,7 @@ import '../../CSS/Sidebar.scss'
 import { useTranslation } from 'react-i18next'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
+import PaidIcon from '@mui/icons-material/Paid'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread'
@@ -32,6 +33,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
         break
       case AdminDashboardState.MISSIONS:
         navigate(ROUTES.ADMIN_MISSIONS_DASHBOARD)
+        break
+      case AdminDashboardState.PAYMENTS:
+        navigate(ROUTES.ADMIN_PAYMENTS)
         break
       case AdminDashboardState.DOCUMENTS:
         navigate(ROUTES.ADMIN_DOCUMENTS_DASHBOARD)
@@ -70,6 +74,10 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             <p className={ stateDashboard === AdminDashboardState.MISSIONS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.MISSIONS) }}>
               <RoomOutlinedIcon />
               { t('admin.dashboard.mission') }
+            </p>
+            <p className={ stateDashboard === AdminDashboardState.PAYMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.PAYMENTS) }}>
+              <PaidIcon />
+              { t('admin.dashboard.payments') }
             </p>
             <p className={ stateDashboard === AdminDashboardState.DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.DOCUMENTS) }}>
               <TopicOutlinedIcon />

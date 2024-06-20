@@ -8,6 +8,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
 import GroupsIcon from '@mui/icons-material/Groups'
 import PaidIcon from '@mui/icons-material/Paid'
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact'
 import { DashboardState } from '../../../Enum'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
@@ -43,6 +44,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.GROUP:
         navigate(ROUTES.STUDENT_GROUP)
         break
+      case DashboardState.NETWORK:
+        navigate(ROUTES.STUDENT_NETWORK)
+        break
       default:
         break
     }
@@ -66,6 +70,7 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       <div className='sidebar__text'>
         <SidebarItem icon={<DashboardOutlinedIcon />} labelKey='student.dashboard.home' dashboardState={DashboardState.DASHBOARD} />
         <SidebarItem icon={<RoomOutlinedIcon />} labelKey='student.dashboard.mission' dashboardState={DashboardState.MISSION} />
+        <SidebarItem icon={<ConnectWithoutContactIcon />} labelKey='student.dashboard.network' dashboardState={DashboardState.NETWORK} />
         <SidebarItem icon={<RequestPageOutlinedIcon />} labelKey='student.dashboard.facture' dashboardState={DashboardState.FACTURES} />
         <SidebarItem icon={<PaidIcon />} labelKey='student.dashboard.paiements' dashboardState={DashboardState.PAIEMENTS} />
         <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
