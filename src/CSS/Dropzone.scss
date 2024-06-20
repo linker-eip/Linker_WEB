@@ -14,3 +14,63 @@
         cursor: pointer;
     }
 }
+
+.dropzoneV2 {
+    font-family: 'poppins';
+    font-size: '20px';
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+    color: #3DA1CC;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 0.2vw #3DA1CC dashed;
+    width: 15vw;
+    height: 5vw;
+    
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__image {
+        width: 3vw;
+        height: auto;
+    }
+
+    &__image2 {
+        width: 2.8vw;
+        height: auto;
+    }
+
+    &__text {
+        font-weight: 100;
+        font-size: 1vw;
+    }
+
+    &__container {
+        position: relative;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        border: 0.2vw #3DA1CC dashed;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0.8vw;
+    }
+
+    &__img {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 1.1vw;
+        height: auto;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

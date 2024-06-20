@@ -39,16 +39,17 @@ function TaskTab (props: Props): JSX.Element {
       setTaskTab(props.missionTask
         .filter((task) => task.missionTask.groupId === parseInt(props.displayId))
         .sort((a, b) => a.missionTask.id - b.missionTask.id))
+      const result = props.missionTask.filter((task) => task.missionTask.groupId === parseInt(props.displayId))
+      setTotalAmount(result.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.missionTask.amount
+      }, 0))
     } else {
       setTaskTab(props.missionTask.sort((a, b) => a.missionTask.id - b.missionTask.id))
+      setTotalAmount(props.missionTask.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.missionTask.amount
+      }, 0))
     }
   }, [props.missionTask, props.displayId])
-
-  useEffect(() => {
-    let amount = 0
-    props.missionTask.forEach(task => { return (amount += task.missionTask.amount) })
-    setTotalAmount(amount)
-  }, [])
 
   const closeTaskModal = (): void => {
     setTaskModal(false)

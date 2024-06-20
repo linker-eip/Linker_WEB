@@ -37,7 +37,7 @@ function WaitVerifiedStudentAccount (props: Props): JSX.Element {
 
   return (
     <div className='std-bord-container'>
-      <HotbarDashboard hideName hideNotif> Mention Légales </HotbarDashboard>
+      <HotbarDashboard hideName hideNotif> </HotbarDashboard>
       <div className='waiting-account'>
         <div className='waiting-account__title'> {t('verify_page.waiting')} </div>
         <div className='waiting-account__button'>

@@ -17,6 +17,7 @@ interface Row {
   file: string
   status: string
   email: string
+  bis: boolean
 }
 
 function openUrlInNewWindow (url: string): void {
@@ -50,7 +51,8 @@ function AdminVerifyCompanyContent (): JSX.Element {
               documentType: item.documentType,
               file: item.file,
               status: item.status,
-              email
+              email,
+              bis: item.bis
             }
           })
         )
@@ -84,7 +86,8 @@ function AdminVerifyCompanyContent (): JSX.Element {
           },
           body: JSON.stringify({
             companyId: currentData.companyId,
-            documentType: currentData.documentType
+            documentType: currentData.documentType,
+            bis: currentData.bis
           })
         })
         if (response.ok) {
@@ -120,7 +123,8 @@ function AdminVerifyCompanyContent (): JSX.Element {
           body: JSON.stringify({
             companyId: currentData.companyId,
             documentType: currentData.documentType,
-            comment: 'Document refusé.'
+            comment: 'Document refusé.',
+            bis: currentData.bis
           })
         })
         if (response.ok) {

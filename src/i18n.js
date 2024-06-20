@@ -14,6 +14,26 @@ i18n
     resources: {
       fr: {
         translation: {
+          document: {
+            statut: {
+              bis: 'de remplacement'
+            },
+            is_document: {
+              part1: 'Votre document:',
+              part2: 'a été renseigné avec succès.'
+            },
+            no_document: 'Veuillez renseigner votre ',
+            cni: 'CNI',
+            siren: 'SIREN',
+            urssaf: 'URSSAF',
+            rib: 'RIB',
+            kbis: 'KBIS',
+            send: 'ENVOYER LES DOCUMENTS',
+            replace: 'REMPLACER'
+          },
+          notifications: {
+            email: 'Recevoir les notifications par mail'
+          },
           contact: {
             title: 'Nous sommes là pour vous aider. Contactez-nous pour toute question ou assistance.',
             lastname: 'Nom de famille',

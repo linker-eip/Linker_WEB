@@ -108,12 +108,14 @@ export interface CompanyDocumentStatusInfo {
   documentType: CompanyDocumentType
   status: DocumentStatus
   comment: string
+  bis: boolean
 }
 
 export interface StudentDocumentStatusInfo {
   documentType: StudentDocumentType
   status: DocumentStatus
   comment: string
+  bis: boolean
 }
 
 interface Mission {
