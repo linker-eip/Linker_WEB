@@ -48,7 +48,7 @@ const missionStatusMapping: { [key in MissionStatus]: string } = {
 const paymentStatusMapping: { [key in PaymentStatus]: string } = {
   [PaymentStatus.PENDING]: 'En attente',
   [PaymentStatus.MISSING_RIB]: 'RIB manquant',
-  [PaymentStatus.WAITING]: 'En attente',
+  [PaymentStatus.WAITING]: 'Demandé par l\'étudiant',
   [PaymentStatus.PAID]: 'Payée'
 }
 
@@ -216,72 +216,72 @@ function AdminPaymentsContent (): JSX.Element {
                   }}
                 >
                   Modifier
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {pendingDocuments.map((row) => {
-              if (
-                row.missionName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                row.studentEmail?.toLowerCase().includes(searchTerm.toLowerCase())
-              ) {
-                return (
-                  <TableRow key={row.id}>
-                    <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
-                      {row.missionName}
-                    </TableCell>
-                    <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
-                      {row.missionStatus}
-                    </TableCell>
-                    <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
-                      {row.studentEmail}
-                    </TableCell>
-                    <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
-                      {row.paymentStatus}
-                    </TableCell>
-                    <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
-                      {row.paymentAmount}€
-                    </TableCell>
-                    <TableCell align='center'>
-                      <IconButton onClick={() => { handleOpenUpdate(row) }}>
-                        <EditIcon fontSize='large' />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                )
-              }
-              return null
-            })}
-          </TableBody>
-          {/* MODALE POUR MODIFIER */}
-          <Dialog open={openUpdate} onClose={handleCloseUpdate}>
-            <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Modifier un paiement</DialogTitle>
-            <DialogContent>
-              <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
-                Êtes-vous sûr de vouloir modifier le statut de ce paiement ?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={handleCloseUpdate}
-                color="primary"
-                sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-              >
-                Non
-              </Button>
-              <Button
-                onClick={() => { handleUpdate() }}
-                color="primary"
-                sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
-              >
-                Oui
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Table>
-      </TableContainer>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {pendingDocuments.map((row) => {
+                if (
+                  row.missionName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  row.studentEmail?.toLowerCase().includes(searchTerm.toLowerCase())
+                ) {
+                  return (
+                    <TableRow key={row.id}>
+                      <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
+                        {row.missionName}
+                      </TableCell>
+                      <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
+                        {row.missionStatus}
+                      </TableCell>
+                      <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
+                        {row.studentEmail}
+                      </TableCell>
+                      <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
+                        {row.paymentStatus}
+                      </TableCell>
+                      <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
+                        {row.paymentAmount}€
+                      </TableCell>
+                      <TableCell align='center'>
+                        <IconButton onClick={() => { handleOpenUpdate(row) }}>
+                          <EditIcon fontSize='large' />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  )
+                }
+                return null
+              })}
+            </TableBody>
+            {/* MODALE POUR MODIFIER */}
+            <Dialog open={openUpdate} onClose={handleCloseUpdate}>
+              <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Modifier un paiement</DialogTitle>
+              <DialogContent>
+                <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
+                  Êtes-vous sûr de vouloir modifier le statut de ce paiement ?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={handleCloseUpdate}
+                  color="primary"
+                  sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                >
+                  Non
+                </Button>
+                <Button
+                  onClick={() => { handleUpdate() }}
+                  color="primary"
+                  sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                >
+                  Oui
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
-  </div>
   )
 }
 
