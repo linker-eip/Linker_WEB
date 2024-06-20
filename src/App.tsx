@@ -26,6 +26,7 @@ import CompanyProfile from './Company/Dashbord/Profile/CompanyProfile'
 import CompanyMissionChat from './Company/Mission/CompanyMissionChat'
 import StudentMissionChat from './Student/Dashbord/Missions/StudentMissionChat'
 import StudentPayments from './Student/Dashbord/MesPaiements/studentPayments'
+import StudentNetwork from './Student/Dashbord/Réseau/studentNetwork'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
@@ -40,6 +41,7 @@ import AdminVerifyCompany from './Admin/VerifyCompanyDocuments/adminVerifyCompan
 import AdminVerifyStudent from './Admin/VerifyStudentDocuments/adminVerifyStudent'
 import AdminContacts from './Admin/Contacts/adminContacts'
 import AdminArchives from './Admin/Archives/adminArchives'
+import AdminPayments from './Admin/Payments/adminPayments'
 
 import MentionLegales from './Transverse/mentionLegales'
 import Footer from './Transverse/Footer'
@@ -67,6 +69,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments />} />
         <Route path={ROUTES.STUDENT_PROFILE} element={<StudentProfile />} />
         <Route path={ROUTES.STUDENT_MISSIONS} element={<StudentMissions />} />
+        <Route path={ROUTES.STUDENT_NETWORK} element={<StudentNetwork />} />
         <Route path={ROUTES.STUDENT_DETAILED_MISSION} element={<StudentDetailedMission />} />
         <Route path={ROUTES.STUDENT_STATISTICS} element={<StudentStatistics />} />
         <Route path={ROUTES.STUDENT_GROUP} element={<StudentGroup />} />
@@ -98,6 +101,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.ADMIN_VERIFY_STUDENT_DOCUMENTS} element={<AdminVerifyStudent />} />
         <Route path={ROUTES.ADMIN_CONTACTS} element={<AdminContacts />} />
         <Route path={ROUTES.ADMIN_ARCHIVES} element={<AdminArchives />} />
+        <Route path={ROUTES.ADMIN_PAYMENTS} element={<AdminPayments />} />
         <Route path={ROUTES.MENTION_LEGALES} element={
           <div>
             <MentionLegales />
