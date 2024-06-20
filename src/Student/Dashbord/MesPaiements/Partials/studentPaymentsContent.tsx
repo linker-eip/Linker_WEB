@@ -9,6 +9,10 @@ import {
   Button, TextField, DialogContentText, InputAdornment
 } from '@mui/material'
 
+interface UpdatePaymentModel {
+  studentPaymentId: number | undefined
+}
+
 interface Row {
   id: number
   missionName: string
@@ -63,8 +67,25 @@ function StudentPaymentsContent (): JSX.Element {
   }
 
   const handleCashOut = (): void => {
-    console.log('Prochainement')
-    handleCloseCashOut()
+    const payload: UpdatePaymentModel = {
+      studentPaymentId: currentData?.id
+    }
+
+    fetch(`https://dev.linker-app.fr/api/payment/student/receive/${String(currentData?.id)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(() => {
+        handleCloseCashOut()
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la demande de cash-out: ${String(error)}`)
+      })
   }
 
   return (
