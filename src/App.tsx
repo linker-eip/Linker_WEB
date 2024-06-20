@@ -26,6 +26,7 @@ import CompanyProfile from './Company/Dashbord/Profile/CompanyProfile'
 import CompanyMissionChat from './Company/Mission/CompanyMissionChat'
 import StudentMissionChat from './Student/Dashbord/Missions/StudentMissionChat'
 import StudentPayments from './Student/Dashbord/MesPaiements/studentPayments'
+import StudentNetwork from './Student/Dashbord/Réseau/studentNetwork'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
@@ -68,6 +69,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments />} />
         <Route path={ROUTES.STUDENT_PROFILE} element={<StudentProfile />} />
         <Route path={ROUTES.STUDENT_MISSIONS} element={<StudentMissions />} />
+        <Route path={ROUTES.STUDENT_NETWORK} element={<StudentNetwork />} />
         <Route path={ROUTES.STUDENT_DETAILED_MISSION} element={<StudentDetailedMission />} />
         <Route path={ROUTES.STUDENT_STATISTICS} element={<StudentStatistics />} />
         <Route path={ROUTES.STUDENT_GROUP} element={<StudentGroup />} />

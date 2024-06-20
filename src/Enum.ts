@@ -1,6 +1,7 @@
 export enum DashboardState {
   DASHBOARD = 'dashboard',
   MISSION = 'mission',
+  NETWORK = 'network',
   FACTURES = 'factures',
   PAIEMENTS = 'paiements',
   PROFIL = 'profil',

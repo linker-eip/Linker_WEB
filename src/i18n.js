@@ -151,6 +151,7 @@ i18n
             dashboard: {
               home: 'Mon dashboard',
               mission: 'Mes missions',
+              network: 'Réseau',
               facture: 'Mes factures',
               paiements: 'Mes paiements',
               profil: 'Mon profil',
@@ -459,6 +460,7 @@ i18n
             dashboard: {
               home: 'Mon dashboard',
               mission: 'Mes missions',
+              network: 'Réseau',
               facture: 'Mes factures',
               paiements: 'Mes paiements',
               profil: 'Mon profil',
