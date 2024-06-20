@@ -315,7 +315,8 @@ function AdminPaymentsContent (): JSX.Element {
                 if (
                   row.missionName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                   row.studentEmail?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  row.paymentStatus?.toLowerCase().includes(searchTerm.toLowerCase())
+                  row.paymentStatus?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  row.paymentAmount?.toString().toLowerCase().includes(searchTerm.toLowerCase())
                 ) {
                   return (
                     <TableRow key={row.id}>
