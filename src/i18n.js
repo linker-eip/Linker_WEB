@@ -380,7 +380,8 @@ i18n
               verifyCompanyDoc: 'Vérification Entreprise',
               verifyStudentDoc: 'Vérification Étudiante',
               contacts: 'Contact',
-              archives: 'Archives'
+              archives: 'Archives',
+              payments: 'Paiements'
             }
           },
           snackbar: {
@@ -640,7 +641,8 @@ i18n
               verifyCompanyDoc: 'Vérification Entreprise',
               verifyStudentDoc: 'Vérification Étudiante',
               contacts: 'Contact',
-              archives: 'Archives'
+              archives: 'Archives',
+              payments: 'Paiements'
             }
           }
         }
