@@ -158,6 +158,21 @@ function AdminPaymentsContent (): JSX.Element {
       })
   }
 
+  const [fieldValidity, setFieldValidity] = useState({
+    paymentStatusValid: true
+  })
+
+  useEffect(() => {
+    const isValid = {
+      paymentStatusValid: selectedStatus.trim() !== ''
+    }
+    setFieldValidity(isValid)
+  }, [selectedStatus])
+
+  const isFormValid = (): boolean => {
+    return Object.values(fieldValidity).every(value => value)
+  }
+
   return (
     <div className='std-document-content'>
       <div className='std-document-card'>
@@ -349,6 +364,7 @@ function AdminPaymentsContent (): JSX.Element {
                     value={selectedStatus}
                     onChange={handleStatusChange}
                     sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                    error={!fieldValidity.paymentStatusValid}
                   >
                     {filteredPaymentStatus.map(([key, value]) => (
                       <MenuItem key={key} value={key} sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
@@ -367,9 +383,10 @@ function AdminPaymentsContent (): JSX.Element {
                   Annuler
                 </Button>
                 <Button
-                  onClick={() => { handleUpdate() }}
+                  onClick={() => { if (isFormValid()) handleUpdate() }}
                   color="primary"
                   sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                  disabled={!isFormValid()}
                 >
                   Modifier
                 </Button>
