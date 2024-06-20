@@ -6,6 +6,7 @@
 .notif-button {
     left: 50%;
     z-index: 9999;
+    font-family: 'Poppins';
 
     @media screen and (min-width: 375px) {
         left: 61.5%;
@@ -83,9 +84,6 @@
     }
 
     &__bg {
-        // position: absolute;
-        // top: -2px;
-        // left: 34px;
         width: 20px;
         height: auto;
     }
@@ -100,5 +98,12 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 9999;
+    }
+
+    &__email {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 1em 1em 0 1em;
     }
 }

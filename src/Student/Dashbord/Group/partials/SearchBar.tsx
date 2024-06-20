@@ -15,7 +15,7 @@ const SearchBar = (props: Props): JSX.Element => {
   const [memberInvited, setMemberInvited] = useState<InvitedMember[] | undefined>()
 
   const handleSearch = (element: any): void => {
-    const searchTerm = element.target.value.toLowerCase()
+    const searchTerm = element.target.value
     setSearchTerm(searchTerm)
   }
 
