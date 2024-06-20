@@ -45,6 +45,9 @@ function TaskTab (props: Props): JSX.Element {
       }, 0))
     } else {
       setTaskTab(props.missionTask.sort((a, b) => a.missionTask.id - b.missionTask.id))
+      setTotalAmount(props.missionTask.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.missionTask.amount
+      }, 0))
     }
   }, [props.missionTask, props.displayId])
 
