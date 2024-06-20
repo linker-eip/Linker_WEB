@@ -202,7 +202,13 @@ function StudentPaymentsContent (): JSX.Element {
                         {row.amount}€
                       </TableCell>
                       <TableCell align='center'>
-                        <IconButton onClick={() => { handleOpenCashOut(row) }}>
+                        <IconButton
+                          onClick={() => { handleOpenCashOut(row) }}
+                          disabled={
+                            row.status === paymentStatusMapping[PaymentStatus.WAITING] ||
+                            row.status === paymentStatusMapping[PaymentStatus.PAID]
+                          }
+                        >
                           <ArrowOutwardIcon fontSize='large' />
                         </IconButton>
                       </TableCell>
