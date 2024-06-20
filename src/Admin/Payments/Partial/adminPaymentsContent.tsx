@@ -8,11 +8,19 @@ import EditIcon from '@mui/icons-material/Edit'
 import SearchIcon from '@mui/icons-material/Search'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 
+import type { SelectChangeEvent } from '@mui/material'
+
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, IconButton, Dialog, DialogActions, DialogContent, DialogTitle,
-  Button, TextField, DialogContentText, InputAdornment
+  Button, TextField, InputAdornment, FormControl, InputLabel, Select,
+  MenuItem
 } from '@mui/material'
+
+interface UpdatePaymentModel {
+  id: number | undefined
+  status: PaymentStatus
+}
 
 interface StudentRibModel {
   File: string
@@ -69,12 +77,16 @@ function openUrlInNewWindow (url: string): void {
   window.open(url, '_blank', 'noopener,noreferrer')
 }
 
+const filteredPaymentStatus = Object.entries(paymentStatusMapping)
+  .filter(([key]) => key !== 'PENDING' && key !== 'WAITING')
+
 function AdminPaymentsContent (): JSX.Element {
   const [rows, setRows] = useState<Row[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [currentData, setCurrentData] = useState<Row | null>(null)
 
   const [openUpdate, setOpenUpdate] = useState(false)
+  const [selectedStatus, setSelectedStatus] = useState<PaymentStatus | ''>('')
 
   useEffect(() => {
     fetch('https://dev.linker-app.fr/api/admin/payment')
@@ -82,7 +94,7 @@ function AdminPaymentsContent (): JSX.Element {
       .then(data => {
         const filteredData = data
           .filter((item: PaymentsModel) => item.mission.status === 'FINISHED')
-          .filter((item: PaymentsModel) => item.status !== 'PENDING')
+          .filter((item: PaymentsModel) => item.status === 'WAITING')
         const formattedData = filteredData.map((item: PaymentsModel) => ({
           id: item.id,
           studentId: item.student.id,
@@ -100,8 +112,6 @@ function AdminPaymentsContent (): JSX.Element {
   }, [])
 
   const handleVisualize = (rowData: Row): void => {
-    setCurrentData(rowData)
-
     fetch(`https://dev.linker-app.fr/api/admin/documents/studentRib/${rowData.studentId}`)
       .then(async (response) => await response.json())
       .then((data: StudentRibModel) => {
@@ -112,17 +122,40 @@ function AdminPaymentsContent (): JSX.Element {
       })
   }
 
+  const handleStatusChange = (event: SelectChangeEvent<string>): void => {
+    setSelectedStatus(event.target.value as PaymentStatus)
+  }
+
   const handleOpenUpdate = (rowData: Row): void => {
     setCurrentData(rowData)
     setOpenUpdate(true)
   }
 
   const handleCloseUpdate = (): void => {
+    setSelectedStatus('')
     setOpenUpdate(false)
   }
 
-  const handleUpdate = async (): Promise<void> => {
-    console.log(currentData)
+  const handleUpdate = (): void => {
+    const payload: UpdatePaymentModel = {
+      id: currentData?.id,
+      status: selectedStatus as PaymentStatus
+    }
+
+    fetch('https://dev.linker-app.fr/api/admin/payment', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(() => {
+        handleCloseUpdate()
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(`Erreur lors de la modification du paiement: ${String(error)}`)
+      })
   }
 
   return (
@@ -304,11 +337,26 @@ function AdminPaymentsContent (): JSX.Element {
             </TableBody>
             {/* MODALE POUR MODIFIER */}
             <Dialog open={openUpdate} onClose={handleCloseUpdate}>
-              <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Modifier un paiement</DialogTitle>
+              <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
+                Modifier le statut d&apos;un paiement
+              </DialogTitle>
               <DialogContent>
-                <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
-                  Êtes-vous sûr de vouloir modifier le statut de ce paiement ?
-                </DialogContentText>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
+                    Statut de paiement
+                  </InputLabel>
+                  <Select
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                  >
+                    {filteredPaymentStatus.map(([key, value]) => (
+                      <MenuItem key={key} value={key} sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </DialogContent>
               <DialogActions>
                 <Button
@@ -316,14 +364,14 @@ function AdminPaymentsContent (): JSX.Element {
                   color="primary"
                   sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
                 >
-                  Non
+                  Annuler
                 </Button>
                 <Button
                   onClick={() => { handleUpdate() }}
                   color="primary"
                   sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
                 >
-                  Oui
+                  Modifier
                 </Button>
               </DialogActions>
             </Dialog>
