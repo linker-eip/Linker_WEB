@@ -12,7 +12,7 @@ import type { ProfileCompany } from '../../../../Typage/ProfileType'
 import { TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
-import DropZone from '../../../../Component/DropZone'
+import DropZoneV2 from '../../../../Component/DropZoneV2'
 import ClassicButton from '../../../../Component/ClassicButton'
 import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
@@ -193,10 +193,9 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
                     <div onClick={handleAvatarEditing}>
                       <CloseIcon className='std-profile-exp__edit'/>
                     </div>
-                    <DropZone onObjectChange={handleAvatarImage}/>
+                    <DropZoneV2 onClose={() => {}} onObjectChange={handleAvatarImage}/>
                     { AvatarImage !== undefined
-                      ? <div>
-                          <p> {AvatarImage[0].path } </p>
+                      ? <div className='std-profile-content__button--send'>
                           <BaseButton title='Envoyer' onClick={(): void => { handleNewPicture() }} />
                         </div>
                       : null }
@@ -273,10 +272,9 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
                     <div onClick={handleAvatarEditing}>
                       <CloseIcon className='std-profile-exp__edit'/>
                     </div>
-                    <DropZone onObjectChange={handleAvatarImage}/>
+                    <DropZoneV2 onClose={() => {}} onObjectChange={handleAvatarImage}/>
                     { AvatarImage !== undefined
-                      ? <div>
-                          <p> {AvatarImage[0].path } </p>
+                      ? <div className='std-profile-content__button--send'>
                           <BaseButton title='Envoyer' onClick={(): void => { handleNewPicture() }} />
                         </div>
                       : null }

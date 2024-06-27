@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Modal from '@mui/material/Modal'
 import { TextField } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
-import DropZone from '../../../../Component/DropZone'
+import DropZoneV2 from '../../../../Component/DropZoneV2'
 import ProfileApi from '../../../../API/ProfileApi'
 import type { StudentProfileInfo } from '../../../../Typage/ProfileType'
 import DatePicker, {} from 'react-datepicker'
@@ -194,13 +194,7 @@ function StudentProfileExperience (props: Props): JSX.Element {
         <div className='std-profile-exp__modal'>
           <h1> Ajoute ton expérience </h1>
             <div className='std-profile-exp__content'>
-              <DropZone onObjectChange={handleLogo} />
-              { logo !== undefined
-                ? <div>
-                    <p> {logo[0].path } </p>
-                  </div>
-                : null
-              }
+              <DropZoneV2 onClose={() => {}} onObjectChange={handleLogo} />
               <TextField
                 className='std-profile-exp__input'
                 value={experienceName}

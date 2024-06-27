@@ -21,7 +21,7 @@ import MissionApi from '../../API/MissionApi'
 import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
-import DropZone from '../../Component/DropZone'
+import DropZoneV2 from '../../Component/DropZoneV2'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -369,7 +369,7 @@ function CompanyDetailedMission (): JSX.Element {
                   ? null
                   : <div>
                       <div> { t('company.detailed_mission.devis.devis') } </div>
-                      <DropZone onObjectChange={handleDevis} />
+                      <DropZoneV2 onClose={resetDevis} onObjectChange={handleDevis} />
                     </div>
                 }
                 { devis !== undefined && isValid && !isDevis
