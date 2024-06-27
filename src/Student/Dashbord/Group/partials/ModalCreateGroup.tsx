@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal'
 import { TextField } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
 import GroupApi from '../../../../API/GroupApi'
-import DropZone from '../../../../Component/DropZone'
+import DropZoneV2 from '../../../../Component/DropZoneV2'
 import ProfileApi from '../../../../API/ProfileApi'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
@@ -93,7 +93,7 @@ function ModalCreateGroup (props: Props): JSX.Element {
             <div className='std-group-modal__title'> { t('student.groups.title') } </div>
           </div>
           <div className='std-group-modal__content-section'>
-            <DropZone onObjectChange={handleLogo} />
+            <DropZoneV2 onClose={() => {}} onObjectChange={handleLogo} />
               { logo !== undefined
                 ? <div>
                     <p> {logo[0].path } </p>
