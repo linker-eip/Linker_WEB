@@ -6,6 +6,7 @@ import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
+import SettingsIcon from '@mui/icons-material/Settings'
 import GroupsIcon from '@mui/icons-material/Groups'
 import PaidIcon from '@mui/icons-material/Paid'
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact'
@@ -47,6 +48,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.NETWORK:
         navigate(ROUTES.STUDENT_NETWORK)
         break
+      case DashboardState.SETTINGS:
+        navigate(ROUTES.STUDENT_SETTINGS)
+        break
       default:
         break
     }
@@ -76,6 +80,7 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
         <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
         <SidebarItem icon={<TopicOutlinedIcon />} labelKey='student.dashboard.doc' dashboardState={DashboardState.DOCUMENTS} />
         <SidebarItem icon={<GroupsIcon />} labelKey='student.dashboard.group' dashboardState={DashboardState.GROUP} />
+        <SidebarItem icon={<SettingsIcon />} labelKey='student.dashboard.settings' dashboardState={DashboardState.SETTINGS} />
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ export enum DashboardState {
   DOCUMENTS = 'documents',
   STATISTICS = 'statistics',
   GROUP = 'group',
+  SETTINGS = 'settings',
 }
 
 export enum AdminDashboardState {

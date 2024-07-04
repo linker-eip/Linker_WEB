@@ -179,6 +179,7 @@ i18n
               stat: 'Mes statistiques',
               invoices: 'Mes factures',
               group: 'Groupe',
+              settings: 'Paramètres',
               groups: {
                 my_group: 'votre groupe',
                 chat: 'Chat textuel',
@@ -318,6 +319,23 @@ i18n
               },
               exclude: {
                 title: 'Exclure un membre'
+              }
+            },
+            settings: {
+              security: {
+                title: 'Sécurité',
+                password: 'Mot de passe',
+                password_old: 'Mot de passe actuel',
+                password_new: 'Nouveau mot de passe',
+                modif: 'Modifier le mot de passe',
+                param1: '1 caractère spécial',
+                param2: '1 majuscule',
+                param3: '1 chiffre',
+                delete: 'Supprimer mon compte',
+                desactivation: 'Désactiver mon compte'
+              },
+              preference: {
+                title: 'Préférences'
               }
             }
           },
