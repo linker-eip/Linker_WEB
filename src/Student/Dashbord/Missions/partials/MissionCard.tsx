@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import '../../../../CSS/MissionCard.scss'
 import { useTranslation } from 'react-i18next'
@@ -94,7 +95,7 @@ function MissionCard (props: Props): JSX.Element {
 
   return (
     <div className='mission-card'>
-        <img className='mission-card__logo' src={companyData?.companyPicture} />
+        {/* <img className='mission-card__logo' src={companyData?.companyPicture} /> */}
       <div className='mission-card__container'>
         <div>
           <p className='mission-card__title'> { props.data.name} </p>
