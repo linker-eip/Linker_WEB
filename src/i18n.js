@@ -322,11 +322,20 @@ i18n
               }
             },
             settings: {
+              error: {
+                empty_field: 'Veuillez remplir tous les champs.',
+                old: 'l\'ancien mot de passe est incorrect.',
+                old_new: 'L\' ancien mot de passe et le nouveau mot de passe ne doivent pas être identiques.',
+                new_confirm: 'Les mots de passe ne sont pas identiques.',
+                composition: 'Le mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial.',
+                success: 'Votre mot de passe a été modifié avec succès.'
+              },
               security: {
                 title: 'Sécurité',
                 password: 'Mot de passe',
                 password_old: 'Mot de passe actuel',
                 password_new: 'Nouveau mot de passe',
+                password_confirm: 'Confirmer le nouveau mot de passe',
                 modif: 'Modifier le mot de passe',
                 param1: '1 caractère spécial',
                 param2: '1 majuscule',
