@@ -13,6 +13,10 @@
         align-items: center;
         margin: 5em;
     }
+    
+    &__section {
+        height: 100vh;
+    }
 
     &__text-section {
         display: flex;
