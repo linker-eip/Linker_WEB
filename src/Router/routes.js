@@ -30,6 +30,7 @@ export const COMPANY_MISSIONS = '/company/missions'
 export const COMPANY_DETAILED_MISSION = '/company/detailed-missions/:missionId'
 export const COMPANY_MISSION_CHAT = '/company/mission/chat/:missionId'
 export const COMPANY_PROFILE = '/company/profile'
+export const COMPANY_SETTINGS = '/company/settings'
 
 export const ADMIN_LOGIN_PAGE = '/admin/login'
 export const ADMIN_DASHBOARD = '/admin/dashboard'
