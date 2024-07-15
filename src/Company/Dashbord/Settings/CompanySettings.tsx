@@ -5,7 +5,7 @@ import { DashboardState } from '../../../Enum'
 import HotbarDashboard from '../../Partials/HotbarDashboard'
 import SidebarDashboard from '../../Partials/SidebarDashboard'
 import { Tab, Tabs } from '@mui/material'
-import StudentSecurity from './Partials/StudentSecurity'
+import StudentSecurity from './Partials/CompanySecurity'
 
 interface TabPanelProps {
   children?: React.ReactNode

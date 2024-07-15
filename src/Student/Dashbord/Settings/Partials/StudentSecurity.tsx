@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable no-self-compare */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 
 import React, { type ChangeEvent, useEffect, useState } from 'react'
 import '../../../../CSS/StudentSecurity.scss'
@@ -16,6 +17,7 @@ import * as ROUTES from '../../../../Router/routes'
 import ModalValidation from '../../../../Component/ModalValidation'
 import { ModalType } from '../../../../Enum'
 import { type StudentProfileInfo } from '../../../../Typage/ProfileType'
+import AuthApi from '../../../../API/AuthApi'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -138,25 +140,11 @@ function StudentSecurity (): JSX.Element {
       })
   }
 
-  const buttonValidation = (): void => {
+  const buttonValidation = async (): Promise<void> => {
     if (oldPassword === '' || newPassword === '' || confirmNewPassword === '') {
       setAlertMessage(t('student.settings.error.empty_field').toString())
       setSnackBarValue(true)
       setErrorInfo(ErrorList.ALL)
-      setSnackError(true)
-      return
-    }
-    if (oldPassword !== oldPassword) {
-      setAlertMessage(t('student.settings.error.old').toString())
-      setSnackBarValue(true)
-      setErrorInfo(ErrorList.OLD)
-      setSnackError(true)
-      return
-    }
-    if (oldPassword === newPassword) {
-      setAlertMessage(t('student.settings.error.old_new').toString())
-      setSnackBarValue(true)
-      setErrorInfo(ErrorList.NEW)
       setSnackError(true)
       return
     }
@@ -174,10 +162,26 @@ function StudentSecurity (): JSX.Element {
       setSnackError(true)
       return
     }
-    setAlertMessage(t('student.settings.error.success').toString())
-    setSnackBarValue(true)
-    setSnackError(false)
-    setErrorInfo(ErrorList.NONE)
+
+    const dto = {
+      oldPassword,
+      newPassword
+    }
+    const response = await AuthApi.changeStudentPassword(localStorage.getItem('jwtToken') as string, dto)
+    if (response === '') {
+      setAlertMessage(t('student.settings.error.success').toString())
+      setSnackBarValue(true)
+      setSnackError(false)
+      setErrorInfo(ErrorList.NONE)
+    } else {
+      setAlertMessage(response)
+      setSnackBarValue(true)
+      setErrorInfo(ErrorList.ALL)
+      setSnackError(true)
+    }
+    setOldPassword('')
+    setNewPassword('')
+    setConfirmNewPassword('')
   }
 
   return (
