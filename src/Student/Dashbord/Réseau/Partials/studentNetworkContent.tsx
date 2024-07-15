@@ -69,6 +69,7 @@ function StudentNetworkContent (): JSX.Element {
     noteMin: '',
     noteMax: ''
   })
+  const [searchPerformed, setSearchPerformed] = useState(false)
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setFilters({
@@ -78,6 +79,8 @@ function StudentNetworkContent (): JSX.Element {
   }
 
   const handleSearch = async (): Promise<void> => {
+    setSearchPerformed(true)
+
     const params = {
       searchString: searchTerm,
       location: filters.location,
@@ -315,62 +318,73 @@ function StudentNetworkContent (): JSX.Element {
         </Grid>
 
         <Grid container spacing={4} mt={2}>
-          {searchResults.map((result) => (
-            <Grid item xs={12} sm={6} md={4} key={result.id}>
-              <Card sx={{ borderRadius: '20px' }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={result.picture ?? '/assets/no-profile-picture.jpg'}
-                  alt={`${result.firstName} ${result.lastName}`}
-                />
-                <CardContent>
-                  <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-                    <Typography variant="h6" component="div" gutterBottom>
-                      {result.firstName} {result.lastName}
-                    </Typography>
-                    <ClassicButton title={`Contacter ${result.firstName}`} />
-                  </Box>
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <DescriptionIcon fontSize="small" sx={{ marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary">
-                      {result.description ? result.description : 'Description indisponible'}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <LocationOnIcon fontSize="small" sx={{ marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary">
-                      {result.location ? result.location : 'Localisation indisponible'}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <StarIcon fontSize="small" sx={{ marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary">
-                      Note: {result.note ?? 'N/A'}
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <EuroIcon fontSize="small" sx={{ marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary">
-                      Taux Journalier Moyen: {result.tjm}€
-                    </Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" mb={2}>
-                    <HandymanIcon fontSize="small" sx={{ marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary">
-                      {result.skills.skills.Development.length > 0 ? (
-                        <div key="Development">
-                          {result.skills.skills.Development.join(', ')}
-                        </div>
-                      ) : (
-                        "Aucune compétences"
-                      )}
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
+          {searchPerformed && searchResults.length === 0 ? (
+            <Grid item xs={12}>
+              <Typography variant="h6" component="div" gutterBottom>
+                Aucun résultat trouvé
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Désolé, nous n'avons trouvé aucun résultat pour votre recherche. Veuillez essayer avec d'autres critères.
+              </Typography>
             </Grid>
-          ))}
+          ) : (
+            searchResults.map((result) => (
+              <Grid item xs={12} sm={6} md={4} key={result.id}>
+                <Card sx={{ borderRadius: '20px' }}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={result.picture ?? '/assets/no-profile-picture.jpg'}
+                    alt={`${result.firstName} ${result.lastName}`}
+                  />
+                  <CardContent>
+                    <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
+                      <Typography variant="h6" component="div" gutterBottom>
+                        {result.firstName} {result.lastName}
+                      </Typography>
+                      <ClassicButton title={`Contacter ${result.firstName}`} />
+                    </Box>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <DescriptionIcon fontSize="small" sx={{ marginRight: '8px' }} />
+                      <Typography variant="body2" color="text.secondary">
+                        {result.description ? result.description : 'Description indisponible'}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <LocationOnIcon fontSize="small" sx={{ marginRight: '8px' }} />
+                      <Typography variant="body2" color="text.secondary">
+                        {result.location ? result.location : 'Localisation indisponible'}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <StarIcon fontSize="small" sx={{ marginRight: '8px' }} />
+                      <Typography variant="body2" color="text.secondary">
+                        Note: {result.note ?? 'N/A'}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <EuroIcon fontSize="small" sx={{ marginRight: '8px' }} />
+                      <Typography variant="body2" color="text.secondary">
+                        Taux Journalier Moyen: {result.tjm}€
+                      </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <HandymanIcon fontSize="small" sx={{ marginRight: '8px' }} />
+                      <Typography variant="body2" color="text.secondary">
+                        {result.skills.skills.Development.length > 0 ? (
+                          <div key="Development">
+                            {result.skills.skills.Development.join(', ')}
+                          </div>
+                        ) : (
+                          "Aucune compétences"
+                        )}
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          )}
         </Grid>
       </div>
     </div>
