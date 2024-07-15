@@ -73,7 +73,7 @@ function MissionCardPotential (props: Props): JSX.Element {
 
   return (
     <div className='mission-card'>
-        <img className='mission-card__logo' src='/assets/anonymLogo.jpg' />
+        {/* <img className='mission-card__logo' src='/assets/anonymLogo.jpg' /> */}
       <div className='mission-card__container'>
         <div>
           <p className='mission-card__pending-title'>
