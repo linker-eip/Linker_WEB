@@ -142,6 +142,7 @@ export interface MissionInfo {
   amount: number
   skills: string
   specificationsFile: string
+  isNoted: boolean
 }
 
 export interface MissionTaskArrayInfo {

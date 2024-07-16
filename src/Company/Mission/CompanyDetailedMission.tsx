@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
@@ -46,6 +47,7 @@ function CompanyDetailedMission (): JSX.Element {
   const [devis, setDevis] = useState<any>()
   const [isDevis, setIsDevis] = useState<boolean>(false)
   const [isValid, setIsValid] = useState<boolean>(false)
+  const [isNoted, setIsNoted] = useState<boolean>(false)
   const [invitedGroups, setInvitedGroups] = useState<GroupInvitedList[]>()
   const [groupToAccept, setGroupToAccept] = useState<number[]>()
 
@@ -287,6 +289,46 @@ function CompanyDetailedMission (): JSX.Element {
     }
   }
 
+  const handleComment = async (): Promise<void> => {
+    try {
+      const missionId = missionData?.mission.id
+      const response = await fetch(`https://dev.linker-app.fr/api/mission/company/comment/${missionId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`
+        },
+        body: JSON.stringify({
+          comment: 'My comment'
+        })
+      })
+      if (!response.ok) throw new Error('Erreur lors de l\'appel API')
+      setHasCompanyCommented(1)
+    } catch (error) {
+      console.error("Erreur lors de l'appel API:", error)
+    }
+  }
+
+  const handleNote = async (): Promise<void> => {
+    try {
+      const missionId = missionData?.mission.id
+      const response = await fetch(`https://dev.linker-app.fr/api/mission/company/note/${missionId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`
+        },
+        body: JSON.stringify({
+          note: 5
+        })
+      })
+      if (!response.ok) throw new Error('Erreur lors de l\'appel API')
+      setHasCompanyNoted(1)
+    } catch (error) {
+      console.error("Erreur lors de l'appel API:", error)
+    }
+  }
+
   return (
     <div className='std-bord-container'>
       <HotbarDashboard> {t('student.dashboard.mission')} </HotbarDashboard>
@@ -354,16 +396,20 @@ function CompanyDetailedMission (): JSX.Element {
                       ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
                       : null
                   }
-                  <div>
-                    {missionData.mission.status === MissionStatus.FINISHED && hasCompanyNoted === 0
-                      ? <ClassicButton title='Noter' onClick={handleNotationOpen} />
-                      : null
-                    }
-                    {missionData.mission.status === MissionStatus.FINISHED && hasCompanyCommented === 0
-                      ? <ClassicButton title='Laisser un avis' onClick={handleCommentOpen} />
-                      : null
-                    }
-                  </div>
+                  {missionData.mission.isNoted === false ? (
+                    <div>
+                      {missionData.mission.status === MissionStatus.FINISHED && hasCompanyNoted === 0
+                        ? <ClassicButton title='Noter' onClick={handleNotationOpen} />
+                        : null
+                      }
+                      {missionData.mission.status === MissionStatus.FINISHED && hasCompanyCommented === 0
+                        ? <ClassicButton title='Laisser un avis' onClick={handleCommentOpen} />
+                        : null
+                      }
+                    </div>
+                  ) :
+                    <div></div>
+                  }
                 </div>
                 {isValid
                   ? null
@@ -463,7 +509,7 @@ function CompanyDetailedMission (): JSX.Element {
             open={notationModal}
             type={ModalType.NOTATION}
             onClose={handleNotationClose}
-            onValid={() => { setHasCompanyNoted(1) }}
+            onValid={() => { handleNote() }}
           />
           : null
       }
@@ -474,7 +520,7 @@ function CompanyDetailedMission (): JSX.Element {
             open={commentModal}
             type={ModalType.COMMENT}
             onClose={handleCommentClose}
-            onValid={() => { setHasCompanyCommented(1) }}
+            onValid={() => { handleComment() }}
           />
           : null
       }
