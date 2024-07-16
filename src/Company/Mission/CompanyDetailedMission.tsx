@@ -47,11 +47,10 @@ function CompanyDetailedMission (): JSX.Element {
   const [devis, setDevis] = useState<any>()
   const [isDevis, setIsDevis] = useState<boolean>(false)
   const [isValid, setIsValid] = useState<boolean>(false)
-  const [isNoted, setIsNoted] = useState<boolean>(false)
   const [invitedGroups, setInvitedGroups] = useState<GroupInvitedList[]>()
   const [groupToAccept, setGroupToAccept] = useState<number[]>()
-
   const [group, setGroup] = useState('')
+  const [comment, setComment] = useState<string>('')
 
   const handleChange = (event: SelectChangeEvent): void => {
     setGroup(event.target.value)
@@ -299,7 +298,7 @@ function CompanyDetailedMission (): JSX.Element {
           Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`
         },
         body: JSON.stringify({
-          comment: 'My comment'
+          comment: comment
         })
       })
       if (!response.ok) throw new Error('Erreur lors de l\'appel API')
@@ -521,6 +520,7 @@ function CompanyDetailedMission (): JSX.Element {
             type={ModalType.COMMENT}
             onClose={handleCommentClose}
             onValid={() => { handleComment() }}
+            onCommentChange={setComment}
           />
           : null
       }
