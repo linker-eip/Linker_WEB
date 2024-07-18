@@ -61,6 +61,7 @@ function CompanySettings (): JSX.Element {
               <StudentSecurity />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
+              <StudentSecurity />
             </CustomTabPanel>
           </div>
         </div>

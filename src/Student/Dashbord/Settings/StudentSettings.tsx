@@ -6,6 +6,7 @@ import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
 import { Tab, Tabs } from '@mui/material'
 import StudentSecurity from './Partials/StudentSecurity'
+import StudentPreferences from './Partials/StudentPreferences'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -61,6 +62,7 @@ function StudentSettings (): JSX.Element {
               <StudentSecurity />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
+              <StudentPreferences />
             </CustomTabPanel>
           </div>
         </div>

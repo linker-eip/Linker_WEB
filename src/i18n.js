@@ -344,7 +344,19 @@ i18n
                 desactivation: 'Désactiver mon compte'
               },
               preference: {
-                title: 'Préférences'
+                title: 'Préférences',
+                language: 'Langue',
+                choose_language: 'Choisissez la langue de l’interface.',
+                select_language: 'Sélectionnez votre langue',
+                french: 'Français',
+                english: 'Anglais',
+                save: 'Sauvegarder',
+                notifications: 'Notifications (emails)',
+                choose_notif: 'Choisissez si vous souhaitez recevoir un mail pour les éléments suivants :',
+                new_message: 'Notification d’un nouveau message',
+                group_notif: 'Notification liés aux groupes',
+                doc_notif: 'Notification liées aux documents',
+                mission_notif: 'Notification liées aux  missions'
               }
             }
           },
