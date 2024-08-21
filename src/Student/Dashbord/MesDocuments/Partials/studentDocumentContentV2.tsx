@@ -12,7 +12,7 @@ import ProfileApi from '../../../../API/ProfileApi'
 // Components.
 import DropZone from '../../../../Component/DropZone'
 import DropZoneV2 from '../../../../Component/DropZoneV2'
-import { TextField, Snackbar } from '@mui/material'
+import { TextField, Snackbar, Skeleton } from '@mui/material'
 import BaseButton from '../../../../Component/BaseButton'
 import ClassicButton from '../../../../Component/ClassicButton'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
@@ -52,6 +52,8 @@ function ShowIcon ({ status }: ShowIconProps): JSX.Element {
 
 function StudentDocumentContentV2 (): JSX.Element {
   const { t } = useTranslation()
+
+  const [loading, setLoading] = useState<boolean | null>(null)
 
   const [cniFile, setCniFile] = useState<any>([])
   const [sirenFile, setSirenFile] = useState<any>([])
@@ -110,6 +112,7 @@ function StudentDocumentContentV2 (): JSX.Element {
           }
         })
       }
+      setLoading(false)
     }
     fetchData()
   }, [])
@@ -296,207 +299,213 @@ function StudentDocumentContentV2 (): JSX.Element {
   return (
     <div className='std-documentV2'>
       <div className='std-documentV2__top-section'>
-        <div className='std-documentV2__container'>
-          <div className='std-documentV2__section'>
-            {cniStatus !== DocumentStatus.NOT_FILLED && !cniReplace && cniStatus !== DocumentStatus.DENIED
-              ? <div className='std-documentV2__content'>
-                  <div className='std-documentV2__status-content'>
-                    <ShowIcon status={cniStatus} />
-                    {t('student.dashboard.card.status.cni')}
-                  </div>
-                  {cniBisStatus === DocumentStatus.NOT_FILLED
-                    ? null
-                    : <div className='std-documentV2__status-content'>
-                        <ShowIcon status={cniBisStatus} />
-                        {t('student.dashboard.card.status.cni')}
-                        <div>
-                          {t('document.statut.bis')}
-                        </div>
-                      </div>
-                  }
-                  <div className='std-documentV2__content--text-section'>
-                    <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
-                    <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
-                    <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
-                  </div>
-                  <div className='std-documentV2__button'>
-                    <ClassicButton title={t('document.replace')} onClick={changeCniStatus} />
-                  </div>
-                </div>
-              : <div className='std-documentV2__content'>
-                  <div className='std-documentV2__status-content'>
-                    <ShowIcon status={cniStatus} />
-                    {t('student.dashboard.card.status.cni')}
-                  </div>
-                  {cniBisStatus === DocumentStatus.NOT_FILLED
-                    ? null
-                    : <div className='std-documentV2__status-content'>
-                        <ShowIcon status={cniBisStatus} />
-                        {t('student.dashboard.card.status.cni')}
-                        <div>
-                          {t('document.statut.bis')}
-                        </div>
-                      </div>
-                  }
-                  <div className='std-documentV2__content--text-section'>
-                    <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-                    <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
-                    <div className='std-documentV2__content--text'> : </div>
-                  </div>
-                  <DropZoneV2 onObjectChange={setCniFile} onClose={resetCniFile} />
-                </div>
-            }
-            {sirenStatus !== DocumentStatus.NOT_FILLED && !sirenReplace && sirenStatus !== DocumentStatus.DENIED
-              ? <div className='std-documentV2__content'>
-                  <div className='std-documentV2__status-content'>
-                    <ShowIcon status={sirenStatus} />
-                    {t('student.dashboard.card.status.statut')}
-                  </div>
-                  {sirenBisStatus === DocumentStatus.NOT_FILLED
-                    ? null
-                    : <div className='std-documentV2__status-content'>
-                        <ShowIcon status={sirenBisStatus} />
-                        {t('student.dashboard.card.status.statut')}
-                        <div>
-                          {t('document.statut.bis')}
-                        </div>
-                      </div>
-                  }
-                  <div className='std-documentV2__content--text-section'>
-                    <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
-                    <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
-                    <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
-                  </div>
-                  <div className='std-documentV2__button'>
-                    <ClassicButton title={t('document.replace')} onClick={changeSirenStatus} />
-                  </div>
-                </div>
-              : <div className='std-documentV2__content'>
-                  <div className='std-documentV2__status-content'>
-                    <ShowIcon status={sirenStatus} />
-                    {t('student.dashboard.card.status.statut')}
-                  </div>
-                  {sirenBisStatus === DocumentStatus.NOT_FILLED
-                    ? null
-                    : <div className='std-documentV2__status-content'>
-                        <ShowIcon status={sirenBisStatus} />
-                        {t('student.dashboard.card.status.statut')}
-                        <div>
-                          {t('document.statut.bis')}
-                        </div>
-                      </div>
-                  }
-                  <div className='std-documentV2__content--text-section'>
-                    <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-                    <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
-                    <div className='std-documentV2__content--text'> : </div>
-                  </div>
-                  <DropZoneV2 onObjectChange={setSirenFile} onClose={resetSirenFile} />
-                </div>
-            }
-          </div>
-          <div className='std-documentV2__section'>
-          {urssafStatus !== DocumentStatus.NOT_FILLED && !urssafReplace && urssafStatus !== DocumentStatus.DENIED
-            ? <div className='std-documentV2__content'>
-                <div className='std-documentV2__status-content'>
-                  <ShowIcon status={urssafStatus} />
-                  {t('student.dashboard.card.status.urssaf')}
-                </div>
-                {urssafBisStatus === DocumentStatus.NOT_FILLED
-                  ? null
-                  : <div className='std-documentV2__status-content'>
-                      <ShowIcon status={urssafBisStatus} />
-                      {t('student.dashboard.card.status.urssaf')}
-                      <div>
-                          {t('document.statut.bis')}
-                        </div>
+      {loading === null
+        ? <Skeleton variant='rectangular' animation='wave' height={400} width={800} />
+        : <div className='std-documentV2__container'>
+            <div className='std-documentV2__section'>
+              {cniStatus !== DocumentStatus.NOT_FILLED && !cniReplace && cniStatus !== DocumentStatus.DENIED
+                ? <div className='std-documentV2__content'>
+                    <div className='std-documentV2__status-content'>
+                      <ShowIcon status={cniStatus} />
+                      {t('student.dashboard.card.status.cni')}
                     </div>
-                }
-                <div className='std-documentV2__content--text-section'>
-                  <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
-                  <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
-                  <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
-                </div>
-                <div className='std-documentV2__button'>
-                  <ClassicButton title={t('document.replace')} onClick={changeUrssafStatus} />
-                </div>
-              </div>
-            : <div className='std-documentV2__content'>
-                <div className='std-documentV2__status-content'>
-                  <ShowIcon status={urssafStatus} />
-                  {t('student.dashboard.card.status.urssaf')}
-                </div>
-                {urssafBisStatus === DocumentStatus.NOT_FILLED
-                  ? null
-                  : <div className='std-documentV2__status-content'>
-                      <ShowIcon status={urssafBisStatus} />
-                      {t('student.dashboard.card.status.urssaf')}
-                      <div>
-                          {t('document.statut.bis')}
+                    {cniBisStatus === DocumentStatus.NOT_FILLED
+                      ? null
+                      : <div className='std-documentV2__status-content'>
+                          <ShowIcon status={cniBisStatus} />
+                          {t('student.dashboard.card.status.cni')}
+                          <div>
+                            {t('document.statut.bis')}
+                          </div>
                         </div>
+                    }
+                    <div className='std-documentV2__content--text-section'>
+                      <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                      <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
+                      <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
                     </div>
-                }
-                <div className='std-documentV2__content--text-section'>
-                  <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-                  <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
-                  <div className='std-documentV2__content--text'> : </div>
-                </div>
-                <DropZoneV2 onObjectChange={setUrssafFile} onClose={resetUrssafFile} />
-              </div>
-            }
-            {ribStatus !== DocumentStatus.NOT_FILLED && !ribReplace && ribStatus !== DocumentStatus.DENIED
+                    <div className='std-documentV2__button'>
+                      <ClassicButton title={t('document.replace')} onClick={changeCniStatus} />
+                    </div>
+                  </div>
+                : <div className='std-documentV2__content'>
+                    <div className='std-documentV2__status-content'>
+                      <ShowIcon status={cniStatus} />
+                      {t('student.dashboard.card.status.cni')}
+                    </div>
+                    {cniBisStatus === DocumentStatus.NOT_FILLED
+                      ? null
+                      : <div className='std-documentV2__status-content'>
+                          <ShowIcon status={cniBisStatus} />
+                          {t('student.dashboard.card.status.cni')}
+                          <div>
+                            {t('document.statut.bis')}
+                          </div>
+                        </div>
+                    }
+                    <div className='std-documentV2__content--text-section'>
+                      <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                      <div className='std-documentV2__content--text-sp'> { t('document.cni') } </div>
+                      <div className='std-documentV2__content--text'> : </div>
+                    </div>
+                    <DropZoneV2 onObjectChange={setCniFile} onClose={resetCniFile} />
+                  </div>
+              }
+              {sirenStatus !== DocumentStatus.NOT_FILLED && !sirenReplace && sirenStatus !== DocumentStatus.DENIED
+                ? <div className='std-documentV2__content'>
+                    <div className='std-documentV2__status-content'>
+                      <ShowIcon status={sirenStatus} />
+                      {t('student.dashboard.card.status.statut')}
+                    </div>
+                    {sirenBisStatus === DocumentStatus.NOT_FILLED
+                      ? null
+                      : <div className='std-documentV2__status-content'>
+                          <ShowIcon status={sirenBisStatus} />
+                          {t('student.dashboard.card.status.statut')}
+                          <div>
+                            {t('document.statut.bis')}
+                          </div>
+                        </div>
+                    }
+                    <div className='std-documentV2__content--text-section'>
+                      <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                      <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
+                      <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
+                    </div>
+                    <div className='std-documentV2__button'>
+                      <ClassicButton title={t('document.replace')} onClick={changeSirenStatus} />
+                    </div>
+                  </div>
+                : <div className='std-documentV2__content'>
+                    <div className='std-documentV2__status-content'>
+                      <ShowIcon status={sirenStatus} />
+                      {t('student.dashboard.card.status.statut')}
+                    </div>
+                    {sirenBisStatus === DocumentStatus.NOT_FILLED
+                      ? null
+                      : <div className='std-documentV2__status-content'>
+                          <ShowIcon status={sirenBisStatus} />
+                          {t('student.dashboard.card.status.statut')}
+                          <div>
+                            {t('document.statut.bis')}
+                          </div>
+                        </div>
+                    }
+                    <div className='std-documentV2__content--text-section'>
+                      <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                      <div className='std-documentV2__content--text-sp'> { t('document.siren') } </div>
+                      <div className='std-documentV2__content--text'> : </div>
+                    </div>
+                    <DropZoneV2 onObjectChange={setSirenFile} onClose={resetSirenFile} />
+                  </div>
+              }
+            </div>
+            <div className='std-documentV2__section'>
+            {urssafStatus !== DocumentStatus.NOT_FILLED && !urssafReplace && urssafStatus !== DocumentStatus.DENIED
               ? <div className='std-documentV2__content'>
                   <div className='std-documentV2__status-content'>
-                    <ShowIcon status={ribStatus} />
-                    {t('student.dashboard.card.status.rib')}
+                    <ShowIcon status={urssafStatus} />
+                    {t('student.dashboard.card.status.urssaf')}
                   </div>
-                  {ribBisStatus === DocumentStatus.NOT_FILLED
+                  {urssafBisStatus === DocumentStatus.NOT_FILLED
                     ? null
                     : <div className='std-documentV2__status-content'>
-                        <ShowIcon status={ribBisStatus} />
-                        {t('student.dashboard.card.status.rib')}
+                        <ShowIcon status={urssafBisStatus} />
+                        {t('student.dashboard.card.status.urssaf')}
                         <div>
-                          {t('document.statut.bis')}
-                        </div>
+                            {t('document.statut.bis')}
+                          </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
-                    <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
                     <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
                   </div>
                   <div className='std-documentV2__button'>
-                    <ClassicButton title={t('document.replace')} onClick={changeRibStatus} />
+                    <ClassicButton title={t('document.replace')} onClick={changeUrssafStatus} />
                   </div>
                 </div>
               : <div className='std-documentV2__content'>
                   <div className='std-documentV2__status-content'>
-                    <ShowIcon status={ribStatus} />
-                    {t('student.dashboard.card.status.rib')}
+                    <ShowIcon status={urssafStatus} />
+                    {t('student.dashboard.card.status.urssaf')}
                   </div>
-                  {ribBisStatus === DocumentStatus.NOT_FILLED
+                  {urssafBisStatus === DocumentStatus.NOT_FILLED
                     ? null
                     : <div className='std-documentV2__status-content'>
-                        <ShowIcon status={ribBisStatus} />
-                        {t('student.dashboard.card.status.rib')}
+                        <ShowIcon status={urssafBisStatus} />
+                        {t('student.dashboard.card.status.urssaf')}
                         <div>
-                          {t('document.statut.bis')}
-                        </div>
+                            {t('document.statut.bis')}
+                          </div>
                       </div>
                   }
                   <div className='std-documentV2__content--text-section'>
                     <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
-                    <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
+                    <div className='std-documentV2__content--text-sp'> { t('document.urssaf') } </div>
                     <div className='std-documentV2__content--text'> : </div>
                   </div>
-                  <DropZoneV2 onObjectChange={setRibFile} onClose={resetRibFile} />
+                  <DropZoneV2 onObjectChange={setUrssafFile} onClose={resetUrssafFile} />
                 </div>
-            }
+              }
+              {ribStatus !== DocumentStatus.NOT_FILLED && !ribReplace && ribStatus !== DocumentStatus.DENIED
+                ? <div className='std-documentV2__content'>
+                    <div className='std-documentV2__status-content'>
+                      <ShowIcon status={ribStatus} />
+                      {t('student.dashboard.card.status.rib')}
+                    </div>
+                    {ribBisStatus === DocumentStatus.NOT_FILLED
+                      ? null
+                      : <div className='std-documentV2__status-content'>
+                          <ShowIcon status={ribBisStatus} />
+                          {t('student.dashboard.card.status.rib')}
+                          <div>
+                            {t('document.statut.bis')}
+                          </div>
+                        </div>
+                    }
+                    <div className='std-documentV2__content--text-section'>
+                      <div className='std-documentV2__content--text'> { t('document.is_document.part1') } </div>
+                      <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
+                      <div className='std-documentV2__content--text'> { t('document.is_document.part2') } </div>
+                    </div>
+                    <div className='std-documentV2__button'>
+                      <ClassicButton title={t('document.replace')} onClick={changeRibStatus} />
+                    </div>
+                  </div>
+                : <div className='std-documentV2__content'>
+                    <div className='std-documentV2__status-content'>
+                      <ShowIcon status={ribStatus} />
+                      {t('student.dashboard.card.status.rib')}
+                    </div>
+                    {ribBisStatus === DocumentStatus.NOT_FILLED
+                      ? null
+                      : <div className='std-documentV2__status-content'>
+                          <ShowIcon status={ribBisStatus} />
+                          {t('student.dashboard.card.status.rib')}
+                          <div>
+                            {t('document.statut.bis')}
+                          </div>
+                        </div>
+                    }
+                    <div className='std-documentV2__content--text-section'>
+                      <div className='std-documentV2__content--text'> { t('document.no_document') } </div>
+                      <div className='std-documentV2__content--text-sp'> { t('document.rib') } </div>
+                      <div className='std-documentV2__content--text'> : </div>
+                    </div>
+                    <DropZoneV2 onObjectChange={setRibFile} onClose={resetRibFile} />
+                  </div>
+              }
+            </div>
           </div>
-        </div>
-        <div className='std-documentV2__button'>
-          <ClassicButton title={t('document.send')} onClick={() => { postFile() }} />
-        </div>
+      }
+      {loading === null
+        ? <Skeleton variant='rectangular' animation='wave' width={800} height={50} />
+        : <div className='std-documentV2__button'>
+            <ClassicButton title={t('document.send')} onClick={() => { postFile() }} />
+          </div>
+      }
       </div>
       <Snackbar open={cniSnackBarValue} autoHideDuration={6000} onClose={closeCniSnackBar}>
         <Alert onClose={closeCniSnackBar} severity="error" sx={{ width: '100%' }}>
