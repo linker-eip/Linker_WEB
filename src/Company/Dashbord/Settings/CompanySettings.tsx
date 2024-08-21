@@ -5,7 +5,8 @@ import { DashboardState } from '../../../Enum'
 import HotbarDashboard from '../../Partials/HotbarDashboard'
 import SidebarDashboard from '../../Partials/SidebarDashboard'
 import { Tab, Tabs } from '@mui/material'
-import StudentSecurity from './Partials/CompanySecurity'
+import CompanySecurity from './Partials/CompanySecurity'
+import CompanyPreferences from './Partials/CompanyPreferences'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -58,9 +59,10 @@ function CompanySettings (): JSX.Element {
               <Tab className='std-mission__text' label={t('student.settings.preference.title')} {...a11yProps(0)} />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <StudentSecurity />
+              <CompanySecurity />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
+              <CompanyPreferences />
             </CustomTabPanel>
           </div>
         </div>
