@@ -89,7 +89,7 @@ function AdminPaymentsContent (): JSX.Element {
   const [selectedStatus, setSelectedStatus] = useState<PaymentStatus | ''>('')
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/admin/payment')
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/payment`)
       .then(async response => await response.json())
       .then(data => {
         const filteredData = data
@@ -112,7 +112,7 @@ function AdminPaymentsContent (): JSX.Element {
   }, [])
 
   const handleVisualize = (rowData: Row): void => {
-    fetch(`https://dev.linker-app.fr/api/admin/documents/studentRib/${rowData.studentId}`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/studentRib/${rowData.studentId}`)
       .then(async (response) => await response.json())
       .then((data: StudentRibModel) => {
         openUrlInNewWindow(data.File)
@@ -142,7 +142,7 @@ function AdminPaymentsContent (): JSX.Element {
       status: selectedStatus as PaymentStatus
     }
 
-    fetch('https://dev.linker-app.fr/api/admin/payment', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/payment`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

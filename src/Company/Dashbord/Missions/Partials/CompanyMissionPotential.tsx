@@ -31,7 +31,7 @@ function CompanyMissionsPotential (): JSX.Element {
   const { t } = useTranslation()
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/mission', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/mission`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
@@ -81,7 +81,7 @@ function CompanyMissionsPotential (): JSX.Element {
       skills: newMissionData.skills
     }
 
-    fetch('https://dev.linker-app.fr/api/mission', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/mission`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,

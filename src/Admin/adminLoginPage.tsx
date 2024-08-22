@@ -27,7 +27,7 @@ function AdminLoginPage (): JSX.Element {
     }
 
     try {
-      const response = await fetch('https://dev.linker-app.fr/api/admin/auth/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
