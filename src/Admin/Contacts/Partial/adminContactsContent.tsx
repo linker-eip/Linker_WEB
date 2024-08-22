@@ -31,7 +31,7 @@ function AdminContactsContent (): JSX.Element {
   const [openDelete, setOpenDelete] = useState(false)
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/admin/contact')
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/contact`)
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: Row) => ({
@@ -69,7 +69,7 @@ function AdminContactsContent (): JSX.Element {
 
   const handleArchivate = (): void => {
     const payload = { isTreated: true }
-    fetch(`https://dev.linker-app.fr/api/admin/contact/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/contact/${String(currentData?.id)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ function AdminContactsContent (): JSX.Element {
   }
 
   const handleDelete = (): void => {
-    fetch(`https://dev.linker-app.fr/api/admin/contact/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/contact/${String(currentData?.id)}`, {
       method: 'DELETE'
     })
       .then(() => {

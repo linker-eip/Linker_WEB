@@ -37,7 +37,7 @@ function AdminMissionsContent (): JSX.Element {
   })
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/admin/mission')
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission`)
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({
@@ -70,7 +70,7 @@ function AdminMissionsContent (): JSX.Element {
       status: currentData?.status
     }
 
-    fetch(`https://dev.linker-app.fr/api/admin/mission/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/${String(currentData?.id)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ function AdminMissionsContent (): JSX.Element {
   }
 
   const handleDelete = (): void => {
-    fetch(`https://dev.linker-app.fr/api/admin/mission/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/${String(currentData?.id)}`, {
       method: 'DELETE'
     })
       .then(() => {
@@ -120,7 +120,7 @@ function AdminMissionsContent (): JSX.Element {
       studentsIds: newMissionData.studentsIds
     }
 
-    fetch('https://dev.linker-app.fr/api/admin/mission/', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

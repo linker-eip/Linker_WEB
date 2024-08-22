@@ -71,16 +71,18 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
 
   return (
     <div className='sidebar'>
-      <div className='sidebar__text'>
-        <SidebarItem icon={<DashboardOutlinedIcon />} labelKey='student.dashboard.home' dashboardState={DashboardState.DASHBOARD} />
-        <SidebarItem icon={<RoomOutlinedIcon />} labelKey='student.dashboard.mission' dashboardState={DashboardState.MISSION} />
-        <SidebarItem icon={<ConnectWithoutContactIcon />} labelKey='student.dashboard.network' dashboardState={DashboardState.NETWORK} />
-        <SidebarItem icon={<RequestPageOutlinedIcon />} labelKey='student.dashboard.facture' dashboardState={DashboardState.FACTURES} />
-        <SidebarItem icon={<PaidIcon />} labelKey='student.dashboard.paiements' dashboardState={DashboardState.PAIEMENTS} />
-        <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
-        <SidebarItem icon={<TopicOutlinedIcon />} labelKey='student.dashboard.doc' dashboardState={DashboardState.DOCUMENTS} />
-        <SidebarItem icon={<GroupsIcon />} labelKey='student.dashboard.group' dashboardState={DashboardState.GROUP} />
-        <SidebarItem icon={<SettingsIcon />} labelKey='student.dashboard.settings' dashboardState={DashboardState.SETTINGS} />
+      <div className='sidebar__section'>
+        <div className='sidebar__text'>
+          <SidebarItem icon={<DashboardOutlinedIcon />} labelKey='student.dashboard.home' dashboardState={DashboardState.DASHBOARD} />
+          <SidebarItem icon={<RoomOutlinedIcon />} labelKey='student.dashboard.mission' dashboardState={DashboardState.MISSION} />
+          <SidebarItem icon={<ConnectWithoutContactIcon />} labelKey='student.dashboard.network' dashboardState={DashboardState.NETWORK} />
+          <SidebarItem icon={<RequestPageOutlinedIcon />} labelKey='student.dashboard.facture' dashboardState={DashboardState.FACTURES} />
+          <SidebarItem icon={<PaidIcon />} labelKey='student.dashboard.paiements' dashboardState={DashboardState.PAIEMENTS} />
+          <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
+          <SidebarItem icon={<TopicOutlinedIcon />} labelKey='student.dashboard.doc' dashboardState={DashboardState.DOCUMENTS} />
+          <SidebarItem icon={<GroupsIcon />} labelKey='student.dashboard.group' dashboardState={DashboardState.GROUP} />
+          <SidebarItem icon={<SettingsIcon />} labelKey='student.dashboard.settings' dashboardState={DashboardState.SETTINGS} />
+        </div>
       </div>
     </div>
   )

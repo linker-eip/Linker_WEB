@@ -13,8 +13,8 @@ export interface Notifications {
 }
 
 export interface StudentPreferences {
-  mailNotifMessage: boolean,
-  mailNotifGroup: boolean,
-  mailNotifMission: boolean,
+  mailNotifMessage: boolean
+  mailNotifGroup: boolean
+  mailNotifMission: boolean
   mailNotifDocument: boolean
 }

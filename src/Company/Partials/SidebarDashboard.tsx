@@ -70,43 +70,45 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
 
   return (
     <div className="sidebar">
-      <div className="sidebar__text">
-        <SidebarItem
-          currentState={stateDashboard}
-          itemState={DashboardState.DASHBOARD}
-          icon={DashboardOutlinedIcon}
-          label={t('student.dashboard.home')}
-          onClick={changeState}
-        />
-        <SidebarItem
-          currentState={stateDashboard}
-          itemState={DashboardState.MISSION}
-          icon={RoomOutlinedIcon}
-          label={t('student.dashboard.mission')}
-          onClick={changeState}
-        />
-        <SidebarItem
-          currentState={stateDashboard}
-          itemState={DashboardState.FACTURES}
-          icon={RequestPageOutlinedIcon}
-          label={t('student.dashboard.facture')}
-          onClick={changeState}
-        />
-        <SidebarItem
-          currentState={stateDashboard}
-          itemState={DashboardState.PROFIL}
-          icon={PersonOutlineOutlinedIcon}
-          label={t('student.dashboard.profil')}
-          onClick={changeState}
-        />
-        <SidebarItem
-          currentState={stateDashboard}
-          itemState={DashboardState.DOCUMENTS}
-          icon={TopicOutlinedIcon}
-          label={t('student.dashboard.doc')}
-          onClick={changeState}
-        />
-        <SidebarItem icon={SettingsIcon} onClick={changeState} label={t('student.dashboard.settings')} currentState={stateDashboard} itemState={DashboardState.SETTINGS} />
+      <div className='sidebar__section'>
+        <div className="sidebar__text">
+          <SidebarItem
+            currentState={stateDashboard}
+            itemState={DashboardState.DASHBOARD}
+            icon={DashboardOutlinedIcon}
+            label={t('student.dashboard.home')}
+            onClick={changeState}
+            />
+          <SidebarItem
+            currentState={stateDashboard}
+            itemState={DashboardState.MISSION}
+            icon={RoomOutlinedIcon}
+            label={t('student.dashboard.mission')}
+            onClick={changeState}
+            />
+          <SidebarItem
+            currentState={stateDashboard}
+            itemState={DashboardState.FACTURES}
+            icon={RequestPageOutlinedIcon}
+            label={t('student.dashboard.facture')}
+            onClick={changeState}
+            />
+          <SidebarItem
+            currentState={stateDashboard}
+            itemState={DashboardState.PROFIL}
+            icon={PersonOutlineOutlinedIcon}
+            label={t('student.dashboard.profil')}
+            onClick={changeState}
+            />
+          <SidebarItem
+            currentState={stateDashboard}
+            itemState={DashboardState.DOCUMENTS}
+            icon={TopicOutlinedIcon}
+            label={t('student.dashboard.doc')}
+            onClick={changeState}
+            />
+          <SidebarItem icon={SettingsIcon} onClick={changeState} label={t('student.dashboard.settings')} currentState={stateDashboard} itemState={DashboardState.SETTINGS} />
+        </div>
       </div>
     </div>
   )

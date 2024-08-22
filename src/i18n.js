@@ -111,6 +111,9 @@ i18n
             accept: {
               subtitle: 'Etes-vous sur de vouloir accepter:'
             },
+            exclude: {
+              subtitle: 'Etes-vous sur de vouloir exclure:'
+            },
             delete: {
               subtitle: 'Etes-vous sûr de vouloir supprimer:',
               groups: {
@@ -178,8 +181,8 @@ i18n
               doc: 'Mes documents',
               stat: 'Mes statistiques',
               invoices: 'Mes factures',
-              group: 'Groupe',
               settings: 'Paramètres',
+              group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
                 chat: 'Chat textuel',
@@ -187,6 +190,7 @@ i18n
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
                 no_invite: 'Il semble que vous n\'ayez aucune invitations en attente.',
                 create_group_button: 'Créer un groupe',
+                invited: 'Les membres invités',
                 member_title: 'Les membres'
               },
               chat: {
@@ -344,7 +348,19 @@ i18n
                 desactivation: 'Désactiver mon compte'
               },
               preference: {
-                title: 'Préférences'
+                title: 'Préférences',
+                language: 'Langue',
+                choose_language: 'Choisissez la langue de l’interface.',
+                select_language: 'Sélectionnez votre langue',
+                french: 'Français',
+                english: 'Anglais',
+                save: 'Sauvegarder',
+                notifications: 'Notifications (emails)',
+                choose_notif: 'Choisissez si vous souhaitez recevoir un mail pour les éléments suivants :',
+                new_message: 'Notification d’un nouveau message',
+                group_notif: 'Notification liés aux groupes',
+                doc_notif: 'Notification liées aux documents',
+                mission_notif: 'Notification liées aux  missions'
               }
             }
           },
@@ -358,7 +374,8 @@ i18n
                   kbis: 'KBIS',
                   siret: 'SIRET'
                 }
-              }
+              },
+              invoices: 'Mes factures'
             },
             mission: {
               pending: {
@@ -403,7 +420,6 @@ i18n
                 task: 'Tâches',
                 attribution: 'Attribution',
                 no_action: 'Aucune action à réaliser'
-
               },
               devis: {
                 title: 'Devis pour la mission: {{name}}',
@@ -439,8 +455,90 @@ i18n
       },
       en: {
         translation: {
+          document: {
+            statut: {
+              bis: 'de remplacement'
+            },
+            is_document: {
+              part1: 'Votre document:',
+              part2: 'a été renseigné avec succès.'
+            },
+            no_document: 'Veuillez renseigner votre ',
+            cni: 'CNI',
+            siren: 'SIREN',
+            urssaf: 'URSSAF',
+            rib: 'RIB',
+            kbis: 'KBIS',
+            send: 'ENVOYER LES DOCUMENTS',
+            replace: 'REMPLACER'
+          },
+          notifications: {
+            email: 'Recevoir les notifications par mail'
+          },
           contact: {
-
+            title: 'Nous sommes là pour vous aider. Contactez-nous pour toute question ou assistance.',
+            lastname: 'Nom de famille',
+            firstname: 'Prénom',
+            email: 'Adresse E-mail',
+            object: 'Sujet du message',
+            message: 'Message',
+            send: 'Envoyer',
+            info: 'Information général',
+            number: 'Numéro de téléphone',
+            message_sended: 'Votre message a été envoyé avec succès.'
+          },
+          homepage: {
+            text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
+            text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
+            title_1: 'Linker',
+            title_2: ', la nouvelle plateforme',
+            title_3: 'étudiante',
+            espace: 'Espace',
+            company: {
+              title: 'Entreprise',
+              text_1: 'Trouvez des équipes complètes en quelques clics',
+              text_2: 'Sélectionnez des groupes d\'étudiants déjà formés, ayant les compétences nécessaires pour vos missions.'
+            },
+            student: {
+              title: 'Étudiant',
+              text_1: 'Libérez votre potentiel en freelance',
+              text_2: 'Trouvez des opportunités de travail en tant que freelance, mettez en avant vos compétences, et travaillez sur des projets passionnants.'
+            },
+            register: 'S’inscrire sur Linker',
+            login: 'Se connecter à Linker'
+          },
+          verify_page: {
+            waiting: 'Afin de vous rendre sur le site de Linker, nous vous prions de vérifier votre compte en utilisant le lien que vous avez reçu par email.',
+            success: {
+              text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
+              text_2: 'Vous pouvez maintenant profiter pleinement des fonctionnalités de ',
+              text_3: 'Linker.',
+              text_4: 'Connectez-vous à votre compte pour commencer à explorer les opportunités de collaboration entre étudiants et entreprises.',
+              text_5: 'Si vous avez des questions ou si vous avez besoin d\'assistance, n\'hésitez pas à nous contacter à l\'adresse suivante : ',
+              text_6: 'contact@linker-app.fr.',
+              text_7: 'Bienvenue sur ',
+              text_8: ' Linker',
+              text_9: ', et bonne chance dans vos futures collaborations !',
+              button_text: 'Se connecter à Linker',
+              button_title_1: 'Espace',
+              button_title_2: 'Étudiant',
+              button_subtext: 'À la recherche de missions ?'
+            },
+            failed: {
+              text_1: 'La vérification de votre adresse e-mail a échoué.',
+              text_2: 'Veuillez vous assurer que vous avez saisi le code correctement.',
+              text_3: 'Vous pouvez réessayer en cliquant sur le lien de vérification que nous vous avons envoyé.',
+              text_4: 'Si le problème persiste, veuillez contacter notre équipe d\'assistance à l\'adresse suivante :',
+              text_5: 'contact@linker-app.fr.',
+              text_6: 'Nous sommes là pour vous aider à résoudre ce problème.',
+              button_text: 'Revenir en lieu sûr'
+            }
+          },
+          footer: {
+            need_help: 'Besoin d’aide ?',
+            contact: 'Contactez-nous',
+            networks: 'Pour mieux nous connaitre !',
+            download: 'Téléchargez l’app'
           },
           modal: {
             title: 'Confirmer votre choix',
@@ -464,11 +562,21 @@ i18n
               }
             },
             leave: {
-              subtitle: 'Etes-vous sur de vouloir quitter:'
+              subtitle: 'Êtes-vous sur de vouloir quitter:'
+            },
+            notation: {
+              subtitle: 'Veuillez remplir les champs ci-dessous pour évaluer la prestation du groupe sur cette mission:'
+            },
+            comment: {
+              subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
             },
             account: {
               deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
               delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
+            },
+            linkedIn: {
+              title: 'Remplir son profil avec LinkedIn',
+              textarea: 'Rentrez le lien de votre profil LinkedIn'
             }
           },
           validate: 'Valider',
@@ -514,14 +622,17 @@ i18n
               doc: 'Mes documents',
               stat: 'Mes statistiques',
               invoices: 'Mes factures',
+              settings: 'Settings',
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
                 chat: 'Chat textuel',
-                invite: 'invitations()',
+                invite: 'invitations({{nbrInvitation}})',
                 no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
+                no_invite: 'Il semble que vous n\'ayez aucune invitations en attente.',
                 create_group_button: 'Créer un groupe',
-                invited: 'Les membres invités'
+                invited: 'Les membres invités',
+                member_title: 'Les membres'
               },
               chat: {
                 send_message: 'Envoyer'
@@ -642,6 +753,56 @@ i18n
                 date: 'Date',
                 description: 'Décris la formation'
               }
+            },
+            groups: {
+              title: 'Création d’un groupe',
+              name: 'Sélectionner un nom pour votre groupe',
+              description: 'Ajouter une description pour votre groupe',
+              button: 'Créer le groupe',
+              invite: {
+                title: 'Ajouter un membre'
+              },
+              exclude: {
+                title: 'Exclure un membre'
+              }
+            },
+            settings: {
+              error: {
+                empty_field: 'Please fill in all fields.',
+                old: 'The old password is incorrect.',
+                old_new: 'The old password and the new password must not be identical.',
+                new_confirm: 'The passwords do not match.',
+                composition: 'The password must contain at least one uppercase letter, one number, and one special character.',
+                success: 'Your password has been successfully changed.'
+              },
+              security: {
+                title: 'Security',
+                password: 'Password',
+                password_old: 'Current Password',
+                password_new: 'New Password',
+                password_confirm: 'Confirm New Password',
+                modif: 'Change Password',
+                param1: '1 special character',
+                param2: '1 uppercase letter',
+                param3: '1 number',
+                delete: 'Delete my account',
+                desactivation: 'Deactivate my account'
+              },
+              preference: {
+                title: 'Preferences',
+                language: 'Language',
+                choose_language: 'Choose the interface language.',
+                select_language: 'Select your language',
+                french: 'French',
+                english: 'English',
+                save: 'Save',
+                notifications: 'Notifications (emails)',
+                choose_notif: 'Choose if you want to receive an email for the following:',
+                new_message: 'New message notification',
+                group_notif: 'Group-related notification',
+                doc_notif: 'Document-related notification',
+                mission_notif: 'Mission-related notification'
+              }
             }
           },
           company: {
@@ -678,6 +839,40 @@ i18n
                 potential_mission: 'Missions en recherche ({{nbrMission}}).',
                 no_mission: 'Vous n\'avez aucune mission en recherche.'
               }
+            },
+            detailed_mission: {
+              research_mission: 'Mission en recherche ⌛',
+              pending_mission: 'Missions en cours ⌛',
+              accepted: 'Proposition acceptée',
+              provisionée: 'Mission provisionée',
+              in_progress: 'Mission en cours',
+              completed: 'Mission terminée ✅',
+              details: 'Détail de la mission',
+              historic: 'Historique de la mission',
+              conversation: 'Accéder à la conversation',
+              mission: 'missions',
+              participants: 'Participants',
+              no_participants: 'Aucun groupe trouvée',
+              selection: 'Liste des groupes',
+              tab: {
+                detail: 'Détail',
+                quantity: 'Quantité',
+                price: 'Prix',
+                task: 'Tâches',
+                attribution: 'Attribution',
+                no_action: 'Aucune action à réaliser'
+              },
+              devis: {
+                title: 'Devis pour la mission: {{name}}',
+                no_devis: 'Pas de devis renseigné pour la mission: {{name}}',
+                devis: 'Importez votre devis'
+              },
+              task: {
+                modal_title: 'Ajouter une tâche',
+                name: 'Nom',
+                description: 'description',
+                price: 'Prix'
+              }
             }
           },
           admin: {
@@ -693,9 +888,22 @@ i18n
               archives: 'Archives',
               payments: 'Paiements'
             }
+          },
+          snackbar: {
+            invitation_error: 'Vous ne pouvez pas inviter cette personne car elle a déjà un groupe.'
           }
         }
       }
+    }
+  })
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false
     }
   })
 

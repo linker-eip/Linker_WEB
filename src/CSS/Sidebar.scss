@@ -4,11 +4,17 @@
   }
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    background-color: #FFF;
-    min-height: 91vh;
+    margin: 1em;
+    margin-top: 3em;
     
+    &__section {
+        display: flex;
+        flex-direction: column;
+        background-color: #FFF;
+        min-height: 91vh;
+        border-radius: 15px;
+    }
+
     &__text {
         display: flex;
         flex-direction: column;

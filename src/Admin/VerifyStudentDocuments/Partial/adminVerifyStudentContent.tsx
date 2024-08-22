@@ -36,12 +36,12 @@ function AdminVerifyStudentContent (): JSX.Element {
   const [openValidate, setOpenValidate] = useState(false)
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/admin/document-verification/students')
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students`)
       .then(async response => await response.json())
       .then(async (data: Record<string, Row>) => {
         const formattedData = await Promise.all(
           Object.entries(data).map(async ([key, item]) => {
-            const emailResponse = await fetch(`https://dev.linker-app.fr/api/admin/users/student/${item.studentId}`)
+            const emailResponse = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/users/student/${item.studentId}`)
             const emailData = await emailResponse.json()
             const email = emailData.email
 
@@ -79,7 +79,7 @@ function AdminVerifyStudentContent (): JSX.Element {
   const handleValidate = async (): Promise<void> => {
     if (currentData != null) {
       try {
-        const response = await fetch('https://dev.linker-app.fr/api/admin/document-verification/students/validate', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students/validate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ function AdminVerifyStudentContent (): JSX.Element {
   const handleDeny = async (): Promise<void> => {
     if (currentData != null) {
       try {
-        const response = await fetch('https://dev.linker-app.fr/api/admin/document-verification/students/deny', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students/deny`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

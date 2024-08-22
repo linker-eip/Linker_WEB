@@ -34,7 +34,7 @@ function AdminUsersContent (): JSX.Element {
   })
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/admin/users/students')
+    fetch(`${process.env.REACT_APP_API_URL as string}api/admin/users/students`)
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({
@@ -66,7 +66,7 @@ function AdminUsersContent (): JSX.Element {
       lastName: currentData?.LastName
     }
 
-    fetch(`https://dev.linker-app.fr/api/admin/users/student/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/users/student/${String(currentData?.id)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -93,7 +93,7 @@ function AdminUsersContent (): JSX.Element {
   }
 
   const handleDelete = (): void => {
-    fetch(`https://dev.linker-app.fr/api/admin/users/student/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/users/student/${String(currentData?.id)}`, {
       method: 'DELETE'
     })
       .then(() => {
@@ -113,7 +113,7 @@ function AdminUsersContent (): JSX.Element {
       lastName: newUserData.lastName
     }
 
-    fetch('https://dev.linker-app.fr/api/admin/users/student', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/users/student`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
