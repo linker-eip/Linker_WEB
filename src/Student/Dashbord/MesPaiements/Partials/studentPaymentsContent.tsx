@@ -35,7 +35,7 @@ function StudentPaymentsContent (): JSX.Element {
   const [openCashOut, setOpenCashOut] = useState(false)
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/payment/student', {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/payment/student`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ function StudentPaymentsContent (): JSX.Element {
       studentPaymentId: currentData?.id
     }
 
-    fetch(`https://dev.linker-app.fr/api/payment/student/receive/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/payment/student/receive/${String(currentData?.id)}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

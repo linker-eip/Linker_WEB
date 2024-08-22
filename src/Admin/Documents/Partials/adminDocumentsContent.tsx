@@ -34,7 +34,7 @@ function AdminDocumentsContent (): JSX.Element {
   })
 
   useEffect(() => {
-    fetch('https://dev.linker-app.fr/api/admin/documents')
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents`)
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({
@@ -66,7 +66,7 @@ function AdminDocumentsContent (): JSX.Element {
     }
 
     try {
-      const response = await fetch(`https://dev.linker-app.fr/api/admin/documents/${String(currentData?.id)}/download`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/${String(currentData?.id)}/download`, {
         method: 'GET'
       })
 
@@ -102,7 +102,7 @@ function AdminDocumentsContent (): JSX.Element {
   }
 
   const handleDelete = (): void => {
-    fetch(`https://dev.linker-app.fr/api/admin/documents/${String(currentData?.id)}`, {
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/${String(currentData?.id)}`, {
       method: 'DELETE'
     })
       .then(() => {
@@ -122,7 +122,7 @@ function AdminDocumentsContent (): JSX.Element {
     formData.append('userId', newDocumentData.userId)
 
     try {
-      const response = await fetch('https://dev.linker-app.fr/api/admin/documents', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents`, {
         method: 'POST',
         body: formData
       })

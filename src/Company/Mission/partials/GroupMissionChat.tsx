@@ -36,7 +36,7 @@ function GroupMissionChat (): JSX.Element {
       extraHeaders: { Authorization: `Bearer ${jwtToken}` }
     }
 
-    const newSocket = io('https://dev.linker-app.fr', socketConfig)
+    const newSocket = io(`${process.env.REACT_APP_API_URL as string}`, socketConfig)
 
     newSocket.on('connect', () => {
       console.log('socket connected')
