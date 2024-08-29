@@ -192,12 +192,6 @@ function StudentProfileContent (props: Props): JSX.Element {
                 </div>
               : null
             }
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
             <div className='std-profile-content__content'>
               <div className='std-profile-content__section'>
                 <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />

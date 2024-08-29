@@ -4,12 +4,14 @@
 }
 
 .std-profile-content {
+  margin-top: 3.1em;
   display: flex;
   padding: 1.8em 2em 1.8em 4em;
   background-color: white;
   font-family: 'Poppins';
   color: #4b4b4b;
   width: -webkit-fill-available;
+  border-radius: 15px;
 
   &__avatar {
     border: 0.1em solid #3da1cc;
