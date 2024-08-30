@@ -36,4 +36,24 @@
       // grid-template-columns: 1fr;
     }
   }
+
+  &__skeleton {
+    margin-top: 3.1em;
+    margin-left: 3em;
+  }
+
+  &__skeleton-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 2em;
+  }
+
+  &__skeleton-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+
 }

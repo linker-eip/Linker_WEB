@@ -9,7 +9,7 @@ import LanguageIcon from '@mui/icons-material/Language'
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter'
 import ProfileApi from '../../../../API/ProfileApi'
 import type { ProfileCompany } from '../../../../Typage/ProfileType'
-import { TextField } from '@mui/material'
+import { TextField, Skeleton } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import BaseButton from '../../../../Component/BaseButton'
 import DropZoneV2 from '../../../../Component/DropZoneV2'
@@ -200,43 +200,59 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
                         </div>
                       : null }
                   </div>
-                : <div onClick={handleAvatarEditing}>
-                    { profilePicture !== '' ? <Avatar alt='avatar' className='std-profile-content__avatar' src={profilePicture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
-                  </div>
+                : profileData === undefined
+                  ? <div>
+                      <Skeleton variant='circular' animation='wave' width={300} height={300} />
+                    </div>
+                  : <div onClick={handleAvatarEditing}>
+                      { profilePicture !== '' ? <Avatar alt='avatar' className='std-profile-content__avatar' src={profilePicture} /> : <Avatar alt='avatar' className='std-profile-content__avatar' src='/assets/anonymLogo.jpg' /> }
+                    </div>
               }
-            <div className='std-profile-content__content'>
-              <h1 className='std-profile-content__title'>
-                { profileData?.name }
-              </h1>
-              { profileData?.description !== '' ? <p> { profileData?.description } </p> : <p> Description </p>}
-              <div className='std-profile-content__section'>
-                <PlaceIcon />
-                { profileData?.location !== '' ? <p> { profileData?.location } </p> : <p> Localité </p> }
-              </div>
-              <div className='std-profile-content__section'>
-                <LanguageIcon />
-                { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
-              </div>
-              <div className='std-profile-content__section'>
-                <BusinessCenterIcon />
-                { profileData?.activity !== '' ? <p> { profileData?.activity } </p> : <p> Activité </p> }
-              </div>
-              <div className='std-profile-content__section'>
-                <ArticleIcon />
-                <p> Nombre total de missions: { nbrMission } </p>
-              </div>
-            </div>
+            {profileData === undefined
+              ? <div className='std-profile-content__content'>
+                  <h1 className='std-profile-content__title'>
+                    <Skeleton variant='text' width={400} height={60} />
+                  </h1>
+                  <Skeleton variant='text' width={400} height={40} />
+                  <div className='std-profile-content__section'>
+                    <Skeleton variant='text' width={350} height={30} />
+                  </div>
+                  <div className='std-profile-content__section'>
+                    <Skeleton variant='text' width={300} height={30} />
+                  </div>
+                  <div className='std-profile-content__section'>
+                    <Skeleton variant='text' width={250} height={30} />
+                  </div>
+                </div>
+              : <div className='std-profile-content__content'>
+                  <h1 className='std-profile-content__title'>
+                    { profileData?.name }
+                  </h1>
+                  { profileData?.description !== '' ? <p> { profileData?.description } </p> : <p> Description </p>}
+                  <div className='std-profile-content__section'>
+                    <PlaceIcon />
+                    { profileData?.location !== '' ? <p> { profileData?.location } </p> : <p> Localité </p> }
+                  </div>
+                  <div className='std-profile-content__section'>
+                    <LanguageIcon />
+                    { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
+                  </div>
+                  <div className='std-profile-content__section'>
+                    <BusinessCenterIcon />
+                    { profileData?.activity !== '' ? <p> { profileData?.activity } </p> : <p> Activité </p> }
+                  </div>
+                  <div className='std-profile-content__section'>
+                    <ArticleIcon />
+                    <p> Nombre total de missions: { nbrMission } </p>
+                  </div>
+                </div>
+            }
             { editable
               ? <div onClick={handleEditMode}>
                 <EditIcon className='std-profile-content__edit-small' />
                 </div>
               : <div></div>
             }
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
-            <div className='std-profile-content__content'></div>
             <div className='std-profile-content__content'>
               <div className='std-profile-content__section'>
                 <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
