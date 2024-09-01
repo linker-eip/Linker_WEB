@@ -17,7 +17,6 @@ function CompanyPreferences (): JSX.Element {
   const { t, i18n } = useTranslation()
   const [language, setLanguage] = useState('')
   const [messageNotif, setMessageNotif] = useState(false)
-  const [groupNotif, setGroupNotif] = useState(false)
   const [documentNotif, setDocumentNotif] = useState(false)
   const [missionNotif, setMissionNotif] = useState(false)
   const [infoPreference, setInfoPreference] = useState<Preferences>()
@@ -25,9 +24,8 @@ function CompanyPreferences (): JSX.Element {
   useEffect(() => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function fetchData () {
-      const info = await NotificationApi.getStudentPreferences(localStorage.getItem('jwtToken') as string)
+      const info = await NotificationApi.getCompanyPreferences(localStorage.getItem('jwtToken') as string)
       setDocumentNotif(info.mailNotifDocument)
-      setGroupNotif(info.mailNotifGroup)
       setMessageNotif(info.mailNotifMessage)
       setMissionNotif(info.mailNotifMission)
       setInfoPreference(info)
@@ -43,44 +41,30 @@ function CompanyPreferences (): JSX.Element {
   const handleChangeMessageNotif = (event: React.ChangeEvent<HTMLInputElement>) => {
     const dto = {
       mailNotifMessage: !messageNotif,
-      mailNotifGroup: groupNotif,
       mailNotifMission: missionNotif,
       mailNotifDocument: documentNotif
     }
-    NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+    NotificationApi.changeCompanyNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
     setMessageNotif(event.target.checked)
-  }
-
-  const handleChangeGroupNotif = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const dto = {
-      mailNotifMessage: messageNotif,
-      mailNotifGroup: !groupNotif,
-      mailNotifMission: missionNotif,
-      mailNotifDocument: documentNotif
-    }
-    NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
-    setGroupNotif(event.target.checked)
   }
 
   const handleChangeDocumentNotif = (event: React.ChangeEvent<HTMLInputElement>) => {
     const dto = {
       mailNotifMessage: messageNotif,
-      mailNotifGroup: groupNotif,
       mailNotifMission: missionNotif,
       mailNotifDocument: !documentNotif
     }
-    NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+    NotificationApi.changeCompanyNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
     setDocumentNotif(event.target.checked)
   }
 
   const handleChangeMissionNotif = (event: React.ChangeEvent<HTMLInputElement>) => {
     const dto = {
       mailNotifMessage: messageNotif,
-      mailNotifGroup: groupNotif,
       mailNotifMission: !missionNotif,
       mailNotifDocument: documentNotif
     }
-    NotificationApi.changeStudentNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
+    NotificationApi.changeCompanyNotificationPreferences(localStorage.getItem('jwtToken') as string, dto)
     setMissionNotif(event.target.checked)
   }
 
@@ -124,7 +108,7 @@ function CompanyPreferences (): JSX.Element {
         <ClassicButton title={t('student.settings.preference.save')} onClick={buttonValidation} />
         </div>
       </div>
-      {/* <div className='std-security__section'>
+      <div className='std-security__section'>
         <div>
           <div className='std-security__title'>
             { t('student.settings.preference.notifications') }
@@ -144,20 +128,6 @@ function CompanyPreferences (): JSX.Element {
                 />
               : <Switch
                 onChange={handleChangeMessageNotif}
-                inputProps={{ 'aria-label': 'controlled' }}
-                />
-            }
-          </div>
-          <div className='std-security__content'>
-            <div className='std-security__help-text'> {t('student.settings.preference.group_notif')} </div>
-            {infoPreference !== null && infoPreference?.mailNotifGroup === true
-              ? <Switch
-                  checked={groupNotif}
-                  onChange={handleChangeGroupNotif}
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-              : <Switch
-                onChange={handleChangeGroupNotif}
                 inputProps={{ 'aria-label': 'controlled' }}
                 />
             }
@@ -191,7 +161,7 @@ function CompanyPreferences (): JSX.Element {
             }
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
