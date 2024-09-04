@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../../Router/routes'
 import ModalValidation from '../../../../Component/ModalValidation'
-import { ModalType } from '../../../../Enum'
+import { ModalType, TicketType } from '../../../../Enum'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { IconButton } from '@mui/material'
 import ClassicButton from '../../../../Component/ClassicButton'
 import MissionApi from '../../../../API/MissionApi'
+import ReportButton from '../../../../Component/ReportButton'
 
 interface MissionPotentialItems {
   id: number
@@ -75,6 +76,7 @@ function MissionCardPotential (props: Props): JSX.Element {
     <div className='mission-card'>
         {/* <img className='mission-card__logo' src='/assets/anonymLogo.jpg' /> */}
       <div className='mission-card__container'>
+      <ReportButton TicketType={TicketType.MISSION} id={props.data.id} />
         <div>
           <p className='mission-card__pending-title'>
             { props.data.name }

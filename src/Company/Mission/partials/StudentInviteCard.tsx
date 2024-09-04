@@ -8,6 +8,8 @@ import GroupApi from '../../../API/GroupApi'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 import { useTranslation } from 'react-i18next'
+import ReportButton from '../../../Component/ReportButton'
+import { TicketType } from '../../../Enum'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
   props,
@@ -51,6 +53,7 @@ const StudentInviteCard = (props: Props): JSX.Element => {
 
   return (
     <div className='std-invite-card'>
+      <ReportButton TicketType={TicketType.GROUP} id={props.group.id}/>
       <div className='std-invite-card__section'>
         <Avatar alt='avatar' src={props.group.name} />
         <div className='std-invite-card__name'>{ props.group.name }</div>

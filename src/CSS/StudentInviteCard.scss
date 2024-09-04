@@ -4,6 +4,7 @@
 }
 
 .std-invite-card {
+    position: relative;
     padding: 2em;
     border: 1px solid #000;
     border-radius: 10px;
@@ -12,6 +13,7 @@
     width: 30em;
     justify-content: space-between;
     align-items: center;
+    margin-top: 1vw;
 
     @media screen and (min-width: 800px) and (max-width: 1000px) {
         width: 25em;

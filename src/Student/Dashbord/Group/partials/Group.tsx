@@ -6,11 +6,12 @@ import ClassicButton from '../../../../Component/ClassicButton'
 import ModalCreateGroup from './ModalCreateGroup'
 import GroupApi from '../../../../API/GroupApi'
 import ModalValidation from '../../../../Component/ModalValidation'
-import { ModalType } from '../../../../Enum'
+import { ModalType, TicketType } from '../../../../Enum'
 import ModalInvitationGroup from './ModalInvitationGroup'
 import MemberCard from './MemberCard'
 import MemberInvitedCard from './MemberInvitedCard'
 import ModalExclusionMember from './ModalExclusionMember'
+import ReportButton from '../../../../Component/ReportButton'
 
 interface Props {
   data: GroupData | undefined
@@ -123,8 +124,12 @@ function Group (props: Props): JSX.Element {
                 <ClassicButton title={props.data?.data?.isLeader ?? false ? 'Détruire le groupe' : 'Quitter le groupe'} refuse onClick={props.data?.data?.isLeader ?? false ? openDeleteModal : openLeaveModal } />
               </div>
               <div className='std-group__details'>
+                <ReportButton TicketType={TicketType.GROUP} id={props.data?.data?.groupId} />
                 <img className='std-group__picture' src={props.data?.data?.picture} />
-                <div> { props.data?.data?.description } </div>
+                <div>
+                  <div className='std-group__text'> { t('student.groups.show_desc') } </div>
+                  <div className='std-group__description'> { props.data?.data?.description } </div>
+                </div>
               </div>
             </div>
             <div className='std-group__member-container'>
