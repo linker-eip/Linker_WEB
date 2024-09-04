@@ -176,8 +176,8 @@ function ModalTaskEdition (props: Props): JSX.Element {
                 </Select>
               </FormControl>
               <div className='cpn-modal-task__button-section'>
-                <ClassicButton title='Valider' onClick={handleValidation} />
                 <ClassicButton title='Annuler' cancelled onClick={handleCloseEditMode}/>
+                <ClassicButton title='Valider' onClick={handleValidation} />
               </div>
             </div>
         </div>

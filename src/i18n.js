@@ -14,6 +14,14 @@ i18n
     resources: {
       fr: {
         translation: {
+          report: {
+            modal_title: 'Signaler cet évènement',
+            title: 'Donner un titre à votre ticket',
+            description: 'Expliquez en quelques mots votre problème',
+            send: 'Envoyer le signalement',
+            cancel: 'Annuler',
+            snackbar: 'Assurez-vous de remplir correctement les zones Titre et Description.'
+          },
           document: {
             statut: {
               bis: 'de remplacement'
@@ -314,6 +322,7 @@ i18n
               }
             },
             groups: {
+              show_desc: 'Description du groupe',
               title: 'Création d’un groupe',
               name: 'Sélectionner un nom pour votre groupe',
               description: 'Ajouter une description pour votre groupe',
@@ -755,6 +764,7 @@ i18n
               }
             },
             groups: {
+              show_desc: 'Description du groupe',
               title: 'Création d’un groupe',
               name: 'Sélectionner un nom pour votre groupe',
               description: 'Ajouter une description pour votre groupe',

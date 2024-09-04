@@ -7,7 +7,7 @@ import '../../CSS/StudentDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import HotbarDashboard from '../Dashbord/Partials/HotbarDashboard'
 import SidebarDashboard from '../Dashbord/Partials/SidebarDashboard'
-import { DashboardState, ModalType, MissionStatus, TaskStatus } from '../../Enum'
+import { DashboardState, ModalType, MissionStatus, TaskStatus, TicketType } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -23,6 +23,7 @@ import Historic from './partials/Historic'
 import ProfileApi from '../../API/ProfileApi'
 import GroupApi from '../../API/GroupApi'
 import * as ROUTES from '../../Router/routes'
+import ReportButton from '../../Component/ReportButton'
 
 function StudentDetailedMission (): JSX.Element {
   isPrivateRoute()
@@ -168,12 +169,12 @@ function StudentDetailedMission (): JSX.Element {
         <div className='std-bord-container__content'>
           { missionData !== undefined
             ? <div className='cpn-detailed-mission__section'>
+              <ReportButton TicketType={TicketType.MISSION} id={missionData.mission.id} />
                 { missionData.mission.status === MissionStatus.PENDING
                   ? <div className='cpn-detailed-mission__potential-section'>
                       <p className='cpn-detailed-mission__section__title'> { t('company.detailed_mission.research_mission') } </p>
                       <div className='cpn-detailed-mission__potential-button'>
                         <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen}/>
-                        <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
                       </div>
                     </div>
                   : null

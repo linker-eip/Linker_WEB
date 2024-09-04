@@ -7,7 +7,7 @@ import '../../CSS/CompanyDetailedMission.scss'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
-import { DashboardState, ModalType, MissionStatus, TaskStatus } from '../../Enum'
+import { DashboardState, ModalType, MissionStatus, TaskStatus, TicketType } from '../../Enum'
 import { useTranslation } from 'react-i18next'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -22,6 +22,7 @@ import MissionGroup from './partials/MissionGroup'
 import TaskTab from './partials/TaskTab'
 import Historic from './partials/Historic'
 import DropZoneV2 from '../../Component/DropZoneV2'
+import ReportButton from '../../Component/ReportButton'
 
 interface HistoricDataEntry {
   logo: string | undefined
@@ -295,6 +296,7 @@ function CompanyDetailedMission (): JSX.Element {
         {missionData !== undefined && missionData !== null
           ? <div className='std-bord-container__content'>
             <div className='cpn-detailed-mission__section'>
+              <ReportButton TicketType={TicketType.MISSION} id={missionData.mission.id} />
               {missionData.mission.status === MissionStatus.PENDING
                 ? <div className='cpn-detailed-mission__potential-section'>
                   <p className='cpn-detailed-mission__section__title'> {t('company.detailed_mission.research_mission')} </p>

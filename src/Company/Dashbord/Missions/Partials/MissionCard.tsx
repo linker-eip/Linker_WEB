@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../../Router/routes'
 import ModalValidation from '../../../../Component/ModalValidation'
-import { ModalType } from '../../../../Enum'
+import { ModalType, TicketType } from '../../../../Enum'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { IconButton } from '@mui/material'
+import ReportButton from '../../../../Component/ReportButton'
 
 interface Props {
   data: {
@@ -19,6 +20,7 @@ interface Props {
     bill: string
     participants: number
     cancelledDate?: string
+    id: number
   }
   cancelled?: boolean
   potential?: boolean
@@ -49,6 +51,7 @@ function MissionCard (props: Props): JSX.Element {
     <div className='mission-card'>
         {/* <img className='mission-card__logo' src={props.data.logo} /> */}
       <div className='mission-card__container'>
+        <ReportButton TicketType={TicketType.MISSION} id={props.data.id} />
         <div>
           <p className='mission-card__title'> { props.data.title } </p>
         </div>

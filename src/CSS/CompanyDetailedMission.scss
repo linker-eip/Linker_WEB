@@ -9,7 +9,9 @@
   font-family: 'Poppins' !important;
 
   &__section {
+    position: relative;
     margin: 1em 1.3em 1.3em 1.3em;
+    margin-top: 3em;
     padding: 1.5em 1.5em 1.5em 1.5em;
     padding-left: 2em;
     background-color: #FFF;
