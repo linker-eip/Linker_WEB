@@ -91,3 +91,14 @@ export enum PaymentStatus {
   WAITING = 'WAITING',
   PAID = 'PAID'
 }
+
+export enum TicketType {
+  GENERAL = 'GENERAL',
+  MISSION = 'MISSION',
+  GROUP = 'GROUP'
+}
+
+export enum TicketState {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+}

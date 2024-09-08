@@ -12,6 +12,7 @@ import StudentProfileExperience from './partials/StudentProfileExperience'
 import StudentProfileEducation from './partials/StudentProfileEducation'
 import ProfileApi from '../../../API/ProfileApi'
 import { type StudentProfileInfo, type SkillsListInfo } from '../../../Typage/ProfileType'
+import { Skeleton } from '@mui/material'
 
 function StudentProfile (): JSX.Element {
   isPrivateRoute()
@@ -60,7 +61,20 @@ function StudentProfile (): JSX.Element {
               <StudentProfileExperience data={profileData} update={refreshProfileData}/>
               <StudentProfileEducation data={profileData} update={refreshProfileData}/>
             </div>
-          : null
+          : <div className='std-bord-container__skeleton'>
+              <div className='std-bord-container__skeleton-row'>
+                <Skeleton variant='circular' animation='wave' width={200} height={200} />
+                <div className='std-bord-container__skeleton-text'>
+                  <Skeleton variant='text' animation='wave' width={500} height={50} />
+                  <Skeleton variant='text' animation='wave' width={350} height={25} />
+                  <Skeleton variant='text' animation='wave' width={250} height={25} />
+                </div>
+              </div>
+              <div className='std-bord-container__skeleton-row'>
+                <Skeleton variant='rounded' animation='wave' width={300} height={500} />
+                <Skeleton variant='rounded' animation='wave' width={300} height={500} />
+              </div>
+            </div>
         }
       </div>
     </div>

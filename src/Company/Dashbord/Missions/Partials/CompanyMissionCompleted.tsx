@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import MissionCardPotential from './MissionCardPotential'
 import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+
 interface MissionCompletedItems {
   id: number
   name: string

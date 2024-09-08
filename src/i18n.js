@@ -14,6 +14,14 @@ i18n
     resources: {
       fr: {
         translation: {
+          report: {
+            modal_title: 'Signaler cet évènement',
+            title: 'Donner un titre à votre ticket',
+            description: 'Expliquez en quelques mots votre problème',
+            send: 'Envoyer le signalement',
+            cancel: 'Annuler',
+            snackbar: 'Assurez-vous de remplir correctement les zones Titre et Description.'
+          },
           document: {
             statut: {
               bis: 'de remplacement'
@@ -314,6 +322,7 @@ i18n
               }
             },
             groups: {
+              show_desc: 'Description du groupe',
               title: 'Création d’un groupe',
               name: 'Sélectionner un nom pour votre groupe',
               description: 'Ajouter une description pour votre groupe',
@@ -455,37 +464,45 @@ i18n
       },
       en: {
         translation: {
+          report: {
+            modal_title: 'Report this event',
+            title: 'Give a title to your ticket',
+            description: 'Briefly explain your issue',
+            send: 'Send the report',
+            cancel: 'Cancel',
+            snackbar: 'Please make sure to properly fill in the Title and Description fields.'
+          },
           document: {
             statut: {
-              bis: 'de remplacement'
+              bis: 'replacement'
             },
             is_document: {
-              part1: 'Votre document:',
-              part2: 'a été renseigné avec succès.'
+              part1: 'Your document:',
+              part2: 'has been successfully completed.'
             },
-            no_document: 'Veuillez renseigner votre ',
+            no_document: 'Please fill in your ',
             cni: 'CNI',
             siren: 'SIREN',
             urssaf: 'URSSAF',
             rib: 'RIB',
             kbis: 'KBIS',
-            send: 'ENVOYER LES DOCUMENTS',
-            replace: 'REMPLACER'
+            send: 'SEND DOCUMENTS',
+            replace: 'REPLACE'
           },
           notifications: {
-            email: 'Recevoir les notifications par mail'
+            email: 'Receive notifications by e-mail'
           },
           contact: {
-            title: 'Nous sommes là pour vous aider. Contactez-nous pour toute question ou assistance.',
-            lastname: 'Nom de famille',
-            firstname: 'Prénom',
-            email: 'Adresse E-mail',
-            object: 'Sujet du message',
+            title: 'We\'re here to help. Contact us if you have any questions or need assistance.',
+            lastname: 'Last Name',
+            firstname: 'First Name',
+            email: 'Email Address',
+            object: 'Subject of the message',
             message: 'Message',
-            send: 'Envoyer',
-            info: 'Information général',
-            number: 'Numéro de téléphone',
-            message_sended: 'Votre message a été envoyé avec succès.'
+            send: 'Send',
+            info: 'General Information',
+            number: 'Phone Number',
+            message_sended: 'Your message has been successfully sent.'
           },
           homepage: {
             text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
@@ -495,222 +512,222 @@ i18n
             title_3: 'étudiante',
             espace: 'Espace',
             company: {
-              title: 'Entreprise',
-              text_1: 'Trouvez des équipes complètes en quelques clics',
-              text_2: 'Sélectionnez des groupes d\'étudiants déjà formés, ayant les compétences nécessaires pour vos missions.'
+              title: 'Company',
+              text_1: 'Find complete teams in just a few clicks',
+              text_2: 'Select pre-formed student groups with the skills needed for your missions.'
             },
             student: {
-              title: 'Étudiant',
-              text_1: 'Libérez votre potentiel en freelance',
-              text_2: 'Trouvez des opportunités de travail en tant que freelance, mettez en avant vos compétences, et travaillez sur des projets passionnants.'
+              title: 'Student',
+              text_1: 'Unlock your potential as a freelancer',
+              text_2: 'Find freelance work opportunities, showcase your skills, and work on exciting projects.'
             },
-            register: 'S’inscrire sur Linker',
-            login: 'Se connecter à Linker'
+            register: 'Sign up on Linker',
+            login: 'Log in to Linker'
           },
           verify_page: {
-            waiting: 'Afin de vous rendre sur le site de Linker, nous vous prions de vérifier votre compte en utilisant le lien que vous avez reçu par email.',
+            waiting: 'To access the Linker site, please verify your account using the link you received by email.',
             success: {
-              text_1: 'Votre adresse e-mail a été vérifiée avec succès.',
-              text_2: 'Vous pouvez maintenant profiter pleinement des fonctionnalités de ',
+              text_1: 'Your email address has been successfully verified.',
+              text_2: 'You can now fully enjoy the features of ',
               text_3: 'Linker.',
-              text_4: 'Connectez-vous à votre compte pour commencer à explorer les opportunités de collaboration entre étudiants et entreprises.',
-              text_5: 'Si vous avez des questions ou si vous avez besoin d\'assistance, n\'hésitez pas à nous contacter à l\'adresse suivante : ',
+              text_4: 'Log in to your account to start exploring collaboration opportunities between students and companies.',
+              text_5: 'If you have any questions or need assistance, feel free to contact us at: ',
               text_6: 'contact@linker-app.fr.',
-              text_7: 'Bienvenue sur ',
-              text_8: ' Linker',
-              text_9: ', et bonne chance dans vos futures collaborations !',
-              button_text: 'Se connecter à Linker',
-              button_title_1: 'Espace',
-              button_title_2: 'Étudiant',
-              button_subtext: 'À la recherche de missions ?'
+              text_7: 'Welcome to ',
+              text_8: 'Linker',
+              text_9: ', and good luck with your future collaborations!',
+              button_text: 'Log in to Linker',
+              button_title_1: 'Student',
+              button_title_2: 'Area',
+              button_subtext: 'Looking for missions?'
             },
             failed: {
-              text_1: 'La vérification de votre adresse e-mail a échoué.',
-              text_2: 'Veuillez vous assurer que vous avez saisi le code correctement.',
-              text_3: 'Vous pouvez réessayer en cliquant sur le lien de vérification que nous vous avons envoyé.',
-              text_4: 'Si le problème persiste, veuillez contacter notre équipe d\'assistance à l\'adresse suivante :',
+              text_1: 'The verification of your email address has failed.',
+              text_2: 'Please ensure you have entered the code correctly.',
+              text_3: 'You can retry by clicking on the verification link we sent you.',
+              text_4: 'If the problem persists, please contact our support team at:',
               text_5: 'contact@linker-app.fr.',
-              text_6: 'Nous sommes là pour vous aider à résoudre ce problème.',
-              button_text: 'Revenir en lieu sûr'
+              text_6: 'We are here to help you resolve this issue.',
+              button_text: 'Return to safety'
             }
           },
           footer: {
-            need_help: 'Besoin d’aide ?',
-            contact: 'Contactez-nous',
-            networks: 'Pour mieux nous connaitre !',
-            download: 'Téléchargez l’app'
+            need_help: 'Need help?',
+            contact: 'Contact us',
+            networks: 'Get to know us better!',
+            download: 'Download the app'
           },
           modal: {
-            title: 'Confirmer votre choix',
-            deleteTitle: 'Confirmer la suppression',
-            notationTitle: 'Noter la prestation',
-            commentTitle: 'Laisser un avis sur la prestation',
-            remaining_char: 'caractères restants',
+            title: 'Confirm Your Choice',
+            deleteTitle: 'Confirm Deletion',
+            notationTitle: 'Rate the Service',
+            commentTitle: 'Leave Feedback on the Service',
+            remaining_char: 'characters remaining',
             refus: {
-              subtitle: 'Etes-vous sur de vouloir refuser:'
+              subtitle: 'Are you sure you want to refuse:'
             },
             accept: {
-              subtitle: 'Etes-vous sur de vouloir accepter:'
+              subtitle: 'Are you sure you want to accept:'
             },
             exclude: {
-              subtitle: 'Etes-vous sur de vouloir exclure:'
+              subtitle: 'Are you sure you want to exclude:'
             },
             delete: {
-              subtitle: 'Etes-vous sûr de vouloir supprimer:',
+              subtitle: 'Are you sure you want to delete:',
               groups: {
-                subtitle: 'Etes-vous sur de vouloir détruire:'
+                subtitle: 'Are you sure you want to delete:'
               }
             },
             leave: {
-              subtitle: 'Êtes-vous sur de vouloir quitter:'
+              subtitle: 'Are you sure you want to leave:'
             },
             notation: {
-              subtitle: 'Veuillez remplir les champs ci-dessous pour évaluer la prestation du groupe sur cette mission:'
+              subtitle: 'Please fill in the fields below to rate the group\'s performance on this task:'
             },
             comment: {
-              subtitle: 'Veuillez remplir le champ ci-dessous pour laisser un avis sur la prestation du groupe sur cette mission:'
+              subtitle: 'Please fill in the field below to leave feedback on the group\'s performance on this task:'
             },
             account: {
-              deactivate: 'Êtes-vous vraiment sûr de vouloir désactiver le compte:',
-              delete: 'Êtes-vous vraiment sûr de vouloir supprimer le compte:'
+              deactivate: 'Are you really sure you want to deactivate the account:',
+              delete: 'Are you really sure you want to delete the account:'
             },
             linkedIn: {
-              title: 'Remplir son profil avec LinkedIn',
-              textarea: 'Rentrez le lien de votre profil LinkedIn'
+              title: 'Fill Your Profile with LinkedIn',
+              textarea: 'Enter your LinkedIn profile link'
             }
           },
-          validate: 'Valider',
-          button: 'Retour',
+          validate: 'Validate',
+          button: 'Back',
           formTitle: {
-            part1: 'Me connecter',
-            part2: 'ou',
-            part3: 'Créer un compte'
+            part1: 'Log in',
+            part2: 'or',
+            part3: 'Create an account'
           },
-          firstName: 'Prénom',
-          lastName: 'Nom',
-          companyName: 'Nom de l\'entreprise',
-          telephone: 'Téléphone',
+          firstName: 'First Name',
+          lastName: 'Last Name',
+          companyName: 'Company Name',
+          telephone: 'Phone',
           email: 'Email',
-          password: 'Mot de passe',
-          confirmPassword: 'Confirmer le mot de passe',
-          firstStudentCheckbox: 'Je certifie avoir plus de 16 ans',
-          firstCompanyCheckbox: 'Je certifie être le propriétaire de cette entreprise',
-          secondGlobalCheckbox: 'En m\'inscrivant, j\'accepte les conditions générales d\'utilisation et la politique de confidentialité de Linker',
-          passwordHelper: 'Minimum 8 caractères, 1 lettre minuscule, 1 lettre majuscule et 1 chiffre.',
-          registerButton: 'S\'inscrire',
-          validateButton: 'Se connecter',
-          forgottenPassword: 'Mot de passe oublié ?',
+          password: 'Password',
+          confirmPassword: 'Confirm Password',
+          firstStudentCheckbox: 'I certify that I am over 16 years old',
+          firstCompanyCheckbox: 'I certify that I am the owner of this company',
+          secondGlobalCheckbox: 'By registering, I agree to the terms of use and privacy policy of Linker',
+          passwordHelper: 'Minimum 8 characters, 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character.',
+          registerButton: 'Sign Up',
+          validateButton: 'Log In',
+          forgottenPassword: 'Forgot Password?',
           missionCard: {
-            price: 'Montant:',
-            begin: 'Début de misison:',
-            end: 'Fin de misison:',
-            cancelled: 'Mission annulée le:',
+            price: 'Amount:',
+            begin: 'Start of mission:',
+            end: 'End of mission:',
+            cancelled: 'Mission cancelled on:',
             participants: 'Participants:',
-            bill: 'N° de facture:',
-            see_mission: 'Voir la mission',
-            skill: 'Compétences associées'
+            bill: 'Invoice number:',
+            see_mission: 'View the mission',
+            skill: 'Associated skills'
           },
           student: {
             title: 'Je suis ÉTUDIANT',
             dashboard: {
-              home: 'Mon dashboard',
-              mission: 'Mes missions',
-              network: 'Réseau',
-              facture: 'Mes factures',
-              paiements: 'Mes paiements',
-              profil: 'Mon profil',
-              doc: 'Mes documents',
-              stat: 'Mes statistiques',
-              invoices: 'Mes factures',
+              home: 'My Dashboard',
+              mission: 'My Missions',
+              network: 'Network',
+              facture: 'My Invoices',
+              paiements: 'My Payments',
+              profil: 'My Profile',
+              doc: 'My Documents',
+              stat: 'My Statistics',
+              invoices: 'My Invoices',
               settings: 'Settings',
-              group: 'Groupe',
+              group: 'Group',
               groups: {
-                my_group: 'votre groupe',
-                chat: 'Chat textuel',
-                invite: 'invitations({{nbrInvitation}})',
-                no_group: 'Il semble que vous n\'ayez pas de groupe. Vous pouvez en créer un ici !',
-                no_invite: 'Il semble que vous n\'ayez aucune invitations en attente.',
-                create_group_button: 'Créer un groupe',
-                invited: 'Les membres invités',
-                member_title: 'Les membres'
+                my_group: 'your group',
+                chat: 'Text Chat',
+                invite: 'invitations ({{nbrInvitation}})',
+                no_group: 'It seems you don’t have a group. You can create one here!',
+                no_invite: 'It seems you have no pending invitations.',
+                create_group_button: 'Create a Group',
+                invited: 'Invited Members',
+                member_title: 'Members'
               },
               chat: {
-                send_message: 'Envoyer'
+                send_message: 'Send'
               },
               hotbar: {
-                profil: 'Profil',
-                quit: 'Déconnexion'
+                profil: 'Profile',
+                quit: 'Log Out'
               },
               card: {
                 status: {
-                  title: 'Mon statut Linker',
-                  content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir réaliser des missions. C\'est la dernière ligne droite !',
+                  title: 'My Linker Status',
+                  content: 'Here are the steps you still need to complete to finish your profile and start taking on missions. It’s the final stretch!',
                   statut: 'SIREN',
-                  cni: 'Carte d\'identité',
-                  rib: 'RIB',
+                  cni: 'ID Card',
+                  rib: 'Bank Details',
                   urssaf: 'URSSAF'
                 },
                 faq: {
-                  title: 'Linker, c\'est...',
-                  content: 'Nous répondons aux questions que vous nous avez le plus posé dans notre dernière vidéo FAQ !'
+                  title: 'Linker is...',
+                  content: 'We answer the most frequently asked questions from our latest FAQ video!'
                 },
                 freelance: {
-                  title: 'Se déclarer freelance',
-                  content: 'Voici un tutoriel pour se déclarer en tant que freelance. Nous savons à quel point c\'est dur de se lancer dans tout ça. Ici tu trouveras toutes les démarches nécessaires pour bien démarrer ton activité. Et en toute légalité bien sûr :D',
-                  button: 'Commencer'
+                  title: 'Register as a Freelancer',
+                  content: 'Here is a guide to register as a freelancer. We know how challenging it can be to start out. You’ll find all the necessary steps to get your activity up and running, and in full compliance with the law :D',
+                  button: 'Get Started'
                 },
                 sales: {
-                  title: 'Mon chiffre d\'affaires',
-                  sales: 'Chiffre d\'affaires (12 derniers mois)',
-                  finished_missions: 'Missions terminées (12 derniers mois)',
-                  see_all: 'Voir toutes mes statistiques'
+                  title: 'My Revenue',
+                  sales: 'Revenue (Last 12 Months)',
+                  finished_missions: 'Completed Missions (Last 12 Months)',
+                  see_all: 'See All My Statistics'
                 }
               }
             },
             mission: {
               pending: {
-                title: 'En cours',
-                pending_mission: 'Missions en cours ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission en cours.'
+                title: 'In Progress',
+                pending_mission: 'Ongoing Missions ({{nbrMission}})',
+                no_mission: 'You have no ongoing missions.'
               },
               completed: {
-                title: 'Terminées',
-                completed_mission: 'Missions terminées ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission terminée.'
+                title: 'Completed',
+                completed_mission: 'Completed Missions ({{nbrMission}})',
+                no_mission: 'You have no completed missions.'
               },
               cancelled: {
-                title: 'Annulées',
-                cancelled_mission: 'Missions annulées ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission annulée.'
+                title: 'Cancelled',
+                cancelled_mission: 'Cancelled Missions ({{nbrMission}})',
+                no_mission: 'You have no cancelled missions.'
               },
               potential: {
-                title: 'Potentielles',
-                potential_mission: 'Missions potentielles ({{nbrMission}})',
-                no_mission: 'Vous n\'avez aucune mission potentielle.'
+                title: 'Potential',
+                potential_mission: 'Potential Missions ({{nbrMission}})',
+                no_mission: 'You have no potential missions.'
               }
             },
             sales: {
-              avis: 'Avis',
-              mark: 'Note Moyenne',
-              text_1: 'laissés par vos clients sur les 12 derniers mois',
-              text_2: 'sur toutes vos missions notées par vos clients'
+              avis: 'Reviews',
+              mark: 'Average Rating',
+              text_1: 'left by your clients over the last 12 months',
+              text_2: 'on all your missions rated by your clients'
             },
             detailed_mission: {
-              pending_mission: 'Mission en cours ⌛',
-              accepted: 'Proposition acceptée',
-              provisionée: 'Mission provisionée',
-              in_progress: 'Mission en cours',
-              completed: 'Mission terminée',
-              mission_completed: 'Mission terminée ✅',
-              details: 'Détail de la mission',
-              historic: 'Historique de la mission',
-              conversation: 'Accéder à la conversation',
+              pending_mission: 'Ongoing Mission ⌛',
+              accepted: 'Proposal Accepted',
+              provisionée: 'Mission Scheduled',
+              in_progress: 'Mission In Progress',
+              completed: 'Mission Completed',
+              mission_completed: 'Mission Completed ✅',
+              details: 'Mission Details',
+              historic: 'Mission History',
+              conversation: 'Access the Conversation',
               mission: 'mission(s)',
               tab: {
-                detail: 'Détail',
-                quantity: 'Quantité',
-                unitary_price: 'Prix unitaire (HT)',
-                total_price: 'total (HT)'
+                detail: 'Detail',
+                quantity: 'Quantity',
+                unitary_price: 'Unit Price (Excl. Tax)',
+                total_price: 'Total (Excl. Tax)'
               }
             },
             profile: {
@@ -718,52 +735,52 @@ i18n
                 desc: 'Description',
                 location: 'Location',
                 website: 'Website',
-                activity: 'Activité'
+                activity: 'Activity'
               },
-              content: {
-              },
+              content: {},
               verif: {
-                title: 'Vérifications',
-                verified_student: 'Étudiant vérifié',
-                verified_freelance: 'Freelance vérifié',
-                linker_charte: 'Charte Linker signée',
-                verified_email: 'Email vérifié',
-                more_information: 'Plus d\'information',
-                check_charte: 'Consulter la charte'
+                title: 'Verifications',
+                verified_student: 'Verified Student',
+                verified_freelance: 'Verified Freelancer',
+                linker_charte: 'Signed Linker Charter',
+                verified_email: 'Verified Email',
+                more_information: 'More Information',
+                check_charte: 'View the Charter'
               },
               skills: {
-                title: 'Compétences',
-                add_skill: 'Ajouter une compétence'
+                title: 'Skills',
+                add_skill: 'Add a Skill'
               },
               experience: {
-                title: 'Expériences',
-                add_exp: 'Ajoute ton expérience',
-                name: 'Rentre le nom de ton expérience ?',
-                position: 'Quel poste avez-vous exercé ?',
-                localisation: 'Lieu',
+                title: 'Experiences',
+                add_exp: 'Add Your Experience',
+                name: 'Enter the name of your experience?',
+                position: 'What position did you hold?',
+                localisation: 'Location',
                 date: 'Date',
-                description: 'Décris ton expérience'
+                description: 'Describe your experience'
               },
               education: {
-                title: 'Formations',
-                add_form: 'Ajoute ta formation',
-                name: 'Rentre le nom de ton formation ?',
-                position: 'Quel est sujet de cette formation ?',
-                localisation: 'Lieu',
+                title: 'Education',
+                add_form: 'Add Your Education',
+                name: 'Enter the name of your education?',
+                position: 'What is the subject of this education?',
+                localisation: 'Location',
                 date: 'Date',
-                description: 'Décris la formation'
+                description: 'Describe the education'
               }
             },
             groups: {
-              title: 'Création d’un groupe',
-              name: 'Sélectionner un nom pour votre groupe',
-              description: 'Ajouter une description pour votre groupe',
-              button: 'Créer le groupe',
+              show_desc: 'Group Description',
+              title: 'Create a Group',
+              name: 'Choose a name for your group',
+              description: 'Add a description for your group',
+              button: 'Create Group',
               invite: {
-                title: 'Ajouter un membre'
+                title: 'Add a Member'
               },
               exclude: {
-                title: 'Exclure un membre'
+                title: 'Exclude a Member'
               }
             },
             settings: {
@@ -806,72 +823,72 @@ i18n
             }
           },
           company: {
-            title: 'Je suis une ENTREPRISE',
+            title: 'I am a COMPANY',
             dashboard: {
               card: {
                 status: {
-                  content: 'Voici les étapes qu\'il te reste à faire pour pouvoir compléter ton profil et pouvoir proposer des missions. C\'est la dernière ligne droite !',
-                  cni: 'Carte d\'identité',
+                  content: 'Here are the steps you still need to complete to finalize your profile and start posting missions. It’s the final stretch!',
+                  cni: 'ID Card',
                   kbis: 'KBIS',
                   siret: 'SIRET'
                 }
               },
-              invoices: 'Mes factures'
+              invoices: 'My Invoices'
             },
             mission: {
               pending: {
-                title: 'En cours',
-                pending_mission: 'Missions en cours ({{nbrMission}}).',
-                no_mission: 'Vous n\'avez aucune mission en cours.'
+                title: 'In Progress',
+                pending_mission: 'Ongoing Missions ({{nbrMission}}).',
+                no_mission: 'You have no ongoing missions.'
               },
               completed: {
-                title: 'Terminées',
-                completed_mission: 'Missions terminées ({{nbrMission}}).',
-                no_mission: 'Vous n\'avez aucune mission terminée.'
+                title: 'Completed',
+                completed_mission: 'Completed Missions ({{nbrMission}}).',
+                no_mission: 'You have no completed missions.'
               },
               cancelled: {
-                title: 'Annulées',
-                cancelled_mission: 'Missions annulées ({{nbrMission}}).',
-                no_mission: 'Vous n\'avez aucune mission annulée.'
+                title: 'Cancelled',
+                cancelled_mission: 'Cancelled Missions ({{nbrMission}}).',
+                no_mission: 'You have no cancelled missions.'
               },
               potential: {
-                title: 'En recherche',
-                potential_mission: 'Missions en recherche ({{nbrMission}}).',
-                no_mission: 'Vous n\'avez aucune mission en recherche.'
+                title: 'In Search',
+                potential_mission: 'Missions in Search ({{nbrMission}}).',
+                no_mission: 'You have no missions in search.'
               }
             },
             detailed_mission: {
-              research_mission: 'Mission en recherche ⌛',
-              pending_mission: 'Missions en cours ⌛',
-              accepted: 'Proposition acceptée',
-              provisionée: 'Mission provisionée',
-              in_progress: 'Mission en cours',
-              completed: 'Mission terminée ✅',
-              details: 'Détail de la mission',
-              historic: 'Historique de la mission',
-              conversation: 'Accéder à la conversation',
+              research_mission: 'Mission in Search ⌛',
+              pending_mission: 'Ongoing Missions ⌛',
+              accepted: 'Proposal Accepted',
+              provisionée: 'Mission Scheduled',
+              in_progress: 'Mission In Progress',
+              completed: 'Mission Completed ✅',
+              details: 'Mission Details',
+              historic: 'Mission History',
+              conversation: 'Access the Conversation',
               mission: 'missions',
               participants: 'Participants',
-              no_participants: 'Aucun groupe trouvée',
-              selection: 'Liste des groupes',
+              no_participants: 'No group found',
+              selection: 'List of Groups',
               tab: {
-                detail: 'Détail',
-                quantity: 'Quantité',
-                price: 'Prix',
-                task: 'Tâches',
+                detail: 'Detail',
+                quantity: 'Quantity',
+                price: 'Price',
+                task: 'Tasks',
                 attribution: 'Attribution',
-                no_action: 'Aucune action à réaliser'
+                no_action: 'No action to be taken'
               },
               devis: {
-                title: 'Devis pour la mission: {{name}}',
-                no_devis: 'Pas de devis renseigné pour la mission: {{name}}',
-                devis: 'Importez votre devis'
+                title: 'Quote for the mission: {{name}}',
+                no_devis: 'No quote provided for the mission: {{name}}',
+                devis: 'Upload your quote'
               },
               task: {
-                modal_title: 'Ajouter une tâche',
-                name: 'Nom',
-                description: 'description',
-                price: 'Prix'
+                modal_title: 'Add a Task',
+                name: 'Name',
+                description: 'Description',
+                price: 'Price'
               }
             }
           },
@@ -890,7 +907,7 @@ i18n
             }
           },
           snackbar: {
-            invitation_error: 'Vous ne pouvez pas inviter cette personne car elle a déjà un groupe.'
+            invitation_error: 'You cannot invite this person because they are already in a group.'
           }
         }
       }

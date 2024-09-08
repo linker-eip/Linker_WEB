@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../../Router/routes'
 import ClassicButton from '../../../../Component/ClassicButton'
 import ModalValidation from '../../../../Component/ModalValidation'
-import { ModalType } from '../../../../Enum'
+import { ModalType, TicketType } from '../../../../Enum'
 import type { MissionInfo, GroupType, CompanyAdminInfo, StudentMissionDetails } from '../../../../Typage/Type'
 import GroupApi from '../../../../API/GroupApi'
 import MissionApi from '../../../../API/MissionApi'
+import ReportButton from '../../../../Component/ReportButton'
 
 interface Props {
   data: MissionInfo
@@ -97,6 +98,7 @@ function MissionCard (props: Props): JSX.Element {
     <div className='mission-card'>
         {/* <img className='mission-card__logo' src={companyData?.companyPicture} /> */}
       <div className='mission-card__container'>
+      <ReportButton TicketType={TicketType.MISSION} id={props.data.id} />
         <div>
           <p className='mission-card__title'> { props.data.name} </p>
         </div>

@@ -13,7 +13,7 @@ import ProfileApi from '../../../API/ProfileApi'
 // Components.
 import DropZone from '../../../Component/DropZone'
 import DropZoneV2 from '../../../Component/DropZoneV2'
-import { TextField, Snackbar } from '@mui/material'
+import { TextField, Snackbar, Skeleton } from '@mui/material'
 import ClassicButton from '../../../Component/ClassicButton'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 
@@ -91,6 +91,7 @@ const Document: React.FC<DocumentProps> = ({ isSet, label, data, handleReset, ha
 }
 
 function CompanyDocumentContentV2 (): JSX.Element {
+  const [skeleton, setSketelon] = useState<boolean | null>(null)
   const { t } = useTranslation()
 
   const [cniFile, setCniFile] = useState<any>([])
@@ -136,6 +137,7 @@ function CompanyDocumentContentV2 (): JSX.Element {
           }
         })
       }
+      setSketelon(false)
     }
     fetchData()
   }, [])
@@ -228,7 +230,9 @@ function CompanyDocumentContentV2 (): JSX.Element {
     <div className='std-documentV2'>
       <div className='std-documentV2__top-section'>
         <div className='std-documentV2__container'>
-          <div className='std-documentV2__section'>
+          {skeleton === null
+            ? <Skeleton variant='rectangular' width={450} height={400}/>
+            : <div className='std-documentV2__section'>
             {cniStatus !== DocumentStatus.NOT_FILLED && cniStatus !== DocumentStatus.DENIED && !cniReplace
               ? <div className='std-documentV2__content'>
                   <div className='std-documentV2__status-content'>
@@ -323,10 +327,14 @@ function CompanyDocumentContentV2 (): JSX.Element {
                 </div>
             }
           </div>
+          }
         </div>
-        <div className='std-documentV2__button'>
-          <ClassicButton title={t('document.send')} onClick={() => { postFile() }} />
-        </div>
+        {skeleton === null
+          ? <Skeleton variant='rectangular' width={450} height={50}/>
+          : <div className='std-documentV2__button'>
+              <ClassicButton title={t('document.send')} onClick={() => { postFile() }} />
+            </div>
+        }
       </div>
       <Snackbar open={cniSnackBarValue} autoHideDuration={6000} onClose={closeCniSnackBar}>
             <Alert onClose={closeCniSnackBar} severity="error" sx={{ width: '100%' }}>

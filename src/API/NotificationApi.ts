@@ -51,6 +51,25 @@ class NotificationApi {
     })
     return response.data
   }
+
+  static async changeCompanyNotificationPreferences (jwtToken: string, dto: AnyObject): Promise<string> {
+    const response = await axios.put(`${process.env.REACT_APP_API_URL as string}/api/company/preferences`, dto, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async getCompanyPreferences (jwtToken: string): Promise<StudentPreferences> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/company/preferences`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    })
+    return response.data
+  }
 }
 
 export default NotificationApi
