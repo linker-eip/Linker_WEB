@@ -52,6 +52,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case AdminDashboardState.ARCHIVES:
         navigate(ROUTES.ADMIN_ARCHIVES)
         break
+      case AdminDashboardState.TICKETS:
+        navigate(ROUTES.ADMIN_TICKETS)
+        break
       default:
         break
     }
@@ -98,6 +101,10 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             <p className={ stateDashboard === AdminDashboardState.ARCHIVES ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.ARCHIVES) }}>
               <ArchiveIcon />
               { t('admin.dashboard.archives') }
+            </p>
+            <p className={ stateDashboard === AdminDashboardState.TICKETS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.TICKETS) }}>
+              <ArchiveIcon />
+              { t('admin.dashboard.tickets') }
             </p>
           </div>
         </div>
