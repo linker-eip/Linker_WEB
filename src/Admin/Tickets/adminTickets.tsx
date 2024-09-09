@@ -7,7 +7,6 @@ import { AdminDashboardState } from '../../Enum'
 import AdminTicketsContent from './Partials/adminTicketsContent'
 
 function AdminTickets (): JSX.Element {
-  console.log('AdminTickets')
   const state = AdminDashboardState
   const { t } = useTranslation()
   return (

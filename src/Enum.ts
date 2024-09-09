@@ -108,14 +108,3 @@ export enum UserType {
   STUDENT_USER = 'STUDENT_USER',
   COMPANY_USER = 'COMPANY_USER',
 }
-
-export enum TicketTypeEnum {
-  GENERAL = 'GENERAL',
-  MISSION = 'MISSION',
-  GROUP = 'GROUP',
-}
-
-export enum TicketStateEnum {
-  OPEN = 'OPEN',
-  CLOSED = 'CLOSED',
-}
