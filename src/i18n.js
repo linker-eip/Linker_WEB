@@ -14,6 +14,7 @@ i18n
     resources: {
       fr: {
         translation: {
+          and: ' et ',
           report: {
             modal_title: 'Signaler cet évènement',
             title: 'Donner un titre à votre ticket',
@@ -163,7 +164,9 @@ i18n
           firstStudentCheckbox: 'Je certifie avoir plus de 16 ans',
           firstCompanyCheckbox: 'Je certifie être le propriétaire de cette entreprise',
           secondGlobalCheckbox: 'En m\'inscrivant, j\'accepte les conditions générales d\'utilisation et la politique de confidentialité de Linker',
-          passwordHelper: 'Minimum 8 caractères, 1 lettre minuscule, 1 lettre majuscule et 1 chiffre.',
+          passwordHelper: 'Minimum 8 caractères, 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial.',
+          wrong_email: 'Votre adresse email ne remplit pas les conditions.',
+          wrong_password: 'Votre mot de passe ne remplit pas les conditions.',
           registerButton: 'S\'inscrire',
           validateButton: 'Se connecter',
           forgottenPassword: 'Mot de passe oublié ?',
@@ -464,6 +467,7 @@ i18n
       },
       en: {
         translation: {
+          and: ' and ',
           report: {
             modal_title: 'Report this event',
             title: 'Give a title to your ticket',
@@ -614,6 +618,8 @@ i18n
           firstCompanyCheckbox: 'I certify that I am the owner of this company',
           secondGlobalCheckbox: 'By registering, I agree to the terms of use and privacy policy of Linker',
           passwordHelper: 'Minimum 8 characters, 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character.',
+          wrong_email: 'Your email address does not meet the requirements.',
+          wrong_password: 'Your password does not meet the requirements.',
           registerButton: 'Sign Up',
           validateButton: 'Log In',
           forgottenPassword: 'Forgot Password?',

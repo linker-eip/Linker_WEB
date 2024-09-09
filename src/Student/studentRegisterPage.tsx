@@ -12,7 +12,8 @@ import {
   FormControlLabel,
   Input,
   IconButton,
-  FormHelperText
+  FormHelperText,
+  Snackbar
 } from '@mui/material'
 
 import Visibility from '@mui/icons-material/Visibility'
@@ -23,10 +24,18 @@ import * as ROUTES from '../Router/routes'
 import '../CSS/LoginPage.scss'
 import AuthApi from '../API/AuthApi'
 
+import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
 function StudentRegisterPage (): JSX.Element {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [error, setError] = useState<string>('')
 
   // States for form fields
   const [firstName, setFirstName] = useState<string>('')
@@ -39,6 +48,8 @@ function StudentRegisterPage (): JSX.Element {
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
   const [firstCheckedState, setFirstCheckedState] = useState<boolean>(false)
   const [secondCheckedState, setSecondCheckedState] = useState<boolean>(false)
+  const [snackbarValue, setSnackbarValue] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>('')
 
   const handleChange = (setState: React.Dispatch<React.SetStateAction<string>>) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,9 +73,10 @@ function StudentRegisterPage (): JSX.Element {
       if (response.status >= 200 && response.status < 204) {
         checkVerifiedAccount(response.data.token)
       }
-    } catch (error) {
-      console.error(error)
-      setError('An error occurred while registering.')
+    } catch (error: any) {
+      const response = JSON.parse(error.request.responseText)
+      setErrorMessage(response.message.join(', '))
+      openSnackbar()
     }
   }
 
@@ -80,6 +92,17 @@ function StudentRegisterPage (): JSX.Element {
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault()
     handleAsyncOperation()
+  }
+
+  const openSnackbar = (): void => {
+    setSnackbarValue(true)
+  }
+
+  const closeSnackbar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSnackbarValue(false)
   }
 
   return (
@@ -155,10 +178,14 @@ function StudentRegisterPage (): JSX.Element {
             <button onClick={handleSubmit} className='login-page-container__form-button'>
               {t('registerButton')}
             </button>
-            {error !== '' && <p className='error-text'>{error}</p>}
           </div>
         </div>
       </div>
+      <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
+        <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
+          { errorMessage }
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
