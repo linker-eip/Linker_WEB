@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useState, type ChangeEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import {
   TextField, FormControl, InputLabel, InputAdornment,
-  Input, IconButton, FormHelperText
+  Input, IconButton, FormHelperText,
+  Snackbar
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
@@ -12,18 +14,14 @@ import HotbarStudent from './Partials/HotbarStudent'
 import '../CSS/LoginPage.scss'
 import * as ROUTES from '../Router/routes'
 import AuthApi from '../API/AuthApi'
+import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const isEmailValid = (email: string): boolean => emailRegex.test(email)
-
-const isStrongPassword = (password: string): boolean => {
-  const lengthRegex = /.{8,}/
-  const uppercaseRegex = /[A-Z]/
-  const lowercaseRegex = /[a-z]/
-  const digitRegex = /\d/
-  return lengthRegex.test(password) && uppercaseRegex.test(password) &&
-    lowercaseRegex.test(password) && digitRegex.test(password)
-}
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 const StudentLoginPage = (): JSX.Element => {
   const { t } = useTranslation()
@@ -32,18 +30,17 @@ const StudentLoginPage = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
+  const [snackbarValue, setSnackbarValue] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>('')
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newEmail = event.target.value
     setEmail(newEmail)
-    setIsButtonDisabled(!(isEmailValid(newEmail) && isStrongPassword(password)))
   }
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPassword = event.target.value
     setPassword(newPassword)
-    setIsButtonDisabled(!(isEmailValid(email) && isStrongPassword(newPassword)))
   }
 
   const validateForm = (): void => {
@@ -53,7 +50,11 @@ const StudentLoginPage = (): JSX.Element => {
         localStorage.setItem('jwtToken', response.data.token)
         if (response.data.error === undefined) checkVerifiedAccount(response.data.token)
       })
-      .catch((error) => { console.error(error) })
+      .catch((error) => {
+        const response = JSON.parse(error.request.responseText)
+        setErrorMessage(response.message.join(', '))
+        openSnackbar()
+      })
   }
 
   const togglePasswordVisibility = (): void => {
@@ -67,6 +68,17 @@ const StudentLoginPage = (): JSX.Element => {
     } else {
       navigate(ROUTES.WAIT_VERIFIED_STUDENT_ACCOUNT)
     }
+  }
+
+  const openSnackbar = (): void => {
+    setSnackbarValue(true)
+  }
+
+  const closeSnackbar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSnackbarValue(false)
   }
 
   return (
@@ -113,10 +125,15 @@ const StudentLoginPage = (): JSX.Element => {
             </Link>
           </FormControl>
           <div className='login-page-container__validate-button'>
-            <button disabled={isButtonDisabled} onClick={validateForm} className='login-page-container__form-button'>{t('validateButton')}</button>
+            <button onClick={validateForm} className='login-page-container__form-button'>{t('validateButton')}</button>
           </div>
         </div>
       </div>
+      <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
+        <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
+          { errorMessage }
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

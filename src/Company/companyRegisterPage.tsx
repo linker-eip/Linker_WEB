@@ -11,7 +11,8 @@ import {
   FormControlLabel,
   Input,
   IconButton,
-  FormHelperText
+  FormHelperText,
+  Snackbar
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -20,6 +21,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import HotbarCompany from './Partials/HotbarCompany'
 import * as ROUTES from '../Router/routes'
 import '../CSS/LoginPage.scss'
+import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 function CompanyRegisterPage (): JSX.Element {
   const { t } = useTranslation()
@@ -32,6 +41,8 @@ function CompanyRegisterPage (): JSX.Element {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [firstCheckedState, setFirstCheckedState] = useState<boolean>(false)
   const [secondCheckedState, setSecondCheckedState] = useState<boolean>(false)
+  const [snackbarValue, setSnackbarValue] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>('')
   const navigate = useNavigate()
 
   const handleRegistration = (): void => {
@@ -51,9 +62,21 @@ function CompanyRegisterPage (): JSX.Element {
         }
       })
       .catch((error) => {
-        console.error("Erreur d'inscription :", error)
-        // TODO: Notifier l'utilisateur de l'erreur d'inscription.
+        const response = JSON.parse(error.request.responseText)
+        setErrorMessage(response.message.join(', '))
+        openSnackbar()
       })
+  }
+
+  const openSnackbar = (): void => {
+    setSnackbarValue(true)
+  }
+
+  const closeSnackbar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSnackbarValue(false)
   }
 
   const handleClickShowPassword = (): void => {
@@ -203,6 +226,11 @@ function CompanyRegisterPage (): JSX.Element {
                 </div>
             </div>
         </div>
+        <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
+          <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
+            { errorMessage }
+          </Alert>
+        </Snackbar>
     </div>
   )
 }
