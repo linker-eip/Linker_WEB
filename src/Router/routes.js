@@ -42,6 +42,7 @@ export const ADMIN_VERIFY_STUDENT_DOCUMENTS = '/admin/verify-student-documents'
 export const ADMIN_CONTACTS = '/admin/contacts'
 export const ADMIN_ARCHIVES = '/admin/archives'
 export const ADMIN_PAYMENTS = '/admin/payments'
+export const ADMIN_TICKETS = '/admin/tickets'
 
 export const MENTION_LEGALES = '/mention-legales'
 export const CONTACT = '/contact'

@@ -8,7 +8,8 @@ import {
   InputAdornment,
   Input,
   IconButton,
-  FormHelperText
+  FormHelperText,
+  Snackbar
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
@@ -17,12 +18,14 @@ import { useTranslation } from 'react-i18next'
 import HotbarCompany from './Partials/HotbarCompany'
 import * as ROUTES from '../Router/routes'
 import '../CSS/LoginPage.scss'
+import MuiAlert, { type AlertProps } from '@mui/material/Alert'
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const PASSWORD_LENGTH_REGEX = /.{8,}/
-const PASSWORD_UPPERCASE_REGEX = /[A-Z]/
-const PASSWORD_LOWERCASE_REGEX = /[a-z]/
-const PASSWORD_DIGIT_REGEX = /\d/
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 function CompanyLoginPage (): JSX.Element {
   const { t } = useTranslation()
@@ -31,40 +34,23 @@ function CompanyLoginPage (): JSX.Element {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
-
-  const isValidEmail = (email: string): boolean => EMAIL_REGEX.test(email)
-  const isStrongPassword = (password: string): boolean =>
-    PASSWORD_LENGTH_REGEX.test(password) &&
-    PASSWORD_UPPERCASE_REGEX.test(password) &&
-    PASSWORD_LOWERCASE_REGEX.test(password) &&
-    PASSWORD_DIGIT_REGEX.test(password)
+  const [snackbarValue, setSnackbarValue] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>('')
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const updatedEmail = event.target.value
     setEmail(updatedEmail)
-    checkIfButtonShouldBeEnabled(updatedEmail, password)
   }
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const updatedPassword = event.target.value
     setPassword(updatedPassword)
-    checkIfButtonShouldBeEnabled(email, updatedPassword)
-  }
-
-  const checkIfButtonShouldBeEnabled = (email: string, password: string): void => {
-    if (isValidEmail(email) && isStrongPassword(password)) {
-      setIsButtonDisabled(false)
-    } else {
-      setIsButtonDisabled(true)
-    }
   }
 
   const fromValidate = (): void => {
     const apiUrl = process.env.REACT_APP_API_URL ?? ''
 
-    axios
-      .post(`${apiUrl}/api/auth/company/login`, { email, password })
+    axios.post(`${apiUrl}/api/auth/company/login`, { email, password })
       .then((response) => {
         localStorage.setItem('jwtToken', response.data.token)
         if (response.data.error === undefined) {
@@ -72,8 +58,21 @@ function CompanyLoginPage (): JSX.Element {
         }
       })
       .catch((error) => {
-        console.log(error)
+        const response = JSON.parse(error.request.responseText)
+        setErrorMessage(response.message.join(', '))
+        openSnackbar()
       })
+  }
+
+  const openSnackbar = (): void => {
+    setSnackbarValue(true)
+  }
+
+  const closeSnackbar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSnackbarValue(false)
   }
 
   const PasswordField = (): JSX.Element => (
@@ -125,12 +124,17 @@ function CompanyLoginPage (): JSX.Element {
           />
           {PasswordField()}
           <div className='login-page-container__validate-button'>
-            <button disabled={isButtonDisabled} onClick={fromValidate} className='login-page-container__form-button'>
+            <button onClick={fromValidate} className='login-page-container__form-button'>
               {t('validateButton')}
             </button>
           </div>
         </div>
       </div>
+      <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
+        <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
+          { errorMessage }
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
