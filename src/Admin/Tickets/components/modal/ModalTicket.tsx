@@ -57,7 +57,7 @@ function ModalTicket (props: Props): JSX.Element {
           <Card sx={{ width: 380 }}>
             <CardContent>
               <Typography variant='h6' component='div'>
-                User
+                {ticket?.authorType === 'STUDENT_USER' ? 'Étudiant' : 'Entreprise'}
               </Typography>
               <Typography variant='body2'>
                 {ticket?.content}

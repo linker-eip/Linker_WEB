@@ -7,6 +7,7 @@ import PaidIcon from '@mui/icons-material/Paid'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread'
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 import ArchiveIcon from '@mui/icons-material/Archive'
 import { AdminDashboardState } from '../../Enum'
 import { useNavigate } from 'react-router-dom'
@@ -103,8 +104,8 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
               { t('admin.dashboard.archives') }
             </p>
             <p className={ stateDashboard === AdminDashboardState.TICKETS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.TICKETS) }}>
-              <ArchiveIcon />
-              { t('admin.dashboard.tickets') }
+              <ConfirmationNumberIcon />
+              { t('admin.dashboard.ticket') }
             </p>
           </div>
         </div>

@@ -20,6 +20,14 @@ interface Row {
   date: Date
 }
 
+function dateFormater (date: Date): string {
+  return new Date(date).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
 function AdminTicketsContent (): JSX.Element {
   const [rows, setRows] = useState<Row[]>([])
   const [ticketsModal, setTicketsModal] = useState<boolean>(false)
@@ -227,7 +235,7 @@ function AdminTicketsContent (): JSX.Element {
                         align='center'
                         sx={{ fontFamily: 'Poppins', fontSize: '24px' }}
                       >
-                        {row.date.toString()}
+                        {dateFormater(row.date)}
                       </TableCell>
                       <TableCell align='center'>
                         <IconButton onClick={() => { openTicketsModal(row.id) }}>

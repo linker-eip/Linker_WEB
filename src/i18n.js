@@ -454,7 +454,8 @@ i18n
               verifyStudentDoc: 'Vérification Étudiante',
               contacts: 'Contact',
               archives: 'Archives',
-              payments: 'Paiements'
+              payments: 'Paiements',
+              ticket: 'Tickets'
             }
           },
           snackbar: {
@@ -903,7 +904,8 @@ i18n
               verifyStudentDoc: 'Vérification Étudiante',
               contacts: 'Contact',
               archives: 'Archives',
-              payments: 'Paiements'
+              payments: 'Paiements',
+              ticket: 'Tickets'
             }
           },
           snackbar: {
