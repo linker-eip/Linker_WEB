@@ -34,7 +34,7 @@ function AdminUsersContent (): JSX.Element {
   })
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}api/admin/users/students`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/users/students`)
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({
