@@ -114,10 +114,10 @@ function StudentNetworkContent (): JSX.Element {
     }
   }
 
-  const handleClick = (studentId: string): void => {
-    if (studentId !== null && studentId !== undefined && studentId !== '') {
+  const handleClick = (userId: string): void => {
+    if (userId !== null && userId !== undefined && userId !== '') {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      navigate(`${ROUTES.STUDENT_PRIVATE_MESSAGE.replace(':studentId', studentId)}`)
+      navigate(`${ROUTES.STUDENT_PRIVATE_MESSAGE.replace(':userId', userId)}`)
     } else {
       console.error('Student ID is undefined or invalid')
     }
