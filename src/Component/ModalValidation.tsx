@@ -16,6 +16,7 @@ interface Props {
   onValid?: () => void
   id?: number
   isDetails?: boolean
+  onCommentChange?: (comment: string) => void
 }
 
 function ModalValidation (props: Props): JSX.Element {
@@ -61,6 +62,7 @@ function ModalValidation (props: Props): JSX.Element {
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setInputText(event.target.value)
+    if (props.onCommentChange !== undefined && props.onCommentChange !== null) props.onCommentChange(event.target.value)
   }
 
   const [starsQualityMark, setStarsQualityMark] = useState(0)
