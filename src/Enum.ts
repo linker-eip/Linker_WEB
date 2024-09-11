@@ -20,7 +20,8 @@ export enum AdminDashboardState {
   VERIFY_STUDENT_DOCUMENTS = 'verify_student_documents',
   CONTACTS = 'contacts',
   ARCHIVES = 'archives',
-  PAYMENTS = 'payments'
+  PAYMENTS = 'payments',
+  TICKETS = 'tickets'
 }
 
 export enum ModalType {
@@ -101,4 +102,9 @@ export enum TicketType {
 export enum TicketState {
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
+}
+
+export enum UserType {
+  STUDENT_USER = 'STUDENT_USER',
+  COMPANY_USER = 'COMPANY_USER',
 }

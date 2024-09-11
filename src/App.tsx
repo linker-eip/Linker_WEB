@@ -51,6 +51,7 @@ import Contact from './Transverse/contact'
 import WaitVerifiedStudentAccount from './Transverse/waitVerifyAccount'
 
 import * as ROUTES from './Router/routes'
+import AdminTickets from './Admin/Tickets/adminTickets'
 
 function App (): JSX.Element {
   return (
@@ -106,6 +107,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.ADMIN_CONTACTS} element={<AdminContacts />} />
         <Route path={ROUTES.ADMIN_ARCHIVES} element={<AdminArchives />} />
         <Route path={ROUTES.ADMIN_PAYMENTS} element={<AdminPayments />} />
+        <Route path={ROUTES.ADMIN_TICKETS} element={<AdminTickets />} />
         <Route path={ROUTES.MENTION_LEGALES} element={
           <div>
             <MentionLegales />
