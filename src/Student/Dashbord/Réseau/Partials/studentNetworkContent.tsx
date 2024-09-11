@@ -1,5 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import * as ROUTES from '../../../../Router/routes'
 
 import '../../../../CSS/Hotbar.scss'
 
@@ -36,7 +38,7 @@ interface Skills {
 }
 
 interface FiltersResultDto {
-  id: number
+  id: string
   firstName: string
   lastName: string
   picture: string | null
@@ -59,6 +61,8 @@ interface FiltersSearchDto {
 }
 
 function StudentNetworkContent (): JSX.Element {
+  const navigate = useNavigate()
+
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<FiltersResultDto[]>([])
   const [filters, setFilters] = useState<FiltersSearchDto>({
@@ -107,6 +111,15 @@ function StudentNetworkContent (): JSX.Element {
       console.log('Search Results:', data)
     } catch (error) {
       console.error('Error fetching search results:', error)
+    }
+  }
+
+  const handleClick = (userId: string): void => {
+    if (userId !== null && userId !== undefined && userId !== '') {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      navigate(`${ROUTES.STUDENT_PRIVATE_MESSAGE.replace(':userId', userId)}`)
+    } else {
+      console.error('Student ID is undefined or invalid')
     }
   }
 
@@ -342,7 +355,10 @@ function StudentNetworkContent (): JSX.Element {
                       <Typography variant="h6" component="div" gutterBottom>
                         {result.firstName} {result.lastName}
                       </Typography>
-                      <ClassicButton title={`Contacter ${result.firstName}`} />
+                      <ClassicButton
+                        title={`Contacter ${result.firstName}`}
+                        onClick={() => { handleClick(result.id) }}
+                      />
                     </Box>
                     <Box display="flex" alignItems="center" mb={2}>
                       <DescriptionIcon fontSize="small" sx={{ marginRight: '8px' }} />
