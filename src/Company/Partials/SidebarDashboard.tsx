@@ -7,6 +7,7 @@ import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
 import SettingsIcon from '@mui/icons-material/Settings'
+import MessageIcon from '@mui/icons-material/Message'
 import { DashboardState } from '../../Enum'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../Router/routes'
@@ -48,6 +49,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.DASHBOARD:
         navigate(ROUTES.COMPANY_DASHBOARD)
         break
+      case DashboardState.MAILBOX:
+        navigate(ROUTES.COMPANY_MAILBOX)
+        break
       case DashboardState.MISSION:
         navigate(ROUTES.COMPANY_MISSIONS)
         break
@@ -79,6 +83,13 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             label={t('student.dashboard.home')}
             onClick={changeState}
             />
+          <SidebarItem
+            currentState={stateDashboard}
+            itemState={DashboardState.MAILBOX}
+            icon={MessageIcon}
+            label={t('student.dashboard.mailbox')}
+            onClick={changeState}
+          />
           <SidebarItem
             currentState={stateDashboard}
             itemState={DashboardState.MISSION}
