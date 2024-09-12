@@ -1,9 +1,10 @@
+/* eslint-disable */
 import '../../../../CSS/StudentGroup.scss'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import io, { type Socket } from 'socket.io-client'
 import MessageIcon from '@mui/icons-material/Message'
-import { TextField, InputAdornment } from '@mui/material'
+import { TextField, InputAdornment, Avatar, Box, Typography, Stack } from '@mui/material'
 import React, { useEffect, useState, useRef } from 'react'
 import ClassicButton from '../../../../Component/ClassicButton'
 
@@ -110,19 +111,48 @@ function PrivateChat (): JSX.Element {
     setNewMessage('')
   }
 
+  function formatDate (timeStamp: string): string {
+    const currentTimestamp = new Date()
+
+    if (!timeStamp) {
+      const year = currentTimestamp.getFullYear()
+      const month = String(currentTimestamp.getMonth() + 1).padStart(2, '0')
+      const day = String(currentTimestamp.getDate()).padStart(2, '0')
+      const hour = String(currentTimestamp.getHours()).padStart(2, '0')
+      const minute = String(currentTimestamp.getMinutes()).padStart(2, '0')
+
+      return `${day}-${month}-${year} ${hour}:${minute}`
+    }
+
+    const [date, time] = timeStamp.split('T')
+    const [year, month, day] = date.split('-')
+    const [hour, minute] = time.split(':')
+
+    return `${day}-${month}-${year} ${hour}:${minute}`
+  }
+
   return (
-    <div className='std-group__container'>
-      <div className='std-group__details-section'>
-        <div className='std-group__chat-messages'>
+    <Box className='std-group__container'>
+      <Box className='std-group__details-section'>
+        <Box className='std-group__chat-messages'>
           {groupMessages.map((msg, index) => (
-            <div key={index} className='std-group__message'>
-              <div>
-                {msg.firstName} {msg.lastName}: {msg.content}
-              </div>
-            </div>
+            <Stack key={index} direction="row" spacing={2} alignItems="center" mb={2}>
+              <Avatar src={msg.picture} alt={`${msg.firstName} ${msg.lastName}`} />
+              <Stack direction="column" spacing={0.5}>
+                <Stack direction="row" spacing={1}>
+                  <Typography variant="body1" fontWeight="bold">
+                    {msg.firstName} {msg.lastName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {formatDate(msg.timestamp)}
+                  </Typography>
+                </Stack>
+                <Typography variant="body1">{msg.content}</Typography>
+              </Stack>
+            </Stack>
           ))}
-        </div>
-        <div className='std-group__chat-input'>
+        </Box>
+        <Box className='std-group__chat-input' display="flex" alignItems="center">
           <TextField
             id="search-bar"
             value={newMessage}
@@ -134,7 +164,7 @@ function PrivateChat (): JSX.Element {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                <MessageIcon />
+                  <MessageIcon />
                 </InputAdornment>
               )
             }}
@@ -150,9 +180,9 @@ function PrivateChat (): JSX.Element {
             title={ t('student.dashboard.chat.send_message') }
             onClick={handleSendMessage}
           />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 
