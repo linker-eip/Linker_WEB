@@ -66,47 +66,49 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
 
   return (
         <div className='sidebar'>
-          <div className='sidebar__text'>
-            <p className={ stateDashboard === AdminDashboardState.DASHBOARD ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.DASHBOARD) }}>
-              <DashboardOutlinedIcon />
-              { t('admin.dashboard.homeTitle') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.USERS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.USERS) }}>
-              <AccountCircleOutlinedIcon />
-              { t('admin.dashboard.utilisateur') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.MISSIONS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.MISSIONS) }}>
-              <RoomOutlinedIcon />
-              { t('admin.dashboard.mission') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.PAYMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.PAYMENTS) }}>
-              <PaidIcon />
-              { t('admin.dashboard.payments') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.DOCUMENTS) }}>
-              <TopicOutlinedIcon />
-              { t('admin.dashboard.doc') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.VERIFY_COMPANY_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_COMPANY_DOCUMENTS) }}>
-              <TopicOutlinedIcon />
-              { t('admin.dashboard.verifyCompanyDoc') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.VERIFY_STUDENT_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_STUDENT_DOCUMENTS) }}>
-              <TopicOutlinedIcon />
-              { t('admin.dashboard.verifyStudentDoc') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.CONTACTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.CONTACTS) }}>
-              <MarkEmailUnreadIcon />
-              { t('admin.dashboard.contacts') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.ARCHIVES ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.ARCHIVES) }}>
-              <ArchiveIcon />
-              { t('admin.dashboard.archives') }
-            </p>
-            <p className={ stateDashboard === AdminDashboardState.TICKETS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.TICKETS) }}>
-              <ConfirmationNumberIcon />
-              { t('admin.dashboard.ticket') }
-            </p>
+          <div className='sidebar__section'>
+            <div className='sidebar__text'>
+              <p className={ stateDashboard === AdminDashboardState.DASHBOARD ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.DASHBOARD) }}>
+                <DashboardOutlinedIcon />
+                { t('admin.dashboard.homeTitle') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.USERS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.USERS) }}>
+                <AccountCircleOutlinedIcon />
+                { t('admin.dashboard.utilisateur') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.MISSIONS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.MISSIONS) }}>
+                <RoomOutlinedIcon />
+                { t('admin.dashboard.mission') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.PAYMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.PAYMENTS) }}>
+                <PaidIcon />
+                { t('admin.dashboard.payments') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.DOCUMENTS) }}>
+                <TopicOutlinedIcon />
+                { t('admin.dashboard.doc') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.VERIFY_COMPANY_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_COMPANY_DOCUMENTS) }}>
+                <TopicOutlinedIcon />
+                { t('admin.dashboard.verifyCompanyDoc') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.VERIFY_STUDENT_DOCUMENTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.VERIFY_STUDENT_DOCUMENTS) }}>
+                <TopicOutlinedIcon />
+                { t('admin.dashboard.verifyStudentDoc') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.CONTACTS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.CONTACTS) }}>
+                <MarkEmailUnreadIcon />
+                { t('admin.dashboard.contacts') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.ARCHIVES ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.ARCHIVES) }}>
+                <ArchiveIcon />
+                { t('admin.dashboard.archives') }
+              </p>
+              <p className={ stateDashboard === AdminDashboardState.TICKETS ? 'sidebar__icon sidebar__icon--selected' : 'sidebar__icon'} onClick={() => { changeState(AdminDashboardState.TICKETS) }}>
+                <ConfirmationNumberIcon />
+                { t('admin.dashboard.ticket') }
+              </p>
+            </div>
           </div>
         </div>
   )

@@ -185,6 +185,7 @@ i18n
             dashboard: {
               home: 'Mon dashboard',
               mission: 'Mes missions',
+              mailbox: 'Messagerie',
               network: 'Réseau',
               facture: 'Mes factures',
               paiements: 'Mes paiements',
@@ -640,6 +641,7 @@ i18n
               home: 'My Dashboard',
               mission: 'My Missions',
               network: 'Network',
+              mailbox: 'Mailbox',
               facture: 'My Invoices',
               paiements: 'My Payments',
               profil: 'My Profile',
