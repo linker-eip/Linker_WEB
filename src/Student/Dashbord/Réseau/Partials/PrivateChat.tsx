@@ -132,7 +132,7 @@ function PrivateChat (): JSX.Element {
   }
 
   return (
-    <Box className='std-group__container'>
+    <Box className='std-group__container' sx={{ height: '80vh', width: '100%' }}>
       <Box className='std-group__details-section'>
         <Box className='std-group__chat-messages'>
           {groupMessages.map((msg, index) => (
