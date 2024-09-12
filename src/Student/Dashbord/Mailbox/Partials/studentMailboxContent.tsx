@@ -49,8 +49,6 @@ function StudentMailboxContent (): JSX.Element {
   }
 
   const handleChannelClick = (channel: Conversation): void => {
-    navigate(`${ROUTES.STUDENT_PRIVATE_MESSAGE.replace(':userId', channel.id.toString())}`)
-
     let route = ''
 
     switch (selectedTab) {
@@ -62,7 +60,7 @@ function StudentMailboxContent (): JSX.Element {
         break
       default:
         console.error('Unknown tab selected')
-        return;
+        return
     }
 
     navigate(route)
