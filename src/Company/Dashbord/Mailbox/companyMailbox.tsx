@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../CSS/StudentDashboard.scss'
+import '../../../CSS/CompanyDashboard.scss'
 import HotbarDashboard from '../../Partials/HotbarDashboard'
 import SidebarDashboard from '../../Partials/SidebarDashboard'
 import { useTranslation } from 'react-i18next'
