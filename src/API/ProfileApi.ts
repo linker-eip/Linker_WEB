@@ -241,6 +241,26 @@ class ProfileApi {
     })
     return response.data
   }
+
+  static async getStudentConversations (jwtToken: string): Promise<any> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/chat/student/conversations`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        Accept: 'application/json'
+      }
+    })
+    return response.data
+  }
+
+  static async getCompanyConversations (jwtToken: string): Promise<any> {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/chat/company/conversations`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+        Accept: 'application/json'
+      }
+    })
+    return response.data
+  }
 }
 
 export default ProfileApi

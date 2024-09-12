@@ -30,6 +30,8 @@ import StudentPayments from './Student/Dashbord/MesPaiements/studentPayments'
 import StudentNetwork from './Student/Dashbord/Réseau/studentNetwork'
 import StudentSettings from './Student/Dashbord/Settings/StudentSettings'
 import CompanySettings from './Company/Dashbord/Settings/CompanySettings'
+import StudentMailbox from './Student/Dashbord/Mailbox/studentMailbox'
+import CompanyMailbox from './Company/Dashbord/Mailbox/companyMailbox'
 
 import AuthVerifyPwd from './Auth/AuthVerifyPwd'
 import StudentInvoices from './Student/Dashbord/MesFactures/studentInvoices'
@@ -69,7 +71,9 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_LOGIN_PAGE} element={<StudentLoginPage />} />
         <Route path={ROUTES.COMPANY_LOGIN_PAGE} element={<CompanyLoginPage />} />
         <Route path={ROUTES.STUDENT_DASHBOARD} element={<StudentDashboard />} />
+        <Route path={ROUTES.STUDENT_MAILBOX} element={<StudentMailbox />} />
         <Route path={ROUTES.COMPANY_DASHBOARD} element={<CompanyDashboard />} />
+        <Route path={ROUTES.COMPANY_MAILBOX} element={<CompanyMailbox />} />
         <Route path={ROUTES.STUDENT_DOCUMENTS_DASHBOARD} element={<StudentDocuments />} />
         <Route path={ROUTES.STUDENT_PROFILE} element={<StudentProfile />} />
         <Route path={ROUTES.STUDENT_MISSIONS} element={<StudentMissions />} />
