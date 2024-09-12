@@ -48,14 +48,30 @@ function StudentMailboxContent (): JSX.Element {
     setSelectedTab(newValue)
   }
 
-   const handleChannelClick = (channel: Conversation): void => {
+  const handleChannelClick = (channel: Conversation): void => {
     navigate(`${ROUTES.STUDENT_PRIVATE_MESSAGE.replace(':userId', channel.id.toString())}`)
+
+    let route = ''
+
+    switch (selectedTab) {
+      case 1:
+        route = ROUTES.STUDENT_MISSION_CHAT.replace(':missionId', channel.id.toString())
+        break
+      case 3:
+        route = ROUTES.STUDENT_PRIVATE_MESSAGE.replace(':userId', channel.id.toString())
+        break
+      default:
+        console.error('Unknown tab selected')
+        return;
+    }
+
+    navigate(route)
   }
 
-  const renderChannelList = (channels: Conversation[], onClickHandler: (channel: Conversation) => void): JSX.Element => (
+  const renderChannelList = (channels: Conversation[], onClickHandler: (channel: Conversation) => void, prefix: string): JSX.Element => (
     <List>
       {channels.map((channel: Conversation) => (
-        <ListItem key={channel.id} onClick={() => onClickHandler(channel)}>
+        <ListItem key={`${prefix}-${channel.id}`} onClick={() => onClickHandler(channel)}>
           {channel.logo != null
             ? (
             <ListItemAvatar>
@@ -82,11 +98,22 @@ function StudentMailboxContent (): JSX.Element {
             </Tabs>
             <Divider />
             {selectedTab === 0 && conversations.groupChannel != null && (
-              renderChannelList([conversations.groupChannel], handleChannelClick)
+              <List>
+                <ListItem key={`groupChannel-${conversations.groupChannel.id}`} onClick={() => handleChannelClick(conversations.groupChannel!)}>
+                  {conversations.groupChannel.logo != null
+                    ? (
+                    <ListItemAvatar>
+                      <Avatar src={conversations.groupChannel.logo || '/assets/no-profile-picture.jpg'} alt={conversations.groupChannel.name} />
+                    </ListItemAvatar>
+                      )
+                    : null}
+                  <ListItemText primary={conversations.groupChannel.name} />
+                </ListItem>
+              </List>
             )}
-            {selectedTab === 1 && renderChannelList(conversations.missionChannels, handleChannelClick)}
-            {selectedTab === 2 && renderChannelList(conversations.premissionChannels, handleChannelClick)}
-            {selectedTab === 3 && renderChannelList(conversations.dmChannels, handleChannelClick)}
+            {selectedTab === 1 && renderChannelList(conversations.missionChannels, handleChannelClick, 'missionChannel')}
+            {selectedTab === 2 && renderChannelList(conversations.premissionChannels, handleChannelClick, 'premissionChannel')}
+            {selectedTab === 3 && renderChannelList(conversations.dmChannels, handleChannelClick, 'dmChannel')}
           </Box>
         </div>
       </div>
