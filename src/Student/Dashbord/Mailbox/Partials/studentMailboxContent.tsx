@@ -76,7 +76,12 @@ function StudentMailboxContent (): JSX.Element {
               <Avatar src={channel.logo} alt={channel.name} />
             </ListItemAvatar>
               )
-            : null}
+            : (
+            <ListItemAvatar>
+              <Avatar src={'/assets/no-profile-picture.jpg'} alt='' />
+            </ListItemAvatar>
+              )
+          }
           <ListItemText primary={channel.name} />
         </ListItem>
       ))}
