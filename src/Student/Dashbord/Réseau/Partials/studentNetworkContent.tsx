@@ -98,7 +98,7 @@ function StudentNetworkContent (): JSX.Element {
     const queryString = new URLSearchParams(params as any).toString()
 
     try {
-      const response = await fetch(`https://dev.linker-app.fr/api/student/searchNetwork?${queryString}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/student/searchNetwork?${queryString}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`
         }
