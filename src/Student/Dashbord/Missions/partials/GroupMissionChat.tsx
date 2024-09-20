@@ -152,6 +152,19 @@ function GroupMissionChat (props: Props): JSX.Element {
     }
   }, [])
 
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
+  const handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      handleSendMessage()
+    }
+  }
+
   const handleSendMessage = (): void => {
     sendMissionMessage(newMessage)
     setNewMessage('')
