@@ -152,19 +152,6 @@ function GroupMissionChat (props: Props): JSX.Element {
     }
   }, [])
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
-
-  const handleKeyDown = (event: KeyboardEvent): void => {
-    if (event.key === 'Enter') {
-      handleSendMessage()
-    }
-  }
-
   const handleSendMessage = (): void => {
     sendMissionMessage(newMessage)
     setNewMessage('')
@@ -192,6 +179,11 @@ function GroupMissionChat (props: Props): JSX.Element {
                       placeholder="Écrivez un message ici"
                       onChange={(e) => {
                         setNewMessage(e.target.value)
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' && newMessage.trim() !== '') {
+                          handleSendMessage()
+                        }
                       }}
                       InputProps={{
                         startAdornment: (

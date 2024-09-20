@@ -40,7 +40,7 @@ function HomePage (): JSX.Element {
 
         <div className='homepage__text-1'> {t('homepage.text_1')} </div>
         <div className='homepage__section'>
-          <div className='homepage__card-container'>
+          <div id='register' className='homepage__card-container'>
             <div className='homepage__content-title'> {t('homepage.espace')} <span className='homepage__content-title-colored'> {t('homepage.company.title')} </span> </div>
             <div className='homepage__content'>
               <div className='homepage__subtext'> {t('homepage.company.text_1')} </div>
