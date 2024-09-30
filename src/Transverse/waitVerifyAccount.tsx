@@ -41,7 +41,7 @@ function WaitVerifiedStudentAccount (props: Props): JSX.Element {
       <div className='waiting-account'>
         <div className='waiting-account__title'> {t('verify_page.waiting')} </div>
         <div className='waiting-account__button'>
-          <ClassicButton title='Actualiser le status' onClick={handleChangeRefetchStatus} />
+          <ClassicButton title='Actualiser le statut' onClick={handleChangeRefetchStatus} />
         </div>
       </div>
     </div>
