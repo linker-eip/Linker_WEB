@@ -160,7 +160,7 @@ function HotbarDashboard (props: Props): JSX.Element {
       <img className='hotbar-container__logo' src="/assets/LinkerFull.png" alt='logo' />
       <p className='hotbar-container__title'>{props.children}</p>
       { props.homepage
-        ? <ClassicButton title={ t('homepage.register') } onClick={scrollToAncre} />
+        ? <div> <ClassicButton title={ t('homepage.register') } onClick={scrollToAncre} /> </div>
         : null
       }
       { props.hideNotif ?? false
