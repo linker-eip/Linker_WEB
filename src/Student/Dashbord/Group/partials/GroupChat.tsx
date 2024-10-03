@@ -176,6 +176,11 @@ function GroupChat (props: Props): JSX.Element {
                       onChange={(e) => {
                         setNewMessage(e.target.value)
                       }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' && newMessage.trim() !== '') {
+                          handleSendMessage()
+                        }
+                      }}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">

@@ -124,9 +124,15 @@ function HotbarDashboard (props: { children: string | any }): JSX.Element {
     setNotifOpen(!notifOpen)
   }
 
+  const redirectToDashboard = (): void => {
+    if (window.location.href.includes('/company/')) {
+      navigate(ROUTES.COMPANY_DASHBOARD)
+    }
+  }
+
   return (
     <div className='hotbar-container'>
-      <img src="/assets/logo.svg" alt='logo'/>
+      <img src="/assets/logo.svg" alt='logo' onClick={redirectToDashboard} />
       <p className='hotbar-container__title'>{ props.children }</p>
       <NotificationButton title='Notification' isClicked={notifOpen} data={NotificationsData ?? []} onClick={callNotification} onReload={reloadNotif} newNotif={newNotif} />
       <div className='hotbar-container__info'>

@@ -18,6 +18,7 @@ import ProfileApi from '../../../API/ProfileApi'
 import NotificationApi from '../../../API/NotificationApi'
 import type { Notifications } from '../../../Typage/NotificationType'
 import NotificationButton from './NotificationButton'
+import ClassicButton from '../../../Component/ClassicButton'
 
 const theme = createTheme({
   palette: {
@@ -149,11 +150,25 @@ function HotbarDashboard (props: Props): JSX.Element {
     setNotifOpen(!notifOpen)
   }
 
+  const redirectToDashboard = (): void => {
+    if (window.location.href.includes('/student/')) {
+      navigate(ROUTES.STUDENT_DASHBOARD)
+    }
+  }
+
+  const scrollToAncre = (): void => {
+    window.location.hash = '#register'
+  }
+
   const { t } = useTranslation()
   return (
     <div className={props.homepage ?? false ? 'hotbar-container-2' : 'hotbar-container'} >
-      <img className='hotbar-container__logo' src="/assets/LinkerFull.png" alt='logo' />
+      <img className='hotbar-container__logo' src="/assets/LinkerFull.png" alt='logo' onClick={redirectToDashboard} />
       <p className='hotbar-container__title'>{props.children}</p>
+      { props.homepage
+        ? <div> <ClassicButton title={ t('homepage.register') } onClick={scrollToAncre} /> </div>
+        : null
+      }
       { props.hideNotif ?? false
         ? null
         : <NotificationButton title='Notification' isClicked={notifOpen} data={NotificationsData ?? []} onClick={callNotification} onReload={reloadNotif} newNotif={newNotif} />
