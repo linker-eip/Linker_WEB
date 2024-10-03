@@ -48,7 +48,11 @@ function AdminTicketsContent (): JSX.Element {
     if (ticketToClose !== null) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/ticket/${ticketToClose}/close`, {
-          method: 'POST'
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+            'Content-Type': 'application/json'
+          }
         })
 
         if (!response.ok) {
@@ -68,7 +72,12 @@ function AdminTicketsContent (): JSX.Element {
   }
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/ticket`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/ticket`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({

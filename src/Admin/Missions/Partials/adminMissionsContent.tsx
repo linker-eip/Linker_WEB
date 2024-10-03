@@ -37,7 +37,12 @@ function AdminMissionsContent (): JSX.Element {
   })
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({
@@ -73,6 +78,7 @@ function AdminMissionsContent (): JSX.Element {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/${String(currentData?.id)}`, {
       method: 'PUT',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
@@ -98,7 +104,11 @@ function AdminMissionsContent (): JSX.Element {
 
   const handleDelete = (): void => {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/${String(currentData?.id)}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
     })
       .then(() => {
         setOpenDelete(false)
@@ -123,6 +133,7 @@ function AdminMissionsContent (): JSX.Element {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/mission/`, {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)

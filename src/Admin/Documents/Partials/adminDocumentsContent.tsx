@@ -34,7 +34,12 @@ function AdminDocumentsContent (): JSX.Element {
   })
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: any) => ({
@@ -67,7 +72,11 @@ function AdminDocumentsContent (): JSX.Element {
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/${String(currentData?.id)}/download`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+          'Content-Type': 'application/json'
+        }
       })
 
       if (response.ok) {
@@ -103,7 +112,11 @@ function AdminDocumentsContent (): JSX.Element {
 
   const handleDelete = (): void => {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/${String(currentData?.id)}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
     })
       .then(() => {
         setOpenDelete(false)
@@ -124,6 +137,10 @@ function AdminDocumentsContent (): JSX.Element {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents`, {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+          'Content-Type': 'application/json'
+        },
         body: formData
       })
 
