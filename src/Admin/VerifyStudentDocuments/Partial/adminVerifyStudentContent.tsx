@@ -36,7 +36,12 @@ function AdminVerifyStudentContent (): JSX.Element {
   const [openValidate, setOpenValidate] = useState(false)
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async response => await response.json())
       .then(async (data: Record<string, Row>) => {
         const formattedData = await Promise.all(
@@ -82,6 +87,7 @@ function AdminVerifyStudentContent (): JSX.Element {
         const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students/validate`, {
           method: 'POST',
           headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -118,6 +124,7 @@ function AdminVerifyStudentContent (): JSX.Element {
         const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/document-verification/students/deny`, {
           method: 'POST',
           headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({

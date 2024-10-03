@@ -89,7 +89,12 @@ function AdminPaymentsContent (): JSX.Element {
   const [selectedStatus, setSelectedStatus] = useState<PaymentStatus | ''>('')
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/payment`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/payment`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async response => await response.json())
       .then(data => {
         const filteredData = data
@@ -112,7 +117,12 @@ function AdminPaymentsContent (): JSX.Element {
   }, [])
 
   const handleVisualize = (rowData: Row): void => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/studentRib/${rowData.studentId}`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/documents/studentRib/${rowData.studentId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async (response) => await response.json())
       .then((data: StudentRibModel) => {
         openUrlInNewWindow(data.File)
@@ -145,6 +155,7 @@ function AdminPaymentsContent (): JSX.Element {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/payment`, {
       method: 'PUT',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)

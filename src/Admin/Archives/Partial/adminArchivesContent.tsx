@@ -29,7 +29,12 @@ function AdminArchivesContent (): JSX.Element {
   const [openDelete, setOpenDelete] = useState(false)
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/contact`)
+    fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/contact`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(async response => await response.json())
       .then(data => {
         const formattedData = data.map((item: Row) => ({
@@ -67,7 +72,11 @@ function AdminArchivesContent (): JSX.Element {
 
   const handleDelete = (): void => {
     fetch(`${process.env.REACT_APP_API_URL as string}/api/admin/contact/${String(currentData?.id)}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken') as string}`,
+        'Content-Type': 'application/json'
+      }
     })
       .then(() => {
         handleCloseDelete()
