@@ -5,8 +5,10 @@ import { AdminDashboardState } from '../../Enum'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
 import AdminArchivesContent from './Partial/adminArchivesContent'
+import isPrivateRoute from '../../Component/isPrivateRoute'
 
 function AdminArchives (): JSX.Element {
+  isPrivateRoute({ admin: true })
   const state = AdminDashboardState
   const { t } = useTranslation()
   return (
