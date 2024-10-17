@@ -7,7 +7,7 @@ import { AdminDashboardState } from '../Enum'
 import isPrivateRoute from '../Component/isPrivateRoute'
 
 function AdminDashboard (): JSX.Element {
-  isPrivateRoute()
+  isPrivateRoute({ admin: true })
   const state = AdminDashboardState
   const { t } = useTranslation()
   return (
