@@ -5,8 +5,10 @@ import { AdminDashboardState } from '../../Enum'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import SidebarDashboard from '../Partials/SidebarDashboard'
 import AdminPaymentsContent from './Partial/adminPaymentsContent'
+import isPrivateRoute from '../../Component/isPrivateRoute'
 
 function AdminPayments (): JSX.Element {
+  isPrivateRoute({ admin: true })
   const state = AdminDashboardState
   const { t } = useTranslation()
   return (
