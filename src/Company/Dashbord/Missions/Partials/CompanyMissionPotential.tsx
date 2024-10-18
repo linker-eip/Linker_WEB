@@ -63,12 +63,12 @@ function CompanyMissionsPotential (): JSX.Element {
   const [openCreate, setOpenCreate] = useState(false)
 
   const [newMissionData, setNewMissionData] = useState<NewMissionData>({
-    name: '',
-    description: '',
-    amount: 0,
+    name: 'Site vitrine',
+    description: 'Site vitrine pour une entreprise de vente de produits bio',
+    amount: 1800,
     startOfMission: new Date(),
-    endOfMission: new Date(),
-    skills: ''
+    endOfMission: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+    skills: 'React'
   })
 
   const handleCreate = (): void => {
@@ -187,6 +187,7 @@ function CompanyMissionsPotential (): JSX.Element {
               setNewMissionData({ ...newMissionData, name: e.target.value })
               setFieldValidity({ ...fieldValidity, nameValid: true })
             }}
+            value={newMissionData.name}
             error={!fieldValidity.nameValid}
           />
           <TextField
@@ -198,6 +199,7 @@ function CompanyMissionsPotential (): JSX.Element {
               setNewMissionData({ ...newMissionData, description: e.target.value })
               setFieldValidity({ ...fieldValidity, descriptionValid: true })
             }}
+            value={newMissionData.description}
             error={!fieldValidity.descriptionValid}
           />
           <TextField
@@ -216,6 +218,7 @@ function CompanyMissionsPotential (): JSX.Element {
                 amountValid: !isNaN(parsedAmount) && parsedAmount > 0
               })
             }}
+            value={newMissionData.amount}
             error={!fieldValidity.amountValid}
           />
           <TextField
@@ -228,6 +231,7 @@ function CompanyMissionsPotential (): JSX.Element {
               setNewMissionData({ ...newMissionData, startOfMission: new Date(e.target.value) })
               setFieldValidity({ ...fieldValidity, startOfMissionValid: true })
             }}
+            value={newMissionData.startOfMission.toISOString().split('T')[0]}
             error={!fieldValidity.startOfMissionValid}
             sx={{ marginTop: '16px' }}
           />
@@ -241,6 +245,7 @@ function CompanyMissionsPotential (): JSX.Element {
               setNewMissionData({ ...newMissionData, endOfMission: new Date(e.target.value) })
               setFieldValidity({ ...fieldValidity, endOfMissionValid: true })
             }}
+            value={newMissionData.endOfMission.toISOString().split('T')[0]}
             error={!fieldValidity.endOfMissionValid}
             sx={{ marginTop: '16px' }}
           />
@@ -253,6 +258,7 @@ function CompanyMissionsPotential (): JSX.Element {
               setNewMissionData({ ...newMissionData, skills: e.target.value })
               setFieldValidity({ ...fieldValidity, skillsValid: true })
             }}
+            value={newMissionData.skills}
             error={!fieldValidity.skillsValid}
           />
         </DialogContent>

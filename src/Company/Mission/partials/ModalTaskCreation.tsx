@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { type ChangeEvent, useState } from 'react'
+import React, { type ChangeEvent, useState, useEffect } from 'react'
 import '../../../CSS/ModalTaskCreation.scss'
 import { useTranslation } from 'react-i18next'
 import Modal from '@mui/material/Modal'
@@ -7,6 +7,59 @@ import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChange
 import ClassicButton from '../../../Component/ClassicButton'
 import MissionApi from '../../../API/MissionApi'
 import { type Members } from '../../../Typage/Type'
+
+const tasks = [
+  {
+    name: 'Concevoir la mise en page de la page d\'accueil',
+    description: 'Créer une mise en page réactive pour la page d\'accueil, incluant l\'en-tête, le pied de page et les sections principales de contenu.',
+    price: 200
+  },
+  {
+    name: 'Développer le formulaire de contact',
+    description: 'Implémenter un formulaire de contact avec validation et intégration email.',
+    price: 150
+  },
+  {
+    name: 'Créer la page "À propos de nous"',
+    description: 'Rédiger et concevoir la page "À propos de nous" avec les informations de l\'entreprise et les biographies de l\'équipe.',
+    price: 100
+  },
+  {
+    name: 'Optimiser les images',
+    description: 'Compresser et optimiser les images pour des temps de chargement plus rapides sans sacrifier la qualité.',
+    price: 80
+  },
+  {
+    name: 'Optimisation SEO',
+    description: 'Mettre en place les pratiques SEO de base, y compris les méta-tags, les mots-clés et le plan du site.',
+    price: 120
+  },
+  {
+    name: 'Tester le site sur plusieurs appareils',
+    description: 'Assurer le bon fonctionnement du site sur différents navigateurs et appareils.',
+    price: 90
+  },
+  {
+    name: 'Configurer Google Analytics',
+    description: 'Intégrer Google Analytics pour suivre le trafic du site et le comportement des utilisateurs.',
+    price: 70
+  },
+  {
+    name: 'Rédiger la politique de confidentialité',
+    description: 'Élaborer une page de politique de confidentialité conforme aux réglementations.',
+    price: 60
+  },
+  {
+    name: 'Déployer le site web',
+    description: 'Déployer le site sur un serveur d\'hébergement et configurer les paramètres du domaine.',
+    price: 150
+  },
+  {
+    name: 'Créer une favicon',
+    description: 'Concevoir et implémenter une favicon pour le site web.',
+    price: 30
+  }
+]
 
 interface Props {
   open: boolean
@@ -30,54 +83,60 @@ function ModalTaskCreation (props: Props): JSX.Element {
   const [errorPrice, setErrorPrice] = useState(false)
 
   const [student, setStudent] = useState('')
+  const [lastTaskIndex, setLastTaskIndex] = useState<number | null>(null)
 
   const handleChange = (event: SelectChangeEvent): void => {
     setStudent(event.target.value)
   }
 
-  const checkError = (): void => {
-    if (name.length === 0) {
-      setErrorName(true)
-    } else {
+  useEffect(() => {
+    if (props.open) {
+      // La modal a été ouverte
+      // Sélectionne une tâche aléatoire différente de la précédente
+      let randomIndex
+      do {
+        randomIndex = Math.floor(Math.random() * tasks.length)
+      } while (randomIndex === lastTaskIndex && tasks.length > 1)
+
+      const task = tasks[randomIndex]
+      setName(task.name)
+      setDescription(task.description)
+      setPrice(task.price)
+      setLastTaskIndex(randomIndex)
+
+      // Réinitialise les états d'erreur
       setErrorName(false)
-    }
-    if (description.length === 0) {
-      setErrorDesc(true)
-    } else {
       setErrorDesc(false)
-    } if (price <= 0) {
-      setErrorPrice(true)
-    } else {
       setErrorPrice(false)
+
+      // Réinitialise la sélection de l'étudiant
+      setStudent('')
     }
+  }, [props.open])
+
+  const checkError = (): void => {
+    setErrorName(name.length === 0)
+    setErrorDesc(description.length === 0)
+    setErrorPrice(price <= 0)
   }
 
   const handleName = (event: ChangeEvent<HTMLInputElement>): void => {
-    setName(event.target.value)
-    if (name.length === 0) {
-      setErrorName(true)
-    } else {
-      setErrorName(false)
-    }
+    const newName = event.target.value
+    setName(newName)
+    setErrorName(newName.length === 0)
   }
 
   const handleDesc = (event: ChangeEvent<HTMLInputElement>): void => {
-    setDescription(event.target.value)
-    if (description.length === 0) {
-      setErrorDesc(true)
-    } else {
-      setErrorDesc(false)
-    }
+    const newDesc = event.target.value
+    setDescription(newDesc)
+    setErrorDesc(newDesc.length === 0)
   }
 
   const handlePrice = (event: ChangeEvent<HTMLInputElement>): void => {
     const parsedNumber = parseFloat(event.target.value)
-    setPrice(isNaN(parsedNumber) ? 0 : parsedNumber)
-    if (price <= 0) {
-      setErrorPrice(true)
-    } else {
-      setErrorPrice(false)
-    }
+    const newPrice = isNaN(parsedNumber) ? 0 : parsedNumber
+    setPrice(newPrice)
+    setErrorPrice(newPrice <= 0)
   }
 
   const handleValidation = async (): Promise<void> => {
@@ -92,9 +151,9 @@ function ModalTaskCreation (props: Props): JSX.Element {
         skills: ''
       }
       if (props.isStudent !== null && props.isStudent !== undefined && props.isStudent) {
-        MissionApi.createTaskAsStudent(localStorage.getItem('jwtToken') as string, props.missionId, data)
+        await MissionApi.createTaskAsStudent(localStorage.getItem('jwtToken') as string, props.missionId, data)
       } else {
-        MissionApi.createTask(localStorage.getItem('jwtToken') as string, props.missionId, data)
+        await MissionApi.createTask(localStorage.getItem('jwtToken') as string, props.missionId, data)
       }
       setName('')
       setDescription('')
@@ -111,17 +170,17 @@ function ModalTaskCreation (props: Props): JSX.Element {
             </div>
             <div className='cpn-modal-task__section'>
               <TextField
-                defaultValue={name}
+                value={name}
                 onChange={handleName}
                 variant='outlined'
                 id="standard-required"
                 label={t('company.detailed_mission.task.name')}
                 inputProps={{ maxLength: maxLengthName }}
                 error={errorName}
-                helperText={errorName ? 'Veuillez rentrer un nom pour votre tâche.' : false}
+                helperText={errorName ? 'Veuillez entrer un nom pour votre tâche.' : false}
               />
               <TextField
-                defaultValue={description}
+                value={description}
                 onChange={handleDesc}
                 variant='outlined'
                 id="outlined-multiline-static fullWidth"
@@ -131,10 +190,10 @@ function ModalTaskCreation (props: Props): JSX.Element {
                 fullWidth
                 multiline
                 error={errorDesc}
-                helperText={errorDesc ? 'Veuillez rentrer une description pour votre tâche.' : false}
+                helperText={errorDesc ? 'Veuillez entrer une description pour votre tâche.' : false}
               />
               <TextField
-                defaultValue={price}
+                value={price}
                 onChange={handlePrice}
                 variant='outlined'
                 id="outlined-number"
@@ -145,7 +204,7 @@ function ModalTaskCreation (props: Props): JSX.Element {
                   shrink: true
                 }}
                 error={errorPrice}
-                helperText={errorPrice ? 'Veuillez rentrer un prix pour votre tâche.' : false}
+                helperText={errorPrice ? 'Veuillez entrer un prix pour votre tâche.' : false}
               />
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Attribution</InputLabel>
