@@ -10,6 +10,7 @@ export enum DashboardState {
   STATISTICS = 'statistics',
   GROUP = 'group',
   SETTINGS = 'settings',
+  CONTACT = 'contact',
 }
 
 export enum AdminDashboardState {
