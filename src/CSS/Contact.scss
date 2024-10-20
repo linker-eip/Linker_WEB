@@ -100,8 +100,6 @@
     display: flex;
     flex-direction: column;
     font-family: 'Poppins';
-    padding-right: 5em;
-    padding-left:  5em;
     background-color: #F2F2F2;
     margin-top: 3em;
 
@@ -137,7 +135,7 @@
         display: grid;
         grid-template-columns: 1.1fr 3.5fr;
         gap: 2vw;
-        align-items: center;
+        // align-items: center;
         padding-top: 2vw;
     }
 
@@ -146,8 +144,8 @@
     }
 
     &__textarea {
-        background-color: #EBEBEB;
-        border: #ffffff solid 1px;
+        background-color: #ffffff;
+        border: #c6c4c4 solid 1px;
         border-radius: 5px;
         resize: none;
         font-family: 'Poppins';

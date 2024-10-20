@@ -139,9 +139,9 @@ export function CompanyContact (): JSX.Element {
                     label={t('contact.object')}
                 />
               </div>
-              <div className='contact-form__section'>
+              <div className='contact-formv2__section'>
                 <div className='contact-form__subtitle'> {t('contact.message')} </div>
-                  <textarea value={message} onChange={handleMessageChange} rows={10} className='contact-form__textarea' />
+                  <textarea value={message} onChange={handleMessageChange} rows={10} className='contact-formv2__textarea' />
               </div>
               <div className='contact-form__button-section'>
                 <ClassicButton title={t('contact.send')} disabled={isButtonDisabled()} onClick={handleSendForm} />
