@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent, type MouseEvent } from 'react'
+import React, { useEffect, useState, type ChangeEvent, type MouseEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
@@ -119,6 +119,20 @@ function CompanyRegisterPage (): JSX.Element {
   const handleSecondCheckboxChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSecondCheckedState(event.target.checked)
   }
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Enter') {
+        handleRegistration()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
 
   return (
     <div className='login-page-container'>
