@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../Router/routes'
 import CheckAuth, { CheckAdmin } from './CheckAuth'
