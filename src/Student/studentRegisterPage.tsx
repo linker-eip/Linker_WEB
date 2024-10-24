@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -89,7 +89,7 @@ function StudentRegisterPage (): JSX.Element {
     }
   }
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
     handleAsyncOperation()
   }
@@ -105,20 +105,6 @@ function StudentRegisterPage (): JSX.Element {
     setSnackbarValue(false)
   }
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Enter') {
-        handleAsyncOperation()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
-
   return (
     <div className='login-page-container'>
       <HotbarStudent />
@@ -130,7 +116,7 @@ function StudentRegisterPage (): JSX.Element {
           <p className='login-page-container__title--sep'>{t('formTitle.part2')}</p>
           <p className='login-page-container__title--login'>{t('formTitle.part3')}</p>
         </div>
-        <div className='login-page-container__form'>
+        <form onSubmit={handleSubmit} className='login-page-container__form'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <TextField
               required
@@ -189,11 +175,11 @@ function StudentRegisterPage (): JSX.Element {
             />
           </div>
           <div className='login-page-container__validate-button'>
-            <button onClick={handleSubmit} className='login-page-container__form-button'>
+            <button type='submit' className='login-page-container__form-button'>
               {t('registerButton')}
             </button>
           </div>
-        </div>
+        </form>
       </div>
       <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
         <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>

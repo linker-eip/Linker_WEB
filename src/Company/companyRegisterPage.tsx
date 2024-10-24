@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type ChangeEvent, type MouseEvent } from 'react'
+import React, { useState, type ChangeEvent, type MouseEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
@@ -45,7 +45,8 @@ function CompanyRegisterPage (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string | null>('')
   const navigate = useNavigate()
 
-  const handleRegistration = (): void => {
+  const handleRegistration = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
     const credentials = {
       email,
       password,
@@ -120,20 +121,6 @@ function CompanyRegisterPage (): JSX.Element {
     setSecondCheckedState(event.target.checked)
   }
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Enter') {
-        handleRegistration()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
-
   return (
     <div className='login-page-container'>
         <HotbarCompany />
@@ -145,7 +132,7 @@ function CompanyRegisterPage (): JSX.Element {
                 <p className='login-page-container__title--sep'>{t('formTitle.part2')}</p>
                 <p className='login-page-container__title--login'>{t('formTitle.part3')}</p>
             </div>
-            <div className='login-page-container__form'>
+            <form onSubmit={handleRegistration} className='login-page-container__form'>
                 <TextField
                     required
                     value={companyName}
@@ -236,9 +223,9 @@ function CompanyRegisterPage (): JSX.Element {
                     />
                 </div>
                 <div className='login-page-container__validate-button'>
-                    <button onClick={handleRegistration} className='login-page-container__form-button'>{t('registerButton')}</button>
+                    <button type='submit' className='login-page-container__form-button'>{t('registerButton')}</button>
                 </div>
-            </div>
+            </form>
         </div>
         <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
           <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
