@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import {
@@ -19,6 +19,7 @@ import HotbarCompany from './Partials/HotbarCompany'
 import * as ROUTES from '../Router/routes'
 import '../CSS/LoginPage.scss'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+import { CheckLogin } from '../Component/CheckAuth'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
   props,
@@ -28,6 +29,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
 })
 
 function CompanyLoginPage (): JSX.Element {
+  CheckLogin()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -47,7 +49,8 @@ function CompanyLoginPage (): JSX.Element {
     setPassword(updatedPassword)
   }
 
-  const fromValidate = (): void => {
+  const fromValidate = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
     const apiUrl = process.env.REACT_APP_API_URL ?? ''
 
     axios.post(`${apiUrl}/api/auth/company/login`, { email, password })
@@ -74,20 +77,6 @@ function CompanyLoginPage (): JSX.Element {
     }
     setSnackbarValue(false)
   }
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Enter') {
-        fromValidate()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
 
   const PasswordField = (): JSX.Element => (
     <FormControl required variant="standard">
@@ -127,7 +116,7 @@ function CompanyLoginPage (): JSX.Element {
             <p>{t('formTitle.part3')}</p>
           </Link>
         </div>
-        <div className='login-page-container__form'>
+        <form onSubmit={fromValidate} className='login-page-container__form'>
           <TextField
             required
             value={email}
@@ -138,11 +127,11 @@ function CompanyLoginPage (): JSX.Element {
           />
           {PasswordField()}
           <div className='login-page-container__validate-button'>
-            <button onClick={fromValidate} className='login-page-container__form-button'>
+            <button type='submit' className='login-page-container__form-button'>
               {t('validateButton')}
             </button>
           </div>
-        </div>
+        </form>
       </div>
       <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
         <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>

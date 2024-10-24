@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useEffect, useState, type ChangeEvent } from 'react'
+import React, { useState, type ChangeEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
@@ -15,6 +15,7 @@ import '../CSS/LoginPage.scss'
 import * as ROUTES from '../Router/routes'
 import AuthApi from '../API/AuthApi'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+import { CheckLogin } from '../Component/CheckAuth'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
   props,
@@ -24,6 +25,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
 })
 
 const StudentLoginPage = (): JSX.Element => {
+  CheckLogin()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -43,7 +45,8 @@ const StudentLoginPage = (): JSX.Element => {
     setPassword(newPassword)
   }
 
-  const validateForm = (): void => {
+  const validateForm = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
     const credentials = { email, password }
     axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/login`, credentials)
       .then((response) => {
@@ -81,20 +84,6 @@ const StudentLoginPage = (): JSX.Element => {
     setSnackbarValue(false)
   }
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Enter') {
-        validateForm()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
-
   return (
     <div className='login-page-container'>
       <HotbarStudent />
@@ -106,7 +95,7 @@ const StudentLoginPage = (): JSX.Element => {
             <p>{t('formTitle.part3')}</p>
           </Link>
         </div>
-        <div className='login-page-container__form'>
+        <form onSubmit={validateForm} className='login-page-container__form'>
           <TextField
             required
             value={email}
@@ -139,9 +128,9 @@ const StudentLoginPage = (): JSX.Element => {
             </Link>
           </FormControl>
           <div className='login-page-container__validate-button'>
-            <button onClick={validateForm} className='login-page-container__form-button'>{t('validateButton')}</button>
+            <button type='submit' className='login-page-container__form-button'>{t('validateButton')}</button>
           </div>
-        </div>
+        </form>
       </div>
       <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
         <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
