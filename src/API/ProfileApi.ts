@@ -15,6 +15,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de votre profil')
+    }
     return response.data
   }
 
@@ -25,6 +28,9 @@ class ProfileApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la désactivation de votre compte')
+    }
     return response.data
   }
 
@@ -35,6 +41,9 @@ class ProfileApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de votre compte')
+    }
     return response.data
   }
 
@@ -45,6 +54,9 @@ class ProfileApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la désactivation de votre compte')
+    }
     return response.data
   }
 
@@ -55,6 +67,9 @@ class ProfileApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de votre compte')
+    }
     return response.data
   }
 
@@ -64,6 +79,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération du profil de l\'entreprise')
+    }
     return response.data
   }
 
@@ -73,6 +91,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de votre profil')
+    }
     return response.data
   }
 
@@ -82,6 +103,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de la liste des compétences')
+    }
     return response.data
   }
 
@@ -92,6 +116,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la mise à jour de votre profil')
+    }
     return response.data
   }
 
@@ -102,6 +129,9 @@ class ProfileApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la mise à jour de votre profil')
+    }
     return response.data
   }
 
@@ -112,6 +142,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la mise à jour de votre profil')
+    }
     return response.data
   }
 
@@ -122,6 +155,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de votre compétence')
+    }
     return response.data
   }
 
@@ -132,6 +168,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de votre formation')
+    }
     return response.data
   }
 
@@ -142,6 +181,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de votre emploi')
+    }
     return response.data
   }
 
@@ -152,6 +194,9 @@ class ProfileApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la mise à jour de votre profil')
+    }
     return response.data
   }
 
@@ -162,6 +207,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de l\'envoi de votre fichier')
+    }
     return response.data
   }
 
@@ -172,6 +220,9 @@ class ProfileApi {
       },
       params: dto
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de votre fichier')
+    }
     return response.data
   }
 
@@ -181,6 +232,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération du statut de vos documents')
+    }
     return response.data
   }
 
@@ -190,6 +244,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération du statut de vos documents')
+    }
     return response.data
   }
 
@@ -200,6 +257,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la vérification de votre document')
+    }
     return response.data
   }
 
@@ -210,6 +270,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la vérification de votre document')
+    }
     return response
   }
 
@@ -220,6 +283,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la vérification de votre document')
+    }
     return response.data
   }
 
@@ -230,6 +296,9 @@ class ProfileApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la vérification de votre document')
+    }
     return response
   }
 
@@ -239,6 +308,9 @@ class ProfileApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de vos statistiques')
+    }
     return response.data
   }
 
@@ -249,6 +321,9 @@ class ProfileApi {
         Accept: 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de vos conversations')
+    }
     return response.data
   }
 
@@ -259,6 +334,9 @@ class ProfileApi {
         Accept: 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de vos conversations')
+    }
     return response.data
   }
 }

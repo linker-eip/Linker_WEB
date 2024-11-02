@@ -10,6 +10,9 @@ class NotificationApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de vos notifications')
+    }
     return response.data
   }
 
@@ -20,6 +23,9 @@ class NotificationApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de votre notification')
+    }
     return response.data
   }
 
@@ -30,6 +36,9 @@ class NotificationApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification du statut de votre notification')
+    }
     return response.data
   }
 
@@ -40,6 +49,9 @@ class NotificationApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification de vos préférences de notification')
+    }
     return response.data
   }
 
@@ -49,6 +61,9 @@ class NotificationApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de vos préférences de notification')
+    }
     return response.data
   }
 
@@ -59,6 +74,9 @@ class NotificationApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification de vos préférences de notification')
+    }
     return response.data
   }
 
@@ -68,6 +86,9 @@ class NotificationApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération de vos préférences de notification')
+    }
     return response.data
   }
 }

@@ -58,6 +58,9 @@ function CompanyLoginPage (): JSX.Element {
         localStorage.setItem('jwtToken', response.data.token)
         if (response.data.error === undefined) {
           navigate(ROUTES.COMPANY_DASHBOARD)
+        } else {
+          setErrorMessage(response.data.error)
+          openSnackbar()
         }
       })
       .catch((error) => {

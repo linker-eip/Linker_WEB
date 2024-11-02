@@ -60,6 +60,9 @@ function CompanyRegisterPage (): JSX.Element {
         localStorage.setItem('jwtToken', jwtToken)
         if (response.status >= 200 && response.status < 204) {
           navigate(ROUTES.COMPANY_DASHBOARD)
+        } else {
+          setErrorMessage(response.data.error)
+          openSnackbar()
         }
       })
       .catch((error) => {
