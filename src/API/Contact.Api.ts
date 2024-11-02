@@ -14,6 +14,7 @@ class ContactApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de l\'envoi de votre message')
       return error
     }
   }

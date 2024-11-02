@@ -10,6 +10,9 @@ class LinkedInApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la mise à jour de votre profil')
+    }
     return response.data
   }
 }

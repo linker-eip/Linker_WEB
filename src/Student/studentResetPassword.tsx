@@ -28,9 +28,12 @@ function StudentResetPassword (): JSX.Element {
         localStorage.setItem('jwtToken', response.data.token)
         if (response.status >= 200 && response.status < 204) {
           navigate(ROUTES.STUDENT_LOGIN_PAGE)
+        } else {
+          alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
         }
       })
       .catch((error) => {
+        alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
         console.log(error)
       })
   }

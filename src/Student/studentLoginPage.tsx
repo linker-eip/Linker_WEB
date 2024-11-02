@@ -51,7 +51,12 @@ const StudentLoginPage = (): JSX.Element => {
     axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/login`, credentials)
       .then((response) => {
         localStorage.setItem('jwtToken', response.data.token)
-        if (response.data.error === undefined) checkVerifiedAccount(response.data.token)
+        if (response.data.error === undefined) {
+          checkVerifiedAccount(response.data.token)
+        } else {
+          setErrorMessage(response.data.error)
+          openSnackbar()
+        }
       })
       .catch((error) => {
         const response = JSON.parse(error.request.responseText)

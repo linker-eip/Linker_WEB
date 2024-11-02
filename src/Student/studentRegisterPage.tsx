@@ -72,6 +72,9 @@ function StudentRegisterPage (): JSX.Element {
       localStorage.setItem('jwtToken', response.data.token)
       if (response.status >= 200 && response.status < 204) {
         checkVerifiedAccount(response.data.token)
+      } else {
+        setErrorMessage(response.data.error)
+        openSnackbar()
       }
     } catch (error: any) {
       const response = JSON.parse(error.request.responseText)

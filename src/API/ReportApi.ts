@@ -13,6 +13,7 @@ class ReportApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la création de votre ticket')
       return error
     }
   }

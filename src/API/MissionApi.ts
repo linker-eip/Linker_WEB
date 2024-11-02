@@ -15,6 +15,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des informations de la mission')
+    }
     return response.data
   }
 
@@ -25,6 +28,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des informations de la mission')
+    }
     return response.data
   }
 
@@ -34,6 +40,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des missions')
+    }
     return response.data
   }
 
@@ -44,6 +53,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des missions')
+    }
     return response.data
   }
 
@@ -54,6 +66,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des missions')
+    }
     return response.data
   }
 
@@ -64,6 +79,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des missions')
+    }
     return response.data
   }
 
@@ -74,6 +92,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des informations de l\'entreprise')
+    }
     return response.data
   }
 
@@ -84,6 +105,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des informations de l\'entreprise')
+    }
     return response.data
   }
 
@@ -94,6 +118,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération des informations de l\'entreprise')
+    }
     return response.data
   }
 
@@ -104,6 +131,9 @@ class MissionApi {
         'Content-Type': 'multipart/form-data'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de l\'envoi des spécifications')
+    }
     return response.data
   }
 
@@ -114,6 +144,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la création de la tâche')
+    }
     return response.data
   }
 
@@ -124,6 +157,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la création de la tâche')
+    }
     return response.data
   }
 
@@ -133,6 +169,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de l\'acceptation du groupe')
+    }
     return response.data
   }
 
@@ -142,6 +181,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors du refus du groupe')
+    }
     return response.data
   }
 
@@ -152,6 +194,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification de la tâche')
+    }
     return response.data
   }
 
@@ -162,6 +207,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification de la tâche')
+    }
     return response.data
   }
 
@@ -171,6 +219,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de la tâche')
+    }
     return response.data
   }
 
@@ -180,6 +231,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la suppression de la tâche')
+    }
     return response.data
   }
 
@@ -192,6 +246,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification de la tâche')
+    }
     return response.data
   }
 
@@ -204,6 +261,9 @@ class MissionApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la modification de la tâche')
+    }
     return response.data
   }
 
@@ -213,6 +273,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la fin de la mission')
+    }
     return response.data
   }
 
@@ -222,6 +285,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de l\'acceptation de la mission')
+    }
     return response.data
   }
 
@@ -231,6 +297,9 @@ class MissionApi {
         Authorization: `Bearer ${jwtToken}`
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors du refus de la mission')
+    }
     return response.data
   }
 
@@ -245,6 +314,9 @@ class MissionApi {
         mission_id: missionId
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la récupération du paiement')
+    }
     return response.data
   }
 }
