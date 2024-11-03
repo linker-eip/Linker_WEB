@@ -17,7 +17,7 @@ enum UserTypeJWT {
   USER_ADMIN = 'USER_ADMIN'
 }
 
-export default function CheckAuth (): boolean {
+function CheckAuth (): boolean {
   const [token, setToken] = useState<string | null>('')
   const [jwtSecret, setJwtSecret] = useState<string | undefined>('')
   useEffect(() => {
@@ -50,6 +50,8 @@ export default function CheckAuth (): boolean {
     return false
   }
 }
+
+export default CheckAuth
 
 export function CheckAdmin (): boolean {
   const [token, setToken] = useState<string | null>('')
