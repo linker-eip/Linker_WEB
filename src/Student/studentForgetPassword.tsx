@@ -29,9 +29,12 @@ function StudentForgetPassword (): JSX.Element {
           const jwtToken = response.data.token
           localStorage.setItem('jwtToken', jwtToken)
           navigate(ROUTES.STUDENT_RESET_PASSWORD)
+        } else {
+          alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
         }
       })
       .catch((error) => {
+        alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
         console.log(error)
       })
   }

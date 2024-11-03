@@ -34,11 +34,13 @@ function CompanyResetPassword (): JSX.Element {
           localStorage.setItem('jwtToken', jwtToken)
           navigate(ROUTES.COMPANY_LOGIN_PAGE)
         } else {
+          alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
           // TODO: Gérer possiblement les autres codes de réponse HTTP.
         }
       })
       .catch((error) => {
         console.error('Error during password reset:', error)
+        alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
         // TODO: Notifier l'utilisateur de l'erreur de réinitialisation.
       })
   }

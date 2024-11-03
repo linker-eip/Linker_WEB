@@ -15,6 +15,7 @@ import '../CSS/LoginPage.scss'
 import * as ROUTES from '../Router/routes'
 import AuthApi from '../API/AuthApi'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+import { CheckLogin } from '../Component/CheckAuth'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
   props,
@@ -24,6 +25,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
 })
 
 const StudentLoginPage = (): JSX.Element => {
+  CheckLogin()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -43,12 +45,18 @@ const StudentLoginPage = (): JSX.Element => {
     setPassword(newPassword)
   }
 
-  const validateForm = (): void => {
+  const validateForm = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
     const credentials = { email, password }
     axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/login`, credentials)
       .then((response) => {
         localStorage.setItem('jwtToken', response.data.token)
-        if (response.data.error === undefined) checkVerifiedAccount(response.data.token)
+        if (response.data.error === undefined) {
+          checkVerifiedAccount(response.data.token)
+        } else {
+          setErrorMessage(response.data.error)
+          openSnackbar()
+        }
       })
       .catch((error) => {
         const response = JSON.parse(error.request.responseText)
@@ -92,7 +100,7 @@ const StudentLoginPage = (): JSX.Element => {
             <p>{t('formTitle.part3')}</p>
           </Link>
         </div>
-        <div className='login-page-container__form'>
+        <form onSubmit={validateForm} className='login-page-container__form'>
           <TextField
             required
             value={email}
@@ -125,9 +133,9 @@ const StudentLoginPage = (): JSX.Element => {
             </Link>
           </FormControl>
           <div className='login-page-container__validate-button'>
-            <button onClick={validateForm} className='login-page-container__form-button'>{t('validateButton')}</button>
+            <button type='submit' className='login-page-container__form-button'>{t('validateButton')}</button>
           </div>
-        </div>
+        </form>
       </div>
       <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
         <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>

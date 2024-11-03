@@ -19,6 +19,7 @@ import HotbarCompany from './Partials/HotbarCompany'
 import * as ROUTES from '../Router/routes'
 import '../CSS/LoginPage.scss'
 import MuiAlert, { type AlertProps } from '@mui/material/Alert'
+import { CheckLogin } from '../Component/CheckAuth'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
   props,
@@ -28,6 +29,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert (
 })
 
 function CompanyLoginPage (): JSX.Element {
+  CheckLogin()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -47,7 +49,8 @@ function CompanyLoginPage (): JSX.Element {
     setPassword(updatedPassword)
   }
 
-  const fromValidate = (): void => {
+  const fromValidate = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
     const apiUrl = process.env.REACT_APP_API_URL ?? ''
 
     axios.post(`${apiUrl}/api/auth/company/login`, { email, password })
@@ -55,6 +58,9 @@ function CompanyLoginPage (): JSX.Element {
         localStorage.setItem('jwtToken', response.data.token)
         if (response.data.error === undefined) {
           navigate(ROUTES.COMPANY_DASHBOARD)
+        } else {
+          setErrorMessage(response.data.error)
+          openSnackbar()
         }
       })
       .catch((error) => {
@@ -113,7 +119,7 @@ function CompanyLoginPage (): JSX.Element {
             <p>{t('formTitle.part3')}</p>
           </Link>
         </div>
-        <div className='login-page-container__form'>
+        <form onSubmit={fromValidate} className='login-page-container__form'>
           <TextField
             required
             value={email}
@@ -124,11 +130,11 @@ function CompanyLoginPage (): JSX.Element {
           />
           {PasswordField()}
           <div className='login-page-container__validate-button'>
-            <button onClick={fromValidate} className='login-page-container__form-button'>
+            <button type='submit' className='login-page-container__form-button'>
               {t('validateButton')}
             </button>
           </div>
-        </div>
+        </form>
       </div>
       <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
         <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
