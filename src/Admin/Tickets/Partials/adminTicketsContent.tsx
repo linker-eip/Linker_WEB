@@ -95,7 +95,7 @@ function AdminTicketsContent (): JSX.Element {
         setRows(formattedData)
       })
       .catch(error => {
-        alert(`Erreur lors de la récupération des données: ${String(error)}`)
+        console.log(`Erreur lors de la récupération des données: ${String(error)}`)
       })
   }, [])
 
@@ -212,7 +212,7 @@ function AdminTicketsContent (): JSX.Element {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => {
+              {rows?.map((row) => {
                 if (searchTerm === '' || row.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return (
                     <TableRow key={row.id}>

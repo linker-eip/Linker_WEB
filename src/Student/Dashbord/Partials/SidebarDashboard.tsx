@@ -14,6 +14,7 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import { DashboardState } from '../../../Enum'
 import { useNavigate } from 'react-router-dom'
 import * as ROUTES from '../../../Router/routes'
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread'
 
 interface Props {
   state: DashboardState
@@ -55,6 +56,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.MAILBOX:
         navigate(ROUTES.STUDENT_MAILBOX)
         break
+      case DashboardState.CONTACT:
+        navigate(ROUTES.STUDENT_CONTACT)
+        break
       default:
         break
     }
@@ -86,6 +90,7 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
           <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
           <SidebarItem icon={<TopicOutlinedIcon />} labelKey='student.dashboard.doc' dashboardState={DashboardState.DOCUMENTS} />
           <SidebarItem icon={<GroupsIcon />} labelKey='student.dashboard.group' dashboardState={DashboardState.GROUP} />
+          <SidebarItem icon={<MarkEmailUnreadIcon />} labelKey='student.dashboard.contact' dashboardState={DashboardState.CONTACT} />
           <SidebarItem icon={<SettingsIcon />} labelKey='student.dashboard.settings' dashboardState={DashboardState.SETTINGS} />
         </div>
       </div>

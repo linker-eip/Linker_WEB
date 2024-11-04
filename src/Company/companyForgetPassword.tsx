@@ -33,6 +33,7 @@ function CompanyForgetPassword (): JSX.Element {
       })
       .catch((error) => {
         // TODO: Gérer l'erreur de manière appropriée.
+        alert('Une erreur est survenue lors de la réinitialisation de votre mot de passe')
         console.log(error)
       })
   }

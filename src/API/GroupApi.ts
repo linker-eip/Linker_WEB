@@ -12,6 +12,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la récupération de vos groupes')
       return error
     }
   }
@@ -27,6 +28,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la création de votre groupe')
       return error
     }
   }
@@ -42,6 +44,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la suppression de votre groupe')
       return error
     }
   }
@@ -57,6 +60,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la suppression de votre groupe')
       return error
     }
   }
@@ -72,6 +76,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de l\'exclusion de ce membre')
       return error
     }
   }
@@ -85,6 +90,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la récupération des membres invités')
       return error
     }
   }
@@ -98,6 +104,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la recherche de membres')
       return error
     }
   }
@@ -111,6 +118,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la recherche de groupes')
       return error
     }
   }
@@ -124,6 +132,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la recherche de groupes')
       return error
     }
   }
@@ -138,6 +147,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de l\'invitation de ce membre')
       return error
     }
   }
@@ -152,6 +162,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de l\'invitation de ce groupe')
       return error
     }
   }
@@ -166,6 +177,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la suppression de l\'invitation de ce membre')
       return error
     }
   }
@@ -179,6 +191,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de la récupération des invitations')
       return error
     }
   }
@@ -193,6 +206,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors de l\'acceptation de l\'invitation')
       return error
     }
   }
@@ -207,6 +221,7 @@ class GroupApi {
       )
       return response
     } catch (error: any) {
+      alert('Une erreur est survenue lors du refus de l\'invitation')
       return error
     }
   }

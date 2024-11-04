@@ -194,6 +194,7 @@ i18n
               stat: 'Mes statistiques',
               invoices: 'Mes factures',
               settings: 'Paramètres',
+              contact: 'Contact',
               group: 'Groupe',
               groups: {
                 my_group: 'votre groupe',
@@ -649,6 +650,7 @@ i18n
               stat: 'My Statistics',
               invoices: 'My Invoices',
               settings: 'Settings',
+              contact: 'Contact',
               group: 'Group',
               groups: {
                 my_group: 'your group',

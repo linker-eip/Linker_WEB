@@ -55,6 +55,8 @@ import WaitVerifiedStudentAccount from './Transverse/waitVerifyAccount'
 
 import * as ROUTES from './Router/routes'
 import AdminTickets from './Admin/Tickets/adminTickets'
+import { StudentContact } from './Student/Dashbord/Contact/StudentContact'
+import { CompanyContact } from './Company/Dashbord/Contact/CompanyContact'
 
 function App (): JSX.Element {
   return (
@@ -86,6 +88,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.STUDENT_MISSION_CHAT} element={<StudentMissionChat/>} />
         <Route path={ROUTES.STUDENT_PRIVATE_MESSAGE} element={<StudentPrivateChat/>} />
         <Route path={ROUTES.STUDENT_PAYMENTS} element={<StudentPayments/>} />
+        <Route path={ROUTES.STUDENT_CONTACT} element={<StudentContact/>} />
         <Route path={ROUTES.COMPANY_DOCUMENTS_DASHBOARD} element={<CompanyDocuments />} />
         <Route path={ROUTES.COMPANY_FORGOT_PASSWORD} element={<CompanyForgetPassword />} />
         <Route path={ROUTES.COMPANY_RESET_PASSWORD} element={<CompanyResetPassword />} />
@@ -103,6 +106,7 @@ function App (): JSX.Element {
         <Route path={ROUTES.COMPANY_DETAILED_MISSION} element={<CompanyDetailedMission />} />
         <Route path={ROUTES.COMPANY_MISSION_CHAT} element={<CompanyMissionChat/>}/>
         <Route path={ROUTES.COMPANY_PROFILE} element={<CompanyProfile />} />
+        <Route path={ROUTES.COMPANY_CONTACT} element={<CompanyContact/>} />
         <Route path={ROUTES.ADMIN_LOGIN_PAGE} element={<AdminLoginPage />} />
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
         <Route path={ROUTES.ADMIN_MISSIONS_DASHBOARD} element={<AdminMissions />} />

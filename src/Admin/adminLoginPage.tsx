@@ -10,8 +10,10 @@ import {
   TextField,
   Typography
 } from '@mui/material'
+import { CheckLogin } from '../Component/CheckAuth'
 
 function AdminLoginPage (): JSX.Element {
+  CheckLogin()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
 

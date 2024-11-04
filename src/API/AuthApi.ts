@@ -8,6 +8,9 @@ export interface AuthResponse {
 class AuthApi {
   static async verifyStudentPassword (code: string): Promise<AuthResponse> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/verify?code=${code}`)
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la vérification de votre mot de passe')
+    }
     return response
   }
 
@@ -20,6 +23,7 @@ class AuthApi {
         }
       })
     } catch (error) {
+      alert('Une erreur est survenue lors de la modification de votre mot de passe')
       console.log(error)
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{ statusCode: number, message: string }>
@@ -41,6 +45,7 @@ class AuthApi {
       })
     } catch (error) {
       console.log(error)
+      alert('Une erreur est survenue lors de la modification de votre mot de passe')
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{ statusCode: number, message: string }>
         if (axiosError.response?.data.statusCode === 401) {
@@ -58,6 +63,9 @@ class AuthApi {
         'Content-Type': 'application/json'
       }
     })
+    if (response.status !== 200 && response.status !== 201) {
+      alert('Une erreur est survenue lors de la vérification de votre compte')
+    }
     return response.data
   }
 }

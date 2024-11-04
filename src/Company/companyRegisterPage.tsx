@@ -45,7 +45,8 @@ function CompanyRegisterPage (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string | null>('')
   const navigate = useNavigate()
 
-  const handleRegistration = (): void => {
+  const handleRegistration = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
     const credentials = {
       email,
       password,
@@ -59,6 +60,9 @@ function CompanyRegisterPage (): JSX.Element {
         localStorage.setItem('jwtToken', jwtToken)
         if (response.status >= 200 && response.status < 204) {
           navigate(ROUTES.COMPANY_DASHBOARD)
+        } else {
+          setErrorMessage(response.data.error)
+          openSnackbar()
         }
       })
       .catch((error) => {
@@ -131,7 +135,7 @@ function CompanyRegisterPage (): JSX.Element {
                 <p className='login-page-container__title--sep'>{t('formTitle.part2')}</p>
                 <p className='login-page-container__title--login'>{t('formTitle.part3')}</p>
             </div>
-            <div className='login-page-container__form'>
+            <form onSubmit={handleRegistration} className='login-page-container__form'>
                 <TextField
                     required
                     value={companyName}
@@ -222,9 +226,9 @@ function CompanyRegisterPage (): JSX.Element {
                     />
                 </div>
                 <div className='login-page-container__validate-button'>
-                    <button onClick={handleRegistration} className='login-page-container__form-button'>{t('registerButton')}</button>
+                    <button type='submit' className='login-page-container__form-button'>{t('registerButton')}</button>
                 </div>
-            </div>
+            </form>
         </div>
         <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
           <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
