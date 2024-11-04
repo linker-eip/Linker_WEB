@@ -60,9 +60,9 @@ function TaskTab (props: Props): JSX.Element {
     props.onCallback()
   }
 
-  const openTaskModal = (): void => {
-    setTaskModal(true)
-  }
+  // const openTaskModal = (): void => {
+  //   setTaskModal(true)
+  // }
 
   const closeEditTaskModal = (): void => {
     setEditTaskModal(false)
@@ -211,9 +211,9 @@ function TaskTab (props: Props): JSX.Element {
               <div />
               <div />
               <div />
-              <div className='cpn-detailed-mission__add-task cpn-detailed-mission__centered'>
+              {/* <div className='cpn-detailed-mission__add-task cpn-detailed-mission__centered'>
                 <img className='cpn-detailed-mission__clickable' src='/assets/adder.svg' onClick={openTaskModal} />
-              </div>
+              </div> */}
             </div>
           : null
         }
