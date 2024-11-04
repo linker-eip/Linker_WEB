@@ -17,15 +17,12 @@ interface GroupMessage {
   timestamp: string
 }
 
-function GroupMissionChat (): JSX.Element {
+function GroupMissionChat(): JSX.Element {
   const { t } = useTranslation()
-
   const { missionId } = useParams()
-
   const [newMessage, setNewMessage] = useState('')
   const [groupMessages, setGroupMessages] = useState<GroupMessage[]>([])
   const socket = useRef<Socket | null>(null)
-
   const jwtToken = localStorage.getItem('jwtToken') as string
   const id = missionId
 
@@ -106,57 +103,69 @@ function GroupMissionChat (): JSX.Element {
   }, [])
 
   const handleSendMessage = (): void => {
-    sendMissionMessage(newMessage)
-    setNewMessage('')
+    if (newMessage.trim() !== '') {
+      sendMissionMessage(newMessage)
+      setNewMessage('')
+    }
   }
 
   return (
     <div className='std-group__container'>
-        <div className='std-group__details-section'>
-            <div className='std-group__chat-messages'>
-                {groupMessages.map((msg, index) => (
-                <div key={index} className='std-group__message'>
-                    <div>
-                    {msg.firstName} {msg.lastName}: {msg.content}
-                    </div>
+      <div className='std-group__details-section'>
+        <div className='std-group__chat-messages'>
+          {groupMessages.map((msg, index) => (
+            <div key={index} className='std-group__message'>
+              <div className='std-group__message-header'>
+                <img
+                  src={msg.picture || '/path/to/default/avatar.png'}
+                  alt={`${msg.firstName} ${msg.lastName}`}
+                  className='std-group__message-picture'
+                />
+                <div className='std-group__message-sender'>
+                  {msg.firstName} {msg.lastName}
                 </div>
-                ))}
+              </div>
+              <div className='std-group__message-text'>
+                {msg.content}
+              </div>
             </div>
-            <div className='std-group__chat-input'>
-                <TextField
-                    id="search-bar"
-                    value={newMessage}
-                    variant="outlined"
-                    placeholder="Écrivez un message ici"
-                    onChange={(e) => {
-                    setNewMessage(e.target.value)
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' && newMessage.trim() !== '') {
-                        handleSendMessage()
-                      }
-                    }}
-                    InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                        <MessageIcon />
-                        </InputAdornment>
-                    )
-                    }}
-                    sx={{
-                    width: '90%',
-                    borderRadius: '20px',
-                    '& .MuiOutlinedInput-root': {
-                        borderRadius: '20px'
-                    }
-                    }}
-                />
-                <ClassicButton
-                    title={ t('student.dashboard.chat.send_message') }
-                    onClick={handleSendMessage}
-                />
-            </div>
+          ))}
         </div>
+        <div className='std-group__chat-input'>
+          <TextField
+            id="search-bar"
+            value={newMessage}
+            variant="outlined"
+            placeholder="Écrivez un message ici"
+            onChange={(e) => {
+              setNewMessage(e.target.value)
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && newMessage.trim() !== '') {
+                handleSendMessage()
+              }
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <MessageIcon />
+                </InputAdornment>
+              )
+            }}
+            sx={{
+              width: '90%',
+              borderRadius: '20px',
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '20px'
+              }
+            }}
+          />
+          <ClassicButton
+            title={t('student.dashboard.chat.send_message')}
+            onClick={handleSendMessage}
+          />
+        </div>
+      </div>
     </div>
   )
 }
