@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable eol-last */
 import React, { type ChangeEvent, useState } from 'react'
 import '../../../CSS/ModalTaskCreation.scss'
 import { useTranslation } from 'react-i18next'

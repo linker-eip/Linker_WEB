@@ -12,6 +12,25 @@
     grid-template-columns: 5fr 1.2fr;
   }
 
+  &__message-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+    justify-content: space-between; /* Ajouté pour aligner le nom et la date */
+  }
+
+  &__message-sender {
+    font-weight: bold;
+    font-size: 14px;
+    /* Vous pouvez ajuster les marges si nécessaire */
+  }
+
+  &__message-timestamp {
+    font-size: 12px;
+    color: #888;
+    margin-left: auto; /* Pour aligner la date à droite */
+  }
+
   &__member-container {
     background-color: #fff;
     min-height: 91.5vh;
@@ -63,7 +82,6 @@
   &__details-section {
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
   }
 
   &__image {
@@ -102,24 +120,47 @@
   }
 
   &__message {
-      margin-bottom: 0.5em;
-      padding: 0.5em;
-      background-color: #ffffff;
-      border-radius: 5px;
+    margin-bottom: 1em;
+  }
+
+  &__message-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+  }
+
+  &__message-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 0.5em;
+  }
+
+  &__message-sender {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  &__message-text {
+    background-color: #f1f1f1;
+    padding: 0.75em;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   &__chat-input {
-      display: flex;
-      width: 95%;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 3em;
+    display: flex;
+    width: 95%;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3em;
   }
 
   &__chat-input input {
-      flex-grow: 1;
-      margin-right: 1em;
-      padding: 0.5em;
+    flex-grow: 1;
+    margin-right: 1em;
+    padding: 0.5em;
   }
 }
 
