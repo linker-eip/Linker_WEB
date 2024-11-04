@@ -63,12 +63,12 @@ function CompanyMissionsPotential (): JSX.Element {
   const [openCreate, setOpenCreate] = useState(false)
 
   const [newMissionData, setNewMissionData] = useState<NewMissionData>({
-    name: 'Site vitrine',
-    description: 'Site vitrine pour une entreprise de vente de produits bio',
-    amount: 1800,
+    name: '',
+    description: '',
+    amount: 0,
     startOfMission: new Date(),
-    endOfMission: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
-    skills: 'React'
+    endOfMission: new Date(),
+    skills: ''
   })
 
   const handleCreate = (): void => {

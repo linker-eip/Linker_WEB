@@ -12,6 +12,25 @@
     grid-template-columns: 5fr 1.2fr;
   }
 
+  &__message-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5em;
+    justify-content: space-between; /* Ajouté pour aligner le nom et la date */
+  }
+
+  &__message-sender {
+    font-weight: bold;
+    font-size: 14px;
+    /* Vous pouvez ajuster les marges si nécessaire */
+  }
+
+  &__message-timestamp {
+    font-size: 12px;
+    color: #888;
+    margin-left: auto; /* Pour aligner la date à droite */
+  }
+
   &__member-container {
     background-color: #fff;
     min-height: 91.5vh;

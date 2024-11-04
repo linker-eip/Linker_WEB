@@ -25,8 +25,8 @@ interface Props {
 
 function ModalCreateGroup (props: Props): JSX.Element {
   const { t } = useTranslation()
-  const [groupName, setGroupName] = useState<string>('Dev & Design Company')
-  const [groupDescription, setGroupDescription] = useState('L\'agence de développement et de design la plus cool de la région.')
+  const [groupName, setGroupName] = useState<string>('')
+  const [groupDescription, setGroupDescription] = useState('')
   const maxLength = 500
   const [logo, setLogo] = useState<any>()
   const [alertError, setAlertError] = useState(false)

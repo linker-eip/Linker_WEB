@@ -33,8 +33,7 @@ function GroupChat (props: Props): JSX.Element {
   const [refetch, setRefetch] = useState<boolean>(false)
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    function setGroupStatusOnMounted () {
+    function setGroupStatusOnMounted (): void {
       if (props.data?.data?.name === undefined) {
         setStatus(false)
       } else {
@@ -45,10 +44,15 @@ function GroupChat (props: Props): JSX.Element {
   }, [props.data])
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    async function setInvitedData () {
-      const response = await GroupApi.getMemberInvited(localStorage.getItem('jwtToken') as string)
-      setMemberInvited(response.data)
+    async function setInvitedData (): Promise<void> {
+      const jwtToken = localStorage.getItem('jwtToken') as string
+
+      if (jwtToken != null) {
+        const response = await GroupApi.getMemberInvited(jwtToken)
+        setMemberInvited(response.data)
+      } else {
+        console.error('JWT token is missing')
+      }
     }
     setInvitedData()
   }, [refetch])
@@ -73,6 +77,11 @@ function GroupChat (props: Props): JSX.Element {
   const jwtToken = localStorage.getItem('jwtToken') as string
 
   const connect = (): void => {
+    if (jwtToken == null) {
+      console.error('JWT token is missing')
+      return
+    }
+
     const socketConfig = {
       autoConnect: false,
       transports: ['polling'],
@@ -149,76 +158,91 @@ function GroupChat (props: Props): JSX.Element {
   }, [])
 
   const handleSendMessage = (): void => {
-    sendGroupMessage(newMessage)
-    setNewMessage('')
+    if (newMessage.trim() !== '') {
+      sendGroupMessage(newMessage)
+      setNewMessage('')
+    }
   }
 
   return (
     <div>
-      { hasGroup
+      {hasGroup
         ? <div className='std-group__container'>
             <div className='std-group__details-section'>
-                <div className='std-group__chat-messages'>
-                  {groupMessages.map((msg, index) => (
-                    <div key={index} className='std-group__message'>
-                      <div>
-                        {msg.firstName} {msg.lastName}: {msg.content}
+              <div className='std-group__chat-messages'>
+                {groupMessages.map((msg, index) => (
+                  <div key={index} className='std-group__message'>
+                    <div className='std-group__message-header'>
+                      <img
+                        src={msg.picture !== '' ? msg.picture : '/assets/DefaultProfile.svg'}
+                        alt={`${msg.firstName} ${msg.lastName}`}
+                        className='std-group__message-picture'
+                      />
+                      <div className='std-group__message-sender'>
+                        {msg.firstName} {msg.lastName}
+                      </div>
+                      <div className='std-group__message-timestamp'>
+                        {new Date(msg.timestamp).toLocaleString()}
                       </div>
                     </div>
-                  ))}
-                </div>
-                <div className='std-group__chat-input'>
-                    <TextField
-                      id="search-bar"
-                      value={newMessage}
-                      variant="outlined"
-                      placeholder="Écrivez un message ici"
-                      onChange={(e) => {
-                        setNewMessage(e.target.value)
-                      }}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' && newMessage.trim() !== '') {
-                          handleSendMessage()
-                        }
-                      }}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <MessageIcon />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{
-                        width: '90%',
-                        borderRadius: '20px',
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: '20px'
-                        }
-                      }}
-                    />
-                    <ClassicButton
-                      title={ t('student.dashboard.chat.send_message') }
-                      onClick={handleSendMessage}
-                    />
-                </div>
+                    <div className='std-group__message-text'>
+                      {msg.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className='std-group__chat-input'>
+                <TextField
+                  id="search-bar"
+                  value={newMessage}
+                  variant="outlined"
+                  placeholder="Écrivez un message ici"
+                  onChange={(e) => {
+                    setNewMessage(e.target.value)
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' && newMessage.trim() !== '') {
+                      handleSendMessage()
+                    }
+                  }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MessageIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                  sx={{
+                    width: '90%',
+                    borderRadius: '20px',
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: '20px'
+                    }
+                  }}
+                />
+                <ClassicButton
+                  title={t('student.dashboard.chat.send_message')}
+                  onClick={handleSendMessage}
+                />
+              </div>
             </div>
             <div className='std-group__member-container'>
-                <div className='std-group__member-title'> {t('student.dashboard.groups.member_title')} </div>
-                <MemberCard member={props.data?.data?.members} />
-                <div className='std-group__member-title'> {t('student.dashboard.groups.invited')} </div>
-                <MemberInvitedCard member={memberInvited} onDelete={handleRefetch} />
+              <div className='std-group__member-title'> {t('student.dashboard.groups.member_title')} </div>
+              <MemberCard member={props.data?.data?.members} />
+              <div className='std-group__member-title'> {t('student.dashboard.groups.invited')} </div>
+              <MemberInvitedCard member={memberInvited} onDelete={handleRefetch} />
             </div>
           </div>
         : <div className='std-group'>
-          <div className='std-group__section'>
-            <div className='std-group__text'> { t('student.dashboard.groups.no_group') } </div>
-            <ClassicButton title={t('student.dashboard.groups.create_group_button')} onClick={openModal}/>
+            <div className='std-group__section'>
+              <div className='std-group__text'> {t('student.dashboard.groups.no_group')} </div>
+              <ClassicButton title={t('student.dashboard.groups.create_group_button')} onClick={openModal} />
+            </div>
+            <div className='std-group__image'>
+              <img src='/assets/groups_image.svg' />
+            </div>
+            <ModalCreateGroup open={creationGroup} onClose={handleCreateGroup} />
           </div>
-          <div className='std-group__image' >
-            <img src='/assets/groups_image.svg' />
-          </div>
-          <ModalCreateGroup open={creationGroup} onClose={handleCreateGroup}/>
-        </div>
       }
     </div>
   )
