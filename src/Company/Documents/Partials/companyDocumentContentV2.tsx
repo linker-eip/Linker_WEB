@@ -109,6 +109,9 @@ function CompanyDocumentContentV2 (): JSX.Element {
   const [cniReplace, setCniReplace] = useState<boolean>(false)
   const [kbisReplace, setKbisReplace] = useState<boolean>(false)
 
+  const [errorSnackBar, setErrorSnackBar] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+
   const resetCniFile = (): void => {
     setCniFile([])
   }
@@ -164,8 +167,20 @@ function CompanyDocumentContentV2 (): JSX.Element {
     setKbisSnackBarValue(false)
   }
 
+  const closeErrorSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setErrorSnackBar(false)
+  }
+
   const postFile = async (): Promise<void> => {
     if (cniFile.length > 0 && cniFile[0].size <= 2 * 1024 * 1024) {
+      if (cniFile[0].type !== 'application/pdf') {
+        setErrorMessage('Les fichiers doivent être au format .pdf')
+        setErrorSnackBar(true)
+        return
+      }
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
       cniFormData.append('documentType', CompanyDocumentType.CNI)
@@ -194,6 +209,11 @@ function CompanyDocumentContentV2 (): JSX.Element {
     }
 
     if (kbisFile.length > 0 && kbisFile[0].size <= 2 * 1024 * 1024) {
+      if (kbisFile[0].type !== 'application/pdf') {
+        setErrorMessage('Les fichiers doivent être au format .pdf')
+        setErrorSnackBar(true)
+        return
+      }
       const kbisFormData = new FormData()
       kbisFormData.append('file', kbisFile[0])
       kbisFormData.append('documentType', CompanyDocumentType.KBIS)
@@ -344,6 +364,11 @@ function CompanyDocumentContentV2 (): JSX.Element {
           <Snackbar open={kbisSnackBarValue} autoHideDuration={6000} onClose={closeKbisSnackBar}>
             <Alert onClose={closeKbisSnackBar} severity="error" sx={{ width: '100%' }}>
               Votre extrait KBIS a déjà été validé.
+            </Alert>
+          </Snackbar>
+          <Snackbar open={errorSnackBar} autoHideDuration={6000} onClose={closeErrorSnackBar}>
+            <Alert onClose={closeErrorSnackBar} severity="error" sx={{ width: '100%' }}>
+              {errorMessage}
             </Alert>
           </Snackbar>
     </div>
