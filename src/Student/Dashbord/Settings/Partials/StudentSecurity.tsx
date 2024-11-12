@@ -173,6 +173,7 @@ function StudentSecurity (): JSX.Element {
       setSnackBarValue(true)
       setSnackError(false)
       setErrorInfo(ErrorList.NONE)
+      setTimeout(() => handleDisconnect(), 1000)
     } else {
       setAlertMessage(response)
       setSnackBarValue(true)
@@ -182,6 +183,11 @@ function StudentSecurity (): JSX.Element {
     setOldPassword('')
     setNewPassword('')
     setConfirmNewPassword('')
+  }
+
+  const handleDisconnect = (): void => {
+    localStorage.removeItem('jwtToken')
+    navigate(ROUTES.STUDENT_LOGIN_PAGE)
   }
 
   return (
