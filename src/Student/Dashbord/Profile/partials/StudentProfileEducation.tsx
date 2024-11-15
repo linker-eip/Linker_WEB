@@ -164,7 +164,7 @@ function StudentProfileEducation (props: Props): JSX.Element {
       </div>
       <Modal open={open} onClose={handleModalClose} >
         <div className='std-profile-exp__modal'>
-          <h1> Ajoute ton expérience </h1>
+          <h1> { t('student.profile.education.add_form') } </h1>
             <div className='std-profile-exp__content'>
               <DropZoneV2 onClose={() => {}} onObjectChange={handleLogo} />
               <TextField
@@ -205,7 +205,7 @@ function StudentProfileEducation (props: Props): JSX.Element {
                   isClearable={true}
                   />
               </div>
-              <p className='std-profile-exp__text' > Description </p>
+              <p className='std-profile-exp__text' > { t('student.profile.education.description') } </p>
               <textarea
                 className='std-profile-exp__input'
                 value={description}

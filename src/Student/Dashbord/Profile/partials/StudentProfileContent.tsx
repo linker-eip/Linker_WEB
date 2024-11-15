@@ -194,13 +194,13 @@ function StudentProfileContent (props: Props): JSX.Element {
             }
             <div className='std-profile-content__content'>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
+                <ClassicButton title={t('student.settings.security.desactivation')} onClick={openDeactivateModal} refuse />
               </div>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
+                <ClassicButton title={t('student.settings.security.delete')} onClick={openDeleteModal} refuse />
               </div>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Remplir avec LinkedIn' onClick={openLinkedInModal} />
+                <ClassicButton title={t('modal.linkedIn.title')} onClick={openLinkedInModal} />
               </div>
               <ModalLinkedIn open={linkedInModal} onClose={closeLinkedInModal} />
               {

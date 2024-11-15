@@ -243,7 +243,7 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
                   </div>
                   <div className='std-profile-content__section'>
                     <ArticleIcon />
-                    <p> Nombre total de missions: { nbrMission } </p>
+                    <p> {t('company.total_mission')} { nbrMission } </p>
                   </div>
                 </div>
             }
@@ -255,10 +255,10 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
             }
             <div className='std-profile-content__content'>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
+                <ClassicButton title={t('student.settings.security.desactivation')} onClick={openDeactivateModal} refuse />
               </div>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
+                <ClassicButton title={t('student.settings.security.delete')} onClick={openDeleteModal} refuse />
               </div>
               {
                 profileData !== null && profileData !== undefined && (

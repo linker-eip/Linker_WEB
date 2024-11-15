@@ -192,7 +192,7 @@ function StudentProfileExperience (props: Props): JSX.Element {
       </div>
       <Modal open={open} onClose={handleModalClose} >
         <div className='std-profile-exp__modal'>
-          <h1> Ajoute ton expérience </h1>
+          <h1> { t('student.profile.experience.add_exp') } </h1>
             <div className='std-profile-exp__content'>
               <DropZoneV2 onClose={() => {}} onObjectChange={handleLogo} />
               <TextField
@@ -233,7 +233,7 @@ function StudentProfileExperience (props: Props): JSX.Element {
                   isClearable={true}
                   />
               </div>
-              <p className='std-profile-exp__text' > Description </p>
+              <p className='std-profile-exp__text' > { t('student.profile.experience.description') } </p>
               <textarea
                 className='std-profile-exp__input'
                 value={description}
@@ -242,7 +242,7 @@ function StudentProfileExperience (props: Props): JSX.Element {
                 cols={32}
               />
               <div className='std-profile-exp__button'>
-                <BaseButton title='envoyer' onClick={handleNewExperience} />
+                <BaseButton title={ t('contact.send') } onClick={handleNewExperience} />
               </div>
             </div>
         </div>

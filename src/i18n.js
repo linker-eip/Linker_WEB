@@ -14,6 +14,9 @@ i18n
     resources: {
       fr: {
         translation: {
+          dropzone: {
+            drop: 'Déposez votre fichier'
+          },
           and: ' et ',
           report: {
             modal_title: 'Signaler cet évènement',
@@ -305,7 +308,8 @@ i18n
               },
               skills: {
                 title: 'Compétences',
-                add_skill: 'Ajouter une compétence'
+                add_skill: 'Ajouter une compétence',
+                no_skill: 'No skills'
               },
               experience: {
                 title: 'Expériences',
@@ -380,6 +384,7 @@ i18n
           },
           company: {
             title: 'Je suis une ENTREPRISE',
+            total_mission: 'Nombre total de missions: ',
             dashboard: {
               card: {
                 status: {
@@ -470,6 +475,9 @@ i18n
       },
       en: {
         translation: {
+          dropzone: {
+            drop: 'Drop your file'
+          },
           and: ' and ',
           report: {
             modal_title: 'Report this event',
@@ -512,12 +520,12 @@ i18n
             message_sended: 'Your message has been successfully sent.'
           },
           homepage: {
-            text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
-            text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
+            text_1: 'Linker is the first multidisciplinary freelance platform for students to carry out one-off assignments.',
+            text_2: 'Find student talent, create skills groups and carry out projects together.',
             title_1: 'Linker',
             title_2: ', la nouvelle plateforme',
-            title_3: 'étudiante',
-            espace: 'Espace',
+            title_3: 'Student',
+            espace: 'Area',
             company: {
               title: 'Company',
               text_1: 'Find complete teams in just a few clicks',
@@ -760,7 +768,8 @@ i18n
               },
               skills: {
                 title: 'Skills',
-                add_skill: 'Add a Skill'
+                add_skill: 'Add a Skill',
+                no_skill: 'No skills'
               },
               experience: {
                 title: 'Experiences',
@@ -835,6 +844,7 @@ i18n
           },
           company: {
             title: 'I am a COMPANY',
+            total_mission: 'Total mission: ',
             dashboard: {
               card: {
                 status: {
