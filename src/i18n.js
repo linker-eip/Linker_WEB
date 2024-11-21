@@ -14,6 +14,12 @@ i18n
     resources: {
       fr: {
         translation: {
+          mailbox: {
+            group: 'Groupe',
+            mission: 'Missions',
+            pre_mission: 'Pré-mission',
+            private: 'Messages privés'
+          },
           dropzone: {
             drop: 'Déposez votre fichier'
           },
@@ -475,6 +481,12 @@ i18n
       },
       en: {
         translation: {
+          mailbox: {
+            group: 'Group',
+            mission: 'Missions',
+            pre_mission: 'Pre-missions',
+            private: 'Private messages'
+          },
           dropzone: {
             drop: 'Drop your file'
           },

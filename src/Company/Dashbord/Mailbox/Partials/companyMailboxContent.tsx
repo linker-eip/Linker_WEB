@@ -4,6 +4,7 @@ import { Box, List, ListItem, ListItemAvatar, Avatar, ListItemText, Divider, Tab
 import ProfileApi from '../../../../API/ProfileApi'
 import * as ROUTES from '../../../../Router/routes'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface Conversation {
   id: number
@@ -18,6 +19,7 @@ interface Conversations {
 
 function StudentMailboxContent (): JSX.Element {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const [conversations, setConversations] = useState<Conversations>({
     missionChannels: [],
@@ -82,8 +84,8 @@ function StudentMailboxContent (): JSX.Element {
         <div>
           <Box>
             <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
-              <Tab label="Missions" />
-              <Tab label="Pré-missions" />
+              <Tab label={t('mailbox.mission')} />
+              <Tab label={t('mailbox.pre_mission')} />
             </Tabs>
             <Divider />
             {selectedTab === 0 && renderChannelList(conversations.missionChannels, handleChannelClick, 'missionChannel')}
