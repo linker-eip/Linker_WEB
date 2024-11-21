@@ -14,6 +14,18 @@ i18n
     resources: {
       fr: {
         translation: {
+          network: {
+            find: 'Rechercher un étudiant',
+            loc: 'Localisation',
+            skills: 'Compétences',
+            tjm_min: 'TJM Minimum',
+            tjm_max: 'TJM Maximum',
+            grade_min: 'Note Minimale',
+            grade_max: 'Note Maximale',
+            search: 'Rechercher',
+            no_result: 'Aucun résultat trouvé',
+            sorry: 'Désolé, nous n\'avons trouvé aucun résultat pour votre recherche. Veuillez essayer avec d\'autres critères.'
+          },
           mailbox: {
             group: 'Groupe',
             mission: 'Missions',
@@ -481,6 +493,18 @@ i18n
       },
       en: {
         translation: {
+          network: {
+            find: 'Find a student',
+            loc: 'Location',
+            skills: 'Skills',
+            tjm_min: 'ADR Minimum',
+            tjm_max: 'ADR Maximum',
+            grade_min: 'Grade Minimum',
+            grade_max: 'Grade Maximum',
+            search: 'Search',
+            no_result: 'No results found',
+            sorry: 'Sorry, we didn\'t find any results for your search. Please try again with other criteria.'
+          },
           mailbox: {
             group: 'Group',
             mission: 'Missions',
