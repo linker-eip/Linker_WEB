@@ -8,6 +8,7 @@ import {
   Paper, IconButton, Dialog, DialogActions, DialogContent, DialogTitle,
   Button, TextField, DialogContentText, InputAdornment
 } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface UpdatePaymentModel {
   studentPaymentId: number | undefined
@@ -28,6 +29,7 @@ const paymentStatusMapping: { [key in PaymentStatus]: string } = {
 }
 
 function StudentPaymentsContent (): JSX.Element {
+  const { t } = useTranslation()
   const [rows, setRows] = useState<Row[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [currentData, setCurrentData] = useState<Row | null>(null)
@@ -97,7 +99,7 @@ function StudentPaymentsContent (): JSX.Element {
             id="search-bar"
             type="search"
             variant="outlined"
-            placeholder="Rechercher un paiement"
+            placeholder={t('payment.search') ?? ''}
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value)
@@ -137,7 +139,7 @@ function StudentPaymentsContent (): JSX.Element {
                     paddingRight: '50px'
                   }}
                 >
-                  Nom de la mission
+                  {t('payment.name')}
                 </TableCell>
                 <TableCell
                   align='center'
@@ -151,7 +153,8 @@ function StudentPaymentsContent (): JSX.Element {
                     paddingRight: '50px'
                   }}
                 >
-                  Statut du paiement
+                  {t('payment.status')}
+
                 </TableCell>
                 <TableCell
                   align='center'
@@ -165,7 +168,7 @@ function StudentPaymentsContent (): JSX.Element {
                     paddingRight: '50px'
                   }}
                 >
-                  Montant
+                  {t('payment.amount')}
                 </TableCell>
                 <TableCell
                   align='center'
@@ -179,7 +182,7 @@ function StudentPaymentsContent (): JSX.Element {
                     paddingRight: '50px'
                   }}
                 >
-                  Cash-out
+                  {t('payment.cash_out')}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -223,7 +226,7 @@ function StudentPaymentsContent (): JSX.Element {
               <DialogTitle sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>Cash-Out</DialogTitle>
               <DialogContent>
                 <DialogContentText sx={{ fontFamily: 'Poppins', fontSize: '20px' }}>
-                  Êtes-vous sûr de vouloir retirer le montant de {currentData?.amount}€ de la mission &apos;{currentData?.missionName}&apos; ?
+                  {t('payment.verify', { amount: currentData?.amount, missionName: currentData?.missionName })}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -232,14 +235,14 @@ function StudentPaymentsContent (): JSX.Element {
                   color="primary"
                   sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
                 >
-                  Non
+                  {t('payment.no')}
                 </Button>
                 <Button
                   onClick={() => { handleCashOut() }}
                   color="primary"
                   sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
                 >
-                  Oui
+                  {t('payment.yes')}
                 </Button>
               </DialogActions>
             </Dialog>

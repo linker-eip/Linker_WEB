@@ -14,6 +14,16 @@ i18n
     resources: {
       fr: {
         translation: {
+          payment: {
+            name: 'Nom de la mission',
+            status: 'Statut du paiement',
+            amount: 'Montant',
+            cash_out: 'Retirer',
+            verify: 'Êtes-vous sûr de vouloir retirer le montant de {{amount}}€ de la mission &apos;{{missionName}}&apos; ?',
+            yes: 'Oui',
+            no: 'Non',
+            search: 'Rechercher un paiement'
+          },
           invoices: {
             year: 'Année',
             title: 'Titre de la mission',
@@ -511,6 +521,16 @@ i18n
       },
       en: {
         translation: {
+          payment: {
+            name: 'Mission name',
+            status: 'Mission status',
+            amount: 'Amount',
+            cash_out: 'Cash-out',
+            verify: 'Are you sure you want to withdraw the amount of {{amount}}€ from the mission “{{missionName}}”?',
+            yes: 'Yes',
+            no: 'No',
+            search: 'Search a payment'
+          },
           invoices: {
             year: 'Year',
             title: 'Mission title',
