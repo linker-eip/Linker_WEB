@@ -342,6 +342,12 @@ i18n
                 activity: 'Activité'
               },
               content: {
+                desc: 'Description',
+                location: 'Localité',
+                website: 'Site Web',
+                activity: 'Activité',
+                grade: 'Pas de note',
+                mission: 'Mission réalisée: {{value}}'
               },
               verif: {
                 title: 'Vérifications',
@@ -848,7 +854,14 @@ i18n
                 website: 'Website',
                 activity: 'Activity'
               },
-              content: {},
+              content: {
+                desc: 'Description',
+                location: 'Location',
+                website: 'Website',
+                activity: 'Activity',
+                grade: 'No Grade',
+                mission: 'Missions done: {{value}}'
+              },
               verif: {
                 title: 'Verifications',
                 verified_student: 'Verified Student',

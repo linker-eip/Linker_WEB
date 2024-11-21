@@ -228,18 +228,18 @@ function CompanyProfileContent ({ editable }: Props): JSX.Element {
                   <h1 className='std-profile-content__title'>
                     { profileData?.name }
                   </h1>
-                  { profileData?.description !== '' ? <p> { profileData?.description } </p> : <p> Description </p>}
+                  { profileData?.description !== '' ? <p> { profileData?.description } </p> : <p> { t('student.profile.content.desc') } </p>}
                   <div className='std-profile-content__section'>
                     <PlaceIcon />
-                    { profileData?.location !== '' ? <p> { profileData?.location } </p> : <p> Localité </p> }
+                    { profileData?.location !== '' ? <p> { profileData?.location } </p> : <p> { t('student.profile.content.location') } </p> }
                   </div>
                   <div className='std-profile-content__section'>
                     <LanguageIcon />
-                    { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> Site Web </p> }
+                    { profileData?.website !== '' ? <p className='std-profile-content__site'> { profileData?.website } </p> : <p> { t('student.profile.content.website') } </p> }
                   </div>
                   <div className='std-profile-content__section'>
                     <BusinessCenterIcon />
-                    { profileData?.activity !== '' ? <p> { profileData?.activity } </p> : <p> Activité </p> }
+                    { profileData?.activity !== '' ? <p> { profileData?.activity } </p> : <p> { t('student.profile.content.activity') } </p> }
                   </div>
                   <div className='std-profile-content__section'>
                     <ArticleIcon />
