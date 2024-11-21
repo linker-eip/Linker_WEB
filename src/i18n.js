@@ -14,6 +14,24 @@ i18n
     resources: {
       fr: {
         translation: {
+          invoices: {
+            year: 'Année',
+            title: 'Titre de la mission',
+            client: 'Client',
+            status: 'État',
+            invoice: 'Facture',
+            student: 'Étudiant',
+            paid: 'Payée',
+            waiting: 'En attente',
+            cancelled: 'Annulée',
+            filter: {
+              date: 'Date 🗓️',
+              status: 'Statut ❓',
+              title: 'Titre 📝',
+              student: 'Étudiant 🧑‍🎓',
+              label: 'Filtrer'
+            }
+          },
           network: {
             find: 'Rechercher un étudiant',
             loc: 'Localisation',
@@ -493,6 +511,24 @@ i18n
       },
       en: {
         translation: {
+          invoices: {
+            year: 'Year',
+            title: 'Mission title',
+            client: 'Client',
+            status: 'Status',
+            invoice: 'Invoice',
+            student: 'Student',
+            paid: 'Paid',
+            waiting: 'Waiting',
+            cancelled: 'Cancelled',
+            filter: {
+              date: 'Date 🗓️',
+              status: 'Status ❓',
+              title: 'Title 📝',
+              student: 'Student 🧑‍🎓',
+              label: 'Filter'
+            }
+          },
           network: {
             find: 'Find a student',
             loc: 'Location',
