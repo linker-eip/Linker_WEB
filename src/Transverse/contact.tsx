@@ -24,6 +24,7 @@ function Contact (): JSX.Element {
   const [messageObject, setMessageObject] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const [snackbarValue, setSnackbarValue] = useState<boolean>(false)
+  const maxLength = 200
 
   const handleLastnameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setLastname(event.target.value)
@@ -38,7 +39,10 @@ function Contact (): JSX.Element {
   }
 
   const handleMessageObjectChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setMessageObject(event.target.value)
+    const value = event.target.value
+    if (value.length <= maxLength) {
+      setMessageObject(value)
+    }
   }
 
   const handleMessageChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
@@ -51,6 +55,7 @@ function Contact (): JSX.Element {
       object: messageObject,
       content: message
     }
+
     const response = await ContactApi.sendMessage(localStorage.getItem('jwtToken') as string, data)
     if (response !== undefined) {
       openSnackbar()
@@ -63,7 +68,7 @@ function Contact (): JSX.Element {
   }
 
   const isButtonDisabled = (): boolean => {
-    if (lastname.length > 1 && firstname.length > 1 && email.length > 1 && messageObject.length > 1 && message.length > 1) {
+    if (lastname.length > 1 && firstname.length > 1 && email.length > 1 && messageObject.length > 1 && messageObject.length <= 200 && message.length > 1) {
       if (isValidEmail(email)) {
         return false
       }
@@ -81,11 +86,7 @@ function Contact (): JSX.Element {
     setSnackbarValue(true)
   }
 
-  const closeSnackbar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
-    if (reason === 'clickaway') {
-      return
-    }
-
+  const closeSnackbar = (): void => {
     setSnackbarValue(false)
   }
 
@@ -133,7 +134,8 @@ function Contact (): JSX.Element {
           </div>
           <div className='contact-form__section'>
             <div className='contact-form__subtitle'> {t('contact.object')} </div>
-            <TextField
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <TextField
                 className='contact-form__textfield'
                 required
                 value={messageObject}
@@ -141,7 +143,11 @@ function Contact (): JSX.Element {
                 variant='outlined'
                 id="standard-required"
                 label={t('contact.object')}
-            />
+              />
+              <div className='contact-form__charcount'>
+                {messageObject.length} / {maxLength}
+              </div>
+            </div>
           </div>
           <div className='contact-form__section'>
             <div className='contact-form__subtitle'> {t('contact.message')} </div>

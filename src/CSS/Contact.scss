@@ -94,6 +94,16 @@
         font-size: 1.5vw;
         font-family: 'Poppins';
     }
+
+    &__charcount {
+        flex: none;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        font-size: 14px;
+        color: #6c757d;
+        margin-left: 4px;
+    }
 }
 
 .contact-formv2 {
