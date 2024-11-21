@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { DashboardState } from '../../../Enum'
 import isPrivateRoute from '../../../Component/isPrivateRoute'
 import StudentProfileContent from './partials/StudentProfileContent'
-import StudentProfileVerification from './partials/StudentProfileVerification'
 import StudentProfileCompetence from './partials/StudentProfileCompetence'
 import StudentProfileExperience from './partials/StudentProfileExperience'
 import StudentProfileEducation from './partials/StudentProfileEducation'
@@ -54,10 +53,7 @@ function StudentProfile (): JSX.Element {
         {profileData !== undefined && skillsList !== undefined
           ? <div className='std-bord-container__content'>
               <StudentProfileContent editable data={profileData} update={refreshProfileData}/>
-              <div className='std-bord-container__row'>
-                <StudentProfileVerification data={profileData}/>
-                <StudentProfileCompetence data={profileData} skills={skillsList} update={refreshProfileData} />
-              </div>
+              <StudentProfileCompetence data={profileData} skills={skillsList} update={refreshProfileData} />
               <StudentProfileExperience data={profileData} update={refreshProfileData}/>
               <StudentProfileEducation data={profileData} update={refreshProfileData}/>
             </div>

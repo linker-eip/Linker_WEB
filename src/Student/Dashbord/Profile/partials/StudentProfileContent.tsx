@@ -164,25 +164,25 @@ function StudentProfileContent (props: Props): JSX.Element {
               <h1 className='std-profile-content__title'>
                 { props.data.firstName } { props.data.lastName }
               </h1>
-              { props.data.description !== '' ? <p> { props.data.description } </p> : <p> Description </p>}
+              { props.data.description !== '' ? <p> { props.data.description } </p> : <p> { t('student.profile.content.desc') } </p>}
               <div className='std-profile-content__mark'>
                 { props.data.note !== null
                   ? props.data.note
-                  : 'pas de note'
+                  : t('student.profile.content.grade')
                 }
                 { props.data.note !== null
                   ? <img src='/assets/stars.svg' alt='stars' className='std-profile-content__stars-selected' />
                   : null
                 }
                 <div className='std-profile-content__circle' />
-                <p> mission réalisé : <strong> {props.data.note} </strong></p>
+                  <p> { t('student.profile.content.mission', { value: props.data.note }) } </p>
               </div>
                 <div className='std-profile-content__section'>
                   <PlaceIcon />
-                  { props.data.location !== '' ? <p> { props.data.location } </p> : <p> Localité </p> }
+                  { props.data.location !== '' ? <p> { props.data.location } </p> : <p> { t('student.profile.content.location') } </p> }
                 </div>
                 <div className='std-profile-content__section'>
-                  { props.data.website !== '' ? <p className='std-profile-content__site'> { props.data.website } </p> : <p> Site Web </p> }
+                  { props.data.website !== '' ? <p className='std-profile-content__site'> { props.data.website } </p> : <p> { t('student.profile.content.website') } </p> }
                 </div>
               </div>
             </div>
@@ -194,13 +194,13 @@ function StudentProfileContent (props: Props): JSX.Element {
             }
             <div className='std-profile-content__content'>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
+                <ClassicButton title={t('student.settings.security.desactivation')} onClick={openDeactivateModal} refuse />
               </div>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
+                <ClassicButton title={t('student.settings.security.delete')} onClick={openDeleteModal} refuse />
               </div>
               <div className='std-profile-content__section'>
-                <ClassicButton title='Remplir avec LinkedIn' onClick={openLinkedInModal} />
+                <ClassicButton title={t('modal.linkedIn.title')} onClick={openLinkedInModal} />
               </div>
               <ModalLinkedIn open={linkedInModal} onClose={closeLinkedInModal} />
               {

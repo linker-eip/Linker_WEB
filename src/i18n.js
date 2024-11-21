@@ -14,6 +14,55 @@ i18n
     resources: {
       fr: {
         translation: {
+          payment: {
+            name: 'Nom de la mission',
+            status: 'Statut du paiement',
+            amount: 'Montant',
+            cash_out: 'Retirer',
+            verify: 'Êtes-vous sûr de vouloir retirer le montant de {{amount}}€ de la mission &apos;{{missionName}}&apos; ?',
+            yes: 'Oui',
+            no: 'Non',
+            search: 'Rechercher un paiement'
+          },
+          invoices: {
+            year: 'Année',
+            title: 'Titre de la mission',
+            client: 'Client',
+            status: 'État',
+            invoice: 'Facture',
+            student: 'Étudiant',
+            paid: 'Payée',
+            waiting: 'En attente',
+            cancelled: 'Annulée',
+            filter: {
+              date: 'Date 🗓️',
+              status: 'Statut ❓',
+              title: 'Titre 📝',
+              student: 'Étudiant 🧑‍🎓',
+              label: 'Filtrer'
+            }
+          },
+          network: {
+            find: 'Rechercher un étudiant',
+            loc: 'Localisation',
+            skills: 'Compétences',
+            tjm_min: 'TJM Minimum',
+            tjm_max: 'TJM Maximum',
+            grade_min: 'Note Minimale',
+            grade_max: 'Note Maximale',
+            search: 'Rechercher',
+            no_result: 'Aucun résultat trouvé',
+            sorry: 'Désolé, nous n\'avons trouvé aucun résultat pour votre recherche. Veuillez essayer avec d\'autres critères.'
+          },
+          mailbox: {
+            group: 'Groupe',
+            mission: 'Missions',
+            pre_mission: 'Pré-mission',
+            private: 'Messages privés'
+          },
+          dropzone: {
+            drop: 'Déposez votre fichier'
+          },
           and: ' et ',
           report: {
             modal_title: 'Signaler cet évènement',
@@ -293,6 +342,12 @@ i18n
                 activity: 'Activité'
               },
               content: {
+                desc: 'Description',
+                location: 'Localité',
+                website: 'Site Web',
+                activity: 'Activité',
+                grade: 'Pas de note',
+                mission: 'Mission réalisée: {{value}}'
               },
               verif: {
                 title: 'Vérifications',
@@ -305,7 +360,8 @@ i18n
               },
               skills: {
                 title: 'Compétences',
-                add_skill: 'Ajouter une compétence'
+                add_skill: 'Ajouter une compétence',
+                no_skill: 'No skills'
               },
               experience: {
                 title: 'Expériences',
@@ -380,6 +436,7 @@ i18n
           },
           company: {
             title: 'Je suis une ENTREPRISE',
+            total_mission: 'Nombre total de missions: ',
             dashboard: {
               card: {
                 status: {
@@ -470,6 +527,55 @@ i18n
       },
       en: {
         translation: {
+          payment: {
+            name: 'Mission name',
+            status: 'Mission status',
+            amount: 'Amount',
+            cash_out: 'Cash-out',
+            verify: 'Are you sure you want to withdraw the amount of {{amount}}€ from the mission “{{missionName}}”?',
+            yes: 'Yes',
+            no: 'No',
+            search: 'Search a payment'
+          },
+          invoices: {
+            year: 'Year',
+            title: 'Mission title',
+            client: 'Client',
+            status: 'Status',
+            invoice: 'Invoice',
+            student: 'Student',
+            paid: 'Paid',
+            waiting: 'Waiting',
+            cancelled: 'Cancelled',
+            filter: {
+              date: 'Date 🗓️',
+              status: 'Status ❓',
+              title: 'Title 📝',
+              student: 'Student 🧑‍🎓',
+              label: 'Filter'
+            }
+          },
+          network: {
+            find: 'Find a student',
+            loc: 'Location',
+            skills: 'Skills',
+            tjm_min: 'ADR Minimum',
+            tjm_max: 'ADR Maximum',
+            grade_min: 'Grade Minimum',
+            grade_max: 'Grade Maximum',
+            search: 'Search',
+            no_result: 'No results found',
+            sorry: 'Sorry, we didn\'t find any results for your search. Please try again with other criteria.'
+          },
+          mailbox: {
+            group: 'Group',
+            mission: 'Missions',
+            pre_mission: 'Pre-missions',
+            private: 'Private messages'
+          },
+          dropzone: {
+            drop: 'Drop your file'
+          },
           and: ' and ',
           report: {
             modal_title: 'Report this event',
@@ -512,12 +618,12 @@ i18n
             message_sended: 'Your message has been successfully sent.'
           },
           homepage: {
-            text_1: 'Linker est la première plateforme de freelance pluridisciplinaire destinée aux étudiants pour la réalisation de missions ponctuelles.',
-            text_2: 'Trouvez des talents étudiants, créez des groupes de compétences et réalisez des projets ensemble.',
+            text_1: 'Linker is the first multidisciplinary freelance platform for students to carry out one-off assignments.',
+            text_2: 'Find student talent, create skills groups and carry out projects together.',
             title_1: 'Linker',
             title_2: ', la nouvelle plateforme',
-            title_3: 'étudiante',
-            espace: 'Espace',
+            title_3: 'Student',
+            espace: 'Area',
             company: {
               title: 'Company',
               text_1: 'Find complete teams in just a few clicks',
@@ -748,7 +854,14 @@ i18n
                 website: 'Website',
                 activity: 'Activity'
               },
-              content: {},
+              content: {
+                desc: 'Description',
+                location: 'Location',
+                website: 'Website',
+                activity: 'Activity',
+                grade: 'No Grade',
+                mission: 'Missions done: {{value}}'
+              },
               verif: {
                 title: 'Verifications',
                 verified_student: 'Verified Student',
@@ -760,7 +873,8 @@ i18n
               },
               skills: {
                 title: 'Skills',
-                add_skill: 'Add a Skill'
+                add_skill: 'Add a Skill',
+                no_skill: 'No skills'
               },
               experience: {
                 title: 'Experiences',
@@ -835,6 +949,7 @@ i18n
           },
           company: {
             title: 'I am a COMPANY',
+            total_mission: 'Total mission: ',
             dashboard: {
               card: {
                 status: {
