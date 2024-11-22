@@ -3,7 +3,7 @@ import '../../../CSS/Sidebar.scss'
 import { useTranslation } from 'react-i18next'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
-// import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined'
+import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import MessageIcon from '@mui/icons-material/Message'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
@@ -29,9 +29,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.DOCUMENTS:
         navigate(ROUTES.STUDENT_DOCUMENTS_DASHBOARD)
         break
-      // case DashboardState.FACTURES:
-      //   navigate(ROUTES.STUDENT_INVOICES_DASHBOARD)
-      //   break
+      case DashboardState.FACTURES:
+        navigate(ROUTES.STUDENT_INVOICES_DASHBOARD)
+        break
       case DashboardState.PAIEMENTS:
         navigate(ROUTES.STUDENT_PAYMENTS)
         break
@@ -85,7 +85,7 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
           <SidebarItem icon={<MessageIcon />} labelKey='student.dashboard.mailbox' dashboardState={DashboardState.MAILBOX} />
           <SidebarItem icon={<RoomOutlinedIcon />} labelKey='student.dashboard.mission' dashboardState={DashboardState.MISSION} />
           <SidebarItem icon={<ConnectWithoutContactIcon />} labelKey='student.dashboard.network' dashboardState={DashboardState.NETWORK} />
-          {/* <SidebarItem icon={<RequestPageOutlinedIcon />} labelKey='student.dashboard.facture' dashboardState={DashboardState.FACTURES} /> */}
+          <SidebarItem icon={<RequestPageOutlinedIcon />} labelKey='student.dashboard.facture' dashboardState={DashboardState.FACTURES} />
           <SidebarItem icon={<PaidIcon />} labelKey='student.dashboard.paiements' dashboardState={DashboardState.PAIEMENTS} />
           <SidebarItem icon={<PersonOutlineOutlinedIcon />} labelKey='student.dashboard.profil' dashboardState={DashboardState.PROFIL} />
           <SidebarItem icon={<TopicOutlinedIcon />} labelKey='student.dashboard.doc' dashboardState={DashboardState.DOCUMENTS} />
