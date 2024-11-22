@@ -3,7 +3,7 @@ import '../../CSS/Sidebar.scss'
 import { useTranslation } from 'react-i18next'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
-// import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined'
+import RequestPageOutlinedIcon from '@mui/icons-material/RequestPageOutlined'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import TopicOutlinedIcon from '@mui/icons-material/TopicOutlined'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -56,9 +56,9 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
       case DashboardState.MISSION:
         navigate(ROUTES.COMPANY_MISSIONS)
         break
-      // case DashboardState.FACTURES:
-      //   navigate(ROUTES.COMPANY_INVOICES_DASHBOARD)
-      //   break
+      case DashboardState.FACTURES:
+        navigate(ROUTES.COMPANY_INVOICES_DASHBOARD)
+        break
       case DashboardState.PROFIL:
         navigate(ROUTES.COMPANY_PROFILE)
         break
@@ -101,13 +101,13 @@ function SidebarDashboard ({ state }: Props): JSX.Element {
             label={t('student.dashboard.mission')}
             onClick={changeState}
             />
-          {/* <SidebarItem
+          <SidebarItem
             currentState={stateDashboard}
             itemState={DashboardState.FACTURES}
             icon={RequestPageOutlinedIcon}
             label={t('student.dashboard.facture')}
             onClick={changeState}
-            /> */}
+            />
           <SidebarItem
             currentState={stateDashboard}
             itemState={DashboardState.PROFIL}
