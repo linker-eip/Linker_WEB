@@ -33,9 +33,6 @@ function CheckAuth (): boolean {
     try {
       const decodedToken: JWT = jwtDecode(token)
       // const currentTime = Date.now() / 1000
-
-      console.log(decodedToken.userType)
-
       if (!decodedToken) {
         localStorage.removeItem('jwtToken')
         return false

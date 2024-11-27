@@ -173,6 +173,7 @@ function CompanySecurity (): JSX.Element {
       setSnackBarValue(true)
       setSnackError(false)
       setErrorInfo(ErrorList.NONE)
+      setTimeout(() => handleDisconnect(), 1000)
     } else {
       setAlertMessage(response)
       setSnackBarValue(true)
@@ -182,6 +183,11 @@ function CompanySecurity (): JSX.Element {
     setOldPassword('')
     setNewPassword('')
     setConfirmNewPassword('')
+  }
+
+  const handleDisconnect = (): void => {
+    localStorage.removeItem('jwtToken')
+    navigate(ROUTES.COMPANY_LOGIN_PAGE)
   }
 
   return (
@@ -273,8 +279,8 @@ function CompanySecurity (): JSX.Element {
           { t('student.settings.security.delete') }
         </div>
         <div className='std-security__container'>
-          <ClassicButton title='Désactiver votre compte' onClick={openDeactivateModal} refuse />
-          <ClassicButton title='Supprimer votre compte' onClick={openDeleteModal} refuse />
+          <ClassicButton title={t('student.settings.security.desactivation')} onClick={openDeactivateModal} refuse />
+          <ClassicButton title={t('student.settings.security.delete')} onClick={openDeleteModal} refuse />
         </div>
       </div>
       <Snackbar open={snackBarValue} autoHideDuration={6000} onClose={closeSnackBar}>

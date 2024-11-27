@@ -65,6 +65,9 @@ function StudentDocumentContentV2 (): JSX.Element {
   const [urssafSnackBarValue, setUrssafSnackBarValue] = useState<boolean>(false)
   const [ribSnackBarValue, setRibSnackBarValue] = useState<boolean>(false)
 
+  const [errorSnackBar, setErrorSnackBar] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+
   const [cniStatus, setCniStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
   const [sirenStatus, setSirenStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
   const [urssafStatus, setUrssafStatus] = useState<DocumentStatus>(DocumentStatus.NOT_FILLED)
@@ -177,8 +180,20 @@ function StudentDocumentContentV2 (): JSX.Element {
     setRibSnackBarValue(false)
   }
 
+  const closeErrorSnackBar = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setErrorSnackBar(false)
+  }
+
   const postFile = async (): Promise<void> => {
     if (cniFile.length > 0 && cniFile[0].size <= 2 * 1024 * 1024) {
+      if (cniFile[0].type !== 'application/pdf') {
+        setErrorMessage('Les fichiers doivent être au format .pdf')
+        setErrorSnackBar(true)
+        return
+      }
       const cniFormData = new FormData()
       cniFormData.append('file', cniFile[0])
       cniFormData.append('documentType', StudentDocumentType.CNI)
@@ -207,6 +222,11 @@ function StudentDocumentContentV2 (): JSX.Element {
     }
 
     if (sirenFile.length > 0 && sirenFile[0].size <= 2 * 1024 * 1024) {
+      if (sirenFile[0].type !== 'application/pdf') {
+        setErrorMessage('Les fichiers doivent être au format .pdf')
+        setErrorSnackBar(true)
+        return
+      }
       const sirenFormData = new FormData()
       sirenFormData.append('file', sirenFile[0])
       sirenFormData.append('documentType', StudentDocumentType.SIREN)
@@ -238,6 +258,11 @@ function StudentDocumentContentV2 (): JSX.Element {
     }
 
     if (urssafFile.length > 0 && urssafFile[0].size <= 2 * 1024 * 1024) {
+      if (urssafFile[0].type !== 'application/pdf') {
+        setErrorMessage('Les fichiers doivent être au format .pdf')
+        setErrorSnackBar(true)
+        return
+      }
       const urssafFormData = new FormData()
       urssafFormData.append('file', urssafFile[0])
       urssafFormData.append('documentType', StudentDocumentType.URSSAF)
@@ -267,6 +292,11 @@ function StudentDocumentContentV2 (): JSX.Element {
     }
 
     if (ribFile.length > 0 && ribFile[0].size <= 2 * 1024 * 1024) {
+      if (ribFile[0].type !== 'application/pdf') {
+        setErrorMessage('Les fichiers doivent être au format .pdf')
+        setErrorSnackBar(true)
+        return
+      }
       const ribFormData = new FormData()
       ribFormData.append('file', ribFile[0])
       ribFormData.append('documentType', StudentDocumentType.RIB)
@@ -507,6 +537,11 @@ function StudentDocumentContentV2 (): JSX.Element {
           </div>
       }
       </div>
+      <Snackbar open={errorSnackBar} autoHideDuration={6000} onClose={closeErrorSnackBar}>
+        <Alert onClose={closeErrorSnackBar} severity="error" sx={{ width: '100%' }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
       <Snackbar open={cniSnackBarValue} autoHideDuration={6000} onClose={closeCniSnackBar}>
         <Alert onClose={closeCniSnackBar} severity="error" sx={{ width: '100%' }}>
           Votre carte d&apos;identité a déjà été validée.

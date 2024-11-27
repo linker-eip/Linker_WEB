@@ -24,6 +24,7 @@ import {
   TextField, InputAdornment, Grid, Card, CardContent, CardMedia,
   Typography, Box
 } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface NestedSkills {
   Development: string[]
@@ -62,6 +63,7 @@ interface FiltersSearchDto {
 
 function StudentNetworkContent (): JSX.Element {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<FiltersResultDto[]>([])
@@ -132,7 +134,7 @@ function StudentNetworkContent (): JSX.Element {
             id="search-bar"
             type="search"
             variant="outlined"
-            placeholder="Rechercher un étudiant"
+            placeholder={t('network.find') ?? ''}
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value)
@@ -163,7 +165,7 @@ function StudentNetworkContent (): JSX.Element {
               type="search"
               name="location"
               variant="outlined"
-              placeholder="Localisation"
+              placeholder={t('network.loc') ?? ''}
               value={filters.location}
               onChange={handleFilterChange}
               InputProps={{
@@ -191,7 +193,7 @@ function StudentNetworkContent (): JSX.Element {
               type="search"
               name="skills"
               variant="outlined"
-              placeholder="Compétences"
+              placeholder={t('network.skills') ?? ''}
               value={filters.skills}
               onChange={handleFilterChange}
               InputProps={{
@@ -219,7 +221,7 @@ function StudentNetworkContent (): JSX.Element {
               type="number"
               name="tjmMin"
               variant="outlined"
-              placeholder="TJM Minimum"
+              placeholder={t('network.tjm_min') ?? ''}
               value={filters.tjmMin}
               onChange={handleFilterChange}
               InputProps={{
@@ -247,7 +249,7 @@ function StudentNetworkContent (): JSX.Element {
               type="number"
               name="tjmMax"
               variant="outlined"
-              placeholder="TJM Maximum"
+              placeholder={t('network.tjm_max') ?? ''}
               value={filters.tjmMax}
               onChange={handleFilterChange}
               InputProps={{
@@ -275,7 +277,7 @@ function StudentNetworkContent (): JSX.Element {
               type="number"
               name="noteMin"
               variant="outlined"
-              placeholder="Note Minimale"
+              placeholder={t('network.grade_min') ?? ''}
               value={filters.noteMin}
               onChange={handleFilterChange}
               InputProps={{
@@ -303,7 +305,7 @@ function StudentNetworkContent (): JSX.Element {
               type="number"
               name="noteMax"
               variant="outlined"
-              placeholder="Note Maximale"
+              placeholder={t('network.grade_max') ?? ''}
               value={filters.noteMax}
               onChange={handleFilterChange}
               InputProps={{
@@ -326,7 +328,7 @@ function StudentNetworkContent (): JSX.Element {
             />
           </Grid>
           <Grid item xs={6} mt={2} mb={1} display="flex" justifyContent="flex-end">
-            <ClassicButton title="Rechercher" onClick={() => { handleSearch() }} />
+            <ClassicButton title={t('network.search')} onClick={() => { handleSearch() }} />
           </Grid>
         </Grid>
 
@@ -334,10 +336,10 @@ function StudentNetworkContent (): JSX.Element {
           {searchPerformed && searchResults.length === 0 ? (
             <Grid item xs={12}>
               <Typography variant="h6" component="div" gutterBottom>
-                Aucun résultat trouvé
+                {t('network.no_result')}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Désolé, nous n'avons trouvé aucun résultat pour votre recherche. Veuillez essayer avec d'autres critères.
+              {t('network.sorry')}
               </Typography>
             </Grid>
           ) : (

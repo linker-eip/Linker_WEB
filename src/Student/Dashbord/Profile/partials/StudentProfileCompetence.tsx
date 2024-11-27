@@ -174,7 +174,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {dataSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> Design & product </div>
@@ -184,7 +184,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {designSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> Development </div>
@@ -194,7 +194,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {devSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
@@ -204,7 +204,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {marketSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> No-Code </div>
@@ -214,7 +214,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {noCodeSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
               </div>
@@ -226,7 +226,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {dataSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> Design & product </div>
@@ -236,7 +236,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {designSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> Development </div>
@@ -246,7 +246,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {devSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> Marketing & Sales </div>
@@ -256,7 +256,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {marketSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                   <div className="std-profile-comp__skills-title"> No-Code </div>
@@ -266,13 +266,13 @@ function StudentProfileCompetence (props: Props): JSX.Element {
                     ))}
                     {noCodeSkill.length > 0
                       ? null
-                      : <div> Aucune compétence </div>
+                      : <div> {t('student.profile.skills.no_skill')} </div>
                     }
                   </div>
                 </div>
             }
             {isEdit
-              ? <div className="std-profile-comp__sep">Ajoute une compétence</div>
+              ? <div className="std-profile-comp__sep"> {t('student.profile.skills.add_skill')} </div>
               : null}
             <div className="std-profile-comp__skills-section">
               {isEdit
@@ -333,7 +333,7 @@ function StudentProfileCompetence (props: Props): JSX.Element {
               </div>
             </div>
             {isEdit
-              ? <ClassicButton title='Valider' onClick={handleValidSkill} />
+              ? <ClassicButton title={t('validate')} onClick={handleValidSkill} />
               : null
             }
           </div>

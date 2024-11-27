@@ -1,8 +1,7 @@
 import React from 'react'
 import '../../../../CSS/Hotbar.scss'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography, IconButton } from '@mui/material'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface Row {
   année: string
@@ -36,9 +35,9 @@ const headerCellStyle: { align: 'center', sx: object } = {
   }
 }
 
-const tableHeaders = ['Année', 'Titre de la mission', 'Client', 'État', 'Facture']
-
 function StudentInvoicesContent (): JSX.Element {
+  const { t } = useTranslation()
+
   const handleDownload = (): void => {
     const link = document.createElement('a')
     link.href = '/assets/ipsum_1.pdf'
@@ -47,6 +46,8 @@ function StudentInvoicesContent (): JSX.Element {
     link.click()
     document.body.removeChild(link)
   }
+
+  const tableHeaders = [t('invoices.year'), t('invoices.title'), t('invoices.client'), t('invoices.status'), t('invoices.invoice')]
 
   return (
     <div className='std-document-content'>
@@ -79,21 +80,6 @@ function StudentInvoicesContent (): JSX.Element {
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack direction='row' alignItems='center' justifyContent='space-between' mt='30px'>
-          <IconButton
-            style={{ padding: 0, marginLeft: '500px' }}
-            onClick={() => { console.log('Chevron gauche cliqué!') }}>
-            <ChevronLeftIcon style={{ fontSize: 40 }} />
-          </IconButton>
-          <Typography variant="body1" sx={{ fontFamily: 'Poppins', fontSize: '24px', fontWeight: 'bold' }}>
-            Page 1 sur 2
-          </Typography>
-          <IconButton
-            style={{ padding: 0, marginRight: '500px' }}
-            onClick={() => { console.log('Chevron droite cliqué!') }}>
-            <ChevronRightIcon style={{ fontSize: 40 }} />
-          </IconButton>
-        </Stack>
       </div>
     </div>
   )
