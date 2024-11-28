@@ -22,7 +22,7 @@ const SearchBar = (props: Props): JSX.Element => {
   const handleResearch = async (): Promise<void> => {
     const response = await GroupApi.searchMembers(localStorage.getItem('jwtToken') as string, searchTerm)
     setSearchResults(response.data)
-
+    setMemberInvited(undefined)
     const membersInvitedResponse = await GroupApi.getMemberInvited(localStorage.getItem('jwtToken') as string)
     setMemberInvited(membersInvitedResponse.data)
   }

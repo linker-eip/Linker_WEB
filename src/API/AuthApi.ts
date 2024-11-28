@@ -1,4 +1,5 @@
 import axios, { type AxiosError } from 'axios'
+import { enqueueSnackbar } from 'notistack'
 
 export interface AuthResponse {
   status: number
@@ -6,6 +7,10 @@ export interface AuthResponse {
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class AuthApi {
+  private static handleError (message: string): void {
+    enqueueSnackbar(message, { variant: 'error' })
+  }
+  
   static async verifyStudentPassword (code: string): Promise<AuthResponse> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/verify?code=${code}`)
     if (response.status !== 200 && response.status !== 201) {
@@ -22,15 +27,10 @@ class AuthApi {
           'Content-Type': 'application/json'
         }
       })
-    } catch (error) {
-      alert('Une erreur est survenue lors de la modification de votre mot de passe')
+    } catch (error: any) {
       console.log(error)
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{ statusCode: number, message: string }>
-        if (axiosError.response?.data.statusCode === 401) {
-          return (axiosError.response?.data.message)
-        }
-      }
+      this.handleError(error.response.data.message)
+      return error
     }
     return ''
   }
@@ -43,15 +43,10 @@ class AuthApi {
           'Content-Type': 'application/json'
         }
       })
-    } catch (error) {
+    } catch (error: any) {
       console.log(error)
-      alert('Une erreur est survenue lors de la modification de votre mot de passe')
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{ statusCode: number, message: string }>
-        if (axiosError.response?.data.statusCode === 401) {
-          return (axiosError.response?.data.message)
-        }
-      }
+      this.handleError(error.response.data.message)
+      return error
     }
     return ''
   }

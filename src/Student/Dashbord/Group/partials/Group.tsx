@@ -44,8 +44,10 @@ function Group (props: Props): JSX.Element {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     async function setInvitedData () {
-      const response = await GroupApi.getMemberInvited(localStorage.getItem('jwtToken') as string)
-      setMemberInvited(response.data)
+      if (hasGroup) {
+        const response = await GroupApi.getMemberInvited(localStorage.getItem('jwtToken') as string)
+        setMemberInvited(response.data)
+      }
     }
     setInvitedData()
   }, [inviteModal, refetch])

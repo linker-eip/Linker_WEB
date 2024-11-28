@@ -1,26 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../../../CSS/Hotbar.scss'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
-interface Row {
-  année: string
-  titre: string
-  client: string
-  etat: string
-}
-
-const rows: Row[] = [
-  { année: '2022', titre: 'Site vitrine', client: 'Epic Voyages', etat: 'Payée' },
-  { année: '2022', titre: 'App mobile', client: 'Epic Voyages', etat: 'Payée' },
-  { année: '2022', titre: 'Site e-commerce', client: 'WinterTimeOff', etat: 'En attente' },
-  { année: '2022', titre: 'Site vitrine', client: 'Pharmacie Derol', etat: 'Payée' },
-  { année: '2022', titre: 'Site vitrine', client: 'Pharmacie Derol', etat: 'Payée' },
-  { année: '2022', titre: 'App mobile', client: 'Epic Voyages', etat: 'Payée' },
-  { année: '2022', titre: 'Site e-commerce', client: 'WinterTimeOff', etat: 'En attente' },
-  { année: '2022', titre: 'Site vitrine', client: 'Pharmacie Derol', etat: 'Payée' },
-  { année: '2022', titre: 'Site vitrine', client: 'Pharmacie Derol', etat: 'Payée' }
-]
+import InvoiceApi from '../../../../API/InvoiceApi'
 
 const headerCellStyle: { align: 'center', sx: object } = {
   align: 'center',
@@ -35,19 +17,42 @@ const headerCellStyle: { align: 'center', sx: object } = {
   }
 }
 
+interface Invoice {
+  id: number
+  documentPath: string
+  documentType: string
+  documentUser: string
+  userId: number
+  createdAt: string
+}
+
 function StudentInvoicesContent (): JSX.Element {
   const { t } = useTranslation()
+  const [invoiceData, setInvoiceData] = React.useState<Invoice[]>([])
 
-  const handleDownload = (): void => {
+  const handleDownload = (documentPath: string): void => {
     const link = document.createElement('a')
-    link.href = '/assets/ipsum_1.pdf'
-    link.download = 'invoice.pdf'
+    link.href = `https://${documentPath}`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
   }
 
-  const tableHeaders = [t('invoices.year'), t('invoices.title'), t('invoices.client'), t('invoices.status'), t('invoices.invoice')]
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const data = await InvoiceApi.getInvoicesForStudent(localStorage.getItem('jwtToken') as string)
+        setInvoiceData(data.data)
+      } catch (error) {
+        console.error('Error fetching invoices:', error)
+        setInvoiceData([])
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const tableHeaders = [t('invoices.year'), t('invoices.status'), t('invoices.invoice')]
 
   return (
     <div className='std-document-content'>
@@ -64,19 +69,34 @@ function StudentInvoicesContent (): JSX.Element {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.titre}>
-                  <TableCell align='center' component="th" scope="row" sx={{ fontSize: '24px' }}>
-                    {row.année}
-                  </TableCell>
-                  <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>{row.titre}</TableCell>
-                  <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>{row.client}</TableCell>
-                  <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>{row.etat}</TableCell>
-                  <TableCell align='center'>
-                    <img src='/assets/downloadInvoice.png' alt='Download' style={{ cursor: 'pointer', width: '40px', height: '40px' }} onClick={handleDownload} />
+              {invoiceData.length > 0
+                ? (
+                    invoiceData.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell align='center' component="th" scope="row" sx={{ fontSize: '24px' }}>
+                      {new Date(row.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell align='center' sx={{ fontFamily: 'Poppins', fontSize: '24px' }}>
+                      {t('invoices.paid')}
+                    </TableCell>
+                    <TableCell align='center'>
+                      <img
+                        src='/assets/downloadInvoice.png'
+                        alt='Download'
+                        style={{ cursor: 'pointer', width: '40px', height: '40px' }}
+                        onClick={() => { handleDownload(row.documentPath) }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                    ))
+                  )
+                : (
+                <TableRow>
+                  <TableCell colSpan={5} align='center'>
+                    {t('invoices.no_invoices')}
                   </TableCell>
                 </TableRow>
-              ))}
+                  )}
             </TableBody>
           </Table>
         </TableContainer>
