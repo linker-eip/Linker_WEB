@@ -1,4 +1,4 @@
-import axios, { type AxiosError } from 'axios'
+import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
 
 export interface AuthResponse {
@@ -10,7 +10,7 @@ class AuthApi {
   private static handleError (message: string): void {
     enqueueSnackbar(message, { variant: 'error' })
   }
-  
+
   static async verifyStudentPassword (code: string): Promise<AuthResponse> {
     const response = await axios.post(`${process.env.REACT_APP_API_URL as string}/api/auth/student/verify?code=${code}`)
     if (response.status !== 200 && response.status !== 201) {
