@@ -1,8 +1,13 @@
 import axios from 'axios'
+import { enqueueSnackbar } from 'notistack'
 import type { Group, GroupeInvitedMember, GroupSearchMember, GroupInvitationData, SearchGroups } from '../Typage/Type'
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class GroupApi {
+  private static handleError (message: string): void {
+    enqueueSnackbar(message, { variant: 'error' })
+  }
+
   static async getGroup (jwtToken: string): Promise<Group> {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/group`, {
@@ -12,7 +17,8 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la récupération de vos groupes')
+      console.log(error)
+      this.handleError(error.response.data.message)
       return error
     }
   }
@@ -24,11 +30,10 @@ class GroupApi {
           Authorization: `Bearer ${jwtToken}`,
           'Content-Type': 'application/json'
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la création de votre groupe')
+      this.handleError(error.response.data.message)
       return error
     }
   }
@@ -40,11 +45,10 @@ class GroupApi {
           Authorization: `Bearer ${jwtToken}`,
           'Content-Type': 'application/json'
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la suppression de votre groupe')
+      this.handleError('Une erreur est survenue lors de la suppression de votre groupe')
       return error
     }
   }
@@ -56,11 +60,10 @@ class GroupApi {
           Authorization: `Bearer ${jwtToken}`,
           'Content-Type': 'application/json'
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la suppression de votre groupe')
+      this.handleError('Une erreur est survenue lors de la suppression de votre groupe')
       return error
     }
   }
@@ -72,11 +75,10 @@ class GroupApi {
           Authorization: `Bearer ${jwtToken}`,
           'Content-Type': 'application/json'
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de l\'exclusion de ce membre')
+      this.handleError('Une erreur est survenue lors de l\'exclusion de ce membre')
       return error
     }
   }
@@ -90,7 +92,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la récupération des membres invités')
+      this.handleError('Une erreur est survenue lors de la récupération des membres invités')
       return error
     }
   }
@@ -104,7 +106,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la recherche de membres')
+      this.handleError('Une erreur est survenue lors de la recherche de membres')
       return error
     }
   }
@@ -118,7 +120,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la recherche de groupes')
+      this.handleError('Une erreur est survenue lors de la recherche de groupes')
       return error
     }
   }
@@ -132,7 +134,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la recherche de groupes')
+      this.handleError('Une erreur est survenue lors de la recherche de groupes')
       return error
     }
   }
@@ -143,11 +145,10 @@ class GroupApi {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de l\'invitation de ce membre')
+      this.handleError('Une erreur est survenue lors de l\'invitation de ce membre')
       return error
     }
   }
@@ -158,11 +159,10 @@ class GroupApi {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de l\'invitation de ce groupe')
+      this.handleError('Une erreur est survenue lors de l\'invitation de ce groupe')
       return error
     }
   }
@@ -173,11 +173,10 @@ class GroupApi {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la suppression de l\'invitation de ce membre')
+      this.handleError('Une erreur est survenue lors de la suppression de l\'invitation de ce membre')
       return error
     }
   }
@@ -191,7 +190,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de la récupération des invitations')
+      this.handleError('Une erreur est survenue lors de la récupération des invitations')
       return error
     }
   }
@@ -202,11 +201,10 @@ class GroupApi {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors de l\'acceptation de l\'invitation')
+      this.handleError('Une erreur est survenue lors de l\'acceptation de l\'invitation')
       return error
     }
   }
@@ -217,11 +215,10 @@ class GroupApi {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         }
-      }
-      )
+      })
       return response
     } catch (error: any) {
-      alert('Une erreur est survenue lors du refus de l\'invitation')
+      this.handleError('Une erreur est survenue lors du refus de l\'invitation')
       return error
     }
   }

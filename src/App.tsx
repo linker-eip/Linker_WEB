@@ -57,9 +57,18 @@ import * as ROUTES from './Router/routes'
 import AdminTickets from './Admin/Tickets/adminTickets'
 import { StudentContact } from './Student/Dashbord/Contact/StudentContact'
 import { CompanyContact } from './Company/Dashbord/Contact/CompanyContact'
+import { SnackbarProvider } from 'notistack'
 
 function App (): JSX.Element {
   return (
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right'
+      }}
+      autoHideDuration={5000}
+    >
     <Router>
       <Routes>
         <Route path={ROUTES.LANDING_PAGE} element={
@@ -138,6 +147,7 @@ function App (): JSX.Element {
         } />
       </Routes>
     </Router>
+    </SnackbarProvider>
   )
 }
 

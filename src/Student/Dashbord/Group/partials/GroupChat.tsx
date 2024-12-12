@@ -47,7 +47,7 @@ function GroupChat (props: Props): JSX.Element {
     async function setInvitedData (): Promise<void> {
       const jwtToken = localStorage.getItem('jwtToken') as string
 
-      if (jwtToken != null) {
+      if (jwtToken != null && hasGroup) {
         const response = await GroupApi.getMemberInvited(jwtToken)
         setMemberInvited(response.data)
       } else {
