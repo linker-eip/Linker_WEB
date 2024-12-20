@@ -14,6 +14,14 @@ i18n
     resources: {
       fr: {
         translation: {
+          decline: 'Refuser',
+          accept: 'Accepter',
+          cancel: 'Annuler',
+          delete: 'Supprimer',
+          leave: 'Quitter',
+          confirm: 'Confirmer',
+          disable: 'Désactiver',
+          exclude: 'Exclure',
           payment: {
             name: 'Nom de la mission',
             status: 'Statut du paiement',
@@ -30,6 +38,7 @@ i18n
             client: 'Client',
             status: 'État',
             invoice: 'Facture',
+            no_invoices: 'Il n\'y a pas de factures',
             student: 'Étudiant',
             paid: 'Payée',
             waiting: 'En attente',
@@ -527,6 +536,14 @@ i18n
       },
       en: {
         translation: {
+          decline: 'Decline',
+          accept: 'Accept',
+          cancel: 'Cancel',
+          delete: 'Delete',
+          leave: 'Quit',
+          confirm: 'Confirm',
+          disable: 'Disable',
+          exclude: 'Exclude',
           payment: {
             name: 'Mission name',
             status: 'Mission status',
@@ -543,6 +560,7 @@ i18n
             client: 'Client',
             status: 'Status',
             invoice: 'Invoice',
+            no_invoices: 'No invoices',
             student: 'Student',
             paid: 'Paid',
             waiting: 'Waiting',
