@@ -458,6 +458,8 @@ i18n
               invoices: 'Mes factures'
             },
             mission: {
+              finished: 'Terminer la mission',
+              pay: 'Payer la mission',
               pending: {
                 title: 'En cours',
                 pending_mission: 'Missions en cours ({{nbrMission}}).',
@@ -980,6 +982,8 @@ i18n
               invoices: 'My Invoices'
             },
             mission: {
+              finished: 'Complete mission',
+              pay: 'Pay mission',
               pending: {
                 title: 'In Progress',
                 pending_mission: 'Ongoing Missions ({{nbrMission}}).',

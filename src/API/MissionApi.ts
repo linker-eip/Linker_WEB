@@ -319,6 +319,26 @@ class MissionApi {
     }
     return response.data
   }
+
+  static async getPaymentStatus (jwtToken: string, missionId: number): Promise<boolean> {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL as string}/api/payment`, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json'
+        },
+        params: {
+          mission_id: missionId
+        }
+      })
+      if (response.data.status !== 'PAID') {
+        return false
+      }
+      return true
+    } catch (e: any) {
+      return false
+    }
+  }
 }
 
 export default MissionApi
