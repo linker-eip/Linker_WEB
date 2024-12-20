@@ -275,46 +275,46 @@ function ModalValidation (props: Props): JSX.Element {
         }
         <div className='modal-validation__button-section'>
           { props.type === ModalType.REFUS
-            ? <ClassicButton title='Refuser' refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('decline')} refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.ACCEPT
-            ? <ClassicButton title='Accepter' onClick={handleValidation} />
+            ? <ClassicButton title={t('accept')} onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DELETE
-            ? <ClassicButton title='Supprimer' refuse onClick={handleDeleteClose} />
+            ? <ClassicButton title={t('delete')} refuse onClick={handleDeleteClose} />
             : null
           }
           { props.type === ModalType.EXCLUSION
-            ? <ClassicButton title='Exclure' refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('exclude')} refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DELETE_GROUP
-            ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('delete')} refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.NOTATION
-            ? <ClassicButton title='Confirmer' onClick={handleValidation} />
+            ? <ClassicButton title={t('confirm')} onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.COMMENT
-            ? <ClassicButton title='Confirmer' onClick={handleValidation} />
+            ? <ClassicButton title={t('confirm')} onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.LEAVE
-            ? <ClassicButton title='Quitter' refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('quit')} refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DEACTIVATE_ACCOUNT
-            ? <ClassicButton title='Désactiver' refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('disable')} refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DELETE_ACCOUNT
-            ? <ClassicButton title='Supprimer' refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('delete')} refuse onClick={handleValidation} />
             : null
           }
-          <ClassicButton title='Annuler' cancelled onClick={handleValidationClose} />
+          <ClassicButton title={t('cancel')} cancelled onClick={handleValidationClose} />
         </div>
       </div>
     </Modal>

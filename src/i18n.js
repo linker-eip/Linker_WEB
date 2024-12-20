@@ -14,6 +14,14 @@ i18n
     resources: {
       fr: {
         translation: {
+          decline: 'Refuser',
+          accept: 'Accepter',
+          cancel: 'Annuler',
+          delete: 'Supprimer',
+          leave: 'Quitter',
+          confirm: 'Confirmer',
+          disable: 'Désactiver',
+          exclude: 'Exclure',
           payment: {
             name: 'Nom de la mission',
             status: 'Statut du paiement',
@@ -528,6 +536,14 @@ i18n
       },
       en: {
         translation: {
+          decline: 'Decline',
+          accept: 'Accept',
+          cancel: 'Cancel',
+          delete: 'Delete',
+          leave: 'Quit',
+          confirm: 'Confirm',
+          disable: 'Disable',
+          exclude: 'Exclude',
           payment: {
             name: 'Mission name',
             status: 'Mission status',
