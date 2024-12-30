@@ -116,14 +116,14 @@ function Group (props: Props): JSX.Element {
             <div className='std-group__details-section'>
               <div className='std-group__button-container'>
                 { props.data?.data?.isLeader ?? false
-                  ? <ClassicButton title='Ajouter des membres' onClick={openInviteModal} />
+                  ? <ClassicButton title={t('student.groups.invite.title')} onClick={openInviteModal} />
                   : null
                 }
                 { props.data?.data?.isLeader ?? false
-                  ? <ClassicButton title='Exclure un membre' onClick={openExclusionModal} refuse />
+                  ? <ClassicButton title={t('student.groups.exclude.title')} onClick={openExclusionModal} refuse />
                   : null
                 }
-                <ClassicButton title={props.data?.data?.isLeader ?? false ? 'Détruire le groupe' : 'Quitter le groupe'} refuse onClick={props.data?.data?.isLeader ?? false ? openDeleteModal : openLeaveModal } />
+                <ClassicButton title={props.data?.data?.isLeader ?? false ? t('student.groups.destroy') : t('student.groups.leave')} refuse onClick={props.data?.data?.isLeader ?? false ? openDeleteModal : openLeaveModal } />
               </div>
               <div className='std-group__details'>
                 <ReportButton TicketType={TicketType.GROUP} id={props.data?.data?.groupId} />

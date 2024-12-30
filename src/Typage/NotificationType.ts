@@ -4,6 +4,8 @@ export interface Notifications {
   id: number
   title: string
   text: string
+  enTitle?: string | null
+  enText?: string | null
   type: NotificationType
   studentId: number
   companyId: number | null
