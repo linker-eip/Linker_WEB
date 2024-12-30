@@ -16,8 +16,6 @@ function ModalInvitationGroup (props: Props): JSX.Element {
     props.onClose()
   }
 
-  const studentName = ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'rayane', 'rayquaza', 'raylib']
-
   return (
     <Modal open={props.open} onClose={handleValidationClose} >
         <div className='std-invite-modal'>
@@ -25,7 +23,7 @@ function ModalInvitationGroup (props: Props): JSX.Element {
             <div className='std-invite-modal__title'> { t('student.groups.invite.title') } </div>
           </div>
           <div className='std-invite-modal__content-section'>
-            <SearchBar data={studentName} />
+            <SearchBar />
           </div>
         </div>
       </Modal>

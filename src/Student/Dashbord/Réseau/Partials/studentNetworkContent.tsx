@@ -110,7 +110,6 @@ function StudentNetworkContent (): JSX.Element {
       }
       const data = await response.json()
       setSearchResults(data)
-      console.log('Search Results:', data)
     } catch (error) {
       console.error('Error fetching search results:', error)
     }

@@ -22,10 +22,9 @@ interface Props {
 function ModalValidation (props: Props): JSX.Element {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [opened, setOpened] = useState(props.open)
+  const [, setOpened] = useState(props.open)
 
   const handleValidationClose = (): void => {
-    console.log(opened)
     setOpened(false)
     props.onClose()
   }
@@ -303,7 +302,7 @@ function ModalValidation (props: Props): JSX.Element {
             : null
           }
           { props.type === ModalType.LEAVE
-            ? <ClassicButton title={t('quit')} refuse onClick={handleValidation} />
+            ? <ClassicButton title={t('leave')} refuse onClick={handleValidation} />
             : null
           }
           { props.type === ModalType.DEACTIVATE_ACCOUNT

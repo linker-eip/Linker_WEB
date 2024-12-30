@@ -5,11 +5,7 @@ import '../../../../CSS/StudentGroup.scss'
 import GroupApi from '../../../../API/GroupApi'
 import type { InvitedMember, SearchMember } from '../../../../Typage/Type'
 
-interface Props {
-  data: string[]
-}
-
-const SearchBar = (props: Props): JSX.Element => {
+const SearchBar = (): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<SearchMember[]>()
   const [memberInvited, setMemberInvited] = useState<InvitedMember[] | undefined>()

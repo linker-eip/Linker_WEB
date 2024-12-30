@@ -148,7 +148,7 @@ class GroupApi {
       })
       return response
     } catch (error: any) {
-      this.handleError('Une erreur est survenue lors de l\'invitation de ce membre')
+      // this.handleError('Une erreur est survenue lors de l\'invitation de ce membre')
       return error
     }
   }

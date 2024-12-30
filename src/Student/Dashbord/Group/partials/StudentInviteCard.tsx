@@ -61,7 +61,7 @@ const StudentInviteCard = (props: Props): JSX.Element => {
         <Avatar alt='avatar' src={props.member.picture} />
         <div className='std-invite-card__name'>{ props.member.firstName } {props.member.lastName}</div>
       </div>
-      {hasBeenInvited ? <ClassicButton disabled title='invité' /> : <ClassicButton title='inviter' onClick={inviteMember} /> }
+      {hasBeenInvited ? <ClassicButton disabled title={t('student.groups.invite.invited')} /> : <ClassicButton title={t('student.groups.invite.invite')} onClick={inviteMember} /> }
       <Snackbar open={snackbarValue} autoHideDuration={6000} onClose={closeSnackbar}>
         <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
           { t('snackbar.invitation_error') }

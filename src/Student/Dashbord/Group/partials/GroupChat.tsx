@@ -1,15 +1,14 @@
 import MemberCard from './MemberCard'
 import '../../../../CSS/StudentGroup.scss'
 import { useTranslation } from 'react-i18next'
-import GroupApi from '../../../../API/GroupApi'
 import ModalCreateGroup from './ModalCreateGroup'
 import io, { type Socket } from 'socket.io-client'
-import MemberInvitedCard from './MemberInvitedCard'
 import MessageIcon from '@mui/icons-material/Message'
 import { TextField, InputAdornment } from '@mui/material'
 import React, { useEffect, useState, useRef } from 'react'
 import ClassicButton from '../../../../Component/ClassicButton'
-import type { Group as GroupData, InvitedMember } from '../../../../Typage/Type'
+import type { Group as GroupData, Members } from '../../../../Typage/Type'
+import MemberGroupCard from './MemberGroupCard'
 
 interface Props {
   data: GroupData | undefined
@@ -29,27 +28,25 @@ function GroupChat (props: Props): JSX.Element {
   const { t } = useTranslation()
   const [hasGroup, setStatus] = useState<boolean>(false)
   const [creationGroup, setCreationGroup] = useState<boolean>(false)
-  const [memberInvited, setMemberInvited] = useState<InvitedMember[] | undefined>()
+  const [memberInvited, setMemberInvited] = useState<Members[] | undefined>()
   const [refetch, setRefetch] = useState<boolean>(false)
 
-  useEffect(() => {
-    function setGroupStatusOnMounted (): void {
-      if (props.data?.data?.name === undefined) {
-        setStatus(false)
-      } else {
-        setStatus(true)
-      }
-    }
-    setGroupStatusOnMounted()
-  }, [props.data])
+  // useEffect(() => {
+  //   function setGroupStatusOnMounted (): void {
+  //     if (props.data?.data?.name === undefined) {
+  //       setStatus(false)
+  //     } else {
+  //       setStatus(true)
+  //     }
+  //   }
+  //   setGroupStatusOnMounted()
+  // }, [props.data])
 
   useEffect(() => {
     async function setInvitedData (): Promise<void> {
-      const jwtToken = localStorage.getItem('jwtToken') as string
-
-      if (jwtToken != null && hasGroup) {
-        const response = await GroupApi.getMemberInvited(jwtToken)
-        setMemberInvited(response.data)
+      if (props.data?.data?.name === undefined) {
+        setStatus(true)
+        setMemberInvited(props.data?.data?.members)
       } else {
         console.error('JWT token is missing')
       }
@@ -229,8 +226,7 @@ function GroupChat (props: Props): JSX.Element {
             <div className='std-group__member-container'>
               <div className='std-group__member-title'> {t('student.dashboard.groups.member_title')} </div>
               <MemberCard member={props.data?.data?.members} />
-              <div className='std-group__member-title'> {t('student.dashboard.groups.invited')} </div>
-              <MemberInvitedCard member={memberInvited} onDelete={handleRefetch} />
+              <MemberGroupCard member={memberInvited} onDelete={handleRefetch} />
             </div>
           </div>
         : <div className='std-group'>

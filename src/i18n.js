@@ -398,11 +398,15 @@ i18n
               description: 'Ajouter une description pour votre groupe',
               button: 'Créer le groupe',
               invite: {
-                title: 'Ajouter un membre'
+                title: 'Ajouter des membres',
+                invite: 'Inviter',
+                invited: 'Invité'
               },
               exclude: {
                 title: 'Exclure un membre'
-              }
+              },
+              destroy: 'Dissoudre le groupe',
+              leave: 'Quitter le groupe'
             },
             settings: {
               error: {
@@ -922,11 +926,15 @@ i18n
               description: 'Add a description for your group',
               button: 'Create Group',
               invite: {
-                title: 'Add a Member'
+                title: 'Add Members',
+                invite: 'Invite',
+                invited: 'Invited'
               },
               exclude: {
-                title: 'Exclude a Member'
-              }
+                title: 'Exclude Members'
+              },
+              destroy: 'Disband the group',
+              leave: 'lLeave the group'
             },
             settings: {
               error: {
