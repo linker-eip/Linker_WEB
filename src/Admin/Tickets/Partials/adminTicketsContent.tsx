@@ -1,4 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete'
+import CloseIcon from '@mui/icons-material/Close'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
@@ -253,7 +253,7 @@ function AdminTicketsContent (): JSX.Element {
                       </TableCell>
                       <TableCell align='center'>
                         <IconButton onClick={() => { confirmCloseTicket(row.id) }}>
-                          <DeleteIcon fontSize='large' />
+                          <CloseIcon fontSize='large' />
                         </IconButton>
                       </TableCell>
                     </TableRow>

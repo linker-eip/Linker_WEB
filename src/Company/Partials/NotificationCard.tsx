@@ -11,6 +11,7 @@ import * as ROUTES from '../../Router/routes'
 
 import CloseIcon from '@mui/icons-material/Close'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   onClick?: () => void
@@ -19,8 +20,13 @@ interface Props {
 }
 
 function NotificationCard (props: Props): JSX.Element {
+  const { i18n } = useTranslation()
   const navigate = useNavigate()
-  moment.locale('fr')
+  if (i18n.language === 'fr') {
+    moment.locale('fr')
+  } else {
+    moment.locale('en')
+  }
   const date = moment(props.data.date).format('DD MMMM YYYY')
 
   const handleRemoveNotif = (): void => {
@@ -53,13 +59,13 @@ function NotificationCard (props: Props): JSX.Element {
           </div>
         }
         <div className='notif-card__title'>
-          {props.data.title}
+          { i18n.language === 'fr' ? props.data.title : props.data.enTitle }
         </div>
         <div className='notif-card__text'>
-          {props.data.text}
+          { i18n.language === 'fr' ? props.data.text : props.data.enText}
         </div>
         <div className='notif-card__date'>
-          le {date}
+          {i18n.language === 'fr' ? 'le' : 'on' } {date}
         </div>
       </div>
       <div className='notif-card__section-2'>

@@ -52,6 +52,7 @@ function CompanyDetailedMission (): JSX.Element {
   const [groupToAccept, setGroupToAccept] = useState<number[]>()
   const [group, setGroup] = useState('')
   const [comment, setComment] = useState<string>('')
+  const [paymentStatus, setPaymentStatus] = useState<boolean>(false)
 
   const handleChange = (event: SelectChangeEvent): void => {
     setGroup(event.target.value)
@@ -68,6 +69,8 @@ function CompanyDetailedMission (): JSX.Element {
       setMissionData(response)
       if (response !== undefined) {
         setFinishedTask(response.missionTaskArray.filter((missionTask: MissionTaskArrayInfo) => missionTask.missionTask.status === TaskStatus.FINISHED).length)
+        const value = await MissionApi.getPaymentStatus(localStorage.getItem('jwtToken') as string, response.mission.id)
+        setPaymentStatus(value)
         if (response.mission.specificationsFile !== undefined && response.mission.specificationsFile !== null) {
           setIsDevis(true)
           setIsValid(true)
@@ -162,6 +165,21 @@ function CompanyDetailedMission (): JSX.Element {
 
   const handleRefetch = (): void => {
     setRefetch(!refetchMissionData)
+  }
+
+  const handlePaymentCheckout = async (): Promise<void> => {
+    try {
+      if (missionData?.mission) {
+        const paymentCheckout = await MissionApi.getCompanyMissionCheckout(localStorage.getItem('jwtToken') as string, missionData?.mission.id)
+        if (typeof paymentCheckout.sessionUrl === 'string' && paymentCheckout.sessionUrl.trim() !== '') {
+          window.open(paymentCheckout.sessionUrl, '_blank', 'noopener,noreferrer')
+        } else {
+          console.log('[ERROR] - Session URL is missing in the response.')
+        }
+      }
+    } catch (error) {
+      console.error('[ERROR] - Unable to proceed payment checkout:', error)
+    }
   }
 
   const [starsStatus, setStarsStatus] = useState(['selected', 'selected', 'selected', 'selected', 'selected'])
@@ -394,7 +412,9 @@ function CompanyDetailedMission (): JSX.Element {
                   }
                   {
                     missionData.missionTaskArray.length > 0 && nbrFinishedTask === missionData.missionTaskArray.length && (missionData.mission.status === MissionStatus.IN_PROGRESS || missionData.mission.status === MissionStatus.PROVISIONED)
-                      ? <ClassicButton title='Terminer la mission' onClick={finishMission} />
+                      ? paymentStatus 
+                        ? <ClassicButton title={t('company.mission.finished')} onClick={finishMission} />
+                        : <ClassicButton title={t('company.mission.pay')} onClick={() => { handlePaymentCheckout() }}/>
                       : null
                   }
                   {missionData.mission.isNoted === false ? (

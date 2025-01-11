@@ -14,6 +14,14 @@ i18n
     resources: {
       fr: {
         translation: {
+          decline: 'Refuser',
+          accept: 'Accepter',
+          cancel: 'Annuler',
+          delete: 'Supprimer',
+          leave: 'Quitter',
+          confirm: 'Confirmer',
+          disable: 'Désactiver',
+          exclude: 'Exclure',
           payment: {
             name: 'Nom de la mission',
             status: 'Statut du paiement',
@@ -30,6 +38,7 @@ i18n
             client: 'Client',
             status: 'État',
             invoice: 'Facture',
+            no_invoices: 'Il n\'y a pas de factures',
             student: 'Étudiant',
             paid: 'Payée',
             waiting: 'En attente',
@@ -389,11 +398,15 @@ i18n
               description: 'Ajouter une description pour votre groupe',
               button: 'Créer le groupe',
               invite: {
-                title: 'Ajouter un membre'
+                title: 'Ajouter des membres',
+                invite: 'Inviter',
+                invited: 'Invité'
               },
               exclude: {
                 title: 'Exclure un membre'
-              }
+              },
+              destroy: 'Dissoudre le groupe',
+              leave: 'Quitter le groupe'
             },
             settings: {
               error: {
@@ -449,6 +462,8 @@ i18n
               invoices: 'Mes factures'
             },
             mission: {
+              finished: 'Terminer la mission',
+              pay: 'Payer la mission',
               pending: {
                 title: 'En cours',
                 pending_mission: 'Missions en cours ({{nbrMission}}).',
@@ -527,6 +542,14 @@ i18n
       },
       en: {
         translation: {
+          decline: 'Decline',
+          accept: 'Accept',
+          cancel: 'Cancel',
+          delete: 'Delete',
+          leave: 'Quit',
+          confirm: 'Confirm',
+          disable: 'Disable',
+          exclude: 'Exclude',
           payment: {
             name: 'Mission name',
             status: 'Mission status',
@@ -543,6 +566,7 @@ i18n
             client: 'Client',
             status: 'Status',
             invoice: 'Invoice',
+            no_invoices: 'No invoices',
             student: 'Student',
             paid: 'Paid',
             waiting: 'Waiting',
@@ -902,11 +926,15 @@ i18n
               description: 'Add a description for your group',
               button: 'Create Group',
               invite: {
-                title: 'Add a Member'
+                title: 'Add Members',
+                invite: 'Invite',
+                invited: 'Invited'
               },
               exclude: {
-                title: 'Exclude a Member'
-              }
+                title: 'Exclude Members'
+              },
+              destroy: 'Disband the group',
+              leave: 'lLeave the group'
             },
             settings: {
               error: {
@@ -962,6 +990,8 @@ i18n
               invoices: 'My Invoices'
             },
             mission: {
+              finished: 'Complete mission',
+              pay: 'Pay mission',
               pending: {
                 title: 'In Progress',
                 pending_mission: 'Ongoing Missions ({{nbrMission}}).',

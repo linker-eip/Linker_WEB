@@ -23,7 +23,6 @@ function MissionCard (props: Props): JSX.Element {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const [acceptModal, setAcceptModal] = useState(false)
   const [groupData, setGroupData] = useState<GroupType>()
   const [companyData, setCompanyData] = useState<CompanyAdminInfo>()
   const [missionData, setMissionData] = useState<StudentMissionDetails>()
@@ -54,25 +53,8 @@ function MissionCard (props: Props): JSX.Element {
     setOpen(false)
   }
 
-  const handleAcceptOpen = (): void => {
-    setAcceptModal(true)
-  }
-
-  const handleAcceptClose = (): void => {
-    setAcceptModal(false)
-  }
-
   const handleValidation = (): void => {
     props.onCallback()
-  }
-
-  const acceptMission = async (): Promise<void> => {
-    if (missionData !== undefined) {
-      const response = await MissionApi.acceptMission(localStorage.getItem('jwtToken') as string, missionData.mission.id, missionData.group.id)
-      if (response !== undefined) {
-        window.location.reload()
-      }
-    }
   }
 
   const refuseMission = async (): Promise<void> => {
@@ -141,18 +123,10 @@ function MissionCard (props: Props): JSX.Element {
               <div className='mission-card__link' onClick={handleNavigation}>
                 <p> {t('missionCard.see_mission')} </p>
               </div>
-              <ClassicButton title='Refuser' refuse onClick={handleRefuseOpen} />
-              <ClassicButton title='Accepter' onClick={handleAcceptOpen} />
             </div>
           : null
         }
         </div>
-        {
-          open ? <ModalValidation subject={props.data.name} open={open} type={ModalType.REFUS} onClose={handleRefuseClose} onValid={props.potential === true ? refuseMission : handleValidation} /> : null
-        }
-        {
-          acceptModal ? <ModalValidation subject={props.data.name} open={acceptModal} type={ModalType.ACCEPT} onClose={handleAcceptClose} onValid={props.potential === true ? acceptMission : handleValidation} /> : null
-        }
       </div>
   )
 }
