@@ -52,7 +52,6 @@ function ModalTicket (props: Props): JSX.Element {
     void fetchTicketData()
   }, [ticketId])
 
-  console.log('tichet', ticket)
   const handleValidationClose = (): void => {
     onClose()
   }
