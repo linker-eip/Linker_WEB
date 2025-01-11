@@ -104,18 +104,22 @@ function ModalTicket (props: Props): JSX.Element {
               </Stack>
             ))
             : ''}
-          <TextField
-            label="Réponse"
-            multiline
-            rows={4}
-            value={responseContent}
-            onChange={(e) => { setResponseContent(e.target.value) }}
-            variant="outlined"
-            fullWidth
-          />
-          <Button variant="contained" color="primary" onClick={() => { void handleResponseSubmit() }}>
-            Envoyer la réponse
-          </Button>
+          {ticket?.state !== 'CLOSED' && (
+            <>
+              <TextField
+                label="Réponse"
+                multiline
+                rows={4}
+                value={responseContent}
+                onChange={(e) => { setResponseContent(e.target.value) }}
+                variant="outlined"
+                fullWidth
+              />
+              <Button variant="contained" color="primary" onClick={() => { void handleResponseSubmit() }}>
+                Envoyer la réponse
+              </Button>
+            </>
+          )}
         </Stack>
       </div>
     </Modal>
