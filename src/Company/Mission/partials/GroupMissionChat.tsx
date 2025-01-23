@@ -166,6 +166,8 @@ function GroupMissionChat(): JSX.Element {
           />
         </div>
       </div>
+      <div className='std-group__member-container'>
+      </div>
     </div>
   )
 }
