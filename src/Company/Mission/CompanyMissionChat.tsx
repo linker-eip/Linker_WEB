@@ -3,15 +3,13 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import '../../CSS/StudentMission.scss'
 import '../../CSS/StudentDashboard.scss'
-import GroupApi from '../../API/GroupApi'
 import { DashboardState } from '../../Enum'
 import { useTranslation } from 'react-i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import HotbarDashboard from '../Partials/HotbarDashboard'
 import GroupMissionChat from './partials/GroupMissionChat'
 import isPrivateRoute from '../../Component/isPrivateRoute'
 import SidebarDashboard from '../Partials/SidebarDashboard'
-import type { Group as GroupData } from '../../Typage/Type'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -48,24 +46,9 @@ function CompanyMissionChat (): JSX.Element {
   const state = DashboardState
   const { t } = useTranslation()
   const [value, setValue] = useState(0)
-  const [groupData, setGroupData] = useState<GroupData>()
-  const [refetchData, setRefetchData] = useState(false)
-
-  useEffect(() => {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    async function fetchData () {
-      const groupData = await GroupApi.getGroup(localStorage.getItem('jwtToken') as string)
-      setGroupData(groupData)
-    }
-    fetchData()
-  }, [refetchData])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
-  }
-
-  const handleRefetch = (): void => {
-    setRefetchData(!refetchData)
   }
 
   return (
