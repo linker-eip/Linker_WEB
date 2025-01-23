@@ -1,3 +1,4 @@
+/* eslint-disable */
 import MemberCard from './MemberCard'
 import '../../../../CSS/StudentGroup.scss'
 import { useTranslation } from 'react-i18next'
@@ -161,6 +162,26 @@ function GroupChat (props: Props): JSX.Element {
     }
   }
 
+  function formatDate (timeStamp: string): string {
+    const currentTimestamp = new Date()
+
+    if (!timeStamp) {
+      const year = currentTimestamp.getFullYear()
+      const month = String(currentTimestamp.getMonth() + 1).padStart(2, '0')
+      const day = String(currentTimestamp.getDate()).padStart(2, '0')
+      const hour = String(currentTimestamp.getHours()).padStart(2, '0')
+      const minute = String(currentTimestamp.getMinutes()).padStart(2, '0')
+
+      return `${day}-${month}-${year} ${hour}:${minute}`
+    }
+
+    const [date, time] = timeStamp.split('T')
+    const [year, month, day] = date.split('-')
+    const [hour, minute] = time.split(':')
+
+    return `${day}-${month}-${year} ${hour}:${minute}`
+  }
+
   return (
     <div>
       {hasGroup
@@ -179,7 +200,7 @@ function GroupChat (props: Props): JSX.Element {
                         {msg.firstName} {msg.lastName}
                       </div>
                       <div className='std-group__message-timestamp'>
-                        {new Date(msg.timestamp).toLocaleString()}
+                        {formatDate(msg.timestamp)}
                       </div>
                     </div>
                     <div className='std-group__message-text'>

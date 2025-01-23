@@ -22,6 +22,7 @@ function PrivateChat (): JSX.Element {
   const { t } = useTranslation()
 
   const { userId } = useParams()
+  const numericUserId = Number(userId)
 
   const [newMessage, setNewMessage] = useState('')
   const [groupMessages, setGroupMessages] = useState<PrivateMessage[]>([])
@@ -81,13 +82,13 @@ function PrivateChat (): JSX.Element {
 
   const askForMissionHistory = (): void => {
     if (socket.current != null) {
-      socket.current.emit('directMessageHistory', { userId })
+      socket.current.emit('directMessageHistory', { userId: numericUserId })
     }
   }
 
   const sendMissionMessage = (message: string): void => {
     if (socket.current != null) {
-      socket.current.emit('sendDirectMessage', { message, userId })
+      socket.current.emit('sendDirectMessage', { message, userId: numericUserId })
     }
   }
 
@@ -107,8 +108,10 @@ function PrivateChat (): JSX.Element {
   }, [])
 
   const handleSendMessage = (): void => {
-    sendMissionMessage(newMessage)
-    setNewMessage('')
+    if (newMessage.trim() !== '') {
+      sendMissionMessage(newMessage)
+      setNewMessage('')
+    }
   }
 
   function formatDate (timeStamp: string): string {

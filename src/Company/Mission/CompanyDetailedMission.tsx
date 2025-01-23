@@ -310,7 +310,7 @@ function CompanyDetailedMission (): JSX.Element {
   const handleComment = async (): Promise<void> => {
     try {
       const missionId = missionData?.mission.id
-      const response = await fetch(`https://dev.linker-app.fr/api/mission/company/comment/${missionId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/mission/company/comment/${missionId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -330,7 +330,7 @@ function CompanyDetailedMission (): JSX.Element {
   const handleNote = async (): Promise<void> => {
     try {
       const missionId = missionData?.mission.id
-      const response = await fetch(`https://dev.linker-app.fr/api/mission/company/note/${missionId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL as string}/api/mission/company/note/${missionId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -22,7 +22,7 @@ import ClassicButton from '../../../../Component/ClassicButton'
 
 import {
   TextField, InputAdornment, Grid, Card, CardContent, CardMedia,
-  Typography, Box
+  Typography, Box, CircularProgress
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
@@ -334,12 +334,13 @@ function StudentNetworkContent (): JSX.Element {
         <Grid container spacing={4} mt={2}>
           {searchPerformed && searchResults.length === 0 ? (
             <Grid item xs={12}>
-              <Typography variant="h6" component="div" gutterBottom>
-                {t('network.no_result')}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-              {t('network.sorry')}
-              </Typography>
+              <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                height='100%'>
+                <CircularProgress size={30} />
+              </Box>
             </Grid>
           ) : (
             searchResults.map((result) => (
