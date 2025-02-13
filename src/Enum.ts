@@ -46,8 +46,7 @@ export enum MissionStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   FINISHED = 'FINISHED',
   CANCELLED = 'CANCELLED',
-  GROUP_ACCEPTED = 'GROUP_ACCEPTED',
-  PAID = 'PAID',
+  GROUP_ACCEPTED = 'GROUP_ACCEPTED'
 }
 
 export enum MissionInviteStatus {
