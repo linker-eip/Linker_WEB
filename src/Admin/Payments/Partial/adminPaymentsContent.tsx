@@ -61,8 +61,9 @@ const missionStatusMapping: { [key in MissionStatus]: string } = {
   [MissionStatus.IN_PROGRESS]: 'En cours',
   [MissionStatus.FINISHED]: 'Terminée',
   [MissionStatus.CANCELLED]: 'Annulée',
-  [MissionStatus.GROUP_ACCEPTED]: 'Groupe accepté'
-}
+  [MissionStatus.GROUP_ACCEPTED]: 'Groupe accepté',
+  [MissionStatus.PAID]: 'Payée'
+} 
 
 const paymentStatusMapping: { [key in PaymentStatus]: string } = {
   [PaymentStatus.PENDING]: 'En attente',
@@ -98,7 +99,7 @@ function AdminPaymentsContent (): JSX.Element {
       .then(async response => await response.json())
       .then(data => {
         const filteredData = data
-          .filter((item: PaymentsModel) => item.mission.status === 'FINISHED')
+          .filter((item: PaymentsModel) => item.mission.status === 'PAID')
           .filter((item: PaymentsModel) => item.status === 'WAITING')
         const formattedData = filteredData.map((item: PaymentsModel) => ({
           id: item.id,

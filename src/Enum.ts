@@ -47,6 +47,7 @@ export enum MissionStatus {
   FINISHED = 'FINISHED',
   CANCELLED = 'CANCELLED',
   GROUP_ACCEPTED = 'GROUP_ACCEPTED',
+  PAID = 'PAID',
 }
 
 export enum MissionInviteStatus {
