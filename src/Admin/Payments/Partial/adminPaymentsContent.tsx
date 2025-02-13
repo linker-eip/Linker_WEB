@@ -63,7 +63,7 @@ const missionStatusMapping: { [key in MissionStatus]: string } = {
   [MissionStatus.CANCELLED]: 'Annulée',
   [MissionStatus.GROUP_ACCEPTED]: 'Groupe accepté',
   [MissionStatus.PAID]: 'Payée'
-} 
+}
 
 const paymentStatusMapping: { [key in PaymentStatus]: string } = {
   [PaymentStatus.PENDING]: 'En attente',
