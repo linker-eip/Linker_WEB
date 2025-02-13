@@ -99,7 +99,7 @@ function AdminPaymentsContent (): JSX.Element {
       .then(data => {
         const filteredData = data
           .filter((item: PaymentsModel) => item.mission.status === 'FINISHED')
-          .filter((item: PaymentsModel) => item.status === 'WAITING')
+          .filter((item: PaymentsModel) => item.status === 'PENDING')
         const formattedData = filteredData.map((item: PaymentsModel) => ({
           id: item.id,
           studentId: item.student.id,
